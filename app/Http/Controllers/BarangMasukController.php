@@ -7,8 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
-
-
+use Termwind\Components\Dd;
 
 class BarangMasukController extends Controller
 {
@@ -40,6 +39,7 @@ class BarangMasukController extends Controller
 
     public function formTambah($id = null)
     {
+        // dd($id);
         $manajemen = DB::table('pengguna_manajemen')
         ->select('nama')
         ->where('username',Auth::user()->username)
@@ -58,7 +58,8 @@ class BarangMasukController extends Controller
         $jml_pengajuan = $tambah->jumlah;
         $max_input = $jml_pengajuan - $jml_masuk;
         // dd($max_input);
-
+        // dd($jenisBarang);
+        // dd($kode_baru);
         return view('barangMasuk.formtambah', compact('jenisBarang', 'supplier', 'tambah', 'kode_baru', 'max_input'));
     }
 

@@ -2,9 +2,10 @@
 @section('container')
 <div class="p-5">
  <div class="shadow-md rounded-md mx-auto  bg-base-100 p-5">
- <form action="editsimpanKaprog" method="POST">
+ <form action="editsimpan" method="POST">
  @csrf
-    <h2 class="text-2xl font-bold">Form Edit Barang</h2>
+    <h2 class="text-2xl font-bold">Form Edit Pengguna</h2>
+    <input type="hidden"  name="kode" value="{{$edit->id_pengguna}}" />
     <br>
     <div class="form-control">
         <label class="label">
@@ -12,8 +13,6 @@
         </label>
         <input type="text" name="username" class="input input-bordered"
         value="{{ old('username', $edit->username) }}"/>
-        <input type="hidden"  name="id_pengguna" value="{{$edit->id_pengguna}}" />
-        <input type="hidden"  name="nip" value="{{$edit->nip}}" />
     </div>
     <div class="form-control">
         <label class="label">

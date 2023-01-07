@@ -17,6 +17,7 @@ use App\Http\Controllers\PerbaikanController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\SidebarController;
+use App\Models\PenggunaModel;
 
 // use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -68,8 +69,8 @@ Route::get('/User/kaprog', [KaprogController::class, 'index']);
 Route::group(['middleware' => ['auth','level:manajemen']], function (){
     Route::get('/barangMasuk',[ BarangMasukController::class,'index']);
     Route::get('/barangMasuk/tambah/{id}',[ BarangMasukController::class,'formTambah']);
-    Route::post('/barangMasuk/tambah/simpan',[ BarangMasukController::class,'store']);
 });
+Route::post('/barangMasuk/tambah/simpan',[ BarangMasukController::class,'store']);
 
 Route::get('/supplier',[ SupplierController::class,'index']);
 Route::get('/supplier/tambah',[ SupplierController::class,'formTambah']);
@@ -81,20 +82,9 @@ Route::get('/supplier/hapus/{id}',[SupplierController::class,'hapus']);
 Route::get('/pengguna',[ PenggunaController::class,'index']);
 Route::get('/pengguna/tambah',[ PenggunaController::class,'formTambah']);
 Route::post('/pengguna/simpan',[ PenggunaController::class,'store']);
-//
-Route::get('/pengguna/editAdmin/{id}',[PenggunaController::class,'editAdmin']);
-Route::post('/pengguna/editAdmin/editsimpanAdmin',[ PenggunaController::class,'editsimpanAdmin']);
-Route::get('/pengguna/hapusAdmin/{pengguna}/{id}',[PenggunaController::class,'hapusAdmin']);
-
-//
-Route::get('/pengguna/editManajemen/{id}',[PenggunaController::class,'editManajemen']);
-Route::post('/pengguna/editManajemen/editsimpanManajemen',[ PenggunaController::class,'editsimpanManajemen']);
-Route::get('/pengguna/hapusManajemen/{pengguna}/{id}',[PenggunaController::class,'hapusManajemen']);
-
-//
-Route::get('/pengguna/editKaprog/{id}',[PenggunaController::class,'editKaprog']);
-Route::post('/pengguna/editKaprog/editsimpanKaprog',[ PenggunaController::class,'editsimpanKaprog']);
-Route::get('/pengguna/hapusKaprog/{pengguna}/{id}',[PenggunaController::class,'hapusKaprog']);
+Route::get('/pengguna/edit/{id}',[PenggunaController::class,'edit']);
+Route::post('/pengguna/edit/editsimpan',[ PenggunaController::class,'editsimpan']);
+Route::get('/pengguna/hapus/{id}',[PenggunaController::class,'hapus']);
 
 
 Route::get('/pengajuan/BB',[ PengajuanBBController::class,'index']);

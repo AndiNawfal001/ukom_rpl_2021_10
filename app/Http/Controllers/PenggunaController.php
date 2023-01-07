@@ -14,22 +14,11 @@ class PenggunaController extends Controller
         $data = DB::table('banyak_pengguna')
         ->select('*')
         ->orderBy('id_level')
-        ->paginate(10);
+        ->paginate(5);
 
-        $admin = DB::table('admin')
-        ->join('pengguna', 'admin.id_pengguna', '=', 'pengguna.id_pengguna')
-        ->select('admin.*', 'pengguna.*')
-        ->get();
-
-        $manajemen = DB::table('manajemen')
-        ->join('pengguna', 'manajemen.id_pengguna', '=', 'pengguna.id_pengguna')
-        ->select('manajemen.*', 'pengguna.*')
-        ->get();
-
-        $kaprog = DB::table('kaprog')
-        ->join('pengguna', 'kaprog.id_pengguna', '=', 'pengguna.id_pengguna')
-        ->select('kaprog.*', 'pengguna.*')
-        ->get();
+        $admin = DB::table('admin')->count();
+        $manajemen = DB::table('manajemen')->count();
+        $kaprog = DB::table('kaprog')->count();
 
         return view('pengguna.index', compact('data', 'admin', 'manajemen', 'kaprog'));
     }
@@ -68,206 +57,87 @@ class PenggunaController extends Controller
         }
     }
 
-    //
-    // ADMIN
-    //
-
-
     private function getPenggunaAdmin($id)
     {
         return collect(DB::table('admin')
         ->join('pengguna', 'admin.id_pengguna', '=', 'pengguna.id_pengguna')
         ->select('admin.*', 'pengguna.*')
-        ->where('id_admin', $id)
+        ->where('pengguna.id_pengguna', $id)
         ->get())->firstOrFail();
     }
 
-    public function editAdmin($id = null )
-    {
-        $edit = $this->getPenggunaAdmin($id);
-        return view('pengguna.editformAdmin', compact('edit'));
-    }
-
-    public function editsimpanAdmin(Request $request)
-    {
-        try {
-            $pengguna = [
-                'username'   => $request->input('username'),
-                'email' => $request->input('email'),
-            ];
-            $admin = [
-                'nama'   => $request->input('nama'),
-                'kontak' => $request->input('kontak'),
-            ];
-            DB::table('pengguna')
-                        ->where('id_pengguna', '=', $request->input('id_pengguna'))
-                        ->update($pengguna);
-
-            DB::table('admin')
-                        ->where('id_admin', '=', $request->input('id_admin'))
-                        ->update($admin);
-
-            return redirect('pengguna');
-
-        } catch (\Exception $e) {
-            return $e->getMessage();
-            dd("gagal");
-        }
-    }
-
-    public function hapusAdmin($pengguna=null, $admin=null){
-        try{
-
-             DB::table('pengguna')
-                            ->where('id_pengguna',$pengguna)
-                            ->delete();
-
-             DB::table('admin')
-                            ->where('id_admin',$admin)
-                            ->delete();
-
-            // dd($pengguna);
-
-            return redirect('pengguna');
-
-        }catch(\Exception $e){
-            $e->getMessage();
-        }
-    }
-
-    //
-    // MANAJEMEN
-    //
-
-
-    private function Manajemen($id)
+    private function getPenggunaManajemen($id)
     {
         return collect(DB::table('manajemen')
         ->join('pengguna', 'manajemen.id_pengguna', '=', 'pengguna.id_pengguna')
         ->select('manajemen.*', 'pengguna.*')
-        ->where('nip', $id)
+        ->where('pengguna.id_pengguna', $id)
         ->get())->firstOrFail();
     }
 
-    public function editManajemen($id = null )
-    {
-        $edit = $this->Manajemen($id);
-        return view('pengguna.editformManajemen', compact('edit'));
-    }
-
-    public function editsimpanManajemen(Request $request)
-    {
-        try {
-            // dd($request->all());
-
-            $pengguna = [
-                'username'   => $request->input('username'),
-                'email' => $request->input('email'),
-            ];
-            $manajemen = [
-                'nama'   => $request->input('nama'),
-                'kontak' => $request->input('kontak'),
-            ];
-            // dd($request->all());
-
-            DB::table('pengguna')
-                        ->where('id_pengguna', '=', $request->input('id_pengguna'))
-                        ->update($pengguna);
-            DB::table('manajemen')
-                        ->where('nip', '=', $request->input('nip'))
-                        ->update($manajemen);
-
-            return redirect('pengguna');
-
-
-        } catch (\Exception $e) {
-            return $e->getMessage();
-            dd("gagal");
-        }
-    }
-
-    public function hapusManajemen($pengguna=null, $manajemen=null){
-        try{
-
-             DB::table('pengguna')
-                            ->where('id_pengguna',$pengguna)
-                            ->delete();
-
-             DB::table('manajemen')
-                            ->where('nip',$manajemen)
-                            ->delete();
-
-            return redirect('pengguna');
-
-        }catch(\Exception $e){
-            $e->getMessage();
-        }
-    }
-
-    //
-    // KAPROG
-    //
-
-
-    private function Kaprog($id)
+    private function getPenggunaKaprog($id)
     {
         return collect(DB::table('kaprog')
         ->join('pengguna', 'kaprog.id_pengguna', '=', 'pengguna.id_pengguna')
         ->select('kaprog.*', 'pengguna.*')
-        ->where('nip', $id)
+        ->where('pengguna.id_pengguna', $id)
         ->get())->firstOrFail();
     }
 
-    public function editKaprog($id = null )
+    public function edit($id = null )
     {
-        $edit = $this->Kaprog($id);
-        return view('pengguna.editformKaprog', compact('edit'));
+        // dd($id);
+        $admin = DB::table('admin')->select('id_pengguna')->where('id_pengguna', $id)->count();
+        $manajemen = DB::table('manajemen')->select('id_pengguna')->where('id_pengguna', $id)->count();
+        $kaprog = DB::table('kaprog')->select('id_pengguna')->where('id_pengguna', $id)->count();
+        // dd($manajemen);
+        if ($manajemen == 1) {
+            $edit = $this->getPenggunaManajemen($id);
+        }elseif($admin == 1){
+            $edit = $this->getPenggunaAdmin($id);
+        }elseif($kaprog == 1){
+            $edit = $this->getPenggunaKaprog($id);
+        }
+        // $edit = $this->getPenggunaAdmin(1);
+
+        return view('pengguna.editform', compact('edit'));
     }
 
-    public function editsimpanKaprog(Request $request)
+    public function editsimpan(Request $request)
     {
         try {
-            $pengguna = [
-                'username'   => $request->input('username'),
-                'email' => $request->input('email'),
-            ];
-            $kaprog = [
-                'nama'   => $request->input('nama'),
-                'kontak' => $request->input('kontak'),
-            ];
             // dd($request->all());
+            $updateUser = DB::update("CALL update_user(:kode, :username, :email, :nama, :kontak)", [
+                'kode' => $request->input('kode'),
+                'username' => $request->input('username'),
+                'email' => $request->input('email'),
+                'nama' => $request->input('nama'),
+                'kontak' => $request->input('kontak'),
+            ]);
 
-            DB::table('pengguna')
-                        ->where('id_pengguna', '=', $request->input('id_pengguna'))
-                        ->update($pengguna);
-            DB::table('kaprog')
-                        ->where('nip', '=', $request->input('nip'))
-                        ->update($kaprog);
-
+        if ($updateUser)
             return redirect('pengguna');
-
-
+        else
+            return "input data gagal";
         } catch (\Exception $e) {
-            return $e->getMessage();
-            dd("gagal");
+        return  $e->getMessage();
         }
     }
 
-    public function hapusKaprog($pengguna=null, $kaprog=null){
-        try{
+    public function hapus($id=null){
+        try {
+            // dd($id);
+            $deleteUser = DB::delete("CALL delete_user(:kode)", [
+                'kode' => $id
+            ]);
 
-             DB::table('pengguna')
-                            ->where('id_pengguna',$pengguna)
-                            ->delete();
-
-             DB::table('kaprog')
-                            ->where('nip',$kaprog)
-                            ->delete();
-
+        if ($deleteUser)
             return redirect('pengguna');
-
-        }catch(\Exception $e){
-            $e->getMessage();
+        else
+            return "input data gagal";
+        } catch (\Exception $e) {
+        return  $e->getMessage();
         }
     }
+
 }
