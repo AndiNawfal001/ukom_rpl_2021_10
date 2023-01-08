@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\KaprogController;
 use App\Http\Controllers\LevelUserController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LoggingController;
 use App\Http\Controllers\PemutihanController;
 use App\Http\Controllers\PengajuanBBController;
 use App\Http\Controllers\PenggunaController;

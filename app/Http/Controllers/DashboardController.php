@@ -20,8 +20,8 @@ class DashboardController extends Controller
         $latest_logging = DB::table('log')->orderByDesc('id_log')->paginate(5);
         $bb_outstanding = DB::table('pengajuan_bb')->where('status_pembelian', NULL)->paginate(5);
 
-        // $id_perbaikan_rusak = DB::select('SELECT kode_barang FROM perbaikan WHERE approve_perbaikan = "rusak"'
-        // dd($cek_pemutihan);
+        $kode_rusak = DB::select('SELECT asli, tgl_selesai_perbaikan, status_perbaikan FROM perbaikan_pemutihan WHERE kode_barang IS NULL');
+        // dd($kode_rusak);
         // dd($latest_detail_barang);
 
         return view('partials.dashboard', compact(
@@ -32,7 +32,8 @@ class DashboardController extends Controller
             'ruangan',
             'latest_detail_barang',
             'latest_logging',
-            'bb_outstanding'
+            'bb_outstanding',
+            'kode_rusak'
         ));
     }
 }

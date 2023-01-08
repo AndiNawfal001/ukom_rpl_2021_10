@@ -25,6 +25,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Gate::define('admin+manajemen', function(User $user) {
+            return (in_array($user->level_user->nama_level,['admin','manajemen']));
+            // return ($user->level_user->nama_level === 'admin');
+        });
         Gate::define('admin', function(User $user) {
             // return (in_array($user->level_user->nama_level,['admin','manajemen']));
             return ($user->level_user->nama_level === 'admin');
