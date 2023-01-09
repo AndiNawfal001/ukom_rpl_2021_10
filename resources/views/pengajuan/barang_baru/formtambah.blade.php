@@ -14,7 +14,7 @@
                 <label class="label">
                 <span class="label-text">Nama Barang</span>
                 </label>
-                <input type="text" name="kaprog" value="{{ $kode_baru }}" class="input input-bordered" required/>
+                <input type="text" name="submitter" value="{{ $submitter }}" class="input input-bordered" required/>
             </div>
             <div class="form-control">
                 <label class="label">

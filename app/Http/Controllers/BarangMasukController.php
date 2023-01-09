@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
-use Termwind\Components\Dd;
+// use Termwind\Components\Dd;
 
 class BarangMasukController extends Controller
 {
@@ -57,7 +57,7 @@ class BarangMasukController extends Controller
         $jml_masuk = Arr::get($array, '0');
         $jml_pengajuan = $tambah->jumlah;
         $max_input = $jml_pengajuan - $jml_masuk;
-        // dd($max_input);
+        // dd($tambah);
         // dd($jenisBarang);
         // dd($kode_baru);
         return view('barangMasuk.formtambah', compact('jenisBarang', 'supplier', 'tambah', 'kode_baru', 'max_input'));
@@ -89,4 +89,50 @@ class BarangMasukController extends Controller
         return  $e->getMessage();
         }
     }
+
+    // public function storeLangsung(Request $request)
+    // {
+    //     try {
+
+    //         $i = 1;
+
+    //     $tambahBarangMasuk = DB::table('barang_masuk')->insert([
+    //         'manajemen' => $request->input('manajemen'),
+    //         'nama_barang' => $request->input('nama_barang'),
+    //         'jml_masuk' => $request->input('jml_masuk'),
+    //         'tgl_masuk' => $request->input('tgl_masuk'),
+    //         'manajemen' => $request->input('manajemen')
+    //     ]);
+    //     $tambahBarang = DB::table('barang')->insert([
+    //         // 'id_jenis_brg' => $request->input('jenis'),
+    //         'nama_barang' => $request->input('nama_barang'),
+    //         'jml_barang' => $request->input('jml_masuk')
+    //     ]);
+
+    //     $a = DB::select('SELECT LPAD("a","a")');
+    //     dd($a);
+    //     while($i <= $request->input('jml_masuk')){
+
+
+    //         DB::table('detail_barang')->insert([
+    //             'manajemen' => $request->input('manajemen'),
+    //             'nama_barang' => $request->input('nama_barang'),
+    //             'jml_masuk' => $request->input('jml_masuk'),
+    //             'tgl_masuk' => $request->input('tgl_masuk'),
+    //             'manajemen' => $request->input('manajemen')
+    //         ]);
+
+    //         $i++;
+    //     }
+
+    //         // dd($tambahBarangMasuk);
+
+    //     if ($tambahBarangMasuk)
+    //         return redirect('barangMasuk');
+    //     else
+    //         return "input data gagal";
+    //     } catch (\Exception $e) {
+    //     return  $e->getMessage();
+    //     }
+    // }
 }

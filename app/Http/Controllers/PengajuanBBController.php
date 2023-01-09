@@ -34,16 +34,17 @@ class PengajuanBBController extends Controller
     }
 
     public function formTambah(){
-        $kaprog = DB::table('pengguna_kaprog')
-        ->select('nama')
-        ->where('username',Auth::user()->username)
-        ->get();
-        $array = Arr::pluck($kaprog, 'nama');
-        $kode_baru = Arr::get($array, '0');
-
+        // $kaprog = DB::table('pengguna_kaprog')
+        // ->select('nama')
+        // ->where('username',Auth::user()->username)
+        // ->get();
+        // $array = Arr::pluck($kaprog, 'nama');
+        // $kode_baru = Arr::get($array, '0');
+        $submitter = Auth::user()->username;
+        // dd($submitter);
         $manajemen = $this->getManajemen();
         $kaprog = $this->getKaprog();
-        return view('pengajuan.barang_baru.formtambah', compact('manajemen', 'kaprog', 'kode_baru'));
+        return view('pengajuan.barang_baru.formtambah', compact('manajemen', 'kaprog', 'submitter'));
     }
 
     private function getPengajuanBb($id)
@@ -54,10 +55,10 @@ class PengajuanBBController extends Controller
     public function store(Request $request)
     {
         try {
-
-        $tambah_pengajuan_bb = DB::insert("CALL tambah_pengajuan_bb(:manajemen, :kaprog, :nama_barang, :spesifikasi, :harga_satuan, :total_harga, :jumlah, :ruangan)", [
-            'manajemen' => $request->input('manajemen'),
-            'kaprog' => $request->input('kaprog'),
+            // dd($request->all());
+        $tambah_pengajuan_bb = DB::insert("CALL tambah_pengajuan_bb(:approver, :submitter, :nama_barang, :spesifikasi, :harga_satuan, :total_harga, :jumlah, :ruangan)", [
+            'approver' => $request->input('approver'),
+            'submitter' => $request->input('submitter'),
             'nama_barang' => $request->input('nama_barang'),
             'spesifikasi' => $request->input('spesifikasi'),
             'harga_satuan' => $request->input('harga_satuan'),
@@ -136,24 +137,32 @@ class PengajuanBBController extends Controller
     public function statusSetuju($id=null){
         try{
 
-            $manajemen = DB::table('pengguna_manajemen')
-                ->select('nama')
-                ->where('username',Auth::user()->username)
-                ->get();
-                $array = Arr::pluck($manajemen, 'nama');
-                $kode_lama = Arr::get($array, '0');
+            // $manajemen = DB::table('pengguna_manajemen')
+            //     ->select('nama')
+            //     ->where('username',Auth::user()->username)
+            //     ->get();
+            //     $array = Arr::pluck($manajemen, 'nama');
+            //     $kode_lama = Arr::get($array, '0');
 
-            $x = DB::table('manajemen')
-                ->select('nip')
-                ->where('nama', $kode_lama)
-                ->get();
-                $array = Arr::pluck($x, 'nip');
-                $kode_baru = Arr::get($array, '0');
+            // $x = DB::table('manajemen')
+            //     ->select('nip')
+            //     ->where('nama', $kode_lama)
+            //     ->get();
+            //     $array = Arr::pluck($x, 'nip');
+            //     $kode_baru = Arr::get($array, '0');
 
             // dd($kode_baru);
 
+            $id_pengguna = DB::table('pengguna')
+                ->select('id_pengguna')
+                ->where('username',Auth::user()->username)
+                ->get();
+                $array = Arr::pluck($id_pengguna, 'id_pengguna');
+                $approver = Arr::get($array, '0');
+            // dd($id);
+
             $status = [
-                'manajemen'=>$kode_baru,
+                'approver'=> $approver,
                 'status_approval' => ('setuju'),
                 'tgl_approve' => NOW()
             ];
@@ -170,24 +179,24 @@ class PengajuanBBController extends Controller
     public function statusTidakSetuju($id=null){
         try{
 
-            $manajemen = DB::table('pengguna_manajemen')
-                ->select('nama')
-                ->where('username',Auth::user()->username)
-                ->get();
-                $array = Arr::pluck($manajemen, 'nama');
-                $kode_lama = Arr::get($array, '0');
+            // $manajemen = DB::table('pengguna_manajemen')
+            //     ->select('nama')
+            //     ->where('username',Auth::user()->username)
+            //     ->get();
+            //     $array = Arr::pluck($manajemen, 'nama');
+            //     $kode_lama = Arr::get($array, '0');
 
-            $x = DB::table('manajemen')
-                ->select('nip')
-                ->where('nama', $kode_lama)
-                ->get();
-                $array = Arr::pluck($x, 'nip');
-                $kode_baru = Arr::get($array, '0');
+            // $x = DB::table('manajemen')
+            //     ->select('nip')
+            //     ->where('nama', $kode_lama)
+            //     ->get();
+            //     $array = Arr::pluck($x, 'nip');
+            //     $kode_baru = Arr::get($array, '0');
 
             // dd($kode_baru);
 
             $status = [
-                'manajemen'=>$kode_baru,
+                'approver'=>Auth::user()->username,
                 'status_approval' => ('tidak')
             ];
             $hapus = DB::table('pengajuan_bb')

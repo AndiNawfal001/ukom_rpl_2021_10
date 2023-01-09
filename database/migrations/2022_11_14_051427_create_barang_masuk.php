@@ -19,7 +19,7 @@ return new class extends Migration
             $table->collation = 'utf8mb4_general_ci';
             $table->integer('id_barang_masuk', true);
             // $table->integer('kode_barang');
-            $table->integer('id_pengajuan');
+            $table->integer('id_pengajuan')->nullable();
             $table->string('supplier');
             $table->char('manajemen', 18);
             $table->string('nama_barang');

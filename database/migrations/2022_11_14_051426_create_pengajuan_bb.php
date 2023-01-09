@@ -18,8 +18,8 @@ return new class extends Migration
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_general_ci';
             $table->integer('id_pengajuan_bb',true);
-            $table->char('manajemen', 18)->nullable();
-            $table->char('kaprog', 18);
+            $table->integer('approver')->nullable();
+            $table->integer('submitter');
             $table->char('nama_barang');
             $table->string('spesifikasi');
             $table->string('harga_satuan');
@@ -33,18 +33,34 @@ return new class extends Migration
 
 
             // Foreign key untuk manajemen
+            // $table
+            // ->foreign('manajemen')
+            // ->references('nip')
+            // ->on('manajemen')
+            // ->cascadeOnUpdate()
+            // ->cascadeOnDelete();
+
+            // Foreign key untuk kaprog
+            // $table
+            // ->foreign('kaprog')
+            // ->references('nip')
+            // ->on('kaprog')
+            // ->cascadeOnUpdate()
+            // ->cascadeOnDelete();
+
+            // Foreign key untuk approver
             $table
-            ->foreign('manajemen')
-            ->references('nip')
-            ->on('manajemen')
+            ->foreign('approver')
+            ->references('id_pengguna')
+            ->on('pengguna')
             ->cascadeOnUpdate()
             ->cascadeOnDelete();
 
-            // Foreign key untuk kaprog
+            // Foreign key untuk submitter
             $table
-            ->foreign('kaprog')
-            ->references('nip')
-            ->on('kaprog')
+            ->foreign('submitter')
+            ->references('id_pengguna')
+            ->on('pengguna')
             ->cascadeOnUpdate()
             ->cascadeOnDelete();
         });

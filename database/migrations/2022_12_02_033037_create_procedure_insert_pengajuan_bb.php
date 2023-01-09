@@ -18,8 +18,8 @@ return new class extends Migration
         DB::unprepared("DROP PROCEDURE IF EXISTS tambah_pengajuan_bb");
         DB::unprepared(
           "CREATE PROCEDURE tambah_pengajuan_bb(
-                manajemen VARCHAR(50),
-                kaprog VARCHAR(50),
+                approver VARCHAR(50),
+                submitter VARCHAR(50),
                 nama_barang VARCHAR(50),
                 spesifikasi TEXT,
                 harga_satuan VARCHAR(50),
@@ -29,16 +29,21 @@ return new class extends Migration
             )
             BEGIN
 
-            DECLARE nip_m CHAR(18);
-            DECLARE nip_k CHAR(18);
+            -- DECLARE nip_m CHAR(18);
+            -- DECLARE nip_k CHAR(18);
 
-            SELECT manajemen.nip INTO nip_m FROM manajemen WHERE manajemen.nama = manajemen;
-            SELECT kaprog.nip INTO nip_k FROM kaprog WHERE kaprog.nama = kaprog;
+            DECLARE approver_id VARCHAR(18);
+            DECLARE submitter_id VARCHAR(18);
+
+            -- SELECT manajemen.nip INTO nip_m FROM manajemen WHERE manajemen.nama = manajemen;
+            -- SELECT kaprog.nip INTO nip_k FROM kaprog WHERE kaprog.nama = kaprog;
+            SELECT pengguna.id_pengguna INTO submitter_id FROM pengguna WHERE pengguna.username = submitter;
+            SELECT pengguna.id_pengguna INTO approver_id FROM pengguna WHERE pengguna.username = approver;
 
             INSERT INTO pengajuan_bb
-            (manajemen, kaprog, nama_barang, spesifikasi, harga_satuan, total_harga, jumlah, tgl, ruangan)
+            (approver, submitter, nama_barang, spesifikasi, harga_satuan, total_harga, jumlah, tgl, ruangan)
             VALUES(
-                nip_m, nip_k, nama_barang, spesifikasi, harga_satuan, total_harga, jumlah, NOW(), ruangan
+                approver_id, submitter_id, nama_barang, spesifikasi, harga_satuan, total_harga, jumlah, NOW(), ruangan
             );
 
           END;"
