@@ -136,23 +136,6 @@ class PengajuanBBController extends Controller
     // APPROVAL
     public function statusSetuju($id=null){
         try{
-
-            // $manajemen = DB::table('pengguna_manajemen')
-            //     ->select('nama')
-            //     ->where('username',Auth::user()->username)
-            //     ->get();
-            //     $array = Arr::pluck($manajemen, 'nama');
-            //     $kode_lama = Arr::get($array, '0');
-
-            // $x = DB::table('manajemen')
-            //     ->select('nip')
-            //     ->where('nama', $kode_lama)
-            //     ->get();
-            //     $array = Arr::pluck($x, 'nip');
-            //     $kode_baru = Arr::get($array, '0');
-
-            // dd($kode_baru);
-
             $id_pengguna = DB::table('pengguna')
                 ->select('id_pengguna')
                 ->where('username',Auth::user()->username)
@@ -178,26 +161,17 @@ class PengajuanBBController extends Controller
     }
     public function statusTidakSetuju($id=null){
         try{
-
-            // $manajemen = DB::table('pengguna_manajemen')
-            //     ->select('nama')
-            //     ->where('username',Auth::user()->username)
-            //     ->get();
-            //     $array = Arr::pluck($manajemen, 'nama');
-            //     $kode_lama = Arr::get($array, '0');
-
-            // $x = DB::table('manajemen')
-            //     ->select('nip')
-            //     ->where('nama', $kode_lama)
-            //     ->get();
-            //     $array = Arr::pluck($x, 'nip');
-            //     $kode_baru = Arr::get($array, '0');
-
-            // dd($kode_baru);
+            $id_pengguna = DB::table('pengguna')
+                ->select('id_pengguna')
+                ->where('username',Auth::user()->username)
+                ->get();
+                $array = Arr::pluck($id_pengguna, 'id_pengguna');
+            $approver = Arr::get($array, '0');
 
             $status = [
-                'approver'=>Auth::user()->username,
-                'status_approval' => ('tidak')
+                'approver'=>$approver,
+                'status_approval' => ('tidak'),
+                'tgl_approve' => NOW()
             ];
             $hapus = DB::table('pengajuan_bb')
                             ->where('id_pengajuan_bb',$id)

@@ -19,8 +19,8 @@ return new class extends Migration
             $table->collation = 'utf8mb4_general_ci';
             $table->char('id_perbaikan',6)->primary();
             $table->string('kode_barang');
-            $table->char('manajemen', 18)->nullable();
-            $table->char('kaprog', 18);
+            $table->integer('approver')->nullable();
+            $table->integer('submitter');
             $table->string('ruangan');
             $table->text('keluhan');
             $table->date('tgl_perbaikan');
@@ -40,19 +40,36 @@ return new class extends Migration
             ->foreign('kode_barang')
             ->references('kode_barang')
             ->on('detail_barang');
-            // Foreign key untuk manajemen
+
+            // // Foreign key untuk manajemen
+            // $table
+            // ->foreign('manajemen')
+            // ->references('nip')
+            // ->on('manajemen')
+            // ->cascadeOnUpdate()
+            // ->cascadeOnDelete();
+
+            // // Foreign key untuk kaprog
+            // $table
+            // ->foreign('kaprog')
+            // ->references('nip')
+            // ->on('kaprog')
+            // ->cascadeOnUpdate()
+            // ->cascadeOnDelete();
+
+            // Foreign key untuk approver
             $table
-            ->foreign('manajemen')
-            ->references('nip')
-            ->on('manajemen')
+            ->foreign('approver')
+            ->references('id_pengguna')
+            ->on('pengguna')
             ->cascadeOnUpdate()
             ->cascadeOnDelete();
 
-            // Foreign key untuk kaprog
+            // Foreign key untuk submitter
             $table
-            ->foreign('kaprog')
-            ->references('nip')
-            ->on('kaprog')
+            ->foreign('submitter')
+            ->references('id_pengguna')
+            ->on('pengguna')
             ->cascadeOnUpdate()
             ->cascadeOnDelete();
 

@@ -56,8 +56,9 @@ class PerbaikanController extends Controller
         $array = Arr::pluck($kaprog, 'nama');
         $kode_baru = Arr::get($array, '0');
         // dd($kode_baru);
+        $submitter = Auth::user()->username;
         $perbaikan = $this->inputDataPerbaikan($id);
-        return view('pengajuan.perbaikan.perbaikan', compact('perbaikan', 'kode_baru'));
+        return view('pengajuan.perbaikan.perbaikan', compact('perbaikan', 'submitter'));
     }
 
     public function simpanperbaikan(Request $request)
@@ -70,18 +71,18 @@ class PerbaikanController extends Controller
                 $array = Arr::pluck($x, 'nip');
                 $kode_baru = Arr::get($array, '0');
             // dd($kode_baru);
-
+                // dd($request->all());
             $dariFunction = DB::select('SELECT newIdPerbaikan() AS id_perbaikan');
             // dd($dariFunction);
             $array = Arr::pluck($dariFunction, 'id_perbaikan');
             $id_perbaikan = Arr::get($array, '0');
             // dd($id_perbaikan);
 
-            $tambah_pengajuan_pb = DB::insert("CALL tambah_perbaikan(:id_perbaikan, :kode_barang, :manajemen, :kaprog, :ruangan, :keluhan)", [
+            $tambah_pengajuan_pb = DB::insert("CALL tambah_perbaikan(:id_perbaikan, :kode_barang, :approver, :submitter, :ruangan, :keluhan)", [
                 'id_perbaikan' => $id_perbaikan,
                 'kode_barang' => $request->input('kode_barang'),
-                'manajemen' => $request->input('manajemen'),
-                'kaprog' => $kode_baru,
+                'approver' => $request->input('approver'),
+                'submitter' => $request->input('submitter'),
                 'ruangan' => $request->input('ruangan'),
                 'keluhan' => $request->input('keluhan'),
 
@@ -188,22 +189,15 @@ class PerbaikanController extends Controller
     // APPROVAL PENGAJUAN
     public function statusSetuju($id=null){
         try{
-            $manajemen = DB::table('pengguna_manajemen')
-                ->select('nama')
-                ->where('username',Auth::user()->username)
-                ->get();
-                $array = Arr::pluck($manajemen, 'nama');
-                $kode_lama = Arr::get($array, '0');
+            $id_pengguna = DB::table('pengguna')
+            ->select('id_pengguna')
+            ->where('username',Auth::user()->username)
+            ->get();
+            $array = Arr::pluck($id_pengguna, 'id_pengguna');
+            $approver = Arr::get($array, '0');
 
-            $x = DB::table('manajemen')
-                ->select('nip')
-                ->where('nama', $kode_lama)
-                ->get();
-                $array = Arr::pluck($x, 'nip');
-                $kode_baru = Arr::get($array, '0');
-            // dd($kode_baru);
             $status = [
-                'manajemen' =>  $kode_baru,
+                'approver' => $approver,
                 'approve_perbaikan' => ('sudah diperbaiki'),
                 'tgl_approve' => NOW()
             ];
@@ -221,23 +215,15 @@ class PerbaikanController extends Controller
 
     public function statusTidakSetuju($id=null, $kode=null){
         try{
-
-            $manajemen = DB::table('pengguna_manajemen')
-            ->select('nama')
+            $id_pengguna = DB::table('pengguna')
+            ->select('id_pengguna')
             ->where('username',Auth::user()->username)
             ->get();
-            $array = Arr::pluck($manajemen, 'nama');
-            $kode_lama = Arr::get($array, '0');
-
-            $x = DB::table('manajemen')
-                ->select('nip')
-                ->where('nama', $kode_lama)
-                ->get();
-                $array = Arr::pluck($x, 'nip');
-                $kode_baru = Arr::get($array, '0');
+            $array = Arr::pluck($id_pengguna, 'id_pengguna');
+            $approver = Arr::get($array, '0');
 
             $approve = [
-                'manajemen' => $kode_baru,
+                'approver' => $approver,
                 'approve_perbaikan' => ('rusak'),
                 'tgl_approve' => NOW()
             ];

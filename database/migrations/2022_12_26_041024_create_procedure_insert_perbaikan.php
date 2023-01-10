@@ -20,16 +20,22 @@ return new class extends Migration
           "CREATE PROCEDURE tambah_perbaikan(
                 id_perbaikan CHAR(6),
                 kode_barang VARCHAR(30),
-                manajemen VARCHAR(255),
-                kaprog VARCHAR(255),
+                approver VARCHAR(50),
+                submitter VARCHAR(50),
                 ruangan VARCHAR(255),
                 keluhan TEXT
             )
             BEGIN
+            DECLARE approver_id VARCHAR(18);
+            DECLARE submitter_id VARCHAR(18);
+
+            SELECT pengguna.id_pengguna INTO submitter_id FROM pengguna WHERE pengguna.username = submitter;
+            SELECT pengguna.id_pengguna INTO approver_id FROM pengguna WHERE pengguna.username = approver;
+
             INSERT INTO perbaikan
-            (id_perbaikan, kode_barang, manajemen, kaprog, ruangan, tgl_perbaikan, keluhan)
+            (id_perbaikan, kode_barang, approver, submitter, ruangan, tgl_perbaikan, keluhan)
             VALUES(
-                id_perbaikan, kode_barang, manajemen, kaprog, ruangan, NOW(), keluhan
+                id_perbaikan, kode_barang, approver_id, submitter_id, ruangan, NOW(), keluhan
             );
 
           END;"

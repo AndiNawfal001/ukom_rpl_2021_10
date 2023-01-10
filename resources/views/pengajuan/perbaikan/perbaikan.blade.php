@@ -19,15 +19,17 @@
         </label>
         <input type="text" name="kode_barang" class="input input-bordered "
         value="{{ old('nama', $perbaikan->kode_barang) }}"/>
+
+        <input type="text" name="submitter" value="{{ $submitter }}" class="input input-bordered" required/>
     </div>
 
 
-    <div class="form-control hidden">
+    {{-- <div class="form-control hidden">
         <label class="label">
             <span class="label-text">Dari Ruangan..</span>
         </label>
         <input type="text" name="kaprog" value="{{ $kode_baru }}" class="input input-bordered" required/>
-    </div>
+    </div> --}}
     <div class="form-control">
         <label class="label">
             <span class="label-text">Dari Ruangan..</span>
