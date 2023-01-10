@@ -66,7 +66,7 @@ class BarangMasukController extends Controller
     public function store(Request $request)
     {
         try {
-
+            // dd($request->all());
         $tambahBarangMasuk = DB::insert("CALL tambah_barangmasuk( :nama_barang, :jml_barang, :spesifikasi, :kondisi_barang, :supplier, :nama_manajemen, :jenis_barang, :foto_barang)", [
 
             'nama_barang' => $request->input('nama_barang'),

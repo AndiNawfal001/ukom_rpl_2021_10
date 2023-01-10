@@ -14,7 +14,7 @@
                     <span class="label-text">Nama Barang</span>
                     </label>
                     <input type="text" name="nama_barang" class="input input-bordered"
-                    value="{{ $tambah->nama_barang }}" disabled required/>
+                    value="{{ $tambah->nama_barang }}" required/>
                 </div>
                 <div class="form-control">
                     <label class="label">
@@ -26,7 +26,7 @@
                     <label class="label">
                     <span class="label-text">Spesifikasi</span>
                     </label>
-                    <textarea name="spesifikasi" cols="20" rows="5" class="textarea textarea-bordered" disabled required>{{ $tambah->spesifikasi }}</textarea>
+                    <textarea name="spesifikasi" cols="20" rows="5" class="textarea textarea-bordered" required>{{ $tambah->spesifikasi }}</textarea>
                 </div>
             </div>
 

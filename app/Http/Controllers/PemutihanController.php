@@ -14,7 +14,7 @@ class PemutihanController extends Controller
         // $pemutihanKaprog = DB::table('perbaikan')->where('approve_perbaikan', '=', 'rusak')->count();
         // dd($pemutihanKaprog);
         $data = DB::select('SELECT * FROM pemutihan');
-        return view('pemutihan.index', compact('data'));
+        return view('pengajuan.pemutihan.index', compact('data'));
     }
 
     public function pilihbarangPemutihanLangsung(){
@@ -24,13 +24,13 @@ class PemutihanController extends Controller
         ->where('kondisi_barang', 'baik')
         ->where('status', 'aktif')
         ->paginate(10);
-        return view('pemutihan.pemutihanLangsung.pilihbarang', compact('data'));
+        return view('pengajuan.pemutihan.pemutihanLangsung.pilihbarang', compact('data'));
     }
 
     public function pilihbarang()
     {
         $data = DB::select('SELECT * FROM perbaikan WHERE approve_perbaikan = "rusak"');
-        return view('pemutihan.pilihbarang', compact('data'));
+        return view('pengajuan.pemutihan.pilihbarang', compact('data'));
     }
 
     private function inputDataPemutihan($id)
@@ -50,7 +50,7 @@ class PemutihanController extends Controller
     public function detail($id = null)
     {
         $detail = $this->getPemutihan($id);
-        return view('pemutihan.detail', compact('detail'));
+        return view('pengajuan.pemutihan.detail', compact('detail'));
     }
 
     public function pemutihanLangsung($id = null)
@@ -63,7 +63,7 @@ class PemutihanController extends Controller
         $kode_baru = Arr::get($array, '0');
         // dd($kode_baru);
         $pemutihanLangsung = $this->inputDataPemutihanLangsung($id);
-        return view('pemutihan.pemutihanLangsung.tambah', compact('pemutihanLangsung', 'kode_baru'));
+        return view('pengajuan.pemutihan.pemutihanLangsung.tambah', compact('pemutihanLangsung', 'kode_baru'));
     }
 
     public function simpanpemutihanLangsung(Request $request)
@@ -106,7 +106,7 @@ class PemutihanController extends Controller
         $kode_baru = Arr::get($array, '0');
         // dd($kode_baru);
         $pemutihan = $this->inputDataPemutihan($id);
-        return view('pemutihan.tambah', compact('pemutihan', 'kode_baru'));
+        return view('pengajuan.pemutihan.tambah', compact('pemutihan', 'kode_baru'));
     }
 
 
