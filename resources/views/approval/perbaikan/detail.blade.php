@@ -55,6 +55,13 @@
                             {{ $detail->status_perbaikan }}
                         </span>
                     </div>
+                    @if($detail->approve_perbaikan == "pending")
+                        <div class="py-5 flex flex-reverse gap-3">
+                            <a href="/approval/PB/setuju/{{$detail->id_perbaikan}}"><button class="btn btn-sm btn-outline btn-success">Sudah Diperbaiki</button></a>
+                            <a href="/approval/PB/tidaksetuju/{{$detail->id_perbaikan}}/{{ $detail->kode_barang }}"><button class="btn btn-sm btn-outline btn-error">Rusak</button></a>
+                        </div>
+                    @endif
+
             </div>
         </div>
     </div>

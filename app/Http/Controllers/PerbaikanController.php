@@ -49,12 +49,12 @@ class PerbaikanController extends Controller
 
     public function perbaikan($id = null)
     {
-        $kaprog = DB::table('pengguna_kaprog')
-        ->select('nama')
-        ->where('username',Auth::user()->username)
-        ->get();
-        $array = Arr::pluck($kaprog, 'nama');
-        $kode_baru = Arr::get($array, '0');
+        // $kaprog = DB::table('pengguna_kaprog')
+        // ->select('nama')
+        // ->where('username',Auth::user()->username)
+        // ->get();
+        // $array = Arr::pluck($kaprog, 'nama');
+        // $kode_baru = Arr::get($array, '0');
         // dd($kode_baru);
         $submitter = Auth::user()->username;
         $perbaikan = $this->inputDataPerbaikan($id);
@@ -64,12 +64,12 @@ class PerbaikanController extends Controller
     public function simpanperbaikan(Request $request)
     {
         try {
-            $x = DB::table('kaprog')
-                ->select('nip')
-                ->where('nama', $request->input('kaprog'))
-                ->get();
-                $array = Arr::pluck($x, 'nip');
-                $kode_baru = Arr::get($array, '0');
+            // $x = DB::table('kaprog')
+            //     ->select('nip')
+            //     ->where('nama', $request->input('kaprog'))
+            //     ->get();
+            //     $array = Arr::pluck($x, 'nip');
+            //     $kode_baru = Arr::get($array, '0');
             // dd($kode_baru);
                 // dd($request->all());
             $dariFunction = DB::select('SELECT newIdPerbaikan() AS id_perbaikan');
@@ -88,6 +88,7 @@ class PerbaikanController extends Controller
 
                 // dd($request->all())
             ]);
+            // dd($request->all());
 
             if ($tambah_pengajuan_pb)
                 return redirect('pengajuan/PB');
@@ -106,35 +107,35 @@ class PerbaikanController extends Controller
         $detail = $this->getPengajuanPb($id);
         return view('pengajuan.perbaikan.detail', compact('detail'));
     }
-    public function edit($id = null)
-    {
+    // public function edit($id = null)
+    // {
 
-        $edit = $this->getPengajuanPb($id);
+    //     $edit = $this->getPengajuanPb($id);
 
-        return view('pengajuan.perbaikan.editform', compact('edit'));
-    }
-    public function editsimpan(Request $request)
-    {
-        try {
-            $data = [
-                'manajemen' => $request->input('manajemen'),
-                'kaprog' => $request->input('kaprog'),
-                'nama_barang' => $request->input('nama_barang'),
-                'ruangan' => $request->input('ruangan'),
+    //     return view('pengajuan.perbaikan.editform', compact('edit'));
+    // }
+    // public function editsimpan(Request $request)
+    // {
+    //     try {
+    //         $data = [
+    //             'manajemen' => $request->input('manajemen'),
+    //             'kaprog' => $request->input('kaprog'),
+    //             'nama_barang' => $request->input('nama_barang'),
+    //             'ruangan' => $request->input('ruangan'),
 
-            ];
-            $upd = DB::table('pengajuan_pb')
-                        ->where('id_perbaikan', '=', $request->input('id_perbaikan'))
-                        ->update($data);
-            if($upd){
-                return redirect('pengajuan/PB');
-            }
-            // dd("berhasil", $upd);
-        } catch (\Exception $e) {
-            return $e->getMessage();
-            dd("gagal");
-        }
-    }
+    //         ];
+    //         $upd = DB::table('pengajuan_pb')
+    //                     ->where('id_perbaikan', '=', $request->input('id_perbaikan'))
+    //                     ->update($data);
+    //         if($upd){
+    //             return redirect('pengajuan/PB');
+    //         }
+    //         // dd("berhasil", $upd);
+    //     } catch (\Exception $e) {
+    //         return $e->getMessage();
+    //         dd("gagal");
+    //     }
+    // }
 
     public function hapus($id=null){
         try{
@@ -183,70 +184,6 @@ class PerbaikanController extends Controller
         } catch (\Exception $e) {
             return $e->getMessage();
             dd("gagal");
-        }
-    }
-
-    // APPROVAL PENGAJUAN
-    public function statusSetuju($id=null){
-        try{
-            $id_pengguna = DB::table('pengguna')
-            ->select('id_pengguna')
-            ->where('username',Auth::user()->username)
-            ->get();
-            $array = Arr::pluck($id_pengguna, 'id_pengguna');
-            $approver = Arr::get($array, '0');
-
-            $status = [
-                'approver' => $approver,
-                'approve_perbaikan' => ('sudah diperbaiki'),
-                'tgl_approve' => NOW()
-            ];
-            $hapus = DB::table('perbaikan')
-                            ->where('id_perbaikan',$id)
-                            ->update($status);
-            // dd('berhasil');
-            if($hapus){
-                return redirect('pengajuan/PB');
-            }
-        }catch(\Exception $e){
-            $e->getMessage();
-        }
-    }
-
-    public function statusTidakSetuju($id=null, $kode=null){
-        try{
-            $id_pengguna = DB::table('pengguna')
-            ->select('id_pengguna')
-            ->where('username',Auth::user()->username)
-            ->get();
-            $array = Arr::pluck($id_pengguna, 'id_pengguna');
-            $approver = Arr::get($array, '0');
-
-            $approve = [
-                'approver' => $approver,
-                'approve_perbaikan' => ('rusak'),
-                'tgl_approve' => NOW()
-            ];
-
-            $kondisi = [
-                'kondisi_barang' => ('rusak'),
-            ];
-
-            $perbaikan = DB::table('perbaikan')
-                            ->where('id_perbaikan',$id)
-                            ->update($approve);
-
-            $detail_barang = DB::table('detail_barang')
-                            ->where('kode_barang',$kode)
-                            ->update($kondisi);
-
-            if($perbaikan AND $detail_barang){
-                return redirect('pengajuan/PB');
-            // dd("berhasil");
-
-            }
-        }catch(\Exception $e){
-            $e->getMessage();
         }
     }
 }

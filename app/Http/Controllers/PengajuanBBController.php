@@ -133,54 +133,5 @@ class PengajuanBBController extends Controller
 
 
 
-    // APPROVAL
-    public function statusSetuju($id=null){
-        try{
-            $id_pengguna = DB::table('pengguna')
-                ->select('id_pengguna')
-                ->where('username',Auth::user()->username)
-                ->get();
-                $array = Arr::pluck($id_pengguna, 'id_pengguna');
-                $approver = Arr::get($array, '0');
-            // dd($id);
 
-            $status = [
-                'approver'=> $approver,
-                'status_approval' => ('setuju'),
-                'tgl_approve' => NOW()
-            ];
-            $hapus = DB::table('pengajuan_bb')
-                            ->where('id_pengajuan_bb',$id)
-                            ->update($status);
-            if($hapus){
-                return redirect('pengajuan/BB');
-            }
-        }catch(\Exception $e){
-            $e->getMessage();
-        }
-    }
-    public function statusTidakSetuju($id=null){
-        try{
-            $id_pengguna = DB::table('pengguna')
-                ->select('id_pengguna')
-                ->where('username',Auth::user()->username)
-                ->get();
-                $array = Arr::pluck($id_pengguna, 'id_pengguna');
-            $approver = Arr::get($array, '0');
-
-            $status = [
-                'approver'=>$approver,
-                'status_approval' => ('tidak'),
-                'tgl_approve' => NOW()
-            ];
-            $hapus = DB::table('pengajuan_bb')
-                            ->where('id_pengajuan_bb',$id)
-                            ->update($status);
-            if($hapus){
-                return redirect('pengajuan/BB');
-            }
-        }catch(\Exception $e){
-            $e->getMessage();
-        }
-    }
 }

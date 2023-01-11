@@ -6,33 +6,6 @@
         <h1 class="text-xl pb-3 font-semibold leading-loose">Daftar Barang untuk pemutihan</h1>
 
         <div class="">
-                <ul class="grid gap-6 w-full md:grid-cols-2 mb-4">
-                    <li>
-                        <a href="/pemutihanLangsung/pilihBarang">
-                            <label for="hosting-small" class="inline-flex justify-between items-center p-5 w-full bg-base-100 rounded-lg border cursor-pointer hover:bg-base-300">
-                                <div class="block">
-                                    <div class="w-full text-lg font-semibold">Pemutihan langsung</div>
-                                    <div class="w-full">seperti barang tua</div>
-                                </div>
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            </label>
-                        </a>
-                    </li>
-                    <li>
-
-                        <a href="/pemutihan/pilihbarang">
-                            <label for="hosting-small" class="inline-flex justify-between items-center p-5 w-full bg-base-100 rounded-lg border  cursor-pointer hover:bg-base-300
-                            ">
-                                <div class="block">
-                                    <div class="w-full text-lg font-semibold">Pemutihan dari perbaikan</div>
-                                    <div class="w-full">lengkapi data untuk pemutihan</div>
-                                </div>
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            </label>
-                        </a>
-                    </li>
-                </ul>
-
             <div class="">
                 <div class="overflow-x-auto overflow-y-auto">
                     <table class="table w-full ">

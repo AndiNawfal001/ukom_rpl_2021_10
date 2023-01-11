@@ -34,6 +34,14 @@
                     <span class="p-3 basis-1/2 md:basis-1/4 text-right bg-base-200 font-semibold">Untuk Ruangan</span>
                     <span class="p-3 basis-1/2 md:basis-3/4 bg-base-100">{{ $detail->ruangan }}</span>
                 </div>
+                @if($detail->status_approval == "pending")
+                    <div class="py-5 flex flex-row-reverse gap-3">
+                        <a href="/approval/BB/tidaksetuju/{{$detail->id_pengajuan_bb}}"><button class="btn btn-sm btn-outline btn-error">Tidak Setuju</button></a>
+                        <a href="/approval/BB/setuju/{{$detail->id_pengajuan_bb}}"><button class="btn btn-sm btn-outline btn-success">Setuju</button></a>
+                    </div>
+                @else
+
+                @endif
             </div>
         </div>
     </div>

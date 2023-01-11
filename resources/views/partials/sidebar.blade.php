@@ -24,7 +24,7 @@
                 </li>
             @endcan
 
-            @can('manajemen', 'admin')
+            @can('admin+manajemen')
                 <li class="transition hover:bg-base-200 rounded-lg group">
                     <a href="/barangMasuk" class="flex items-center p-2">
                         <svg class="w-6 h-6 text-gray-500 group-hover:text-base-content" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -36,6 +36,7 @@
                 </li>
             @endcan
 
+            @can('admin+manajemen')
             <li class="transition group">
                 <button type="button" class="flex items-center p-2 w-full text-base font-normal rounded-lg hover:bg-base-200 dropdown-btn" >
                     <svg class="w-6 h-6 text-gray-500 group-hover:text-base-content" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -46,14 +47,19 @@
                 </button>
                 <ul class="hidden py-2 space-y-2 dropdown-container">
                     <li>
-                        <a href="/pengajuan/BB" class="flex items-center p-2 pl-11 w-full text-base font-normal rounded-lg transition duration-75 group hover:bg-base-200">Barang Baru</a>
+                        <a href="/approval/BB" class="flex items-center p-2 pl-11 w-full text-base font-normal rounded-lg transition duration-75 group hover:bg-base-200">Barang Baru</a>
                     </li>
                     <li>
-                        <a href="/pengajuan/PB" class="flex items-center p-2 pl-11 w-full text-base font-normal rounded-lg transition duration-75 group hover:bg-base-200">Perbaikan</a>
+                        <a href="/approval/PB" class="flex items-center p-2 pl-11 w-full text-base font-normal rounded-lg transition duration-75 group hover:bg-base-200">Perbaikan</a>
+                    </li>
+                    <li>
+                        <a href="/approval/pemutihan" class="flex items-center p-2 pl-11 w-full text-base font-normal rounded-lg transition duration-75 group hover:bg-base-200">Pemutihan</a>
                     </li>
 
                 </ul>
             </li>
+            @endcan
+
             <li class="transition group">
                 <button type="button" class="flex items-center p-2 w-full text-base font-normal rounded-lg hover:bg-base-200 dropdown-btn" >
                     <svg class="w-6 h-6 text-gray-500 group-hover:text-base-content" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">

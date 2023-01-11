@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\DashboardController;
@@ -87,6 +88,15 @@ Route::get('/pengguna/edit/{id}',[PenggunaController::class,'edit']);
 Route::post('/pengguna/edit/editsimpan',[ PenggunaController::class,'editsimpan']);
 Route::get('/pengguna/hapus/{id}',[PenggunaController::class,'hapus']);
 
+Route::get('/approval/BB',[ ApprovalController::class,'indexBarangBaru']);
+Route::get('/approval/BB/detail/{id}',[ApprovalController::class,'detailBarangBaru']);
+Route::get('/approval/BB/setuju/{id}',[ApprovalController::class,'statusSetujuBarangBaru']);
+Route::get('/approval/BB/tidaksetuju/{id}',[ApprovalController::class,'statusTidakSetujuBarangBaru']);
+
+Route::get('/approval/PB',[ ApprovalController::class,'indexPerbaikan']);
+Route::get('/approval/PB/detail/{id}',[ApprovalController::class,'detailPerbaikan']);
+Route::get('/approval/PB/setuju/{id}',[ApprovalController::class,'statusSetujuPerbaikan']);
+Route::get('/approval/PB/tidaksetuju/{id}/{kode}',[ApprovalController::class,'statusTidakSetujuPerbaikan']);
 
 Route::get('/pengajuan/BB',[ PengajuanBBController::class,'index']);
 Route::get('/pengajuan/BB/tambah',[ PengajuanBBController::class,'formTambah']);
@@ -95,8 +105,6 @@ Route::get('/pengajuan/BB/edit/{id}',[PengajuanBBController::class,'edit']);
 Route::post('/pengajuan/BB/edit/editsimpan',[ PengajuanBBController::class,'editsimpan']);
 Route::get('/pengajuan/BB/hapus/{id}',[PengajuanBBController::class,'hapus']);
 Route::get('/pengajuan/BB/detail/{id}',[PengajuanBBController::class,'detail']);
-Route::get('/BB/setuju/{id}',[PengajuanBBController::class,'statusSetuju']);
-Route::get('/BB/tidaksetuju/{id}',[PengajuanBBController::class,'statusTidakSetuju']);
 
 Route::get('/pengajuan/PB',[ PerbaikanController::class,'index']);
 Route::get('/pengajuan/PB/pilihBarang',[ PerbaikanController::class,'pilihBarang']);
