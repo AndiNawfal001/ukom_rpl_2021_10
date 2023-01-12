@@ -18,6 +18,13 @@
                     <span class="p-3 basis-1/2 md:basis-1/4 text-right bg-base-200 font-semibold">Keterangan Pemutihan</span>
                     <span class="p-3 basis-1/2 md:basis-3/4 bg-base-100">{{ $detail->ket_pemutihan }}</span>
                 </div
+                    @if($detail->approve_penonaktifan == "pending")
+                    <br>
+                        <div class="py-5 flex flex-reverse gap-3">
+                            <a href="/approval/pemutihan/setuju/{{$detail->id_pemutihan}}/{{ $detail->kode_barang }}"><button class="btn btn-sm btn-outline btn-success">Setuju</button></a>
+                            <a href="/approval/pemutihan/tidaksetuju/{{$detail->id_pemutihan}}"><button class="btn btn-sm btn-outline btn-error">Tidak Setuju</button></a>
+                        </div>
+                    @endif
             </div>
         </div>
     </div>

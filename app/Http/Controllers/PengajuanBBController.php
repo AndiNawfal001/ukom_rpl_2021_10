@@ -34,12 +34,6 @@ class PengajuanBBController extends Controller
     }
 
     public function formTambah(){
-        // $kaprog = DB::table('pengguna_kaprog')
-        // ->select('nama')
-        // ->where('username',Auth::user()->username)
-        // ->get();
-        // $array = Arr::pluck($kaprog, 'nama');
-        // $kode_baru = Arr::get($array, '0');
         $submitter = Auth::user()->username;
         // dd($submitter);
         $manajemen = $this->getManajemen();

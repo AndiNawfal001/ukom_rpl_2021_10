@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\BarangMasukController;
@@ -68,10 +67,11 @@ Route::get('/User/hapus/{id}',[UserController::class,'hapus']);
 
 Route::get('/User/kaprog', [KaprogController::class, 'index']);
 
-Route::group(['middleware' => ['auth','level:manajemen']], function (){
-    Route::get('/barangMasuk',[ BarangMasukController::class,'index']);
-    Route::get('/barangMasuk/tambah/{id}',[ BarangMasukController::class,'formTambah']);
-});
+// Route::group(['middleware' => ['auth','level:manajemen']], function (){
+
+// });
+Route::get('/barangMasuk',[ BarangMasukController::class,'index']);
+Route::get('/barangMasuk/tambah/{id}',[ BarangMasukController::class,'formTambah']);
 Route::post('/barangMasuk/tambah/simpan',[ BarangMasukController::class,'store']);
 
 Route::get('/supplier',[ SupplierController::class,'index']);
@@ -98,6 +98,11 @@ Route::get('/approval/PB/detail/{id}',[ApprovalController::class,'detailPerbaika
 Route::get('/approval/PB/setuju/{id}',[ApprovalController::class,'statusSetujuPerbaikan']);
 Route::get('/approval/PB/tidaksetuju/{id}/{kode}',[ApprovalController::class,'statusTidakSetujuPerbaikan']);
 
+Route::get('/approval/pemutihan',[ ApprovalController::class,'indexPemutihan']);
+Route::get('/approval/pemutihan/detail/{id}',[ApprovalController::class,'detailPemutihan']);
+Route::get('/approval/pemutihan/setuju/{id}/{kode}',[ApprovalController::class,'statusSetujuPemutihan']);
+Route::get('/approval/pemutihan/tidaksetuju/{id}',[ApprovalController::class,'statusTidakSetujuPemutihan']);
+
 Route::get('/pengajuan/BB',[ PengajuanBBController::class,'index']);
 Route::get('/pengajuan/BB/tambah',[ PengajuanBBController::class,'formTambah']);
 Route::post('/pengajuan/BB/simpan',[ PengajuanBBController::class,'store']);
@@ -116,8 +121,21 @@ Route::get('/pengajuan/PB/hapus/{id}',[PerbaikanController::class,'hapus']);
 Route::get('/PB/selesaiPerbaikan/{id}',[PerbaikanController::class,'selesaiPerbaikan']);
 Route::post('/PB/selesaiPerbaikan/simpanSelesaiPerbaikan',[ PerbaikanController::class,'simpanSelesaiPerbaikan']);
 Route::get('/pengajuan/PB/detail/{id}',[PerbaikanController::class,'detail']);
-Route::get('/PB/setuju/{id}',[PerbaikanController::class,'statusSetuju']);
-Route::get('/PB/tidaksetuju/{id}/{kode}',[PerbaikanController::class,'statusTidakSetuju']);
+// Route::get('/PB/setuju/{id}',[PerbaikanController::class,'statusSetuju']);
+// Route::get('/PB/tidaksetuju/{id}/{kode}',[PerbaikanController::class,'statusTidakSetuju']);
+
+
+Route::get('/pemutihan',[ PemutihanController::class,'index']);
+Route::get('/pemutihan/pilihbarang',[ PemutihanController::class,'pilihbarang']);
+Route::get('/pemutihan/pemutihan/{id}',[PemutihanController::class,'pemutihan']);
+Route::post('/pemutihan/pemutihan/simpanpemutihan',[PemutihanController::class,'simpanpemutihan']);
+Route::get('/pemutihan/detail/{id}',[PemutihanController::class,'detail']);
+// Route::get('/pemutihan/setuju/{id}/{kode}',[PemutihanController::class,'statusSetuju']);
+// Route::get('/pemutihan/tidaksetuju/{id}',[PemutihanController::class,'statusTidakSetuju']);
+
+Route::get('/pemutihanLangsung/pilihBarang',[ PemutihanController::class,'pilihbarangPemutihanLangsung']);
+Route::get('/pemutihan/pemutihanLangung/{id}',[PemutihanController::class,'pemutihanLangsung']);
+Route::post('/pemutihan/pemutihanLangsung/simpanpemutihanLangsung',[PemutihanController::class,'simpanpemutihanLangsung']);
 
 Route::get('/perawatan',[ PerawatanController::class,'index']);
 Route::get('/perawatan/pilihBarang',[ PerawatanController::class,'pilihbarangPerawatan']);
@@ -129,19 +147,6 @@ Route::post('/perawatan/edit/editsimpan',[ PerawatanController::class,'editsimpa
 Route::get('/perawatan/hapus/{id}',[PerawatanController::class,'hapus']);
 
 
-Route::get('/pemutihan',[ PemutihanController::class,'index']);
-Route::get('/pemutihan/pilihbarang',[ PemutihanController::class,'pilihbarang']);
-Route::get('/pemutihan/pemutihan/{id}',[PemutihanController::class,'pemutihan']);
-Route::post('/pemutihan/pemutihan/simpanpemutihan',[PemutihanController::class,'simpanpemutihan']);
-Route::get('/pemutihan/detail/{id}',[PemutihanController::class,'detail']);
-Route::get('/pemutihan/setuju/{id}/{kode}',[PemutihanController::class,'statusSetuju']);
-Route::get('/pemutihan/tidaksetuju/{id}',[PemutihanController::class,'statusTidakSetuju']);
-
-Route::get('/pemutihanLangsung/pilihBarang',[ PemutihanController::class,'pilihbarangPemutihanLangsung']);
-Route::get('/pemutihan/pemutihanLangung/{id}',[PemutihanController::class,'pemutihanLangsung']);
-Route::post('/pemutihan/pemutihanLangsung/simpanpemutihanLangsung',[PemutihanController::class,'simpanpemutihanLangsung']);
-
-
 Route::get('/ruangan',[ RuanganController::class,'index']);
 Route::get('/ruangan/tambah',[ RuanganController::class,'formTambah']);
 Route::post('/ruangan/simpan',[ RuanganController::class,'store']);
@@ -150,13 +155,4 @@ Route::post('/ruangan/edit/editsimpan',[ RuanganController::class,'editsimpan'])
 Route::get('/ruangan/hapus/{id}',[RuanganController::class,'hapus']);
 
 
-Route::get('/User/admin',[ AdminController::class,'index']);
-Route::get('/User/admin/tambah',[ AdminController::class,'formTambah']);
-Route::post('/User/admin/simpan',[ AdminController::class,'simpan']);
-
-Route::get('/User/admin/edit/{id}',[ AdminController::class,'getAdminPengguna']);
-Route::post('/User/admin/edit/update',[ SupplierController::class,'update']);
-
 Route::get('/log',[ LoggingController::class,'index']);
-
-

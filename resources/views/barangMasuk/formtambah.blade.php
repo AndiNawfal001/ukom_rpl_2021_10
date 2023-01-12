@@ -47,7 +47,7 @@
                     <label class="label">
                     <span class="label-text">Nama Manejemen</span>
                     </label>
-                    <input type="text" name="nama_manajemen" class="input input-bordered" value="{{ $kode_baru }}" required/>
+                    <input type="text" name="adder" class="input input-bordered" value="{{ $adder }}" required/>
                 </div>
 
                 <div class="form-control">

@@ -18,7 +18,6 @@ class PerbaikanController extends Controller
     }
 
     public function pilihBarang(){
-        // $data = DB::select('SELECT * FROM barang_masuk_perbaikan');
         $data = DB::table('barang_masuk_perbaikan')
         ->select('*')
         ->where('status', 'aktif')
@@ -26,22 +25,6 @@ class PerbaikanController extends Controller
         ->paginate(10);
         return view('pengajuan.perbaikan.pilihbarang', compact('data'));
     }
-
-    private function getManajemen(): Collection
-    {
-        return collect(DB::select('SELECT * FROM manajemen'));
-    }
-
-    private function getKaprog(): Collection
-    {
-        return collect(DB::select('SELECT * FROM kaprog'));
-    }
-
-    private function getBarang(): Collection
-    {
-        return collect(DB::select('SELECT * FROM barang'));
-    }
-
     private function inputDataPerbaikan($id)
     {
         return collect(DB::select('SELECT * FROM detail_barang WHERE kode_barang = ?', [$id]))->firstOrFail();
@@ -49,13 +32,6 @@ class PerbaikanController extends Controller
 
     public function perbaikan($id = null)
     {
-        // $kaprog = DB::table('pengguna_kaprog')
-        // ->select('nama')
-        // ->where('username',Auth::user()->username)
-        // ->get();
-        // $array = Arr::pluck($kaprog, 'nama');
-        // $kode_baru = Arr::get($array, '0');
-        // dd($kode_baru);
         $submitter = Auth::user()->username;
         $perbaikan = $this->inputDataPerbaikan($id);
         return view('pengajuan.perbaikan.perbaikan', compact('perbaikan', 'submitter'));
@@ -64,14 +40,6 @@ class PerbaikanController extends Controller
     public function simpanperbaikan(Request $request)
     {
         try {
-            // $x = DB::table('kaprog')
-            //     ->select('nip')
-            //     ->where('nama', $request->input('kaprog'))
-            //     ->get();
-            //     $array = Arr::pluck($x, 'nip');
-            //     $kode_baru = Arr::get($array, '0');
-            // dd($kode_baru);
-                // dd($request->all());
             $dariFunction = DB::select('SELECT newIdPerbaikan() AS id_perbaikan');
             // dd($dariFunction);
             $array = Arr::pluck($dariFunction, 'id_perbaikan');
@@ -107,35 +75,6 @@ class PerbaikanController extends Controller
         $detail = $this->getPengajuanPb($id);
         return view('pengajuan.perbaikan.detail', compact('detail'));
     }
-    // public function edit($id = null)
-    // {
-
-    //     $edit = $this->getPengajuanPb($id);
-
-    //     return view('pengajuan.perbaikan.editform', compact('edit'));
-    // }
-    // public function editsimpan(Request $request)
-    // {
-    //     try {
-    //         $data = [
-    //             'manajemen' => $request->input('manajemen'),
-    //             'kaprog' => $request->input('kaprog'),
-    //             'nama_barang' => $request->input('nama_barang'),
-    //             'ruangan' => $request->input('ruangan'),
-
-    //         ];
-    //         $upd = DB::table('pengajuan_pb')
-    //                     ->where('id_perbaikan', '=', $request->input('id_perbaikan'))
-    //                     ->update($data);
-    //         if($upd){
-    //             return redirect('pengajuan/PB');
-    //         }
-    //         // dd("berhasil", $upd);
-    //     } catch (\Exception $e) {
-    //         return $e->getMessage();
-    //         dd("gagal");
-    //     }
-    // }
 
     public function hapus($id=null){
         try{

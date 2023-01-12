@@ -40,13 +40,13 @@ class BarangMasukController extends Controller
     public function formTambah($id = null)
     {
         // dd($id);
-        $manajemen = DB::table('pengguna_manajemen')
-        ->select('nama')
-        ->where('username',Auth::user()->username)
-        ->get();
-        $array = Arr::pluck($manajemen, 'nama');
-        $kode_baru = Arr::get($array, '0');
-
+        // $manajemen = DB::table('pengguna_manajemen')
+        // ->select('nama')
+        // ->where('username',Auth::user()->username)
+        // ->get();
+        // $array = Arr::pluck($manajemen, 'nama');
+        // $kode_baru = Arr::get($array, '0');
+        $adder = Auth::user()->username;
         $tambah = $this->getPengajuanBb($id);
         $jenisBarang = $this->getJenisBarang();
         $supplier = $this->getSupplier();
@@ -60,21 +60,21 @@ class BarangMasukController extends Controller
         // dd($tambah);
         // dd($jenisBarang);
         // dd($kode_baru);
-        return view('barangMasuk.formtambah', compact('jenisBarang', 'supplier', 'tambah', 'kode_baru', 'max_input'));
+        return view('barangMasuk.formtambah', compact('jenisBarang', 'supplier', 'tambah', 'adder', 'max_input'));
     }
 
     public function store(Request $request)
     {
         try {
             // dd($request->all());
-        $tambahBarangMasuk = DB::insert("CALL tambah_barangmasuk( :nama_barang, :jml_barang, :spesifikasi, :kondisi_barang, :supplier, :nama_manajemen, :jenis_barang, :foto_barang)", [
+        $tambahBarangMasuk = DB::insert("CALL tambah_barangmasuk( :nama_barang, :jml_barang, :spesifikasi, :kondisi_barang, :supplier, :adder, :jenis_barang, :foto_barang)", [
 
             'nama_barang' => $request->input('nama_barang'),
             'jml_barang' => $request->input('jml_barang'),
             'spesifikasi' => $request->input('spesifikasi'),
             'kondisi_barang' => ('baik'),
             'supplier' => $request->input('supplier'),
-            'nama_manajemen' => $request->input('nama_manajemen'),
+            'adder' => $request->input('adder'),
             'jenis_barang' => $request->input('jenis_barang'),
             'foto_barang' => $request->input('foto_barang'),
             // dd($request->all())

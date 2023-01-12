@@ -18,14 +18,17 @@ return new class extends Migration
         DB::unprepared(
           "CREATE PROCEDURE tambah_pemutihan_langsung(
                 kode_barang VARCHAR(30),
-                kaprog VARCHAR(255),
+                submitter VARCHAR(255),
                 ket_pemutihan TEXT
             )
             BEGIN
+            DECLARE submitter_id VARCHAR(18);
+
+            SELECT pengguna.id_pengguna INTO submitter_id FROM pengguna WHERE pengguna.username = submitter;
             INSERT INTO pemutihan
-            (kode_barang, kaprog, tgl_pemutihan, ket_pemutihan)
+            (kode_barang, submitter, tgl_pemutihan, ket_pemutihan)
             VALUES(
-                kode_barang, kaprog, NOW(), ket_pemutihan
+                kode_barang, submitter_id, NOW(), ket_pemutihan
             );
 
           END;"

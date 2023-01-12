@@ -12,8 +12,8 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function index(){
-        $supplier = DB::table('supplier')->count();
-        return view('partials.sidebar', compact('supplier'));
-    }
+    // public function index(){
+    //     $supplier = DB::table('supplier')->count();
+    //     return view('partials.sidebar', compact('supplier'));
+    // }
 }

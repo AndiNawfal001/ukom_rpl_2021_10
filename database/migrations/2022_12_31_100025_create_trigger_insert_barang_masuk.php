@@ -23,14 +23,14 @@ return new class extends Migration
             FOR EACH ROW
             BEGIN
 
-            DECLARE manajemen VARCHAR(30);
+            DECLARE adder VARCHAR(50);
             DECLARE kode CHAR(7);
 
             SELECT newIdLog() INTO kode;
-            SELECT manajemen.nama INTO manajemen FROM manajemen WHERE manajemen.nip = new.manajemen;
+            SELECT pengguna.username INTO adder FROM pengguna WHERE pengguna.id_pengguna = new.adder;
 
-            INSERT INTO log (id_log, nama, aktifitas, tgl) VALUES (
-                kode, manajemen, 'tambah barang', NOW()
+            INSERT INTO log (id_log, username, aktifitas, tgl) VALUES (
+                kode, adder, 'tambah barang', NOW()
             );
 
             END;"

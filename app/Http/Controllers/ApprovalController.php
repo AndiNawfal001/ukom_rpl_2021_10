@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Auth;
 class ApprovalController extends Controller
 {
     //
+    // BARANG BARU
+    //
+
     public function indexBarangBaru(){
 
         // data pending manajemen
@@ -82,8 +85,9 @@ class ApprovalController extends Controller
     }
 
 
-
-
+    //
+    // PERBAIKAN
+    //
 
 
     public function indexPerbaikan(){
@@ -165,5 +169,88 @@ class ApprovalController extends Controller
         }
     }
 
+    //
+    // PEMUTIHAN
+    //
 
+    public function indexPemutihan(){
+        $data = DB::select('SELECT * FROM pemutihan');
+        return view('approval.pemutihan.index', compact('data'));
+    }
+
+    private function getPemutihan($id)
+    {
+        return collect(DB::select('SELECT * FROM pemutihan WHERE id_pemutihan = ?', [$id]))->firstOrFail();
+    }
+
+    public function detailPemutihan($id = null)
+    {
+        $detail = $this->getPemutihan($id);
+        return view('approval.pemutihan.detail', compact('detail'));
+    }
+
+    public function statusSetujuPemutihan($id=null, $kode=null){
+        try{
+            $id_pengguna = DB::table('pengguna')
+            ->select('id_pengguna')
+            ->where('username',Auth::user()->username)
+            ->get();
+            $array = Arr::pluck($id_pengguna, 'id_pengguna');
+            $approver = Arr::get($array, '0');
+
+            $approve = [
+                'approver' => $approver,
+                'approve_penonaktifan' => ('setuju'),
+                'tgl_approve' => NOW()
+            ];
+
+            $status = [
+                'status' => ('nonaktif')
+            ];
+            // dd('hehe');
+
+            $pemutihan = DB::table('pemutihan')
+                            ->where('id_pemutihan',$id)
+                            ->update($approve);
+            // dd('hehe');
+            $detail_barang = DB::table('detail_barang')
+                            ->where('kode_barang',$kode)
+                            ->update($status);
+
+            if($pemutihan){
+                return redirect('approval/pemutihan');
+            }
+        }catch(\Exception $e){
+            $e->getMessage();
+        }
+    }
+
+    public function statusTidakSetujuPemutihan($id=null){
+        try{
+            $id_pengguna = DB::table('pengguna')
+            ->select('id_pengguna')
+            ->where('username',Auth::user()->username)
+            ->get();
+            $array = Arr::pluck($id_pengguna, 'id_pengguna');
+            $approver = Arr::get($array, '0');
+
+            $approve = [
+                'approver' => $approver,
+                'approve_penonaktifan' => ('tidak setuju'),
+                'tgl_approve' => NOW()
+            ];
+
+            $pemutihan = DB::table('pemutihan')
+                            ->where('id_pemutihan',$id)
+                            ->update($approve);
+
+            if($pemutihan){
+                return redirect('approval/pemutihan');
+            // dd("berhasil");
+
+            }
+        }catch(\Exception $e){
+            $e->getMessage();
+        }
+    }
 }

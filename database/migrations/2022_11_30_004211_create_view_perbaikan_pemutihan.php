@@ -16,7 +16,7 @@ return new class extends Migration
     {
         DB::unprepared(
             "CREATE OR REPLACE VIEW perbaikan_pemutihan AS (
-             SELECT perbaikan.kode_barang AS asli, perbaikan.tgl_selesai_perbaikan, perbaikan.status_perbaikan,
+             SELECT perbaikan.id_perbaikan, perbaikan.kode_barang AS asli, perbaikan.tgl_selesai_perbaikan, perbaikan.status_perbaikan, perbaikan.approve_perbaikan,
                 pemutihan.kode_barang
 
                 FROM pemutihan

@@ -21,12 +21,12 @@
         <input type="text" name="kode_barang" class="input input-bordered "
         value="{{ old('nama', $pemutihan->kode_barang) }}"/>
     </div>
-    <div class="form-control hidden">
+    <div class="form-control">
         <label class="label">
         <span class="label-text">Kontak</span>
         </label>
-        <input type="text" name="kaprog" class="input input-bordered"
-        value="{{ $kode_baru }}"/>
+        <input type="text" name="submitter" class="input input-bordered"
+        value="{{ $submitter }}"/>
     </div>
     <div class="form-control">
         <label class="label">

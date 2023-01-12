@@ -11,14 +11,11 @@ use Illuminate\Support\Facades\Auth;
 class PemutihanController extends Controller
 {
     public function index(){
-        // $pemutihanKaprog = DB::table('perbaikan')->where('approve_perbaikan', '=', 'rusak')->count();
-        // dd($pemutihanKaprog);
         $data = DB::select('SELECT * FROM pemutihan');
         return view('pengajuan.pemutihan.index', compact('data'));
     }
 
     public function pilihbarangPemutihanLangsung(){
-        // $data = DB::select('SELECT * FROM barang_masuk_perbaikan');
         $data = DB::table('barang_masuk_perbaikan')
         ->select('*')
         ->where('kondisi_barang', 'baik')
@@ -29,7 +26,7 @@ class PemutihanController extends Controller
 
     public function pilihbarang()
     {
-        $data = DB::select('SELECT * FROM perbaikan WHERE approve_perbaikan = "rusak"');
+        $data = DB::select('SELECT * FROM perbaikan_pemutihan WHERE kode_barang IS NULL AND approve_perbaikan = "rusak" ');
         return view('pengajuan.pemutihan.pilihbarang', compact('data'));
     }
 
@@ -55,37 +52,26 @@ class PemutihanController extends Controller
 
     public function pemutihanLangsung($id = null)
     {
-        $kaprog = DB::table('pengguna_kaprog')
-        ->select('nama')
-        ->where('username',Auth::user()->username)
-        ->get();
-        $array = Arr::pluck($kaprog, 'nama');
-        $kode_baru = Arr::get($array, '0');
+        $submitter = Auth::user()->username;
+
         // dd($kode_baru);
         $pemutihanLangsung = $this->inputDataPemutihanLangsung($id);
-        return view('pengajuan.pemutihan.pemutihanLangsung.tambah', compact('pemutihanLangsung', 'kode_baru'));
+        return view('pengajuan.pemutihan.pemutihanLangsung.tambah', compact('pemutihanLangsung', 'submitter'));
     }
 
     public function simpanpemutihanLangsung(Request $request)
     {
         try {
 
-            $x = DB::table('kaprog')
-                ->select('nip')
-                ->where('nama', $request->input('kaprog'))
-                ->get();
-                $array = Arr::pluck($x, 'nip');
-                $kode_baru = Arr::get($array, '0');
-
-            $hehe = DB::insert("CALL tambah_pemutihan_langsung(:kode_barang, :kaprog, :ket_pemutihan)", [
+            $x = DB::insert("CALL tambah_pemutihan_langsung(:kode_barang, :submitter, :ket_pemutihan)", [
                 'kode_barang' => $request->input('kode_barang'),
-                'kaprog' => $kode_baru,
+                'submitter' => $request->input('submitter'),
                 'ket_pemutihan' => $request->input('ket_pemutihan'),
 
                 // dd($request->all())
             ]);
 
-            if ($hehe)
+            if ($x)
                 return redirect('pemutihan');
             else
                 return "input data gagal";
@@ -101,35 +87,20 @@ class PemutihanController extends Controller
 
     public function pemutihan($id = null)
     {
-        $kaprog = DB::table('pengguna_kaprog')
-        ->select('nama')
-        ->where('username',Auth::user()->username)
-        ->get();
-        $array = Arr::pluck($kaprog, 'nama');
-        $kode_baru = Arr::get($array, '0');
-        // dd($kode_baru);
+        $submitter = Auth::user()->username;
         $pemutihan = $this->inputDataPemutihan($id);
-        return view('pengajuan.pemutihan.tambah', compact('pemutihan', 'kode_baru'));
+        return view('pengajuan.pemutihan.tambah', compact('pemutihan', 'submitter'));
     }
 
 
     public function simpanpemutihan(Request $request)
     {
         try {
-            $x = DB::table('kaprog')
-                ->select('nip')
-                ->where('nama', $request->input('kaprog'))
-                ->get();
-                $array = Arr::pluck($x, 'nip');
-                $kode_baru = Arr::get($array, '0');
-
-            $tambah_pengajuan_pb = DB::insert("CALL tambah_pemutihan(:id_perbaikan, :kode_barang, :kaprog, :ket_pemutihan)", [
+            $tambah_pengajuan_pb = DB::insert("CALL tambah_pemutihan(:id_perbaikan, :kode_barang, :submitter, :ket_pemutihan)", [
                 'id_perbaikan' => $request->input('id_perbaikan'),
                 'kode_barang' => $request->input('kode_barang'),
-                'kaprog' => $kode_baru,
-                'ket_pemutihan' => $request->input('ket_pemutihan'),
-
-                // dd($request->all())
+                'submitter' => $request->input('submitter'),
+                'ket_pemutihan' => $request->input('ket_pemutihan')
             ]);
 
             if ($tambah_pengajuan_pb)
@@ -144,23 +115,10 @@ class PemutihanController extends Controller
     // APPROVAL PENGAJUAN
     public function statusSetuju($id=null, $kode=null){
         try{
-            $manajemen = DB::table('pengguna_manajemen')
-                ->select('nama')
-                ->where('username',Auth::user()->username)
-                ->get();
-                $array = Arr::pluck($manajemen, 'nama');
-                $kode_lama = Arr::get($array, '0');
-
-            $x = DB::table('manajemen')
-                ->select('nip')
-                ->where('nama', $kode_lama)
-                ->get();
-                $array = Arr::pluck($x, 'nip');
-                $kode_baru = Arr::get($array, '0');
-            // dd($kode_baru);
+            $approver = Auth::user()->username;
 
             $approve = [
-                'manajemen' => $kode_baru,
+                'approver' => $approver,
                 'approve_penonaktifan' => ('setuju'),
                 'tgl_approve' => NOW()
             ];
@@ -187,23 +145,10 @@ class PemutihanController extends Controller
 
     public function statusTidakSetuju($id=null){
         try{
-            $manajemen = DB::table('pengguna_manajemen')
-                ->select('nama')
-                ->where('username',Auth::user()->username)
-                ->get();
-                $array = Arr::pluck($manajemen, 'nama');
-                $kode_lama = Arr::get($array, '0');
-
-            $x = DB::table('manajemen')
-                ->select('nip')
-                ->where('nama', $kode_lama)
-                ->get();
-                $array = Arr::pluck($x, 'nip');
-                $kode_baru = Arr::get($array, '0');
-            // dd($kode_baru);
+            $approver = Auth::user()->username;
 
             $approve = [
-                'manajemen' => $kode_baru,
+                'manajemen' => $approver,
                 'approve_penonaktifan' => ('tidak setuju'),
                 'tgl_approve' => NOW()
             ];

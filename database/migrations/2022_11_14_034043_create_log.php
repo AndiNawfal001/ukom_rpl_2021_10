@@ -18,7 +18,7 @@ return new class extends Migration
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_general_ci';
             $table->char('id_log',7)->primary();
-            $table->string('nama');
+            $table->string('username');
             $table->string('aktifitas');
             $table->date('tgl');
         });

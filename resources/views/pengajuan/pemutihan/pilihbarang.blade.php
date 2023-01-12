@@ -21,7 +21,7 @@
                         @forelse($data as $key)
                         <tr>
                         <th>{{ $no++ }}</th>
-                        <td>{{ $key->kode_barang }}</td>
+                        <td>{{ $key->asli }}</td>
                         <td>{{ $key->tgl_selesai_perbaikan }}</td>
                         <td>{{ $key->approve_perbaikan }}</td>
                         <td>

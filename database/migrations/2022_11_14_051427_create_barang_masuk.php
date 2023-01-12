@@ -21,7 +21,7 @@ return new class extends Migration
             // $table->integer('kode_barang');
             $table->integer('id_pengajuan')->nullable();
             $table->string('supplier');
-            $table->char('manajemen', 18);
+            $table->integer('adder');
             $table->string('nama_barang');
             $table->integer('jml_masuk');
             $table->date('tgl_masuk');
@@ -52,10 +52,18 @@ return new class extends Migration
             ->cascadeOnDelete();
 
             // Foreign key untuk manajemen
+            // $table
+            // ->foreign('manajemen')
+            // ->references('nip')
+            // ->on('manajemen')
+            // ->cascadeOnUpdate()
+            // ->cascadeOnDelete();
+
+            // Foreign key untuk adder
             $table
-            ->foreign('manajemen')
-            ->references('nip')
-            ->on('manajemen')
+            ->foreign('adder')
+            ->references('id_pengguna')
+            ->on('pengguna')
             ->cascadeOnUpdate()
             ->cascadeOnDelete();
         });
