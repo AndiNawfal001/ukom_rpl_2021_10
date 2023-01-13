@@ -25,7 +25,6 @@ class BarangController extends Controller
         $data = DB::table('detail_barang')
             ->where('id_barang',$id)
             ->paginate(10);
-        // $data = DB::select('SELECT * FROM detail_barang WHERE id_barang = '.$id);
 
         // dd($data);
         return view('barang.detail', compact('data'));

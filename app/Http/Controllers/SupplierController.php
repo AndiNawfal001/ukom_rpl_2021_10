@@ -32,13 +32,19 @@ class SupplierController extends Controller
         $array = Arr::pluck($dariFunction, 'id_supplier');
         $kode_baru = Arr::get($array, '0');
         // dd($kode_baru);
-        $tambahSupplier = DB::insert("CALL tambah_supplier(:id_supplier, :nama, :kontak, :alamat)", [
+        $tambahSupplier = DB::table('supplier')->insert([
             'id_supplier' => $kode_baru,
             'nama' => $request->input('nama'),
             'kontak' => $request->input('kontak'),
-            'alamat' => $request->input('alamat'),
-            // dd($request->all())
+            'alamat' => $request->input('alamat')
         ]);
+        // $tambahSupplier = DB::insert("CALL tambah_supplier(:id_supplier, :nama, :kontak, :alamat)", [
+        //     'id_supplier' => $kode_baru,
+        //     'nama' => $request->input('nama'),
+        //     'kontak' => $request->input('kontak'),
+        //     'alamat' => $request->input('alamat'),
+        //     // dd($request->all())
+        // ]);
 
         if ($tambahSupplier)
             return redirect('supplier');
