@@ -12,15 +12,9 @@ use Illuminate\Support\Facades\Auth;
 class PengajuanBBController extends Controller
 {
     public function index(){
-
-        // data pending manajemen
-        $pending = DB::select('SELECT * FROM pengajuan_bb WHERE status_approval = "pending" ');
-
-        // KAPROG
-        $data = DB::select('SELECT * FROM pengajuan_bb');
-
-
-        return view('pengajuan.barang_baru.index', compact('data', 'pending'));
+        $submitter = Auth::user()->id_pengguna;
+        $data = DB::select('SELECT * FROM pengajuan_bb WHERE submitter ='.$submitter);
+        return view('pengajuan.barang_baru.index', compact('data'));
     }
 
     private function getManajemen(): Collection
@@ -34,11 +28,9 @@ class PengajuanBBController extends Controller
     }
 
     public function formTambah(){
-        $submitter = Auth::user()->username;
-        // dd($submitter);
         $manajemen = $this->getManajemen();
         $kaprog = $this->getKaprog();
-        return view('pengajuan.barang_baru.formtambah', compact('manajemen', 'kaprog', 'submitter'));
+        return view('pengajuan.barang_baru.formtambah', compact('manajemen', 'kaprog' ));
     }
 
     private function getPengajuanBb($id)
@@ -49,18 +41,9 @@ class PengajuanBBController extends Controller
     public function store(Request $request)
     {
         try {
-            $buatapprover = DB::select('SELECT pengguna.id_pengguna FROM pengguna WHERE pengguna.username = ?', [$request->input('approver')]);
-            $array = Arr::pluck($buatapprover, 'id_pengguna');
-            $approver_id = Arr::get($array, '0');
-            // dd($approver_id);
-
-            $buatsubmitter = DB::select('SELECT pengguna.id_pengguna FROM pengguna WHERE pengguna.username = ?', [$request->input('submitter')]);
-            $array = Arr::pluck($buatsubmitter, 'id_pengguna');
-            $submitter_id = Arr::get($array, '0');
-            // dd($submitter_id);
+            $submitter_id = Auth::user()->id_pengguna;
 
             $tambah_pengajuan_bb = DB::table('pengajuan_bb')->insert([
-                'approver' => $approver_id,
                 'submitter' => $submitter_id,
                 'nama_barang' => $request->input('nama_barang'),
                 'spesifikasi' => $request->input('spesifikasi'),

@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 // use Illuminate\Support\Collection;
 
@@ -56,16 +57,6 @@ class PerawatanController extends Controller{
                 'foto_perawatan' => $image
 
             ]);
-            // $tambahPerawatan = DB::insert("CALL tambah_perawatan(:id_perawatan, :kode_barang, :nama_pelaksana, :ket_perawatan, :foto_perawatan)", [
-            //     'id_perawatan' => $id_perawatan,
-            //     'kode_barang' => $request->input('kode_barang'),
-            //     'nama_pelaksana' => $request->input('nama_pelaksana'),
-            //     'ket_perawatan' => $request->input('ket_perawatan'),
-            //     'foto_perawatan' => $image
-
-            //     // dd($request->all())
-            // ]);
-
             if ($tambahPerawatan)
                 return redirect('perawatan');
             else
@@ -105,8 +96,6 @@ class PerawatanController extends Controller{
                 'ket_perawatan' => $request->input('ket_perawatan'),
                 'foto_perawatan' => $image,
             ];
-            $id_perawatan = $request->input('id_perawatan');
-            // dd($id_perawatan);
             $upd = DB::table('perawatan')
                         ->where('id_perawatan', '=', $request->input('id_perawatan'))
                         ->update($data);

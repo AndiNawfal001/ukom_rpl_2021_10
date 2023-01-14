@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
 class PemutihanController extends Controller
 {
     public function index(){
-        $data = DB::select('SELECT * FROM pemutihan');
+        $submitter = Auth::user()->id_pengguna;
+
+        $data = DB::select('SELECT * FROM pemutihan WHERE submitter ='.$submitter);
         return view('pengajuan.pemutihan.index', compact('data'));
     }
 
@@ -52,19 +52,14 @@ class PemutihanController extends Controller
 
     public function pemutihanLangsung($id = null)
     {
-        $submitter = Auth::user()->username;
-
-        // dd($kode_baru);
         $pemutihanLangsung = $this->inputDataPemutihanLangsung($id);
-        return view('pengajuan.pemutihan.pemutihanLangsung.tambah', compact('pemutihanLangsung', 'submitter'));
+        return view('pengajuan.pemutihan.pemutihanLangsung.tambah', compact('pemutihanLangsung'));
     }
 
     public function simpanpemutihanLangsung(Request $request)
     {
         try {
-            $buatsubmitter = DB::select('SELECT pengguna.id_pengguna FROM pengguna WHERE pengguna.username = ?', [$request->input('submitter')]);
-            $array = Arr::pluck($buatsubmitter, 'id_pengguna');
-            $submitter_id = Arr::get($array, '0');
+            $submitter_id = Auth::user()->id_pengguna;
 
             $x = DB::table('pemutihan')->insert([
                 'id_perbaikan' => $request->input('id_perbaikan'),
@@ -74,12 +69,6 @@ class PemutihanController extends Controller
                 'ket_pemutihan' => $request->input('ket_pemutihan')
 
             ]);
-            // $x = DB::insert("CALL tambah_pemutihan(:id_perbaikan, :kode_barang, :submitter, :ket_pemutihan)", [
-            //     'id_perbaikan' => $request->input('id_perbaikan'),
-            //     'kode_barang' => $request->input('kode_barang'),
-            //     'submitter' => $request->input('submitter'),
-            //     'ket_pemutihan' => $request->input('ket_pemutihan')
-            // ]);
 
             if ($x)
                 return redirect('pemutihan');
@@ -97,20 +86,23 @@ class PemutihanController extends Controller
 
     public function pemutihan($id = null)
     {
-        $submitter = Auth::user()->username;
         $pemutihan = $this->inputDataPemutihan($id);
-        return view('pengajuan.pemutihan.tambah', compact('pemutihan', 'submitter'));
+        return view('pengajuan.pemutihan.tambah', compact('pemutihan'));
     }
 
 
     public function simpanpemutihan(Request $request)
     {
         try {
-            $tambah_pengajuan_pb = DB::insert("CALL tambah_pemutihan(:id_perbaikan, :kode_barang, :submitter, :ket_pemutihan)", [
+            $submitter_id = Auth::user()->id_pengguna;
+
+            $tambah_pengajuan_pb = DB::table('pemutihan')->insert([
                 'id_perbaikan' => $request->input('id_perbaikan'),
                 'kode_barang' => $request->input('kode_barang'),
-                'submitter' => $request->input('submitter'),
+                'submitter' => $submitter_id,
+                'tgl_pemutihan' => NOW(),
                 'ket_pemutihan' => $request->input('ket_pemutihan')
+
             ]);
 
             if ($tambah_pengajuan_pb)
@@ -122,58 +114,4 @@ class PemutihanController extends Controller
             }
     }
 
-    // APPROVAL PENGAJUAN
-    public function statusSetuju($id=null, $kode=null){
-        try{
-            $approver = Auth::user()->username;
-
-            $approve = [
-                'approver' => $approver,
-                'approve_penonaktifan' => ('setuju'),
-                'tgl_approve' => NOW()
-            ];
-
-            $status = [
-                'status' => ('nonaktif')
-            ];
-
-            $pemutihan = DB::table('pemutihan')
-                            ->where('id_pemutihan',$id)
-                            ->update($approve);
-
-            $detail_barang = DB::table('detail_barang')
-                            ->where('kode_barang',$kode)
-                            ->update($status);
-
-            if($pemutihan){
-                return redirect('pemutihan');
-            }
-        }catch(\Exception $e){
-            $e->getMessage();
-        }
-    }
-
-    public function statusTidakSetuju($id=null){
-        try{
-            $approver = Auth::user()->username;
-
-            $approve = [
-                'manajemen' => $approver,
-                'approve_penonaktifan' => ('tidak setuju'),
-                'tgl_approve' => NOW()
-            ];
-
-            $pemutihan = DB::table('pemutihan')
-                            ->where('id_pemutihan',$id)
-                            ->update($approve);
-
-            if($pemutihan){
-                return redirect('pemutihan');
-            // dd("berhasil");
-
-            }
-        }catch(\Exception $e){
-            $e->getMessage();
-        }
-    }
 }

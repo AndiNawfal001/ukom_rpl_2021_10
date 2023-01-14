@@ -12,9 +12,10 @@ use Illuminate\Support\Facades\Auth;
 class PerbaikanController extends Controller
 {
     public function index(){
-        $data = DB::select('SELECT * FROM perbaikan');
-        $admin = DB::select('SELECT * FROM perbaikan WHERE tgl_selesai_perbaikan IS NOT NULL');
-        return view('pengajuan.perbaikan.index', compact('data', 'admin'));
+        $submitter= Auth::user()->id_pengguna;
+
+        $data = DB::select('SELECT * FROM perbaikan WHERE submitter ='. $submitter);
+        return view('pengajuan.perbaikan.index', compact('data' ));
     }
 
     public function pilihBarang(){
@@ -32,34 +33,24 @@ class PerbaikanController extends Controller
 
     public function perbaikan($id = null)
     {
-        $submitter = Auth::user()->username;
         $perbaikan = $this->inputDataPerbaikan($id);
-        return view('pengajuan.perbaikan.perbaikan', compact('perbaikan', 'submitter'));
+        return view('pengajuan.perbaikan.perbaikan', compact('perbaikan' ));
     }
 
     public function simpanperbaikan(Request $request)
     {
         try {
+
             $dariFunction = DB::select('SELECT newIdPerbaikan() AS id_perbaikan');
             // dd($dariFunction);
             $array = Arr::pluck($dariFunction, 'id_perbaikan');
             $id_perbaikan = Arr::get($array, '0');
             // dd($id_perbaikan);
-
-            $buatapprover = DB::select('SELECT pengguna.id_pengguna FROM pengguna WHERE pengguna.username = ?', [$request->input('approver')]);
-            $array = Arr::pluck($buatapprover, 'id_pengguna');
-            $approver_id = Arr::get($array, '0');
-            // dd($approver_id);
-
-            $buatsubmitter = DB::select('SELECT pengguna.id_pengguna FROM pengguna WHERE pengguna.username = ?', [$request->input('submitter')]);
-            $array = Arr::pluck($buatsubmitter, 'id_pengguna');
-            $submitter_id = Arr::get($array, '0');
-            // dd($submitter_id);
+            $submitter_id = Auth::user()->id_pengguna;
 
             $tambah_pengajuan_pb = DB::table('perbaikan')->insert([
                 'id_perbaikan' => $id_perbaikan,
                 'kode_barang' => $request->input('kode_barang'),
-                'approver' => $approver_id,
                 'submitter' => $submitter_id,
                 'ruangan' => $request->input('ruangan'),
                 'tgl_perbaikan' => NOW(),

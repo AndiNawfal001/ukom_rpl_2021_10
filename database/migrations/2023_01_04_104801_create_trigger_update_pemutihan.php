@@ -14,7 +14,7 @@ return new class extends Migration
      */
     public function up()
     {
-        // DB::unprepared("DROP TRIGGER IF EXISTS update_pemutihan");
+        DB::unprepared("DROP TRIGGER IF EXISTS update_pemutihan");
         // DB::unprepared(
         //   "CREATE TRIGGER after_update_pemutihan
         //     AFTER UPDATE

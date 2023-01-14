@@ -20,13 +20,6 @@
         <input type="text" name="kode_barang" class="input input-bordered "
         value="{{ old('nama', $pemutihanLangsung->kode_barang) }}"/>
     </div>
-    <div class="form-control hidden">
-        <label class="label">
-        <span class="label-text">Kontak</span>
-        </label>
-        <input type="text" name="submitter" class="input input-bordered"
-        value="{{ $submitter }}"/>
-    </div>
     <div class="form-control">
         <label class="label">
         <span class="label-text">Keterangan PemutihanLangsung</span>
