@@ -12,11 +12,18 @@ use Illuminate\Support\Arr;
 class RuanganController extends Controller
 {
     public function index(){
-        $data = DB::select('SELECT * FROM ruangan');
-        // dd($data);
-        $jumlah = DB::select('SELECT COUNT(id_ruangan) FROM ruangan');
+        $data = DB::table('ruangan')->paginate(5);
+        return view('ruangan.index', compact('data' ));
+    }
 
-        return view('ruangan.index', compact('data', 'jumlah'));
+    public function search(Request $request){
+        $search = $request->input('search');
+
+        $data = DB::table('ruangan')
+        ->where('nama_ruangan','like',"%".$search."%")
+        ->orWhere('penanggung_jawab','like',"%".$search."%")
+        ->paginate(5);
+        return view('ruangan.index', compact('data' ));
     }
 
     private function getRuangan($id)
@@ -48,15 +55,6 @@ class RuanganController extends Controller
             'ket' => $request->input('ket'),
 
         ]);
-        // $tambah_ruangan = DB::insert("CALL tambah_ruangan(:id_ruangan, :nama_ruangan, :penanggung_jawab, :ket, :image)", [
-        //     'id_ruangan' => $kode_baru,
-        //     'nama_ruangan' => $request->input('nama_ruangan'),
-        //     'penanggung_jawab' => $request->input('penanggung_jawab'),
-        //     'ket' => $request->input('ket'),
-        //     // 'image' => $image,
-
-        //     // dd($request->all())
-        // ]);
 
         if ($tambah_ruangan)
             return redirect('ruangan');

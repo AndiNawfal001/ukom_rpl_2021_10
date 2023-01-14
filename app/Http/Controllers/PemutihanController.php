@@ -15,6 +15,20 @@ class PemutihanController extends Controller
         return view('pengajuan.pemutihan.index', compact('data'));
     }
 
+    private function getPemutihan($id)
+    {
+        return collect(DB::select('SELECT * FROM pemutihan WHERE id_pemutihan = ?', [$id]))->firstOrFail();
+    }
+    public function detail($id = null)
+    {
+        $detail = $this->getPemutihan($id);
+        return view('pengajuan.pemutihan.detail', compact('detail'));
+    }
+
+
+
+    // LANGSUNG
+
     public function pilihbarangPemutihanLangsung(){
         $data = DB::table('barang_masuk_perbaikan')
         ->select('*')
@@ -24,30 +38,21 @@ class PemutihanController extends Controller
         return view('pengajuan.pemutihan.pemutihanLangsung.pilihbarang', compact('data'));
     }
 
-    public function pilihbarang()
-    {
-        $data = DB::select('SELECT * FROM perbaikan_pemutihan WHERE kode_barang IS NULL AND approve_perbaikan = "rusak" ');
-        return view('pengajuan.pemutihan.pilihbarang', compact('data'));
-    }
-
-    private function inputDataPemutihan($id)
-    {
-        return collect(DB::select('SELECT * FROM perbaikan WHERE id_perbaikan = ?', [$id]))->firstOrFail();
+    public function searchPLangsung(Request $request){
+        $search = $request->input('search');
+        $data = DB::table('barang_masuk_perbaikan')
+        ->select('*')
+        ->where('kondisi_barang', 'baik')
+        ->where('status', 'aktif')
+        ->where('kode_barang','like',"%".$search."%")
+        ->orWhere('nama_barang','like',"%".$search."%")
+        ->paginate(10);
+        return view('pengajuan.pemutihan.pemutihanLangsung.pilihbarang', compact('data'));
     }
 
     private function inputDataPemutihanLangsung($id)
     {
         return collect(DB::select('SELECT * FROM detail_barang WHERE kode_barang = ?', [$id]))->firstOrFail();
-    }
-
-    private function getPemutihan($id)
-    {
-        return collect(DB::select('SELECT * FROM pemutihan WHERE id_pemutihan = ?', [$id]))->firstOrFail();
-    }
-    public function detail($id = null)
-    {
-        $detail = $this->getPemutihan($id);
-        return view('pengajuan.pemutihan.detail', compact('detail'));
     }
 
     public function pemutihanLangsung($id = null)
@@ -81,8 +86,35 @@ class PemutihanController extends Controller
 
 
 
+    // DARI PERBAIKAN
 
+    private function inputDataPemutihan($id)
+    {
+        return collect(DB::select('SELECT * FROM perbaikan WHERE id_perbaikan = ?', [$id]))->firstOrFail();
+    }
 
+    public function pilihbarang()
+    {
+        $data = DB::table('perbaikan_pemutihan')
+        ->select('*')
+        ->whereNull('kode_barang')
+        ->where('approve_perbaikan', 'rusak')
+        ->paginate(10);
+        return view('pengajuan.pemutihan.pilihbarang', compact('data'));
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+        $data = DB::table('perbaikan_pemutihan')
+        ->select('*')
+        ->whereNull('kode_barang')
+        ->where('approve_perbaikan', 'rusak')
+        ->where('kode_barang','like',"%".$search."%")
+        ->orWhere('nama_barang','like',"%".$search."%")
+        ->paginate(10);
+        return view('pengajuan.pemutihan.pilihbarang', compact('data'));
+    }
 
     public function pemutihan($id = null)
     {

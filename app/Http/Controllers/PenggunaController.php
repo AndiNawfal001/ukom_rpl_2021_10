@@ -23,6 +23,24 @@ class PenggunaController extends Controller
         return view('pengguna.index', compact('data', 'admin', 'manajemen', 'kaprog'));
     }
 
+    public function search(Request $request){
+        $search = $request->input('search');
+
+        $data = DB::table('banyak_pengguna')
+        ->select('*')
+        ->where('username','like',"%".$search."%")
+        ->orWhere('email','like',"%".$search."%")
+        ->orWhere('nama_level','like',"%".$search."%")
+        ->orderBy('id_level')
+        ->paginate(5);
+
+        $admin = DB::table('admin')->count();
+        $manajemen = DB::table('manajemen')->count();
+        $kaprog = DB::table('kaprog')->count();
+
+        return view('pengguna.index', compact('data', 'admin', 'manajemen', 'kaprog'));
+    }
+
     private function getlevelUser(): Collection
     {
         return collect(DB::select('SELECT * FROM level_user'));

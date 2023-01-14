@@ -5,6 +5,25 @@
     <div class="bg-base-100 shadow rounded-md p-4 sm:p-6 xl:p-8 ">
         <h1 class="text-2xl pb-3 font-semibold leading-loose">Daftar Pengguna</h1>
 
+        <div class="lg:hidden justify-between mb-2 ">
+            <form action="/pengguna/search" method="GET">
+                @csrf
+                    <div class="form-control mb-2">
+                        <div class="input-group ">
+                        <input type="text" name="search" placeholder="Search…" class="input input-bordered" />
+                        <button class="btn btn-square" type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                        </button>
+                        </div>
+                    </div>
+            </form>
+            <a href="/pengguna/tambah">
+                <button type="submit" class="btn btn-md btn-success gap-2">
+                    Tambah Pengguna
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </button>
+            </a>
+        </div>
 
         <div class="lg:flex gap-4 ">
             <div class="w-full lg:w-auto stats stats-horizontal lg:stats-vertical shadow">
@@ -26,12 +45,31 @@
 
             </div>
             <div class="basis-4/5 mt-4 lg:mt-0">
+                <div class="hidden lg:flex justify-between mb-2 ">
+                    <form action="/pengguna/search" method="GET">
+                        @csrf
+                            <div class="form-control mb-2">
+                                <div class="input-group ">
+                                <input type="text" name="search" placeholder="Search…" class="input input-bordered" />
+                                <button class="btn btn-square" type="submit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                                </button>
+                                </div>
+                            </div>
+                    </form>
+                    <a href="/pengguna/tambah">
+                        <button type="submit" class="btn btn-md btn-success gap-2">
+                            Tambah Pengguna
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </button>
+                    </a>
+                </div>
                 <div class="">
                     <div class="overflow-x-auto overflow-y-auto">
                         <table class="table w-full ">
                             <thead>
                                 <tr>
-                                    <th>NO</th>
+                                    {{-- <th>NO</th> --}}
                                     <th>Username</th>
                                     <th>Email</th>
                                     <th>Level User</th>
@@ -41,8 +79,8 @@
                             <?php $no=1;?>
                             @foreach($data as $key)
                             <tr>
-                                <th>{{ $no++ }}</th>
-                                <td>{{ $key->username }}</td>
+                                {{-- <th>{{ $no++ }}</th> --}}
+                                <th>{{ $key->username }}</th>
                                 <td>{{ $key->email }}</td>
                                 <td>{{ $key->nama_level }}</td>
                                 <td>
@@ -63,16 +101,17 @@
                             @endforeach
 
                         </table>
+                    </div>
+                    <div class="lg:flex flex-row-reverse">
+                        <div>
+                            {{ $data->links() }}
+                        </div>
+                    </div>
                 </div>
-                <a href="/pengguna/tambah">
-                    <button type="submit" class="btn btn-md btn-success mt-4 gap-2">
-                        Tambah Pengguna
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    </button>
-                </a>
-            </div>
-        </div>
 
+            </div>
+
+        </div>
         </div>
     </div>
 </div>

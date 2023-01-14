@@ -26,6 +26,19 @@ class PerbaikanController extends Controller
         ->paginate(10);
         return view('pengajuan.perbaikan.pilihbarang', compact('data'));
     }
+
+    public function search(Request $request){
+        $search = $request->input('search');
+        $data = DB::table('barang_masuk_perbaikan')
+        ->select('*')
+        ->where('status', 'aktif')
+        ->where('kondisi_barang', 'baik')
+        ->where('kode_barang','like',"%".$search."%")
+        ->orWhere('nama_barang','like',"%".$search."%")
+        ->paginate(10);
+        return view('pengajuan.perbaikan.pilihbarang', compact('data'));
+    }
+
     private function inputDataPerbaikan($id)
     {
         return collect(DB::select('SELECT * FROM detail_barang WHERE kode_barang = ?', [$id]))->firstOrFail();

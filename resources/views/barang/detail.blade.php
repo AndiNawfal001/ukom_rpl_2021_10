@@ -9,7 +9,7 @@
                     <table class="table table-compact table-zebra w-full ">
                         <thead>
                             <tr>
-                                <th>No</th>
+                                {{-- <th>No</th> --}}
                                 <th>Kode Barang</th>
                                 <th>Kondisi</th>
                                 <th>Status</th>
@@ -18,7 +18,7 @@
                         <?php $no=1;?>
                         @forelse($data as $key)
                         <tr>
-                        <th>{{ $no++ }}</th>
+                        {{-- <th>{{ $no++ }}</th> --}}
                         <td>{{ $key->kode_barang }}</td>
                         <td>{{ $key->kondisi_barang }}</td>
                         <td>{{ $key->status }}</td>

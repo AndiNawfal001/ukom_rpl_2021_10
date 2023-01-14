@@ -20,6 +20,19 @@ class BarangController extends Controller
         return view('barang.index', compact('data'));
     }
 
+    public function search(Request $request){
+        $search = $request->input('search');
+        $data = DB::table('barang')
+        ->join('jenis_barang', 'barang.id_jenis_brg', '=', 'jenis_barang.id_jenis_brg')
+        ->orderBy('id_barang')
+        ->select('jenis_barang.nama_jenis', 'barang.*')
+        ->where('nama_jenis','like',"%".$search."%")
+        ->orWhere('nama_barang','like',"%".$search."%")
+        ->paginate(10);
+
+        return view('barang.index', compact('data'));
+    }
+
     public function detail($id=null){
         // dd($id);
         $data = DB::table('detail_barang')

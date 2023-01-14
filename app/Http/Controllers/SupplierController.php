@@ -10,7 +10,18 @@ use Illuminate\Support\Arr;
 class SupplierController extends Controller
 {
     public function index(){
-        $data = DB::select('SELECT * FROM supplier');
+        $data = DB::table('supplier')->paginate(5);
+        return view('supplier.index', compact('data'));
+    }
+
+    public function search(Request $request){
+        $search = $request->input('search');
+
+        $data = DB::table('supplier')
+                ->where('nama','like',"%".$search."%")
+                ->orWhere('kontak','like',"%".$search."%")
+                ->orWhere('alamat','like',"%".$search."%")
+                ->paginate(5);
         return view('supplier.index', compact('data'));
     }
 
