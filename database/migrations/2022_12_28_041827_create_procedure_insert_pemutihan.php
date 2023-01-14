@@ -28,6 +28,14 @@ return new class extends Migration
 
             SELECT pengguna.id_pengguna INTO submitter_id FROM pengguna WHERE pengguna.username = submitter;
 
+            -- IF (id_perbaikan IS NULL) THEN
+            --     INSERT INTO pemutihan
+            --     (kode_barang, submitter, tgl_pemutihan, ket_pemutihan)
+            --     VALUES(
+            --         kode_barang, submitter_id, NOW(), ket_pemutihan
+            --     );
+            -- END IF;
+
             INSERT INTO pemutihan
             (id_perbaikan, kode_barang, submitter, tgl_pemutihan, ket_pemutihan)
             VALUES(

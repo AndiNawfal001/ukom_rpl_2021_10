@@ -62,14 +62,24 @@ class PemutihanController extends Controller
     public function simpanpemutihanLangsung(Request $request)
     {
         try {
+            $buatsubmitter = DB::select('SELECT pengguna.id_pengguna FROM pengguna WHERE pengguna.username = ?', [$request->input('submitter')]);
+            $array = Arr::pluck($buatsubmitter, 'id_pengguna');
+            $submitter_id = Arr::get($array, '0');
 
-            $x = DB::insert("CALL tambah_pemutihan_langsung(:kode_barang, :submitter, :ket_pemutihan)", [
+            $x = DB::table('pemutihan')->insert([
+                'id_perbaikan' => $request->input('id_perbaikan'),
                 'kode_barang' => $request->input('kode_barang'),
-                'submitter' => $request->input('submitter'),
-                'ket_pemutihan' => $request->input('ket_pemutihan'),
+                'submitter' => $submitter_id,
+                'tgl_pemutihan' => NOW(),
+                'ket_pemutihan' => $request->input('ket_pemutihan')
 
-                // dd($request->all())
             ]);
+            // $x = DB::insert("CALL tambah_pemutihan(:id_perbaikan, :kode_barang, :submitter, :ket_pemutihan)", [
+            //     'id_perbaikan' => $request->input('id_perbaikan'),
+            //     'kode_barang' => $request->input('kode_barang'),
+            //     'submitter' => $request->input('submitter'),
+            //     'ket_pemutihan' => $request->input('ket_pemutihan')
+            // ]);
 
             if ($x)
                 return redirect('pemutihan');

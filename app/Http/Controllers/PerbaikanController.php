@@ -46,17 +46,26 @@ class PerbaikanController extends Controller
             $id_perbaikan = Arr::get($array, '0');
             // dd($id_perbaikan);
 
-            $tambah_pengajuan_pb = DB::insert("CALL tambah_perbaikan(:id_perbaikan, :kode_barang, :approver, :submitter, :ruangan, :keluhan)", [
+            $buatapprover = DB::select('SELECT pengguna.id_pengguna FROM pengguna WHERE pengguna.username = ?', [$request->input('approver')]);
+            $array = Arr::pluck($buatapprover, 'id_pengguna');
+            $approver_id = Arr::get($array, '0');
+            // dd($approver_id);
+
+            $buatsubmitter = DB::select('SELECT pengguna.id_pengguna FROM pengguna WHERE pengguna.username = ?', [$request->input('submitter')]);
+            $array = Arr::pluck($buatsubmitter, 'id_pengguna');
+            $submitter_id = Arr::get($array, '0');
+            // dd($submitter_id);
+
+            $tambah_pengajuan_pb = DB::table('perbaikan')->insert([
                 'id_perbaikan' => $id_perbaikan,
                 'kode_barang' => $request->input('kode_barang'),
-                'approver' => $request->input('approver'),
-                'submitter' => $request->input('submitter'),
+                'approver' => $approver_id,
+                'submitter' => $submitter_id,
                 'ruangan' => $request->input('ruangan'),
+                'tgl_perbaikan' => NOW(),
                 'keluhan' => $request->input('keluhan'),
 
-                // dd($request->all())
             ]);
-            // dd($request->all());
 
             if ($tambah_pengajuan_pb)
                 return redirect('pengajuan/PB');
@@ -66,10 +75,12 @@ class PerbaikanController extends Controller
             return  $e->getMessage();
             }
     }
+
     private function getPengajuanPb($id)
     {
         return collect(DB::select('SELECT * FROM perbaikan WHERE id_perbaikan = ?', [$id]))->firstOrFail();
     }
+
     public function detail($id = null)
     {
         $detail = $this->getPengajuanPb($id);

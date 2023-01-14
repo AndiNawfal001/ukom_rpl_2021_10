@@ -49,20 +49,28 @@ class PengajuanBBController extends Controller
     public function store(Request $request)
     {
         try {
-            // dd($request->all());
-        $tambah_pengajuan_bb = DB::insert("CALL tambah_pengajuan_bb(:approver, :submitter, :nama_barang, :spesifikasi, :harga_satuan, :total_harga, :jumlah, :ruangan)", [
-            'approver' => $request->input('approver'),
-            'submitter' => $request->input('submitter'),
-            'nama_barang' => $request->input('nama_barang'),
-            'spesifikasi' => $request->input('spesifikasi'),
-            'harga_satuan' => $request->input('harga_satuan'),
-            'total_harga' => $request->input('total_harga'),
-            'jumlah' => $request->input('jumlah'),
-            'ruangan' => $request->input('ruangan'),
+            $buatapprover = DB::select('SELECT pengguna.id_pengguna FROM pengguna WHERE pengguna.username = ?', [$request->input('approver')]);
+            $array = Arr::pluck($buatapprover, 'id_pengguna');
+            $approver_id = Arr::get($array, '0');
+            // dd($approver_id);
 
-            // dd($request->all())
-        ]);
+            $buatsubmitter = DB::select('SELECT pengguna.id_pengguna FROM pengguna WHERE pengguna.username = ?', [$request->input('submitter')]);
+            $array = Arr::pluck($buatsubmitter, 'id_pengguna');
+            $submitter_id = Arr::get($array, '0');
+            // dd($submitter_id);
 
+            $tambah_pengajuan_bb = DB::table('pengajuan_bb')->insert([
+                'approver' => $approver_id,
+                'submitter' => $submitter_id,
+                'nama_barang' => $request->input('nama_barang'),
+                'spesifikasi' => $request->input('spesifikasi'),
+                'harga_satuan' => $request->input('harga_satuan'),
+                'total_harga' => $request->input('total_harga'),
+                'jumlah' => $request->input('jumlah'),
+                'tgl' => NOW(),
+                'ruangan' => $request->input('ruangan'),
+
+            ]);
         if ($tambah_pengajuan_bb)
             return redirect('pengajuan/BB');
         else

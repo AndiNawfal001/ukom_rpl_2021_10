@@ -33,23 +33,30 @@ class RuanganController extends Controller
     {
         try {
 
-        if($request->file('image')){
-            $image = $request->file('image')->store('images');
-        }
+        // if($request->file('image')){
+        //     $image = $request->file('image')->store('images');
+        // }
 
         $dariFunction = DB::select('SELECT newIdRuangan() AS id_ruangan');
         $array = Arr::pluck($dariFunction, 'id_ruangan');
         $kode_baru = Arr::get($array, '0');
 
-        $tambah_ruangan = DB::insert("CALL tambah_ruangan(:id_ruangan, :nama_ruangan, :penanggung_jawab, :ket, :image)", [
+        $tambah_ruangan = DB::table('ruangan')->insert([
             'id_ruangan' => $kode_baru,
             'nama_ruangan' => $request->input('nama_ruangan'),
             'penanggung_jawab' => $request->input('penanggung_jawab'),
             'ket' => $request->input('ket'),
-            'image' => $image,
 
-            // dd($request->all())
         ]);
+        // $tambah_ruangan = DB::insert("CALL tambah_ruangan(:id_ruangan, :nama_ruangan, :penanggung_jawab, :ket, :image)", [
+        //     'id_ruangan' => $kode_baru,
+        //     'nama_ruangan' => $request->input('nama_ruangan'),
+        //     'penanggung_jawab' => $request->input('penanggung_jawab'),
+        //     'ket' => $request->input('ket'),
+        //     // 'image' => $image,
+
+        //     // dd($request->all())
+        // ]);
 
         if ($tambah_ruangan)
             return redirect('ruangan');
@@ -72,18 +79,18 @@ class RuanganController extends Controller
     {
         try {
 
-            if($request->file('image')){
-                if($request->oldImage){
-                    Storage::delete($request->oldImage);
-                }
-                $image = $request->file('image')->store('images');
-            }
+            // if($request->file('image')){
+            //     if($request->oldImage){
+            //         Storage::delete($request->oldImage);
+            //     }
+            //     $image = $request->file('image')->store('images');
+            // }
 
             $data = [
                 'nama_ruangan' => $request->input('nama_ruangan'),
                 'penanggung_jawab' => $request->input('penanggung_jawab'),
                 'ket' => $request->input('ket'),
-                'image' => $image,
+                // 'image' => $image,
 
 
             ];
@@ -104,14 +111,14 @@ class RuanganController extends Controller
 
         try{
             // dd($id);
-            $x = DB::table('ruangan')
-                        ->where('id_ruangan', '=', $id)
-                        ->get(); //AMBIL DATA FILE
-            // dd($x);
-            $flattened = Arr::pluck($x, 'image');
-            // $y = Arr::flatten($flattened);
-            $price = Arr::get($flattened, '0');
-            Storage::delete($price); //HAPUS FILE DI STORAGE
+            // $x = DB::table('ruangan')
+            //             ->where('id_ruangan', '=', $id)
+            //             ->get(); //AMBIL DATA FILE
+            // // dd($x);
+            // $flattened = Arr::pluck($x, 'image');
+            // // $y = Arr::flatten($flattened);
+            // $price = Arr::get($flattened, '0');
+            // Storage::delete($price); //HAPUS FILE DI STORAGE
 
             $hapus = DB::table('ruangan')
                             ->where('id_ruangan',$id)

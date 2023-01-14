@@ -47,18 +47,26 @@ class PerawatanController extends Controller{
 
             $image = $request->file('image')->store('perawatan');
 
-
-            $hehe = DB::insert("CALL tambah_perawatan(:id_perawatan, :kode_barang, :nama_pelaksana, :ket_perawatan, :foto_perawatan)", [
+            $tambahPerawatan = DB::table('perawatan')->insert([
                 'id_perawatan' => $id_perawatan,
                 'kode_barang' => $request->input('kode_barang'),
                 'nama_pelaksana' => $request->input('nama_pelaksana'),
                 'ket_perawatan' => $request->input('ket_perawatan'),
+                'tgl_perawatan' => NOW(),
                 'foto_perawatan' => $image
 
-                // dd($request->all())
             ]);
+            // $tambahPerawatan = DB::insert("CALL tambah_perawatan(:id_perawatan, :kode_barang, :nama_pelaksana, :ket_perawatan, :foto_perawatan)", [
+            //     'id_perawatan' => $id_perawatan,
+            //     'kode_barang' => $request->input('kode_barang'),
+            //     'nama_pelaksana' => $request->input('nama_pelaksana'),
+            //     'ket_perawatan' => $request->input('ket_perawatan'),
+            //     'foto_perawatan' => $image
 
-            if ($hehe)
+            //     // dd($request->all())
+            // ]);
+
+            if ($tambahPerawatan)
                 return redirect('perawatan');
             else
                 return "input data gagal";

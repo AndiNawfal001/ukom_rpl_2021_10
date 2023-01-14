@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('nama_ruangan');
             $table->string('penanggung_jawab');
             $table->text('ket');
-            $table->string('image');
+            // $table->string('image');
 
             // Foreign key untuk kode_barang
             // $table

@@ -15,24 +15,24 @@ return new class extends Migration
     public function up()
     {
         DB::unprepared("DROP PROCEDURE IF EXISTS tambah_pemutihan_langsung");
-        DB::unprepared(
-          "CREATE PROCEDURE tambah_pemutihan_langsung(
-                kode_barang VARCHAR(30),
-                submitter VARCHAR(255),
-                ket_pemutihan TEXT
-            )
-            BEGIN
-            DECLARE submitter_id VARCHAR(18);
+        // DB::unprepared(
+        //   "CREATE PROCEDURE tambah_pemutihan_langsung(
+        //         kode_barang VARCHAR(30),
+        //         submitter VARCHAR(255),
+        //         ket_pemutihan TEXT
+        //     )
+        //     BEGIN
+        //     DECLARE submitter_id VARCHAR(18);
 
-            SELECT pengguna.id_pengguna INTO submitter_id FROM pengguna WHERE pengguna.username = submitter;
-            INSERT INTO pemutihan
-            (kode_barang, submitter, tgl_pemutihan, ket_pemutihan)
-            VALUES(
-                kode_barang, submitter_id, NOW(), ket_pemutihan
-            );
+        //     SELECT pengguna.id_pengguna INTO submitter_id FROM pengguna WHERE pengguna.username = submitter;
+        //     INSERT INTO pemutihan
+        //     (kode_barang, submitter, tgl_pemutihan, ket_pemutihan)
+        //     VALUES(
+        //         kode_barang, submitter_id, NOW(), ket_pemutihan
+        //     );
 
-          END;"
-        );
+        //   END;"
+        // );
     }
 
     /**

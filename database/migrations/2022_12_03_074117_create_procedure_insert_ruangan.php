@@ -16,21 +16,21 @@ return new class extends Migration
     public function up()
     {
         DB::unprepared("DROP PROCEDURE IF EXISTS tambah_ruangan");
-        DB::unprepared(
-          "CREATE PROCEDURE tambah_ruangan(
-                id_ruangan CHAR(6),
-                nama_ruangan VARCHAR(50),
-                penanggung_jawab VARCHAR(50),
-                ket TEXT,
-                image VARCHAR(255)
-            )
-            BEGIN
-            INSERT INTO ruangan
-            (id_ruangan, nama_ruangan, penanggung_jawab, ket, image)
-            VALUES(id_ruangan, nama_ruangan, penanggung_jawab, ket, image);
+        // DB::unprepared(
+        //   "CREATE PROCEDURE tambah_ruangan(
+        //         id_ruangan CHAR(6),
+        //         nama_ruangan VARCHAR(50),
+        //         penanggung_jawab VARCHAR(50),
+        //         ket TEXT,
+        //         image VARCHAR(255)
+        //     )
+        //     BEGIN
+        //     INSERT INTO ruangan
+        //     (id_ruangan, nama_ruangan, penanggung_jawab, ket, image)
+        //     VALUES(id_ruangan, nama_ruangan, penanggung_jawab, ket, image);
 
-          END;"
-        );
+        //   END;"
+        // );
     }
 
     /**

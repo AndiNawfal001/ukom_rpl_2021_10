@@ -13,7 +13,7 @@
                             <th>Nama Ruangan</th>
                             <th>Penanggung Jawab</th>
                             <th>Ket</th>
-                            <th>Image</th>
+                            {{-- <th>Image</th> --}}
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -24,11 +24,11 @@
                     <td>{{ $key->nama_ruangan }}</td>
                     <td>{{ $key->penanggung_jawab }}</td>
                     <td>{{ $key->ket }}</td>
-                    <td>
+                    {{-- <td>
                         <a href="{{ asset('storage/'.$key->image) }}" target="_blank" class="group">
                             <img src="{{ asset('storage/'.$key->image) }}" class="w-40 h-32 shadow rounded-md group-hover:brightness-50 mask mask-squircle">
                         </a>
-                    </td>
+                    </td> --}}
                     <td>
                         <a href="ruangan/edit/{{$key->id_ruangan}}">
                             {{-- EDIT --}}

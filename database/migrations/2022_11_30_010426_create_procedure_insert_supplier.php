@@ -17,21 +17,21 @@ return new class extends Migration
     {
 
         DB::unprepared("DROP PROCEDURE IF EXISTS tambah_supplier");
-        DB::unprepared(
-          "CREATE PROCEDURE tambah_supplier(
-                id_supplier CHAR(6),
-                nama VARCHAR(255),
-                kontak VARCHAR(255),
-                alamat VARCHAR(255)
-            )
-            BEGIN
-            INSERT INTO supplier
-            (id_supplier, nama, kontak, alamat)
-            VALUES(
-                id_supplier, nama, kontak, alamat
-            );
+        // DB::unprepared(
+        //   "CREATE PROCEDURE tambah_supplier(
+        //         id_supplier CHAR(6),
+        //         nama VARCHAR(255),
+        //         kontak VARCHAR(255),
+        //         alamat VARCHAR(255)
+        //     )
+        //     BEGIN
+        //     INSERT INTO supplier
+        //     (id_supplier, nama, kontak, alamat)
+        //     VALUES(
+        //         id_supplier, nama, kontak, alamat
+        //     );
 
-          END;"
-        );
+        //   END;"
+        // );
     }
 };

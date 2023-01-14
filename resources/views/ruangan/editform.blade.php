@@ -28,7 +28,7 @@
         <input type="text" name="ket" class="input input-bordered"
         value="{{ old('ket', $edit->ket) }}"/>
     </div>
-    <div class="form-control">
+    {{-- <div class="form-control">
         <label class="label">
             <span class="label-text">Gambar</span>
         </label>
@@ -43,7 +43,7 @@
         <img class="img-preview object-scale-down w-1/2 md:w-1/4" alt="">
 
         @endif
-    </div>
+    </div> --}}
 
         <div class="form-control mt-6">
           <button type="submit" value="simpan" class="btn btn-primary">Simpan</button>

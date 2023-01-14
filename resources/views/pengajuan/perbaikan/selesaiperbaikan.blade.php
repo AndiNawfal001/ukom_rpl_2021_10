@@ -35,11 +35,11 @@
         <label class="label">
             <span class="label-text">Status Barang</span>
             </label>
-        <div class="flex items-center pl-4 rounded border">
+        <div class="flex items-center pl-4 rounded-t border">
             <input id="bordered-radio-1" type="radio" value="bisa diperbaiki" name="status_perbaikan" class="radio radio-success">
             <label for="bordered-radio-1" class="py-4 ml-2 text-success w-full text-sm font-medium ">Bisa Diperbaiki</label>
         </div>
-        <div class="flex items-center pl-4 rounded border">
+        <div class="flex items-center pl-4 rounded-b border">
             <input id="bordered-radio-2" type="radio" value="tidak bisa diperbaiki" name="status_perbaikan" class="radio radio-error">
             <label for="bordered-radio-2" class="py-4 ml-2 text-error w-full text-sm font-medium ">Tidak Bisa Diperbaiki</label>
         </div>

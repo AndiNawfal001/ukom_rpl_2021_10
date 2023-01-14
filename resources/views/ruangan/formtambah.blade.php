@@ -25,14 +25,14 @@
         </label>
         <input type="text" name="ket" class="input input-bordered" required/>
     </div>
-    <div class="form-control">
+    {{-- <div class="form-control">
         <label class="label">
             <span class="label-text">Gambar</span>
         </label>
         <input type="file" name="image" id="image" class="file-input file-input-bordered w-full max-w-xs" onchange="previewImage()" required/>
         <br>
         <img src="" class="img-preview object-scale-down w-1/2 md:w-1/4" alt="">
-    </div>
+    </div> --}}
 
         <div class="form-control mt-6">
           <button type="submit" value="simpan" class="btn btn-primary">Simpan</button>
