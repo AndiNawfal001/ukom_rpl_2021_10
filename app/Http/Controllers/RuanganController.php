@@ -20,20 +20,10 @@ class RuanganController extends Controller
         $search = $request->input('search');
 
         $data = DB::table('ruangan')
-        ->where('nama_ruangan','like',"%".$search."%")
-        ->orWhere('penanggung_jawab','like',"%".$search."%")
-        ->paginate(5);
+                ->where('nama_ruangan','like',"%".$search."%")
+                ->orWhere('penanggung_jawab','like',"%".$search."%")
+                ->paginate(5);
         return view('ruangan.index', compact('data' ));
-    }
-
-    private function getRuangan($id)
-    {
-        return collect(DB::select('SELECT * FROM ruangan WHERE id_ruangan = ?', [$id]))->firstOrFail();
-    }
-
-    public function formTambah(){
-
-        return view('ruangan.formtambah');
     }
 
     public function store(Request $request)
@@ -65,15 +55,8 @@ class RuanganController extends Controller
         }
     }
 
-    public function edit($id = null)
-    {
 
-        $edit = $this->getRuangan($id);
-
-        return view('ruangan.editform', compact('edit'));
-    }
-
-    public function editsimpan(Request $request)
+    public function update(Request $request, $id = null)
     {
         try {
 
@@ -89,15 +72,11 @@ class RuanganController extends Controller
                 'penanggung_jawab' => $request->input('penanggung_jawab'),
                 'ket' => $request->input('ket'),
                 // 'image' => $image,
-
-
             ];
-            $upd = DB::table('ruangan')
-                        ->where('id_ruangan', '=', $request->input('id_ruangan'))
+            DB::table('ruangan')
+                        ->where('id_ruangan', '=', $id)
                         ->update($data);
-            if($upd){
                 return redirect('ruangan');
-            }
             // dd("berhasil", $upd);
         } catch (\Exception $e) {
             return $e->getMessage();

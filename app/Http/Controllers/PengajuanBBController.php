@@ -13,7 +13,22 @@ class PengajuanBBController extends Controller
 {
     public function index(){
         $submitter = Auth::user()->id_pengguna;
-        $data = DB::select('SELECT * FROM pengajuan_bb WHERE submitter ='.$submitter);
+        $data = DB::table('pengajuan_bb')
+                ->where('submitter', $submitter)
+                ->paginate(10);
+
+        return view('pengajuan.barang_baru.index', compact('data'));
+    }
+
+    public function search(Request $request){
+        $submitter = Auth::user()->id_pengguna;
+        $search = $request->input('search');
+        $data = DB::table('pengajuan_bb')
+                ->where('submitter', $submitter)
+                ->where('nama_barang','like',"%".$search."%")
+                // ->orWhere('status_approval','like',"%".$search."%")
+                // ->orWhere('tgl','like',"%".$search."%")
+                ->paginate(10);
         return view('pengajuan.barang_baru.index', compact('data'));
     }
 

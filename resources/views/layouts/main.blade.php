@@ -8,7 +8,7 @@
   <title>MyStock</title>
 
 </head>
-<body class="min-h-screen bg-base-200 ">
+<body class="min-h-screen bg-base-200">
 @include('partials.navbar')
 
 <div class="lg:flex ">
@@ -21,7 +21,7 @@
 
     <div class="opacity-50 hidden fixed inset-0 z-10" id="sidebarBackdrop" ></div>
         <div id="main-content" class="h-full w-full  relative overflow-y-auto lg:ml-64" data-aos="fade-down">
-            <main>
+            <main >
                 @yield('container')
             </main>
         </div>
@@ -29,6 +29,7 @@
     </div>
 
 </div>
+@yield('modal')
 
 <script src="{{ asset('js/index.js') }}"></script>
 {{-- <script src="{{ "https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" }}"></script> --}}

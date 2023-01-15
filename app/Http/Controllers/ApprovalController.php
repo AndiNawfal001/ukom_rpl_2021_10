@@ -16,7 +16,20 @@ class ApprovalController extends Controller
     public function indexBarangBaru(){
 
         // data pending manajemen
-        $data = DB::select('SELECT * FROM pengajuan_bb');
+        $data = DB::table('pengajuan_bb')->paginate(10);
+
+        return view('approval.barang_baru.index', compact('data'));
+    }
+
+    public function searchindexBarangBaru(Request $request){
+        $search = $request->input('search');
+
+        // data pending manajemen
+        $data = DB::table('pengajuan_bb')
+                    ->where('nama_barang','like',"%".$search."%")
+                    ->orWhere('total_harga','like',"%".$search."%")
+                    ->orWhere('tgl','like',"%".$search."%")
+                    ->paginate(10);
 
         return view('approval.barang_baru.index', compact('data'));
     }
@@ -91,9 +104,17 @@ class ApprovalController extends Controller
 
 
     public function indexPerbaikan(){
-        $data = DB::select('SELECT * FROM perbaikan');
-        $admin = DB::select('SELECT * FROM perbaikan WHERE tgl_selesai_perbaikan IS NOT NULL');
-        return view('approval.perbaikan.index', compact('data', 'admin'));
+        $data = DB::table('perbaikan')->whereNotNull('tgl_selesai_perbaikan')->paginate(10);
+        return view('approval.perbaikan.index', compact('data'));
+    }
+
+    public function searchindexPerbaikan(Request $request){
+        $search = $request->input('search');
+        $data = DB::table('perbaikan')
+                    ->whereNotNull('tgl_selesai_perbaikan')
+                    ->where('kode_barang','like',"%".$search."%")
+                    ->paginate(10);
+        return view('approval.perbaikan.index', compact('data'));
     }
 
     private function getPengajuanPb($id)
@@ -174,7 +195,15 @@ class ApprovalController extends Controller
     //
 
     public function indexPemutihan(){
-        $data = DB::select('SELECT * FROM pemutihan');
+        $data = DB::table('pemutihan')->paginate(10);
+        return view('approval.pemutihan.index', compact('data'));
+    }
+
+    public function searchindexPemutihan(Request $request){
+        $search = $request->input('search');
+        $data = DB::table('pemutihan')
+                ->where('kode_barang','like',"%".$search."%")
+                ->paginate(10);
         return view('approval.pemutihan.index', compact('data'));
     }
 

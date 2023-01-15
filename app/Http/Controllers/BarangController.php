@@ -34,12 +34,28 @@ class BarangController extends Controller
     }
 
     public function detail($id=null){
-        // dd($id);
+        $id_barang = $id;
+        // dd('p');
         $data = DB::table('detail_barang')
             ->where('id_barang',$id)
             ->paginate(10);
 
         // dd($data);
-        return view('barang.detail', compact('data'));
+        return view('barang.detail', compact('id_barang','data'));
+    }
+    public function searchdetail(Request $request, $id=null){
+        // dd($id);
+        $id_barang = $id;
+        $search = $request->input('search');
+
+        $data = DB::table('detail_barang')
+            ->where('id_barang',$id)
+            ->where('kode_barang','like',"%".$search."%")
+            ->orWhere('kondisi_barang','like',"%".$search."%")
+            ->orWhere('status','like',"%".$search."%")
+            ->paginate(10);
+
+        // dd($data);
+        return view('barang.detail', compact('id_barang','data'));
     }
 }

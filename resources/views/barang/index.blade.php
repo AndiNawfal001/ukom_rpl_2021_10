@@ -61,8 +61,8 @@
 
 
             </table>
-            <div class="flex flex-row-reverse">
-                <div class=" w-1/5">
+            <div class="lg:flex flex-row-reverse">
+                <div >
                     {{ $data->links() }}
                 </div>
             </div>

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Arr;
-
+use RealRashid\SweetAlert\Facades\Alert;
 
 class SupplierController extends Controller
 {
@@ -23,16 +23,6 @@ class SupplierController extends Controller
                 ->orWhere('alamat','like',"%".$search."%")
                 ->paginate(5);
         return view('supplier.index', compact('data'));
-    }
-
-    public function formTambah(){
-        // dd($data);
-        return view('supplier.formtambah');
-    }
-
-    private function getSupplier($id)
-    {
-        return collect(DB::select('SELECT * FROM supplier WHERE id_supplier = ?', [$id]))->firstOrFail();
     }
 
     public function store(Request $request)
@@ -58,28 +48,22 @@ class SupplierController extends Controller
         }
     }
 
-    public function edit($id = null)
-    {
-
-        $edit = $this->getSupplier($id);
-
-        return view('supplier.editform', compact('edit'));
-    }
-
-    public function editsimpan(Request $request)
+    public function update(Request $request, $id = null)
     {
         try {
+            // dd($request->all());
             $data = [
-                // 'nama'   => $request->input('nama'),
+                'nama'   => $request->input('nama'),
                 'kontak' => $request->input('kontak'),
                 'alamat' => $request->input('alamat')
             ];
             DB::table('supplier')
-                        ->where('id_supplier', '=', $request->input('id_supplier'))
+                        ->where('id_supplier', '=', $id)
                         ->update($data);
+
+            // Alert::success('Success Title', 'Success Message');
             return redirect('supplier');
 
-            // dd("berhasi", $upd);
         } catch (\Exception $e) {
             return $e->getMessage();
             dd("gagal");

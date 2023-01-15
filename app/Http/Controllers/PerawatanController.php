@@ -11,14 +11,40 @@ use Illuminate\Support\Facades\Auth;
 
 class PerawatanController extends Controller{
     public function index(){
-        $data = DB::select('SELECT * FROM perawatan');
+        $data = DB::table('perawatan')->paginate(5);
+        return view('perawatan.index', compact('data'));
+    }
+
+    public function search(Request $request){
+        $search = $request->input('search');
+
+        $data = DB::table('perawatan')
+                ->where('kode_barang','like',"%".$search."%")
+                ->orWhere('tgl_perawatan','like',"%".$search."%")
+                ->orWhere('nama_pelaksana','like',"%".$search."%")
+                ->paginate(5);
         return view('perawatan.index', compact('data'));
     }
 
     public function pilihbarangPerawatan(){
-        $data = DB::select('SELECT * FROM detail_barang WHERE kondisi_barang = "baik" AND status = "aktif" ');
+        $data = DB::table('detail_barang')
+                ->where('kondisi_barang','baik')
+                ->Where('status','aktif')
+                ->paginate(10);
         return view('perawatan.pilihbarang', compact('data'));
     }
+
+    public function searchpilihbarangPerawatan(Request $request){
+        $search = $request->input('search');
+
+        $data = DB::table('detail_barang')
+                ->where('kondisi_barang','baik')
+                ->where('status','aktif')
+                ->where('kode_barang','like',"%".$search."%")
+                ->paginate(10);
+        return view('perawatan.pilihbarang', compact('data'));
+    }
+
 
     private function databarangPerawatan($id)
     {

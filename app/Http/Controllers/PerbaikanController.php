@@ -13,8 +13,20 @@ class PerbaikanController extends Controller
 {
     public function index(){
         $submitter= Auth::user()->id_pengguna;
+        $data = DB::table('perbaikan')
+                ->where('submitter', $submitter)
+                ->paginate(10);
+        return view('pengajuan.perbaikan.index', compact('data' ));
+    }
 
-        $data = DB::select('SELECT * FROM perbaikan WHERE submitter ='. $submitter);
+    public function search(Request $request){
+        $submitter= Auth::user()->id_pengguna;
+        $search = $request->input('search');
+
+        $data = DB::table('perbaikan')
+                ->where('submitter', $submitter)
+                ->where('kode_barang','like',"%".$search."%")
+                ->paginate(10);
         return view('pengajuan.perbaikan.index', compact('data' ));
     }
 
@@ -27,7 +39,7 @@ class PerbaikanController extends Controller
         return view('pengajuan.perbaikan.pilihbarang', compact('data'));
     }
 
-    public function search(Request $request){
+    public function searchpilihbarang(Request $request){
         $search = $request->input('search');
         $data = DB::table('barang_masuk_perbaikan')
         ->select('*')

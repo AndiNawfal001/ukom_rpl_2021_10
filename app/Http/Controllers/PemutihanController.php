@@ -11,7 +11,9 @@ class PemutihanController extends Controller
     public function index(){
         $submitter = Auth::user()->id_pengguna;
 
-        $data = DB::select('SELECT * FROM pemutihan WHERE submitter ='.$submitter);
+        $data = DB::table('pemutihan')
+                ->where('submitter', $submitter)
+                ->paginate(10);
         return view('pengajuan.pemutihan.index', compact('data'));
     }
 
@@ -95,9 +97,12 @@ class PemutihanController extends Controller
 
     public function pilihbarang()
     {
+        $submitter = Auth::user()->id_pengguna;
+
         $data = DB::table('perbaikan_pemutihan')
         ->select('*')
         ->whereNull('kode_barang')
+        ->where('submitter', $submitter)
         ->where('approve_perbaikan', 'rusak')
         ->paginate(10);
         return view('pengajuan.pemutihan.pilihbarang', compact('data'));
@@ -105,14 +110,16 @@ class PemutihanController extends Controller
 
     public function search(Request $request)
     {
+        $submitter = Auth::user()->id_pengguna;
         $search = $request->input('search');
         $data = DB::table('perbaikan_pemutihan')
         ->select('*')
         ->whereNull('kode_barang')
+        ->where('submitter', $submitter)
         ->where('approve_perbaikan', 'rusak')
-        ->where('kode_barang','like',"%".$search."%")
-        ->orWhere('nama_barang','like',"%".$search."%")
+        ->orWhere('asli','like',"%".$search."%")
         ->paginate(10);
+        dd($data);
         return view('pengajuan.pemutihan.pilihbarang', compact('data'));
     }
 
