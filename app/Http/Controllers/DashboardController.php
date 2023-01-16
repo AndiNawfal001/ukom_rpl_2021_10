@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class DashboardController extends Controller
 {
     public function dashboard () {
-        $submitter = Auth::user()->id_pengguna;
+        $submitter = Auth::user()?->id_pengguna;
 
         $barang_masuk = DB::table('barang_masuk')->sum('jml_masuk');
         // dd($barang_masuk);

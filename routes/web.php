@@ -50,7 +50,9 @@ Route::post('/levelUser/simpan',[LevelUserController::class,'simpan']);
 
 Route::get('login',[LoginController::class,'login'])->name('login');
 Route::post('/login',[LoginController::class,'authenticate']);
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
 
 //Route Group untuk menggabungkan banyaknya middleware
 Route::group(['middleware' => ['auth','level:admin,manajemen']], function (){
@@ -81,8 +83,8 @@ Route::get('/supplier/hapus/{id}',[SupplierController::class,'hapus']);
 
 Route::get('/pengguna',[ PenggunaController::class,'index']);
 Route::get('/pengguna/search',[ PenggunaController::class,'search']);
-Route::get('/pengguna/tambah',[ PenggunaController::class,'formTambah']);
-Route::post('/pengguna/simpan',[ PenggunaController::class,'store']);
+// Route::get('/pengguna/tambah',[ PenggunaController::class,'formTambah']);
+Route::post('/pengguna/tambah',[ PenggunaController::class,'store']);
 Route::get('/pengguna/edit/{id}',[PenggunaController::class,'edit']);
 Route::post('/pengguna/edit/editsimpan',[ PenggunaController::class,'editsimpan']);
 Route::get('/pengguna/hapus/{id}',[PenggunaController::class,'hapus']);

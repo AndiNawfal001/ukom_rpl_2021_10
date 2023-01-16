@@ -131,6 +131,7 @@
 
         <ul class="pt-4 mt-4 space-y-2 place-content-end lg:hidden">
             <li class="transition select-none text-center">
+                @auth
                 <span >
                     {{Auth::user()->username}}
                     -
@@ -142,6 +143,7 @@
                         {{ Auth::user()->level_user->nama_level }}
                     </span>
                 </span>
+                @endauth
             </li>
         </ul>
        </div>

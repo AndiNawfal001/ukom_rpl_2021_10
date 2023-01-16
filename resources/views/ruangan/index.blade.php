@@ -3,6 +3,7 @@
 
 <div class="pt-6 px-4">
     <div class="bg-base-100 shadow rounded-md p-4 sm:p-6 xl:p-8 ">
+
         <h1 class="text-xl pb-3 font-semibold leading-loose">Daftar Ruangan</h1>
         <div class="lg:flex justify-between mb-2">
             <form action="/ruangan/search" method="GET">
@@ -18,7 +19,7 @@
             </form>
             <div class="">
                 <label for="tambahruangan" class="btn btn-success gap-2">
-                    Tambah Supplier <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Tambah Ruangan <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 </label>
             </div>
         </div>

@@ -125,8 +125,10 @@ class PemutihanController extends Controller
 
     public function pemutihan($id = null)
     {
+        $submitter = Auth::user()->id_pengguna;
+
         $pemutihan = $this->inputDataPemutihan($id);
-        return view('pengajuan.pemutihan.tambah', compact('pemutihan'));
+        return view('pengajuan.pemutihan.tambah', compact('pemutihan', 'submitter'));
     }
 
 

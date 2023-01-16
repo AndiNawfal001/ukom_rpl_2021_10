@@ -17,12 +17,10 @@
                         </div>
                     </div>
             </form>
-            <a href="/pengguna/tambah">
-                <button type="submit" class="btn btn-md btn-success gap-2">
-                    Tambah Pengguna
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                </button>
-            </a>
+            <label for="tambahpengguna" class="btn btn-success gap-2">
+                Tambah Ruangan <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </label>
+
         </div>
 
         <div class="lg:flex gap-4 ">
@@ -57,12 +55,15 @@
                                 </div>
                             </div>
                     </form>
-                    <a href="/pengguna/tambah">
+                    {{-- <a href="/pengguna/tambah">
                         <button type="submit" class="btn btn-md btn-success gap-2">
                             Tambah Pengguna
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         </button>
-                    </a>
+                    </a> --}}
+                    <label for="tambahpengguna" class="btn btn-success gap-2">
+                        Tambah Pengguna <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </label>
                 </div>
                 <div class="">
                     <div class="overflow-x-auto overflow-y-auto">
@@ -119,7 +120,94 @@
     <br>
 </div>
 
+@endsection
 
+@section('modal')
+{{-- TAMBAH Ruangan --}}
+<input type="checkbox" id="tambahpengguna" class="modal-toggle" />
+<label for="tambahpengguna" class="modal cursor-pointer">
+<div class="max-h-screen w-4/5 overflow-y-auto">
+    <div class="bg-base-100 rounded-xl p-5 w-full" for="">
+        <form action="pengguna/tambah" method="POST">
+            @csrf
+            <h2 class="text-2xl font-bold">Tambah Pengguna</h2>
+            <br>
+            <div class="lg:flex flex-row gap-5">
+                <div class="basis-1/2">
+                    <div class="form-control">
+                        <label class="label">
+                        <span class="label-text">Username</span>
+                        </label>
+                        <input type="text" name="username" class="input input-bordered" value="{{ old('username') }}"  required/>
 
+                        @error('username')
+                        <p class="text-red-500">{{ $message }}</p>
+                    @enderror
 
+                    </div>
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Level User</span>
+                        </label>
+                        <select class="select select-bordered w-full max-w-xs" name="levelUser" required>
+                            <option disabled selected>-- Pilih Level --</option>
+                            @foreach ($levelUser as $item)
+                                <option value="{{ $item->nama_level }}" {{ old('levelUser') == $item->nama_level ? 'selected' : null}}>{{ $item->nama_level }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-control">
+                        <label class="label">
+                        <span class="label-text">Email</span>
+                        </label>
+                        <input type="text" name="email" class="input input-bordered" value="{{ old('email') }}"  required/>
+                        @error('email')
+
+                        <p class="text-red-500">{{ $message }}</p>
+
+                        @enderror
+                    </div>
+                    <div class="form-control">
+                        <label class="label">
+                        <span class="label-text">Password</span>
+                        </label>
+                        <input type="text" name="password" class="input input-bordered" required/>
+                    </div>
+                </div>
+                <div class="basis-1/2">
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">NIP</span>
+                        </label>
+                        <input type="text" name="nip" class="input input-bordered" value="{{ old('nip') }}" placeholder="Silahkan dikosongkan jika user admin"/>
+                        @error('nip')
+                            <p class="text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Nama</span>
+                        </label>
+                        <input type="text" name="nama" class="input input-bordered" value="{{ old('nama') }}"  required/>
+                    </div>
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Kontak</span>
+                        </label>
+                        <input type="text" name="kontak" class="input input-bordered" value="{{ old('kontak') }}"  placeholder="ex = 087654321234" required/>
+                        @error('kontak')
+
+                        <p class="text-red-500">{{ $message }}</p>
+
+                        @enderror
+                    </div>
+                </div>
+            </div>
+            <div class="form-control mt-6">
+                <button type="submit" value="simpan" class="btn btn-primary">Simpan</button>
+            </div>
+        </form>
+    </div>
+</div>
+</label>
 @endsection

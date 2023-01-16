@@ -16,16 +16,44 @@ class RuanganSeeder extends Seeder
      */
     public function run()
     {
-        // $ruangan = collect([
-        //     [
-        //         'id_ruangan' => 'RGN001',
-        //         'nama_ruangan' => 'D12',
-        //         'penanggung_jawab' => 'Km nya',
-        //         'ket' => 'Butuh Meja',
+        $ruangan = collect([
+            [
+                'id_ruangan' => 'RGN001',
+                'nama_ruangan' => 'D1',
+                'penanggung_jawab' => 'Km nya',
+                'ket' => 'Butuh Meja',
 
-        //     ],
+            ],
+            [
+                'id_ruangan' => 'RGN002',
+                'nama_ruangan' => 'D2',
+                'penanggung_jawab' => 'Km nya',
+                'ket' => 'Butuh Meja',
 
-        // ]);
-        // $ruangan->each(fn ($r) => DB::table('ruangan')->insert($r));
+            ],
+            [
+                'id_ruangan' => 'RGN003',
+                'nama_ruangan' => 'D3',
+                'penanggung_jawab' => 'Km nya',
+                'ket' => 'Butuh Meja',
+
+            ],
+            [
+                'id_ruangan' => 'RGN004',
+                'nama_ruangan' => 'D4',
+                'penanggung_jawab' => 'Km nya',
+                'ket' => 'Butuh Meja',
+
+            ],
+            [
+                'id_ruangan' => 'RGN005',
+                'nama_ruangan' => 'D5',
+                'penanggung_jawab' => 'Km nya',
+                'ket' => 'Butuh Meja',
+
+            ],
+
+        ]);
+        $ruangan->each(fn ($r) => DB::table('ruangan')->insert($r));
     }
 }

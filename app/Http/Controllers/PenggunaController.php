@@ -10,6 +10,11 @@ use Illuminate\Support\Collection;
 
 class PenggunaController extends Controller
 {
+    private function getlevelUser(): Collection
+    {
+        return collect(DB::select('SELECT * FROM level_user'));
+    }
+
     public function index(){
         $data = DB::table('banyak_pengguna')
         ->select('*')
@@ -19,8 +24,9 @@ class PenggunaController extends Controller
         $admin = DB::table('admin')->count();
         $manajemen = DB::table('manajemen')->count();
         $kaprog = DB::table('kaprog')->count();
+        $levelUser = $this->getlevelUser();
 
-        return view('pengguna.index', compact('data', 'admin', 'manajemen', 'kaprog'));
+        return view('pengguna.index', compact('data', 'admin', 'manajemen', 'kaprog', 'levelUser'));
     }
 
     public function search(Request $request){
@@ -37,23 +43,26 @@ class PenggunaController extends Controller
         $admin = DB::table('admin')->count();
         $manajemen = DB::table('manajemen')->count();
         $kaprog = DB::table('kaprog')->count();
-
-        return view('pengguna.index', compact('data', 'admin', 'manajemen', 'kaprog'));
-    }
-
-    private function getlevelUser(): Collection
-    {
-        return collect(DB::select('SELECT * FROM level_user'));
-    }
-
-    public function formTambah(){
         $levelUser = $this->getlevelUser();
 
-        return view('pengguna.formtambah', compact('levelUser'));
+        return view('pengguna.index', compact('data', 'admin', 'manajemen', 'kaprog', 'levelUser'));
     }
+
+
+    // public function formTambah(){
+    //     $levelUser = $this->getlevelUser();
+
+    //     return view('pengguna.formtambah', compact('levelUser'));
+    // }
 
     public function store(Request $request)
     {
+        $request->validate([
+            'email' => 'required|unique:pengguna,email|email:dns',
+            'nip' => 'max:18',
+            'username' => 'required|unique:pengguna,username',
+            'kontak' => 'required|numeric'
+        ]) ;
         try {
             // dd($request->all());
             $tambahUser = DB::insert("CALL tambah_user(:username, :levelUser, :email, :password, :nip, :nama, :kontak)", [

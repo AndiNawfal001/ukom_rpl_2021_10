@@ -61,7 +61,7 @@ class SupplierController extends Controller
                         ->where('id_supplier', '=', $id)
                         ->update($data);
 
-            // Alert::success('Success Title', 'Success Message');
+            Alert::success('Success Title', 'Success Message');
             return redirect('supplier');
 
         } catch (\Exception $e) {
@@ -76,6 +76,7 @@ class SupplierController extends Controller
                             ->where('id_supplier',$id)
                             ->delete();
             if($hapus){
+                Alert::question('Question Title', 'Question Message');
                 return redirect('supplier');
             }
         }catch(\Exception $e){

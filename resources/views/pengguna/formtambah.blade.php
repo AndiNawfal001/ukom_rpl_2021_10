@@ -13,7 +13,12 @@
                     <label class="label">
                     <span class="label-text">Username</span>
                     </label>
-                    <input type="text" name="username" class="input input-bordered" required/>
+                    <input type="text" name="username" class="input input-bordered" value="{{ old('username') }}"  required/>
+
+                    @error('username')
+                    <p class="text-red-500">{{ $message }}</p>
+                @enderror
+
                 </div>
                 <div class="form-control">
                     <label class="label">
@@ -22,7 +27,7 @@
                     <select class="select select-bordered w-full max-w-xs" name="levelUser" required>
                         <option disabled selected>-- Pilih Level --</option>
                         @foreach ($levelUser as $item)
-                            <option value="{{ $item->nama_level }} ">{{ $item->nama_level }}</option>
+                            <option value="{{ $item->nama_level }}" {{ old('levelUser') == $item->nama_level ? 'selected' : null}}>{{ $item->nama_level }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -30,7 +35,12 @@
                     <label class="label">
                     <span class="label-text">Email</span>
                     </label>
-                    <input type="text" name="email" class="input input-bordered" required/>
+                    <input type="text" name="email" class="input input-bordered" value="{{ old('email') }}"  required/>
+                    @error('email')
+
+                    <p class="text-red-500">{{ $message }}</p>
+
+                    @enderror
                 </div>
                 <div class="form-control">
                     <label class="label">
@@ -44,19 +54,27 @@
                     <label class="label">
                         <span class="label-text">NIP</span>
                     </label>
-                    <input type="text" name="nip" class="input input-bordered" placeholder="Silahkan dikosongkan jika user admin"/>
+                    <input type="text" name="nip" class="input input-bordered" value="{{ old('nip') }}" placeholder="Silahkan dikosongkan jika user admin"/>
+                    @error('nip')
+                        <p class="text-red-500">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="form-control">
                     <label class="label">
                         <span class="label-text">Nama</span>
                     </label>
-                    <input type="text" name="nama" class="input input-bordered" required/>
+                    <input type="text" name="nama" class="input input-bordered" value="{{ old('nama') }}"  required/>
                 </div>
                 <div class="form-control">
                     <label class="label">
                         <span class="label-text">Kontak</span>
                     </label>
-                    <input type="text" name="kontak" class="input input-bordered" placeholder="ex = 0876-5432-1234" required/>
+                    <input type="text" name="kontak" class="input input-bordered" value="{{ old('kontak') }}"  placeholder="ex = 087654321234" required/>
+                    @error('kontak')
+
+                    <p class="text-red-500">{{ $message }}</p>
+
+                    @enderror
                 </div>
             </div>
         </div>

@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('container')
-
+@include('sweetalert::alert')
 <div class="pt-6 px-4">
     <div class="bg-base-100 shadow rounded-md p-4 sm:p-6 xl:p-8 ">
         <h1 class="text-xl pb-3 font-semibold leading-loose">Daftar Supplier</h1>

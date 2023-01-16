@@ -42,10 +42,16 @@ class PengajuanBBController extends Controller
         return collect(DB::select('SELECT * FROM kaprog'));
     }
 
+    private function getRuangan(): Collection
+    {
+        return collect(DB::select('SELECT * FROM ruangan'));
+    }
+
     public function formTambah(){
         $manajemen = $this->getManajemen();
         $kaprog = $this->getKaprog();
-        return view('pengajuan.barang_baru.formtambah', compact('manajemen', 'kaprog' ));
+        $ruangan = $this->getRuangan();
+        return view('pengajuan.barang_baru.formtambah', compact('manajemen', 'kaprog', 'ruangan' ));
     }
 
     private function getPengajuanBb($id)
@@ -55,6 +61,9 @@ class PengajuanBBController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'nama_barang' => 'required|unique:pengajuan_bb,nama_barang'
+        ]) ;
         try {
             $submitter_id = Auth::user()->id_pengguna;
 

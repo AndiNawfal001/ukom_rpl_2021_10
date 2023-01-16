@@ -41,6 +41,7 @@
                         <div class="p-3 basis-4/4 w-full md:basis-3/4 bg-base-100 grid place-content-center md:place-content-start">
                             <a href="{{ asset('storage/'.$detail->gambar_pelaksanaan) }}" target="_blank" class="group">
                                 <img src="{{ asset('storage/'.$detail->gambar_pelaksanaan) }}" class="w-52 shadow  group-hover:brightness-50 ">
+                            </a>
                         </div>
                     </div>
                     <div class="bg-primary-content flex border">

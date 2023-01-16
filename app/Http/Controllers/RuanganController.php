@@ -22,6 +22,7 @@ class RuanganController extends Controller
         $data = DB::table('ruangan')
                 ->where('nama_ruangan','like',"%".$search."%")
                 ->orWhere('penanggung_jawab','like',"%".$search."%")
+                ->orWhere('ket','like',"%".$search."%")
                 ->paginate(5);
         return view('ruangan.index', compact('data' ));
     }

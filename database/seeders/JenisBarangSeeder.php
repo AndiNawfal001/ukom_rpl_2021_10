@@ -19,17 +19,14 @@ class JenisBarangSeeder extends Seeder
             [
                 'id_jenis_brg' => 'JB001',
                 'nama_jenis' => 'Elektronik'
-
             ],
             [
                 'id_jenis_brg' => 'JB002',
                 'nama_jenis' => 'Furniture'
-
             ],
             [
                 'id_jenis_brg' => 'JB003',
                 'nama_jenis' => 'Alat Tulis'
-
             ],
 
         ]);

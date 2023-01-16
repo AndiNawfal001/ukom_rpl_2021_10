@@ -15,6 +15,9 @@
                 <span class="label-text">Nama Barang</span>
                 </label>
                 <input type="text" name="nama_barang" class="input input-bordered" required/>
+                @error('nama_barang')
+                        <p class="text-red-500">{{ $message }}</p>
+                @enderror
             </div>
             <div class="form-control">
                 <label class="label">
@@ -47,8 +50,19 @@
                 <label class="label">
                     <span class="label-text">Untuk Ruangan..</span>
                 </label>
-                <input type="text" name="ruangan" class="input input-bordered" required/>
+                <select class="select select-bordered w-full max-w-xs" name="ruangan" required>
+                    <option disabled selected>-- Pilih Ruangan --</option>
+                    @foreach ($ruangan as $item)
+                        <option value="{{ $item->nama_ruangan }} ">{{ $item->nama_ruangan }}</option>
+                    @endforeach
+                </select>
             </div>
+            {{-- <div class="form-control">
+                <label class="label">
+                    <span class="label-text">Untuk Ruangan..</span>
+                </label>
+                <input type="text" name="ruangan" class="input input-bordered" required/>
+            </div> --}}
         </div>
     </div>
 
