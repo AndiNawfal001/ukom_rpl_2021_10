@@ -42,13 +42,16 @@
                         <td>{{ $item->nama_barang }}</td>
                         <td>{{ $item->kode_barang }}</td>
                         <td>
-                            <a href="/pengajuan/PB/perbaikan/{{$item->kode_barang}}">
-                            <div class="tooltip tooltip-warning" data-tip="lakukan perbaikan">
+                            {{-- <a href="/pengajuan/PB/perbaikan/{{$item->kode_barang}}"> --}}
+                            {{-- <div class="tooltip tooltip-warning" data-tip="lakukan perbaikan">
                                 <button class="btn btn-sm btn-warning btn-square btn-outline">
                                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11"></path></svg>
                                 </button>
-                            </div>
-                            </a>
+                            </div> --}}
+                            {{-- </a> --}}
+                            <label for="perbaikan{{ $item->kode_barang }}" class="btn btn-sm btn-warning btn-square btn-outline">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11"></path></svg>
+                            </label>
                         </td>
                         {{-- <td>{{ $key->password }}</td> --}}
                         @empty
@@ -76,4 +79,48 @@
 
 
 
+@endsection
+
+@section('modal')
+@foreach($data as $key)
+<input type="checkbox" id="perbaikan{{ $key->kode_barang }}" class="modal-toggle" />
+<label for="perbaikan{{ $key->kode_barang }}" class="modal cursor-pointer">
+    <label class="modal-box relative" for="">
+        <form action="/pengajuan/PB/perbaikan/simpanperbaikan" method="POST">
+            @csrf
+            <div class="flex justify-between">
+                <div class="order-last">
+                    Kode barang :
+                    <div class="btn btn-sm btn-outline no-animation">{{ $key->kode_barang }}</div>
+
+                </div>
+                <h2 class="text-2xl font-bold">Form Perbaikan</h2>
+            </div>
+            <br>
+            <div class="form-control hidden">
+                <label class="label">
+                <span class="label-text">Kode Barang</span>
+                </label>
+                <input type="text" name="kode_barang" class="input input-bordered "
+                value="{{ old('nama', $key->kode_barang) }}"/>
+            </div>
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">Dari Ruangan..</span>
+                </label>
+                <input type="text" name="ruangan" class="input input-bordered" required/>
+            </div>
+            <div class="form-control">
+                <label class="label">
+                <span class="label-text">Keluhan</span>
+                </label>
+                <textarea name="keluhan" cols="20" rows="5" class="textarea textarea-bordered" " required></textarea>
+            </div>
+                <div class="form-control mt-6">
+                <button type="submit" value="simpan" class="btn btn-primary">Simpan</button>
+                </div>
+        </form>
+    </label>
+</label>
+@endforeach
 @endsection

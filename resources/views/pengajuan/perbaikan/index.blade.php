@@ -53,13 +53,16 @@
                             ">{{ $key->approve_perbaikan }}</td>
                             <td>
                                 @if($key->tgl_selesai_perbaikan == NULL)
-                                    <a href="/PB/selesaiPerbaikan/{{$key->id_perbaikan}}">
+                                    {{-- <a href="/PB/selesaiPerbaikan/{{$key->id_perbaikan}}">
                                         <div class="tooltip tooltip-warning" data-tip="Selesai perbaikan">
                                         <button class="btn btn-sm  btn-warning btn-square btn-outline">
                                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                                         </button>
                                         </div>
-                                    </a>
+                                    </a> --}}
+                                    <label for="tambahperbaikan{{$key->id_perbaikan}}" class="btn btn-sm  btn-warning btn-square btn-outline">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    </label>
                                 @else
                                 <a href="PB/detail/{{$key->id_perbaikan}}">
                                     {{-- INFO --}}
@@ -94,4 +97,86 @@
 </div>
 
 
+@endsection
+
+@section('modal')
+    @foreach($data as $key)
+    <input type="checkbox" id="tambahperbaikan{{$key->id_perbaikan}}" class="modal-toggle" />
+    <div class="modal">
+        <div class="modal-box w-11/12 max-w-5xl">
+            <form action="/PB/selesaiPerbaikan/simpanSelesaiPerbaikan" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-action fixed right-5 top-0">
+                    <label for="tambahperbaikan{{$key->id_perbaikan}}" class="btn btn-sm btn-square">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </label>
+                </div>
+                <div class=" ">
+                    <h2 class="text-2xl font-bold">Form Selesai Perbaikan</h2>
+                    <div class=" ">
+                        Kode barang :
+                        <div class="btn btn-sm btn-outline no-animation">{{ $key->kode_barang }}</div>
+                    </div>
+                </div>
+                <br>
+                <div class="form-control hidden">
+                    <label class="label">
+                    <span class="label-text">Kode Barang</span>
+                    </label>
+                    <input type="text" name="id_perbaikan" class="input input-bordered "
+                    value="{{ old('nama', $key->id_perbaikan) }}"/>
+                </div>
+                <div class="lg:flex flex-row gap-5">
+                    <div class="basis-1/2">
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text">Nama Teknisi</span>
+                            </label>
+                            <input type="text" name="nama_teknisi" class="input input-bordered" required/>
+                        </div>
+                        <div class="form-control">
+                            <label class="label">
+                            <span class="label-text">Penyebab Keluhan</span>
+                            </label>
+                            <textarea name="penyebab_keluhan" cols="20" rows="5" class="textarea textarea-bordered" required></textarea>
+                        </div>
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text">Gambar saat perbaikan</span>
+                            </label>
+                            <input type="file" name="image" id="image" class="file-input file-input-bordered w-full max-w-xs" onchange="previewImage()" required/>
+                            <br>
+                            <img src="" class="img-preview object-scale-down w-1/2 md:w-1/4" alt="">
+                        </div>
+                    </div>
+                    <div class="basis-1/2">
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text">Status Barang</span>
+                                </label>
+                            <div class="flex items-center pl-4 rounded-t border">
+                                <input id="bordered-radio-1" type="radio" value="bisa diperbaiki" name="status_perbaikan" class="radio radio-success">
+                                <label for="bordered-radio-1" class="py-4 ml-2 text-success w-full text-sm font-medium ">Bisa Diperbaiki</label>
+                            </div>
+                            <div class="flex items-center pl-4 rounded-b border">
+                                <input id="bordered-radio-2" type="radio" value="tidak bisa diperbaiki" name="status_perbaikan" class="radio radio-error">
+                                <label for="bordered-radio-2" class="py-4 ml-2 text-error w-full text-sm font-medium ">Tidak Bisa Diperbaiki</label>
+                            </div>
+                        </div>
+                        <div class="form-control">
+                            <label class="label">
+                            <span class="label-text">Solusi Keluhan</span>
+                            </label>
+                            <textarea name="solusi_barang" cols="20" rows="5" class="textarea textarea-bordered" placeholder="Silahkan Dikosongkan Jika Status Barang tidak bisa diperbaiki" ></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                    <div class="form-control mt-6">
+                    <button type="submit" value="simpan" class="btn btn-primary">Simpan</button>
+                    </div>
+            </form>
+        </div>
+    </div>
+    @endforeach
 @endsection

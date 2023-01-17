@@ -11,27 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class PengajuanBBController extends Controller
 {
-    public function index(){
-        $submitter = Auth::user()->id_pengguna;
-        $data = DB::table('pengajuan_bb')
-                ->where('submitter', $submitter)
-                ->paginate(10);
-
-        return view('pengajuan.barang_baru.index', compact('data'));
-    }
-
-    public function search(Request $request){
-        $submitter = Auth::user()->id_pengguna;
-        $search = $request->input('search');
-        $data = DB::table('pengajuan_bb')
-                ->where('submitter', $submitter)
-                ->where('nama_barang','like',"%".$search."%")
-                // ->orWhere('status_approval','like',"%".$search."%")
-                // ->orWhere('tgl','like',"%".$search."%")
-                ->paginate(10);
-        return view('pengajuan.barang_baru.index', compact('data'));
-    }
-
     private function getManajemen(): Collection
     {
         return collect(DB::select('SELECT * FROM manajemen'));
@@ -47,12 +26,38 @@ class PengajuanBBController extends Controller
         return collect(DB::select('SELECT * FROM ruangan'));
     }
 
-    public function formTambah(){
+    public function index(){
         $manajemen = $this->getManajemen();
         $kaprog = $this->getKaprog();
         $ruangan = $this->getRuangan();
-        return view('pengajuan.barang_baru.formtambah', compact('manajemen', 'kaprog', 'ruangan' ));
+        $submitter = Auth::user()->id_pengguna;
+        $data = DB::table('pengajuan_bb')
+                ->where('submitter', $submitter)
+                ->paginate(10);
+
+        return view('pengajuan.barang_baru.index', compact('data', 'manajemen', 'kaprog', 'ruangan'));
     }
+
+    public function search(Request $request){
+        $manajemen = $this->getManajemen();
+        $kaprog = $this->getKaprog();
+        $ruangan = $this->getRuangan();
+        $submitter = Auth::user()->id_pengguna;
+        $search = $request->input('search');
+        $data = DB::table('pengajuan_bb')
+                ->where('submitter', $submitter)
+                ->where('nama_barang','like',"%".$search."%")
+                // ->orWhere('status_approval','like',"%".$search."%")
+                // ->orWhere('tgl','like',"%".$search."%")
+                ->paginate(10);
+        return view('pengajuan.barang_baru.index', compact('data', 'manajemen', 'kaprog', 'ruangan'));
+    }
+
+
+    // public function formTambah(){
+
+    //     return view('pengajuan.barang_baru.formtambah', compact('manajemen', 'kaprog', 'ruangan' ));
+    // }
 
     private function getPengajuanBb($id)
     {
@@ -103,7 +108,7 @@ class PengajuanBBController extends Controller
     }
 
 
-    public function editsimpan(Request $request)
+    public function update(Request $request, $id = null)
     {
         try {
             $data = [
@@ -114,7 +119,7 @@ class PengajuanBBController extends Controller
                 'jumlah' => $request->input('jumlah')
             ];
             $upd = DB::table('pengajuan_bb')
-                        ->where('id_pengajuan_bb', '=', $request->input('id_pengajuan_bb'))
+                        ->where('id_pengajuan_bb', '=', $id)
                         ->update($data);
             if($upd){
                 return redirect('pengajuan/BB');

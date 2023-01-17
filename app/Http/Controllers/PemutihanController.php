@@ -105,7 +105,7 @@ class PemutihanController extends Controller
         ->where('submitter', $submitter)
         ->where('approve_perbaikan', 'rusak')
         ->paginate(10);
-        return view('pengajuan.pemutihan.pilihbarang', compact('data'));
+        return view('pengajuan.pemutihan.pilihbarang', compact('data', 'submitter'));
     }
 
     public function search(Request $request)

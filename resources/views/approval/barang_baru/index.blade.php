@@ -4,6 +4,7 @@
 <div class="pt-6 px-4">
     <div class="bg-base-100 border-t-2 border-primary shadow rounded-md p-4 sm:p-6 xl:p-8 ">
         <h1 class="text-xl pb-3 font-semibold leading-loose">Daftar Pengajuan Barang Baru</h1>
+
         <form action="/approval/BB/search" method="GET">
             @csrf
                 <div class="form-control mb-2">
@@ -46,12 +47,9 @@
 
                                     </td>
                                     <td>
-                                        <a href="/approval/BB/detail/{{$key->id_pengajuan_bb}}">
-                                            {{-- INFO --}}
-                                            <button class="btn btn-sm  btn-info btn-square btn-outline">
-                                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                        </button>
-                                    </a>
+                                        <label for="approvalbbdetail{{ $key->id_pengajuan_bb }}" class="btn btn-sm  btn-info btn-square btn-outline">
+                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        </label>
                                     </td>
                                     {{-- <td>{{ $key->password }}</td> --}}
                                     @empty
@@ -80,10 +78,58 @@
     </div>
     <br>
 </div>
+@endsection
+@section('modal')
+@foreach($data as $key)
+<input type="checkbox" id="approvalbbdetail{{ $key->id_pengajuan_bb }}" class="modal-toggle" />
+<div class="modal">
+    <div class="modal-box w-11/12 max-w-5xl">
+        <h1 class="text-xl font-semibold leading-loose">Detail </h1>
+        <div class="modal-action fixed right-5 top-0">
+            <label for="approvalbbdetail{{ $key->id_pengajuan_bb }}" class="btn">Yay!</label>
+        </div>
+        <div class="p-6 space-y-6">
+            <div class="p-5 lg:p-0 lg:w-10/12 mx-auto">
+                <div class="flex border">
+                    <span class="p-3 basis-2/5 text-right bg-base-200 font-semibold">Nama Barang</span>
+                    <span class="p-3 basis-3/5 md:basis-3/4 bg-base-100">{{ $key->nama_barang }}</span>
+                </div>
+                <div class="flex border">
+                    <span class="p-3 basis-2/5 text-right bg-base-200 font-semibold">Harga Satuan</span>
+                    <span class="p-3 basis-3/5 md:basis-3/4 bg-base-100">Rp. {{ $key->harga_satuan }}</span>
+                </div>
+                <div class="flex border">
+                    <span class="p-3 basis-2/5 text-right bg-base-200 font-semibold">Total Harga</span>
+                    <span class="p-3 basis-3/5 md:basis-3/4 bg-base-100">Rp. {{ $key->total_harga }}</span>
+                </div>
+                <div class="flex border">
+                    <span class="p-3 basis-2/5 text-right bg-base-200 font-semibold">Jumlah Barang</span>
+                    <span class="p-3 basis-3/5 md:basis-3/4 bg-base-100">{{ $key->jumlah }}</span>
+                </div>
+                <div class="flex border">
+                    <span class="p-3 basis-2/5 text-right bg-base-200 font-semibold">Tanggal Pengajuan</span>
+                    <span class="p-3 basis-3/5 md:basis-3/4 bg-base-100">{{ $key->tgl }}</span>
+                </div>
+                <div class="flex border">
+                    <span class="p-3 basis-2/5 text-right bg-base-200 font-semibold">Spesifikasi</span>
+                    <span class="p-3 basis-3/5 md:basis-3/4 bg-base-100">{{ $key->spesifikasi }} Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias temporibus, aliquid blanditiis consequatur distinctio dolorum nemo dolorem soluta modi cumque est hic optio cum aliquam nobis quasi eum reprehenderit esse? </span>
+                </div>
+                <div class="flex border">
+                    <span class="p-3 basis-2/5 text-right bg-base-200 font-semibold">Untuk Ruangan</span>
+                    <span class="p-3 basis-3/5 md:basis-3/4 bg-base-100">{{ $key->ruangan }}</span>
+                </div>
+                @if($key->status_approval == "pending")
+                    <div class="py-5 flex flex-row-reverse gap-3">
+                        <a href="/approval/BB/tidaksetuju/{{$key->id_pengajuan_bb}}"><button class="btn btn-sm btn-outline btn-error">Tidak Setuju</button></a>
+                        <a href="/approval/BB/setuju/{{$key->id_pengajuan_bb}}"><button class="btn btn-sm btn-outline btn-success">Setuju</button></a>
+                    </div>
+                @else
 
+                @endif
+            </div>
+        </div>
 
-
-
-
-
+    </div>
+</div>
+@endforeach
 @endsection

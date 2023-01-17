@@ -17,7 +17,10 @@
                     </div>
             </form>
             <div class="">
-                <a href="/pengajuan/BB/tambah"><button type="submit" class="btn btn-success gap-2" >Tambah Pengajuan <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></button></a>
+                {{-- <a href="/pengajuan/BB/tambah"><button type="submit" class="btn btn-success gap-2" >Tambah Pengajuan <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></button></a> --}}
+                <label for="tambahpengajuanbb" class="btn btn-success gap-2">
+                    Tambah Pengajuan <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </label>
             </div>
         </div>
             <div class="">
@@ -52,32 +55,23 @@
                                     </td>
                                     <td>
                                         @if($key->status_approval == "pending")
-                                                <a href="BB/edit/{{$key->id_pengajuan_bb}}">
-                                                    {{-- EDIT --}}
-                                                    <button class="btn btn-sm btn-warning btn-square btn-outline">
-                                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                                                    </button>
-                                                </a>
-                                                <a href="BB/hapus/{{$key->id_pengajuan_bb}}">
+                                                <label for="editpengajuanbb{{$key->id_pengajuan_bb}}" class="btn btn-sm btn-warning btn-square btn-outline">
+                                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                                                </label>
+                                                <a href="/pengajuan/BB/hapus/{{$key->id_pengajuan_bb}}">
                                                     {{-- DELETE --}}
                                                     <button class="btn btn-sm btn-error btn-square btn-outline">
                                                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                                                     </button>
                                                 </a>
                                             @elseif($key->status_approval === 'setuju')
-                                            <a href="BB/detail/{{$key->id_pengajuan_bb}}">
-                                                    {{-- INFO --}}
-                                                    <button class="btn btn-sm  btn-info btn-square btn-outline">
-                                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                                    </button>
-                                            </a>
+                                            <label for="detailpengajuanbb{{$key->id_pengajuan_bb}}" class="btn btn-sm btn-info btn-square btn-outline">
+                                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            </label>
                                             @elseif($key->status_approval === 'tidak')
-                                            <a href="BB/detail/{{$key->id_pengajuan_bb}}">
-                                                    {{-- INFO --}}
-                                                    <button class="btn btn-sm  btn-info btn-square btn-outline">
-                                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                                    </button>
-                                            </a>
+                                            <label for="detailpengajuanbb{{$key->id_pengajuan_bb}}" class="btn btn-sm btn-info btn-square btn-outline">
+                                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            </label>
                                         @endif
                                     </a>
                                     </td>
@@ -106,8 +100,211 @@
 </div>
 
 
+@endsection
+
+@section('modal')
+    {{-- TAMBAH --}}
+
+    <!-- Put this part before </body> tag -->
+    <input type="checkbox" id="tambahpengajuanbb" class="modal-toggle" />
+    <div class="modal">
+        <div class="modal-box w-11/12 max-w-5xl">
+            <form action="/pengajuan/BB/tambah" method="POST">
+                @csrf
+                <div class="modal-action fixed right-5 top-0">
+                        <label for="tambahpengajuanbb" class="btn btn-sm btn-square">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                        </label>
+                </div>
+                <h2 class="text-2xl font-bold">Form Tambah Pengajuan</h2>
+                <br>
+
+                <div class="lg:flex flex-row gap-5">
+                    <div class="basis-1/2">
+                        <div class="form-control">
+                            <label class="label">
+                            <span class="label-text">Nama Barang</span>
+                            </label>
+                            <input type="text" name="nama_barang" class="input input-bordered" required/>
+                            @error('nama_barang')
+                                    <p class="text-red-500">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="form-control">
+                            <label class="label">
+                            <span class="label-text">Spesifikasi</span>
+                            </label>
+                            <textarea name="spesifikasi" cols="20" rows="5" class="textarea textarea-bordered" " required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="basis-1/2">
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text">Harga Satuan</span>
+                            </label>
+                            <input type="text" name="harga_satuan" class="input input-bordered" required/>
+                        </div>
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text">Total Harga</span>
+                            </label>
+                            <input type="text" name="total_harga" class="input input-bordered" required/>
+                        </div>
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text">Jumlah Barang</span>
+                            </label>
+                            <input type="number" name="jumlah" class="input input-bordered" required/>
+                        </div>
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text">Untuk Ruangan..</span>
+                            </label>
+                            <select class="select select-bordered w-full max-w-xs" name="ruangan" required>
+                                <option disabled selected>-- Pilih Ruangan --</option>
+                                @foreach ($ruangan as $item)
+                                    <option value="{{ $item->nama_ruangan }} ">{{ $item->nama_ruangan }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        {{-- <div class="form-control">
+                            <label class="label">
+                                <span class="label-text">Untuk Ruangan..</span>
+                            </label>
+                            <input type="text" name="ruangan" class="input input-bordered" required/>
+                        </div> --}}
+                    </div>
+                </div>
 
 
+                    <div class="form-control mt-6">
+                        <button type="submit" value="simpan" class="btn btn-primary">Simpan</button>
+                    </div>
+            </form>
+        </div>
+    </div>
+
+    {{-- EDIT --}}
+    @foreach($data as $key)
+
+        <!-- Put this part before </body> tag -->
+        <input type="checkbox" id="editpengajuanbb{{$key->id_pengajuan_bb}}" class="modal-toggle" />
+        <div class="modal">
+            <div class="modal-box w-11/12 max-w-5xl">
+                <form action="/pengajuan/BB/update/{{$key->id_pengajuan_bb}}" method="POST">
+                    @csrf
+                    <div class="modal-action fixed right-5 top-0">
+                        <label for="editpengajuanbb{{$key->id_pengajuan_bb}}" class="btn btn-sm btn-square">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                        </label>
+                    </div>
+                    <h2 class="text-2xl font-bold">Edit Barang</h2>
+                    <br>
+                    <div class="lg:flex flex-row gap-5">
+                        <div class="basis-1/2">
+                            <div class="form-control">
+                                <label class="label">
+                                <span class="label-text">Nama Barang</span>
+                                </label>
+                                <input type="text" name="nama_barang" class="input input-bordered"
+                                value="{{ old('nama_barang', $key->nama_barang) }}"/>
+                                <input type="hidden"  name="id_pengajuan_bb" value="{{$key->id_pengajuan_bb}}" />
+                            </div>
+                            <div class="form-control">
+                                <label class="label">
+                                <span class="label-text">spesifikasi</span>
+                                </label>
+                                <input type="text" name="spesifikasi" class="input input-bordered"
+                                value="{{ old('spesifikasi', $key->spesifikasi) }}"/>
+                            </div>
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text">harga_satuan</span>
+                                </label>
+                                <input type="text" name="harga_satuan" class="input input-bordered"
+                                value="{{ old('harga_satuan', $key->harga_satuan) }}"/>
+                            </div>
+                        </div>
+                        <div class="basis-1/2">
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text">total_harga</span>
+                                </label>
+                                <input type="text" name="total_harga" class="input input-bordered"
+                                value="{{ old('total_harga', $key->total_harga) }}"/>
+                            </div>
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text">jumlah</span>
+                                </label>
+                                <input type="number" name="jumlah" class="input input-bordered"
+                                value="{{ old('jumlah', $key->jumlah) }}"/>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="form-control mt-6">
+                            <button type="submit" value="simpan" class="btn btn-primary">Simpan</button>
+                        </div>
+                </form>
+            </div>
+        </div>
+    @endforeach
+
+    @foreach($data as $key)
+
+        <!-- Put this part before </body> tag -->
+        <input type="checkbox" id="detailpengajuanbb{{$key->id_pengajuan_bb}}" class="modal-toggle" />
+        <div class="modal">
+            <div class="modal-box w-11/12 max-w-5xl">
+
+
+                <div class="">
+
+                    <div class="p-5 lg:p-0 lg:w-3/4 mx-auto">
+                        <div class="my-2">
+                            <div class="modal-action fixed right-5 top-0">
+                                <label for="detailpengajuanbb{{$key->id_pengajuan_bb}}" class="btn btn-sm btn-square">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                                </label>
+                            </div>
+                            <h1 class="text-xl font-semibold leading-loose">Detail </h1>
+                        </div>
+                        <div class="bg-primary-content flex border">
+                            <span class="p-3 basis-1/2 md:basis-1/4 text-right bg-base-200 font-semibold">Nama Barang</span>
+                            <span class="p-3 basis-1/2 md:basis-3/4 bg-base-100">{{ $key->nama_barang }}</span>
+                        </div>
+                        <div class="bg-primary-content flex border">
+                            <span class="p-3 basis-1/2 md:basis-1/4 text-right bg-base-200 font-semibold">Harga Satuan</span>
+                            <span class="p-3 basis-1/2 md:basis-3/4 bg-base-100">Rp. {{ $key->harga_satuan }}</span>
+                        </div>
+                        <div class="bg-primary-content flex border">
+                            <span class="p-3 basis-1/2 md:basis-1/4 text-right bg-base-200 font-semibold">Total Harga</span>
+                            <span class="p-3 basis-1/2 md:basis-3/4 bg-base-100">Rp. {{ $key->total_harga }}</span>
+                        </div>
+                        <div class="bg-primary-content flex border">
+                            <span class="p-3 basis-1/2 md:basis-1/4 text-right bg-base-200 font-semibold">Jumlah Barang</span>
+                            <span class="p-3 basis-1/2 md:basis-3/4 bg-base-100">{{ $key->jumlah }}</span>
+                        </div>
+                        <div class="bg-primary-content flex border">
+                            <span class="p-3 basis-1/2 md:basis-1/4 text-right bg-base-200 font-semibold">Tanggal Pengajuan</span>
+                            <span class="p-3 basis-1/2 md:basis-3/4 bg-base-100">{{ $key->tgl }}</span>
+                        </div>
+                        <div class="bg-primary-content flex border">
+                            <span class="p-3 basis-1/2 md:basis-1/4 text-right bg-base-200 font-semibold">Spesifikasi</span>
+                            <span class="p-3 basis-1/2 md:basis-3/4 bg-base-100">{{ $key->spesifikasi }}</span>
+                        </div>
+                        <div class="bg-primary-content flex border">
+                            <span class="p-3 basis-1/2 md:basis-1/4 text-right bg-base-200 font-semibold">Untuk Ruangan</span>
+                            <span class="p-3 basis-1/2 md:basis-3/4 bg-base-100">{{ $key->ruangan }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
 
 
 @endsection
+
+

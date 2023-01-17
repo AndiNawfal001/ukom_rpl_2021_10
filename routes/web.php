@@ -109,23 +109,23 @@ Route::get('/approval/pemutihan/tidaksetuju/{id}',[ApprovalController::class,'st
 
 Route::get('/pengajuan/BB',[ PengajuanBBController::class,'index']);
 Route::get('/pengajuan/BB/search',[ PengajuanBBController::class,'search']);
-Route::get('/pengajuan/BB/tambah',[ PengajuanBBController::class,'formTambah']);
-Route::post('/pengajuan/BB/simpan',[ PengajuanBBController::class,'store']);
-Route::get('/pengajuan/BB/edit/{id}',[PengajuanBBController::class,'edit']);
-Route::post('/pengajuan/BB/edit/editsimpan',[ PengajuanBBController::class,'editsimpan']);
+// Route::get('/pengajuan/BB/tambah',[ PengajuanBBController::class,'formTambah']);
+Route::post('/pengajuan/BB/tambah',[ PengajuanBBController::class,'store']);
+// Route::get('/pengajuan/BB/edit/{id}',[PengajuanBBController::class,'edit']);
+Route::post('/pengajuan/BB/update/{id}',[ PengajuanBBController::class,'update']);
 Route::get('/pengajuan/BB/hapus/{id}',[PengajuanBBController::class,'hapus']);
-Route::get('/pengajuan/BB/detail/{id}',[PengajuanBBController::class,'detail']);
+// Route::get('/pengajuan/BB/detail/{id}',[PengajuanBBController::class,'detail']);
 
 Route::get('/pengajuan/PB',[ PerbaikanController::class,'index']);
 Route::get('/pengajuan/PB/search',[ PerbaikanController::class,'search']);
 Route::get('/pengajuan/PB/pilihBarang',[ PerbaikanController::class,'pilihBarang']);
 Route::get('/pengajuan/PB/pilihBarang/search',[ PerbaikanController::class,'searchpilihbarang']);
 Route::get('/pengajuan/PB/edit/{id}',[PerbaikanController::class,'edit']);
-Route::get('/pengajuan/PB/perbaikan/{id}',[PerbaikanController::class,'perbaikan']);
+// Route::get('/pengajuan/PB/perbaikan/{id}',[PerbaikanController::class,'perbaikan']);
 Route::post('/pengajuan/PB/perbaikan/simpanperbaikan',[PerbaikanController::class,'simpanperbaikan']);
 Route::post('/pengajuan/PB/edit/editsimpan',[ PerbaikanController::class,'editsimpan']);
 Route::get('/pengajuan/PB/hapus/{id}',[PerbaikanController::class,'hapus']);
-Route::get('/PB/selesaiPerbaikan/{id}',[PerbaikanController::class,'selesaiPerbaikan']);
+// Route::get('/PB/selesaiPerbaikan/{id}',[PerbaikanController::class,'selesaiPerbaikan']);
 Route::post('/PB/selesaiPerbaikan/simpanSelesaiPerbaikan',[ PerbaikanController::class,'simpanSelesaiPerbaikan']);
 Route::get('/pengajuan/PB/detail/{id}',[PerbaikanController::class,'detail']);
 

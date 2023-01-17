@@ -10,44 +10,48 @@
 </head>
 <body>
 
-    <div class="hero min-h-screen bg-base-100 select-none" style="background-image:url('https://images.unsplash.com/photo-1499123785106-343e69e68db1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1748&q=80')">
+    <div class="hero min-h-screen bg-base-100 select-none">
         <div class="hero-content w-full flex-col lg:flex-row-reverse gap-7"  data-aos="zoom-in" duration="2000">
+            <div class="card flex-shrink-0 w-full max-w-sm border bg-gray-50">
+                <div class="card-body w-full">
+                    <div class="w-full text-center">
+                        <img src="{{ asset('image/aa.png') }}" class="mx-auto w-14">
+                        <h1 class="text-2xl font-light my-2 ">Sign in to MyStock</h1>
+                    </div>
+                @if($errors->any())
+                @foreach($errors->all() as $err)
+                <div class="alert alert-error shadow-lg" >
+                    <span>{{ $err }}</span>
+                    <button class="btn-sm">
+                        <svg  class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                </div>
+                @endforeach
+                @endif
+                <form action="login" method="POST">
+                    @csrf
+                    <div class="form-control">
+                    <label class="label">
+                        <span class="" for="email">Email</span>
+                    </label>
+                    <input type="email" name="email" id="email" placeholder="email" class="input input-bordered @error('email') @enderror"  autofocus required value="{{ old ('email') }}"/>
 
-            <div class="card flex-shrink-0 w-full max-w-sm shadow-md bg-gray-800 bg-opacity-50 backdrop-blur-md">
-            <div class="card-body w-full">
-                <div class="w-full text-center">
-                    <img src="{{ asset('image/aa.png') }}" class="mx-auto w-14">
-                    <h1 class="text-xl font-mono my-2 text-base-100">Sign in to MyStock</h1>
-                </div>
-              @if($errors->any())
-              @foreach($errors->all() as $err)
-              <span class="alert alert-error shadow-lg">{{ $err }}</span>
-              @endforeach
-              @endif
-              <form action="login" method="POST">
-                @csrf
-                <div class="form-control">
-                <label class="label">
-                    <span class="text-base-100" for="email">Email</span>
-                </label>
-                <input type="email" name="email" id="email" placeholder="email" class="input input-bordered @error('email') @enderror"  autofocus required value="{{ old ('email') }}"/>
+                    @error('email')
+                        <span class="text-red-500">{{ $message }}</span>
+                    @enderror
 
-                @error('email')
-                    <span class="text-red-500">{{ $message }}</span>
-                @enderror
-
+                    </div>
+                    <div class="form-control">
+                    <label class="label" for="password">
+                        <span class="" name="password" id="password" required>Password</span>
+                    </label>
+                    <input type="password" name="password" placeholder="password" class="input input-bordered" />
+                    </div>
+                    <div class="form-control mt-6 w-full">
+                    <button type="submit" class="btn btn-active btn-success">Login</button>
+                    </div>
+                </form>
                 </div>
-                <div class="form-control">
-                  <label class="label" for="password">
-                      <span class="text-base-100" name="password" id="password" required>Password</span>
-                  </label>
-                  <input type="password" name="password" placeholder="password" class="input input-bordered" />
-                </div>
-                <div class="form-control mt-6 w-full">
-                 <button type="submit" class="btn btn-active btn-success">Login</button>
-                </div>
-              </form>
-            </div>
             </div>
         </div>
     </div>
@@ -57,5 +61,10 @@
 <script>
     AOS.init();
 </script>
+<script>
+    const x = document.querySelector('.alert');
+        const y= document.querySelector('.btn-sm');
+        y.addEventListener('click', () => x.remove());
+    </script>
 </body>
 </html>
