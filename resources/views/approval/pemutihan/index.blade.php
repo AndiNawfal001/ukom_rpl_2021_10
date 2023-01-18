@@ -3,7 +3,7 @@
 <div class="pt-6 px-4">
 
     <div class="bg-base-100 border-t-2 border-primary shadow rounded-md p-4 sm:p-6 xl:p-8 ">
-        <h1 class="text-xl pb-3 font-semibold leading-loose">Daftar Barang untuk pemutihan</h1>
+        <h1 class="text-xl pb-3 font-semibold leading-loose">Daftar Pengajuan pemutihan untuk di Approve</h1>
         <form action="/approval/pemutihan/search" method="GET">
             @csrf
                 <div class="form-control mb-2">

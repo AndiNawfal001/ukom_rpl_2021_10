@@ -23,12 +23,9 @@
                         <td>{{ $key->jumlah}}</td>
                         <td>{{ $key->tgl_approve }}</td>
                         <td>
-                            <a href="/pengajuan/BB/detail/{{$key->id_pengajuan_bb}}">
-                                {{-- INFO --}}
-                                <button class="btn btn-sm  btn-info btn-square btn-outline">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                </button>
-                            </a>
+                            <label for="detailpengajuanbb{{$key->id_pengajuan_bb}}" class="btn btn-sm btn-info btn-square btn-outline">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </label>
                             @if($key->status_pembelian === NULL OR $key->status_pembelian === "outstanding")
                                 <a href="/barangMasuk/tambah/{{ $key->id_pengajuan_bb }}">
                                     {{-- PLUS --}}
@@ -109,4 +106,55 @@
     </div>
     <br>
 </div>
+@endsection
+
+@section('modal')
+@foreach($approved as $key)
+
+        <!-- Put this part before </body> tag -->
+        <input type="checkbox" id="detailpengajuanbb{{$key->id_pengajuan_bb}}" class="modal-toggle" />
+        <div class="modal">
+            <div class="modal-box w-11/12 max-w-5xl">
+                <h1 class="text-xl font-semibold leading-loose">Detail </h1>
+                <div class="modal-action fixed right-5 top-0">
+                    <label for="detailpengajuanbb{{ $key->id_pengajuan_bb }}" class="btn btn-sm btn-square">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </label>
+                </div>
+                <hr class="border">
+                <div class="p-6 space-y-6">
+                    <div class="p-5 lg:p-0 lg:w-3/4 mx-auto">
+                        <div class="bg-primary-content flex border">
+                            <span class="p-3 basis-1/2 md:basis-1/4 text-right bg-base-200 font-semibold">Nama Barang</span>
+                            <span class="p-3 basis-1/2 md:basis-3/4 bg-base-100">{{ $key->nama_barang }}</span>
+                        </div>
+                        <div class="bg-primary-content flex border">
+                            <span class="p-3 basis-1/2 md:basis-1/4 text-right bg-base-200 font-semibold">Harga Satuan</span>
+                            <span class="p-3 basis-1/2 md:basis-3/4 bg-base-100">Rp. {{ $key->harga_satuan }}</span>
+                        </div>
+                        <div class="bg-primary-content flex border">
+                            <span class="p-3 basis-1/2 md:basis-1/4 text-right bg-base-200 font-semibold">Total Harga</span>
+                            <span class="p-3 basis-1/2 md:basis-3/4 bg-base-100">Rp. {{ $key->total_harga }}</span>
+                        </div>
+                        <div class="bg-primary-content flex border">
+                            <span class="p-3 basis-1/2 md:basis-1/4 text-right bg-base-200 font-semibold">Jumlah Barang</span>
+                            <span class="p-3 basis-1/2 md:basis-3/4 bg-base-100">{{ $key->jumlah }}</span>
+                        </div>
+                        <div class="bg-primary-content flex border">
+                            <span class="p-3 basis-1/2 md:basis-1/4 text-right bg-base-200 font-semibold">Tanggal Pengajuan</span>
+                            <span class="p-3 basis-1/2 md:basis-3/4 bg-base-100">{{ $key->tgl }}</span>
+                        </div>
+                        <div class="bg-primary-content flex border">
+                            <span class="p-3 basis-1/2 md:basis-1/4 text-right bg-base-200 font-semibold">Spesifikasi</span>
+                            <span class="p-3 basis-1/2 md:basis-3/4 bg-base-100">{{ $key->spesifikasi }}</span>
+                        </div>
+                        <div class="bg-primary-content flex border">
+                            <span class="p-3 basis-1/2 md:basis-1/4 text-right bg-base-200 font-semibold">Untuk Ruangan</span>
+                            <span class="p-3 basis-1/2 md:basis-3/4 bg-base-100">{{ $key->ruangan }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
 @endsection

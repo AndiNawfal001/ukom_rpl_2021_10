@@ -115,16 +115,22 @@ class PerawatanController extends Controller{
                     Storage::delete($request->oldImage);
                 }
                 $image = $request->file('image')->store('perawatan');
+                $data = [
+                    'nama_pelaksana' => $request->input('nama_pelaksana'),
+                    'ket_perawatan' => $request->input('ket_perawatan'),
+                    'foto_perawatan' => $image,
+                ];
+            }else{
+                $data = [
+                    'nama_pelaksana' => $request->input('nama_pelaksana'),
+                    'ket_perawatan' => $request->input('ket_perawatan'),
+                ];
             }
-
-            $data = [
-                'nama_pelaksana' => $request->input('nama_pelaksana'),
-                'ket_perawatan' => $request->input('ket_perawatan'),
-                'foto_perawatan' => $image,
-            ];
             $upd = DB::table('perawatan')
-                        ->where('id_perawatan', '=', $request->input('id_perawatan'))
-                        ->update($data);
+                            ->where('id_perawatan', '=', $request->input('id_perawatan'))
+                            ->update($data);
+
+
             // dd('berhasil');
             if($upd){
                 // return redirect('perawatan/detail/'.$id_perawatan);

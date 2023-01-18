@@ -3,7 +3,7 @@
 
 <div class="pt-6 px-4">
     <div class="bg-base-100 border-t-2 border-primary shadow rounded-md p-4 sm:p-6 xl:p-8 ">
-        <h1 class="text-xl pb-3 font-semibold leading-loose">Daftar Pengajuan Barang Baru</h1>
+        <h1 class="text-xl pb-3 font-semibold leading-loose">Daftar Pengajuan Barang Baru untuk di Approve</h1>
 
         <form action="/approval/BB/search" method="GET">
             @csrf
@@ -86,8 +86,11 @@
     <div class="modal-box w-11/12 max-w-5xl">
         <h1 class="text-xl font-semibold leading-loose">Detail </h1>
         <div class="modal-action fixed right-5 top-0">
-            <label for="approvalbbdetail{{ $key->id_pengajuan_bb }}" class="btn">Yay!</label>
+            <label for="approvalbbdetail{{ $key->id_pengajuan_bb }}" class="btn btn-sm btn-square">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </label>
         </div>
+        <hr class="border">
         <div class="p-6 space-y-6">
             <div class="p-5 lg:p-0 lg:w-10/12 mx-auto">
                 <div class="flex border">
@@ -112,12 +115,13 @@
                 </div>
                 <div class="flex border">
                     <span class="p-3 basis-2/5 text-right bg-base-200 font-semibold">Spesifikasi</span>
-                    <span class="p-3 basis-3/5 md:basis-3/4 bg-base-100">{{ $key->spesifikasi }} Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias temporibus, aliquid blanditiis consequatur distinctio dolorum nemo dolorem soluta modi cumque est hic optio cum aliquam nobis quasi eum reprehenderit esse? </span>
+                    <span class="p-3 basis-3/5 md:basis-3/4 bg-base-100">{{ $key->spesifikasi }} </span>
                 </div>
                 <div class="flex border">
                     <span class="p-3 basis-2/5 text-right bg-base-200 font-semibold">Untuk Ruangan</span>
                     <span class="p-3 basis-3/5 md:basis-3/4 bg-base-100">{{ $key->ruangan }}</span>
                 </div>
+
                 @if($key->status_approval == "pending")
                     <div class="py-5 flex flex-row-reverse gap-3">
                         <a href="/approval/BB/tidaksetuju/{{$key->id_pengajuan_bb}}"><button class="btn btn-sm btn-outline btn-error">Tidak Setuju</button></a>

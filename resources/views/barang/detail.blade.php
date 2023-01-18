@@ -17,22 +17,44 @@
             </form>
             <div class=" gap-5">
                 <div class="overflow-x-auto overflow-y-auto ">
-                    <table class="table table-compact table-zebra w-full ">
+                    <table class="table table-zebra w-full ">
                         <thead>
                             <tr>
                                 {{-- <th>No</th> --}}
-                                <th>Kode Barang</th>
+                                <th> Barang</th>
                                 <th>Kondisi</th>
                                 <th>Status</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <?php $no=1;?>
                         @forelse($data as $key)
                         <tr>
                         {{-- <th>{{ $no++ }}</th> --}}
-                        <td>{{ $key->kode_barang }}</td>
-                        <td>{{ $key->kondisi_barang }}</td>
-                        <td>{{ $key->status }}</td>
+                        <td>
+                            <div class="flex items-center space-x-3">
+                                <div>
+                                    <div class="font-bold text-lg">{{ $key->nama_barang }}</div>
+                                    <div class="text-sm opacity-50">{{ $key->kode_barang }}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="
+                            {{ ($key->kondisi_barang === 'rusak') ? 'text-yellow-500' : '' }}
+                            {{ ($key->kondisi_barang === 'baik') ? 'text-blue-500' : '' }}
+                        ">{{ $key->kondisi_barang }}</td>
+                        <td class="
+                            {{ ($key->status === 'nonaktif') ? 'text-red-500' : '' }}
+                            {{ ($key->status === 'aktif') ? 'text-green-500' : '' }}
+                        ">{{ $key->status }}</td>
+                        <td>
+                            <label for="infodetailbarang{{$key->kode_barang}}" class="btn btn-sm btn-info btn-square btn-outline">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </label>
+                            <label for="editdetailbarang{{$key->kode_barang}}" class="btn btn-sm btn-warning btn-square btn-outline">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                            </label>
+                        </td>
                         @empty
                         <tr>
                             <td colspan="4">
@@ -60,6 +82,95 @@
     <br>
 </div>
 
+@endsection
+
+@section('modal')
+
+@foreach($data as $key)
+<input type="checkbox" id="infodetailbarang{{ $key->kode_barang }}" class="modal-toggle" />
+<div class="modal">
+    <div class="modal-box w-11/12 max-w-5xl">
+        <h1 class="text-xl font-semibold leading-loose">Detail </h1>
+        <div class="modal-action fixed right-5 top-0">
+            <label for="infodetailbarang{{ $key->kode_barang }}" class="btn btn-sm btn-square">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </label>
+        </div>
+        <hr class="border">
+        <div class="p-6 space-y-6">
+            <div class="p-5 lg:p-0 lg:w-10/12 mx-auto">
+                <div class="flex border">
+                    <span class="p-3 basis-2/5 text-right bg-base-200 font-semibold">Nama Barang</span>
+                    <span class="p-3 basis-3/5 md:basis-3/4 bg-base-100">{{ $key->nama_barang }}</span>
+                </div>
+                <div class="flex border">
+                    <span class="p-3 basis-2/5 text-right bg-base-200 font-semibold">Kode Barang</span>
+                    <span class="p-3 basis-3/5 md:basis-3/4 bg-base-100">{{ $key->kode_barang }}</span>
+                </div>
+                <div class="flex border">
+                    <span class="p-3 basis-2/5 text-right bg-base-200 font-semibold">Jenis Barang</span>
+                    <span class="p-3 basis-3/5 md:basis-3/4 bg-base-100">{{ $key->nama_jenis }}</span>
+                </div>
+                <div class="flex border">
+                    <span class="p-3 basis-2/5 text-right bg-base-200 font-semibold">Spesifikasi</span>
+                    <span class="p-3 basis-3/5 md:basis-3/4 bg-base-100">{{ $key->spesifikasi }} </span>
+                </div>
+                <div class="flex border">
+                    <div class="p-3 basis-2/5 md:text-right bg-base-200 font-semibold">Foto Barang</div>
+                    <div class="p-3 basis-3/5 md:basis-3/4 bg-base-100 grid place-content-center md:place-content-start">
+                        <a href="{{ asset('storage/'.$key->foto_barang) }}" target="_blank" class="group">
+                            <img src="{{ asset('storage/'.$key->foto_barang) }}" class="w-52 shadow  group-hover:brightness-50 "/>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+@endforeach
 
 
+@foreach($data as $key)
+    <input type="checkbox" id="editdetailbarang{{ $key->kode_barang }}" class="modal-toggle" />
+    <label for="editdetailbarang{{ $key->kode_barang }}" class="modal cursor-pointer">
+    <label class="modal-box relative" for="">
+        <form action="/barang/detail/update/{{ $key->kode_barang }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <h2 class="text-2xl font-bold">Edit Detail Barang</h2>
+            <br>
+            <div class="form-control">
+                <label class="label">
+                <span class="label-text">Spesifikasi</span>
+                </label>
+                <input type="text" name="spesifikasi" class="input input-bordered"
+                value="{{ old('spesifikasi', $key->spesifikasi) }}"/>
+                <input type="hidden"  name="kode_barang" value="{{$key->kode_barang}}" />
+                <input type="hidden"  name="id_barang" value="{{$key->id_barang}}" />
+            </div>
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">Gambar</span>
+                </label>
+
+                <input type="file" name="image" id="image" class="file-input file-input-bordered w-full max-w-xs" onchange="previewImage()"/>
+                <br>
+                <input type="hidden" name="oldImage" value="{{ $key->foto_barang }}">
+
+                @if($key->foto_barang)
+                    <img src="{{ asset('storage/'.$key->foto_barang) }}" class="img-preview object-scale-down w-1/2 md:w-1/4" alt="">
+                @else
+                <img class="img-preview object-scale-down w-1/2 md:w-1/4" alt="">
+
+                @endif
+            </div>
+
+                <div class="form-control mt-6">
+                <button type="submit" value="simpan" class="btn btn-primary">Simpan</button>
+                </div>
+        </form>
+    </label>
+    </label>
+
+    @endforeach
 @endsection

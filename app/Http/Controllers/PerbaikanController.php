@@ -30,16 +30,25 @@ class PerbaikanController extends Controller
         return view('pengajuan.perbaikan.index', compact('data' ));
     }
 
+    private function getRuangan(): Collection
+    {
+        return collect(DB::select('SELECT * FROM ruangan'));
+    }
+
     public function pilihBarang(){
+        $ruangan = $this->getRuangan();
+
         $data = DB::table('barang_masuk_perbaikan')
         ->select('*')
         ->where('status', 'aktif')
         ->where('kondisi_barang', 'baik')
         ->paginate(10);
-        return view('pengajuan.perbaikan.pilihbarang', compact('data'));
+        return view('pengajuan.perbaikan.pilihbarang', compact('data', 'ruangan'));
     }
 
     public function searchpilihbarang(Request $request){
+        $ruangan = $this->getRuangan();
+
         $search = $request->input('search');
         $data = DB::table('barang_masuk_perbaikan')
         ->select('*')
@@ -48,7 +57,7 @@ class PerbaikanController extends Controller
         ->where('kode_barang','like',"%".$search."%")
         ->orWhere('nama_barang','like',"%".$search."%")
         ->paginate(10);
-        return view('pengajuan.perbaikan.pilihbarang', compact('data'));
+        return view('pengajuan.perbaikan.pilihbarang', compact('data','ruangan'));
     }
 
     private function inputDataPerbaikan($id)

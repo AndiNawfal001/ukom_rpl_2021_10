@@ -15,7 +15,7 @@ class BarangMasukController extends Controller
         $data = DB::select('SELECT * FROM barang_masuk');
         $approved = DB::select('SELECT * FROM pengajuan_bb WHERE status_approval = "setuju" ');
         return view('barangMasuk.index', compact('data', 'approved'));
-     }
+    }
 
     public function getJumlahPengajuan(){
         $data = DB::select('SELECT COUNT(id_pengajuan_bb) AS jumlah FROM pengajuan_bb WHERE status_approval = "setuju"');
@@ -65,7 +65,12 @@ class BarangMasukController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'nama_barang' => 'required|exists:pengajuan_bb,nama_barang'
+        ]);
         try {
+        $image = $request->file('image')->store('barang');
+
             // dd($request->all());
         $tambahBarangMasuk = DB::insert("CALL tambah_barangmasuk( :nama_barang, :jml_barang, :spesifikasi, :kondisi_barang, :supplier, :adder, :jenis_barang, :foto_barang)", [
 
@@ -76,7 +81,7 @@ class BarangMasukController extends Controller
             'supplier' => $request->input('supplier'),
             'adder' => $request->input('adder'),
             'jenis_barang' => $request->input('jenis_barang'),
-            'foto_barang' => $request->input('foto_barang'),
+            'foto_barang' => $image,
             // dd($request->all())
         ]);
             // dd($tambahBarangMasuk);

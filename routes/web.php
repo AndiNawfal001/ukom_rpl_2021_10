@@ -43,6 +43,7 @@ Route::get('/barang',[ BarangController::class,'index']);
 Route::get('/barang/search',[ BarangController::class,'search']);
 Route::get('/barang/detail/{id}',[ BarangController::class,'detail']);
 Route::get('/barang/detail/search/{id}',[ BarangController::class,'searchdetail']);
+Route::post('/barang/detail/update/{id}',[ BarangController::class,'update']);
 
 
 Route::get('/levelUser/tambah',[LevelUserController::class,'formTambah']);
@@ -56,7 +57,24 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 //Route Group untuk menggabungkan banyaknya middleware
 Route::group(['middleware' => ['auth','level:admin,manajemen']], function (){
-    Route::get('/levelUser',[LevelUserController::class,'index']);
+    // Route::get('/levelUser',[LevelUserController::class,'index']);
+    Route::get('/approval/BB',[ ApprovalController::class,'indexBarangBaru']);
+    Route::get('/approval/BB/search',[ ApprovalController::class,'searchindexBarangBaru']);
+    Route::get('/approval/BB/detail/{id}',[ApprovalController::class,'detailBarangBaru']);
+    Route::get('/approval/BB/setuju/{id}',[ApprovalController::class,'statusSetujuBarangBaru']);
+    Route::get('/approval/BB/tidaksetuju/{id}',[ApprovalController::class,'statusTidakSetujuBarangBaru']);
+
+    Route::get('/approval/PB',[ ApprovalController::class,'indexPerbaikan']);
+    Route::get('/approval/PB/search',[ ApprovalController::class,'searchindexPerbaikan']);
+    Route::get('/approval/PB/detail/{id}',[ApprovalController::class,'detailPerbaikan']);
+    Route::get('/approval/PB/setuju/{id}',[ApprovalController::class,'statusSetujuPerbaikan']);
+    Route::get('/approval/PB/tidaksetuju/{id}/{kode}',[ApprovalController::class,'statusTidakSetujuPerbaikan']);
+
+    Route::get('/approval/pemutihan',[ ApprovalController::class,'indexPemutihan']);
+    Route::get('/approval/pemutihan/search',[ ApprovalController::class,'searchindexPemutihan']);
+    Route::get('/approval/pemutihan/detail/{id}',[ApprovalController::class,'detailPemutihan']);
+    Route::get('/approval/pemutihan/setuju/{id}/{kode}',[ApprovalController::class,'statusSetujuPemutihan']);
+    Route::get('/approval/pemutihan/tidaksetuju/{id}',[ApprovalController::class,'statusTidakSetujuPemutihan']);
 });
 
 Route::get('/User',[ UserController::class,'index']);
@@ -89,23 +107,7 @@ Route::get('/pengguna/edit/{id}',[PenggunaController::class,'edit']);
 Route::post('/pengguna/edit/editsimpan',[ PenggunaController::class,'editsimpan']);
 Route::get('/pengguna/hapus/{id}',[PenggunaController::class,'hapus']);
 
-Route::get('/approval/BB',[ ApprovalController::class,'indexBarangBaru']);
-Route::get('/approval/BB/search',[ ApprovalController::class,'searchindexBarangBaru']);
-Route::get('/approval/BB/detail/{id}',[ApprovalController::class,'detailBarangBaru']);
-Route::get('/approval/BB/setuju/{id}',[ApprovalController::class,'statusSetujuBarangBaru']);
-Route::get('/approval/BB/tidaksetuju/{id}',[ApprovalController::class,'statusTidakSetujuBarangBaru']);
 
-Route::get('/approval/PB',[ ApprovalController::class,'indexPerbaikan']);
-Route::get('/approval/PB/search',[ ApprovalController::class,'searchindexPerbaikan']);
-Route::get('/approval/PB/detail/{id}',[ApprovalController::class,'detailPerbaikan']);
-Route::get('/approval/PB/setuju/{id}',[ApprovalController::class,'statusSetujuPerbaikan']);
-Route::get('/approval/PB/tidaksetuju/{id}/{kode}',[ApprovalController::class,'statusTidakSetujuPerbaikan']);
-
-Route::get('/approval/pemutihan',[ ApprovalController::class,'indexPemutihan']);
-Route::get('/approval/pemutihan/search',[ ApprovalController::class,'searchindexPemutihan']);
-Route::get('/approval/pemutihan/detail/{id}',[ApprovalController::class,'detailPemutihan']);
-Route::get('/approval/pemutihan/setuju/{id}/{kode}',[ApprovalController::class,'statusSetujuPemutihan']);
-Route::get('/approval/pemutihan/tidaksetuju/{id}',[ApprovalController::class,'statusTidakSetujuPemutihan']);
 
 Route::get('/pengajuan/BB',[ PengajuanBBController::class,'index']);
 Route::get('/pengajuan/BB/search',[ PengajuanBBController::class,'search']);
@@ -114,7 +116,7 @@ Route::post('/pengajuan/BB/tambah',[ PengajuanBBController::class,'store']);
 // Route::get('/pengajuan/BB/edit/{id}',[PengajuanBBController::class,'edit']);
 Route::post('/pengajuan/BB/update/{id}',[ PengajuanBBController::class,'update']);
 Route::get('/pengajuan/BB/hapus/{id}',[PengajuanBBController::class,'hapus']);
-// Route::get('/pengajuan/BB/detail/{id}',[PengajuanBBController::class,'detail']);
+Route::get('/pengajuan/BB/detail/{id}',[PengajuanBBController::class,'detail']);
 
 Route::get('/pengajuan/PB',[ PerbaikanController::class,'index']);
 Route::get('/pengajuan/PB/search',[ PerbaikanController::class,'search']);

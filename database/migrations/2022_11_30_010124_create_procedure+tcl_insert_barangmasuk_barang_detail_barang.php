@@ -23,7 +23,7 @@ return new class extends Migration
             -- nama_manajemen VARCHAR(30),
             adder VARCHAR(50),
             jenis_barang VARCHAR(30),
-            foto_barang VARCHAR(30)
+            foto_barang VARCHAR(225)
         )
         BEGIN
         -- DECLARE barang INT;
@@ -136,8 +136,8 @@ return new class extends Migration
             SET idBarangBaru = CONCAT(0,0, idBarang);
             SET kode_jenisBaru = SUBSTR(kode_jenis, 3);
             SET kode_baru = CONCAT(idBarangBaru, kode_jenisBaru, sekarang, a);
-            INSERT INTO detail_barang (kode_barang, id_barang, spesifikasi, kondisi_barang, foto_barang)
-            VALUES (kode_baru, idBarang, spesifikasi, kondisi_barang, foto_barang);
+            INSERT INTO detail_barang (kode_barang, nama_barang, id_barang, spesifikasi, kondisi_barang, foto_barang)
+            VALUES (kode_baru, nama_barang, idBarang, spesifikasi, kondisi_barang, foto_barang);
             SET i = i + 1;
         END WHILE;
 

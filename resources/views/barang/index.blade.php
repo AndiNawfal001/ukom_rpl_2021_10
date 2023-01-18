@@ -43,7 +43,7 @@
                     <td>{{ $key->jml_barang }}</td>
                     <th>
                         <a href="/barang/detail/{{ $key->id_barang }}">
-                            <button class="btn btn-xs btn-outline btn-primary">Detail</button>
+                            <button class="btn btn-sm btn-outline btn-info">Detail</button>
                         </a>
                     </th>
                   </tr>

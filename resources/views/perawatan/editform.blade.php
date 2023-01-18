@@ -26,7 +26,7 @@
             <span class="label-text">Foto Perawatan</span>
         </label>
 
-        <input type="file" name="image" id="image" class="file-input file-input-bordered w-full max-w-xs" onchange="previewImage()" required/>
+        <input type="file" name="image" id="image" class="file-input file-input-bordered w-full max-w-xs" onchange="previewImage()"  />
         <br>
         <input type="hidden" name="oldImage" value="{{ $edit->foto_perawatan }}">
 

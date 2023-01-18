@@ -23,8 +23,8 @@
 
         </div>
 
-        <div class="lg:flex gap-4 ">
-            <div class="w-full lg:w-auto stats stats-horizontal lg:stats-vertical shadow">
+        <div class="gap-4 ">
+            {{-- <div class="w-full lg:w-auto stats stats-horizontal lg:stats-vertical shadow">
 
                 <div class="stat">
                   <div class="stat-title text-red-500 font-medium">Admin</div>
@@ -41,7 +41,7 @@
                   <div class="stat-value">{{ $kaprog }}</div>
                 </div>
 
-            </div>
+            </div> --}}
             <div class="basis-4/5 mt-4 lg:mt-0">
                 <div class="hidden lg:flex justify-between mb-2 ">
                     <form action="/pengguna/search" method="GET">
