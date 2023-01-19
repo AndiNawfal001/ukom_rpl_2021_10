@@ -5,20 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Arr;
+use App\Models\SupplierModel;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class SupplierController extends Controller
 {
     public function index(){
-        $data = DB::table('supplier')->paginate(5);
+        $data = SupplierModel::paginate(5);
         return view('supplier.index', compact('data'));
     }
 
     public function search(Request $request){
         $search = $request->input('search');
 
-        $data = DB::table('supplier')
-                ->where('nama','like',"%".$search."%")
+        $data = SupplierModel::where('nama','like',"%".$search."%")
                 ->orWhere('kontak','like',"%".$search."%")
                 ->orWhere('alamat','like',"%".$search."%")
                 ->paginate(5);
@@ -33,7 +33,7 @@ class SupplierController extends Controller
         $array = Arr::pluck($dariFunction, 'id_supplier');
         $kode_baru = Arr::get($array, '0');
         // dd($kode_baru);
-        $tambahSupplier = DB::table('supplier')->insert([
+        $tambahSupplier = SupplierModel::insert([
             'id_supplier' => $kode_baru,
             'nama' => $request->input('nama'),
             'kontak' => $request->input('kontak'),
@@ -57,9 +57,7 @@ class SupplierController extends Controller
                 'kontak' => $request->input('kontak'),
                 'alamat' => $request->input('alamat')
             ];
-            DB::table('supplier')
-                        ->where('id_supplier', '=', $id)
-                        ->update($data);
+            SupplierModel::where('id_supplier', '=', $id)->update($data);
 
             Alert::success('Success Title', 'Success Message');
             return redirect('supplier');
@@ -72,9 +70,7 @@ class SupplierController extends Controller
 
     public function hapus($id=null){
         try{
-            $hapus = DB::table('supplier')
-                            ->where('id_supplier',$id)
-                            ->delete();
+            $hapus = SupplierModel::where('id_supplier',$id)->delete();
             if($hapus){
                 Alert::question('Question Title', 'Question Message');
                 return redirect('supplier');

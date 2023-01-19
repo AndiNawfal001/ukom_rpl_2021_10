@@ -55,6 +55,11 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
+Route::group(['middleware' => ['auth','level:admin']], function (){
+    Route::get('/log',[ LoggingController::class,'index']);
+    Route::get('/log/search',[ LoggingController::class,'search']);
+});
+
 //Route Group untuk menggabungkan banyaknya middleware
 Route::group(['middleware' => ['auth','level:admin,manajemen']], function (){
     // Route::get('/levelUser',[LevelUserController::class,'index']);
@@ -165,4 +170,3 @@ Route::post('/ruangan/update/{id}',[ RuanganController::class,'update']);
 Route::get('/ruangan/hapus/{id}',[RuanganController::class,'hapus']);
 
 
-Route::get('/log',[ LoggingController::class,'index']);

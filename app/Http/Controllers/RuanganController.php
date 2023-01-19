@@ -6,21 +6,22 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
+use App\Models\RuanganModel;
 use Illuminate\Support\Arr;
 
 
 class RuanganController extends Controller
 {
     public function index(){
-        $data = DB::table('ruangan')->paginate(5);
+        $data = RuanganModel::paginate(5);
+        // dd($data);
         return view('ruangan.index', compact('data' ));
     }
 
     public function search(Request $request){
         $search = $request->input('search');
 
-        $data = DB::table('ruangan')
-                ->where('nama_ruangan','like',"%".$search."%")
+        $data = RuanganModel::where('nama_ruangan','like',"%".$search."%")
                 ->orWhere('penanggung_jawab','like',"%".$search."%")
                 ->orWhere('ket','like',"%".$search."%")
                 ->paginate(5);
@@ -38,13 +39,12 @@ class RuanganController extends Controller
         $dariFunction = DB::select('SELECT newIdRuangan() AS id_ruangan');
         $array = Arr::pluck($dariFunction, 'id_ruangan');
         $kode_baru = Arr::get($array, '0');
-
-        $tambah_ruangan = DB::table('ruangan')->insert([
+        // dd($kode_baru);
+        $tambah_ruangan = RuanganModel::insert([
             'id_ruangan' => $kode_baru,
             'nama_ruangan' => $request->input('nama_ruangan'),
             'penanggung_jawab' => $request->input('penanggung_jawab'),
             'ket' => $request->input('ket'),
-
         ]);
 
         if ($tambah_ruangan)
@@ -74,8 +74,7 @@ class RuanganController extends Controller
                 'ket' => $request->input('ket'),
                 // 'image' => $image,
             ];
-            DB::table('ruangan')
-                        ->where('id_ruangan', '=', $id)
+                RuanganModel::where('id_ruangan', '=', $id)
                         ->update($data);
                 return redirect('ruangan');
             // dd("berhasil", $upd);
@@ -98,8 +97,7 @@ class RuanganController extends Controller
             // $price = Arr::get($flattened, '0');
             // Storage::delete($price); //HAPUS FILE DI STORAGE
 
-            $hapus = DB::table('ruangan')
-                            ->where('id_ruangan',$id)
+            $hapus = RuanganModel::where('id_ruangan',$id)
                             ->delete();
             if($hapus){
                 return redirect('ruangan');

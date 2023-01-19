@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class KaprogModel extends Model
+class ManajemenModel extends Model
 {
     use HasFactory;
 
-    protected $table = 'kaprog';
+    protected $table = 'manajemen';
     // nama PK
     protected $primaryKey = 'nip';
     // agar timestamps tidak otomatis masuk

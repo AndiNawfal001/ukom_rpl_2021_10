@@ -41,7 +41,7 @@
                         </td>
                         <td class="
                             {{ ($key->kondisi_barang === 'rusak') ? 'text-yellow-500' : '' }}
-                            {{ ($key->kondisi_barang === 'baik') ? 'text-blue-500' : '' }}
+                            {{ ($key->kondisi_barang === 'baik') ? 'text-sky-500' : '' }}
                         ">{{ $key->kondisi_barang }}</td>
                         <td class="
                             {{ ($key->status === 'nonaktif') ? 'text-red-500' : '' }}

@@ -45,8 +45,6 @@ class BarangController extends Controller
         $data = DB::table('barang')
         ->join('jenis_barang', 'barang.id_jenis_brg', '=', 'jenis_barang.id_jenis_brg')
         ->join('detail_barang', 'barang.id_barang', '=', 'detail_barang.id_barang')
-        // ->orderBy('id_barang')
-        // ->select('jenis_barang.nama_jenis', 'barang.*')
         ->where('detail_barang.id_barang', $id)
         ->paginate(10);
 
@@ -58,14 +56,15 @@ class BarangController extends Controller
         $id_barang = $id;
         $search = $request->input('search');
 
-        $data = DB::table('detail_barang')
-            ->where('id_barang',$id)
-            ->where('kode_barang','like',"%".$search."%")
-            ->orWhere('kondisi_barang','like',"%".$search."%")
-            ->orWhere('status','like',"%".$search."%")
-            ->paginate(10);
-
-        // dd($data);
+        $data = DB::table('barang')
+        ->join('jenis_barang', 'barang.id_jenis_brg', '=', 'jenis_barang.id_jenis_brg')
+        ->join('detail_barang', 'barang.id_barang', '=', 'detail_barang.id_barang')
+        ->where('detail_barang.id_barang', $id)
+        ->where('barang.nama_barang','like',"%".$search."%")
+        ->orWhere('kode_barang','like',"%".$search."%")
+        ->orWhere('kondisi_barang','like',"%".$search."%")
+        ->orWhere('status','like',"%".$search."%")
+        ->paginate(10);
         return view('barang.detail', compact('id_barang','data'));
     }
 

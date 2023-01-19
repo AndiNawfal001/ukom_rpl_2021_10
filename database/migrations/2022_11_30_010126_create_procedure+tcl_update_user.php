@@ -28,12 +28,23 @@ return new class extends Migration
             DECLARE cek_admin INT;
             DECLARE cek_manajemen INT;
             DECLARE cek_kaprog INT;
+            -- TCL
+            DECLARE kodeError CHAR(5) DEFAULT '00000';
+            DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
+            BEGIN
+                GET DIAGNOSTICS CONDITION 1
+                kodeError = RETURNED_SQLSTATE;
+            END;
+
+            START TRANSACTION;
+
+            SAVEPOINT initial;
 
             SELECT COUNT(id_pengguna) INTO cek_admin FROM admin WHERE id_pengguna = kode;
             SELECT COUNT(id_pengguna) INTO cek_manajemen FROM manajemen WHERE id_pengguna = kode;
             SELECT COUNT(id_pengguna) INTO cek_kaprog FROM kaprog WHERE id_pengguna = kode;
 
-
+            SAVEPOINT insert_table;
                 IF(cek_admin = 1) THEN
                     UPDATE pengguna SET pengguna.username = username, pengguna.email = email WHERE id_pengguna = kode;
                     UPDATE admin SET nama = nama, kontak = kontak WHERE id_pengguna = kode;
@@ -44,6 +55,12 @@ return new class extends Migration
                     UPDATE pengguna SET pengguna.username = username, pengguna.email = email WHERE id_pengguna = kode;
                     UPDATE kaprog SET nama = nama, kontak = kontak WHERE id_pengguna = id_pengguna;
                 END IF;
+
+            IF kodeError != '00000' THEN
+                ROLLBACK TO insert_table;
+            END IF;
+
+            COMMIT;
 
           END;"
         );
