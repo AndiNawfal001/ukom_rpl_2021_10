@@ -2,19 +2,51 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Pagination\Paginator;
 // use Termwind\Components\Dd;
 
 class BarangMasukController extends Controller
 {
+    // public function paginate($perPage = 15, $columns = ['*'], $pageName = 'page', $page = null) {
+    // }
     public function index(){
         $data = DB::select('SELECT * FROM barang_masuk');
-        $approved = DB::select('SELECT * FROM pengajuan_bb WHERE status_approval = "setuju" ');
-        return view('barangMasuk.index', compact('data', 'approved'));
+        $jenisBarang = DB::table('jenis_barang')->get();
+        $approved = DB::table('pengajuan_bb')->where('status_approval','setuju')->paginate(5);
+        $jenisBarang = DB::table('jenis_barang')->get();
+        // $jenisBarang->setPageName('jenisBarang');
+        // $jenisBarang = DB::table('jenis_barang')->paginate(5, ['*'], 'jenisBarang');
+        // DB::table('jenis_barang')->paginate(5, '[*]', 'jenisBarang');
+        // $jenisBarang = DB::table('jenis_barang')->paginate(5, ['*'], 'jenisBarang');
+        // $approved = DB::table('pengajuan_bb')->where('status_approval','setuju')->paginate(1, '['*']', 'approved');
+
+
+        return view('barangMasuk.index', compact('data', 'approved', 'jenisBarang'));
+    }
+
+    public function search(Request $request){
+        $search = $request->input('search');
+
+        $data = DB::select('SELECT * FROM barang_masuk');
+        // $jenisBarang = DB::table('jenis_barang')->get();
+        // $approved = DB::table('pengajuan_bb')->where('status_approval','setuju')->paginate(5);
+        // $jenisBarang = DB::table('jenis_barang')->paginate(5);
+        // $jenisBarang->setPageName('jenisBarang');
+        $approved = DB::table('pengajuan_bb')
+                ->where('status_approval','setuju')
+                ->where('nama_barang','like',"%".$search."%")
+                ->orWhere('jumlah','like',"%".$search."%")
+                ->paginate(5, ['*'], 'approved');
+        $jenisBarang = DB::table('jenis_barang')
+                ->paginate(5, ['*'], 'jenisBarang');
+
+        return view('barangMasuk.index', compact('data', 'approved', 'jenisBarang'));
     }
 
     public function getJumlahPengajuan(){

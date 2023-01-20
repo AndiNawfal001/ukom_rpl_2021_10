@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use App\Models\RuanganModel;
 use Illuminate\Support\Arr;
-
+use Illuminate\Support\Facades\Validator;
 
 class RuanganController extends Controller
 {
@@ -35,6 +35,14 @@ class RuanganController extends Controller
         // if($request->file('image')){
         //     $image = $request->file('image')->store('images');
         // }
+        $x = Validator::make($request->all(), [
+            'nama_ruangan' => 'required|unique:ruangan,nama_ruangan'
+        ]);
+
+        if ($x->fails()) {
+            flash()->addError('There was a problem submitting your form.');
+            return back()->withErrors($x);
+        }
 
         $dariFunction = DB::select('SELECT newIdRuangan() AS id_ruangan');
         $array = Arr::pluck($dariFunction, 'id_ruangan');
@@ -47,8 +55,11 @@ class RuanganController extends Controller
             'ket' => $request->input('ket'),
         ]);
 
-        if ($tambah_ruangan)
+
+        if ($tambah_ruangan){
+            flash()->addSuccess('Data berhasil ditambahkan.');
             return redirect('ruangan');
+        }
         else
             return "input data gagal";
         } catch (\Exception $e) {
@@ -76,6 +87,7 @@ class RuanganController extends Controller
             ];
                 RuanganModel::where('id_ruangan', '=', $id)
                         ->update($data);
+                flash()->addSuccess('Data berhasil diubah.');
                 return redirect('ruangan');
             // dd("berhasil", $upd);
         } catch (\Exception $e) {
@@ -100,6 +112,7 @@ class RuanganController extends Controller
             $hapus = RuanganModel::where('id_ruangan',$id)
                             ->delete();
             if($hapus){
+                flash()->addSuccess('Data berhasil dihapus.');
                 return redirect('ruangan');
             }
         }catch(\Exception $e){

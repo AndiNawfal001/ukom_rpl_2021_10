@@ -5,6 +5,9 @@
     <div class="bg-base-100 shadow rounded-md p-4 sm:p-6 xl:p-8 ">
 
         <h1 class="text-xl pb-3 font-semibold leading-loose">Daftar Ruangan</h1>
+        @error('nama_ruangan')
+                        <p class="text-red-500">{{ $message }}</p>
+                    @enderror
         <div class="lg:flex justify-between mb-2">
             <form action="/ruangan/search" method="GET">
                 @csrf

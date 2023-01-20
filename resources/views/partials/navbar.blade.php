@@ -60,21 +60,25 @@
           <img src="https://placeimg.com/80/80/people" />
         </div>
       </label>
-      <ul tabindex="0" class="mt-3 p-3 shadow-lg menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
-        @auth
-            <p class="text-base leading-none font-medium">{{Auth::user()->username}}</p>
-            <p class="mb-3 text-sm font-normal
-                {{ (Auth::user()->level_user->nama_level === 'admin') ? 'text-red-500' : '' }}
-                {{ (Auth::user()->level_user->nama_level === 'manajemen') ? 'text-green-500' : '' }}
-                {{ (Auth::user()->level_user->nama_level === 'kaprog') ? 'text-sky-500' : '' }}
-            ">{{Auth::user()->level_user->nama_level}}</p>
-            <div class="mb-4 text-sm font-light">
-                <p>{{Auth::user()->email}}</p>
-            </div>
-        @endauth
+      <a href="https://www.google.com/">
 
-        <button class="btn btn-sm btn-primary">Logout</button>
-      </ul>
+        <ul tabindex="0" class="mt-3 p-3 shadow-lg menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
+            @auth
+                    <p class="text-base leading-none font-medium">{{Auth::user()->username}}</p>
+                    <p class="mb-3 text-sm font-normal
+                        {{ (Auth::user()->level_user->nama_level === 'admin') ? 'text-red-500' : '' }}
+                        {{ (Auth::user()->level_user->nama_level === 'manajemen') ? 'text-green-500' : '' }}
+                        {{ (Auth::user()->level_user->nama_level === 'kaprog') ? 'text-sky-500' : '' }}
+                    ">{{Auth::user()->level_user->nama_level}}</p>
+                    <div class="mb-4 text-sm font-light">
+                        <p>{{Auth::user()->email}}</p>
+                    </div>
+            @endauth
+
+            <button class="btn btn-sm btn-primary">Logout</button>
+        </ul>
+    </a>
+
     </div>
   </div>
 </form>

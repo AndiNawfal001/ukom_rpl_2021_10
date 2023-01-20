@@ -44,7 +44,7 @@ class JenisBarangController extends Controller
         ]);
 
         if ($tambah_jenisbrg)
-            return redirect('jenis_barang');
+            return redirect('barangMasuk');
         else
             return "input data gagal";
         } catch (\Exception $e) {
@@ -97,7 +97,7 @@ class JenisBarangController extends Controller
                             ->where('id_jenis_brg',$id)
                             ->delete();
             if($hapus){
-                return redirect('jenis_barang');
+                return redirect('barangMasuk');
             }
         }catch(\Exception $e){
             $e->getMessage();

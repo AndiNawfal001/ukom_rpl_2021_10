@@ -161,7 +161,7 @@ class PenggunaController extends Controller
         if ($deleteUser)
             return redirect('pengguna');
         else
-            return "input data gagal";
+            return "delete data gagal";
         } catch (\Exception $e) {
         return  $e->getMessage();
         }

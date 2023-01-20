@@ -5,6 +5,7 @@ use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\JenisBarangController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KaprogController;
 use App\Http\Controllers\LevelUserController;
@@ -95,6 +96,7 @@ Route::get('/User/kaprog', [KaprogController::class, 'index']);
 
 // });
 Route::get('/barangMasuk',[ BarangMasukController::class,'index']);
+Route::get('/barangMasuk/search',[ BarangMasukController::class,'search']);
 Route::get('/barangMasuk/tambah/{id}',[ BarangMasukController::class,'formTambah']);
 Route::post('/barangMasuk/tambah/simpan',[ BarangMasukController::class,'store']);
 
@@ -168,5 +170,9 @@ Route::post('/ruangan/tambah',[ RuanganController::class,'store']);
 // Route::get('/ruangan/edit/{id}',[RuanganController::class,'edit']);
 Route::post('/ruangan/update/{id}',[ RuanganController::class,'update']);
 Route::get('/ruangan/hapus/{id}',[RuanganController::class,'hapus']);
+
+
+Route::post('/jenisBarang/tambah',[ JenisBarangController::class,'store']);
+Route::get('/jenisBarang/hapus/{id}',[ JenisBarangController::class,'hapus']);
 
 
