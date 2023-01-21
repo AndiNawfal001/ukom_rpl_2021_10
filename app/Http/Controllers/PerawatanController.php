@@ -83,9 +83,13 @@ class PerawatanController extends Controller{
                 'foto_perawatan' => $image
 
             ]);
-            if ($tambahPerawatan)
+            if ($tambahPerawatan){
+                flash()->options([
+                    'timeout' => 3000, // 3 seconds
+                    'position' => 'top-center',
+                ])->addSuccess('Data berhasil disimpan.');
                 return redirect('perawatan');
-            else
+            }else
                 return "input data gagal";
             } catch (\Exception $e) {
             return  $e->getMessage();
@@ -133,6 +137,10 @@ class PerawatanController extends Controller{
 
             // dd('berhasil');
             if($upd){
+                flash()->options([
+                    'timeout' => 3000, // 3 seconds
+                    'position' => 'top-center',
+                ])->addSuccess('Data berhasil diubah.');
                 // return redirect('perawatan/detail/'.$id_perawatan);
                 return redirect('perawatan');
             }
@@ -161,6 +169,10 @@ class PerawatanController extends Controller{
                             ->where('id_perawatan',$id)
                             ->delete();
             if($hapus){
+                flash()->options([
+                    'timeout' => 3000, // 3 seconds
+                    'position' => 'top-center',
+                ])->addSuccess('Data berhasil dihapus.');
                 return redirect('perawatan');
             }
         }catch(\Exception $e){

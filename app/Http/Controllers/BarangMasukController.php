@@ -118,9 +118,13 @@ class BarangMasukController extends Controller
         ]);
             // dd($tambahBarangMasuk);
 
-        if ($tambahBarangMasuk)
+        if ($tambahBarangMasuk){
+            flash()->options([
+                'timeout' => 3000, // 3 seconds
+                'position' => 'top-center',
+            ])->addSuccess('Barang Berhasil Masuk.');
             return redirect('barangMasuk');
-        else
+        }else
             return "input data gagal";
         } catch (\Exception $e) {
         return  $e->getMessage();

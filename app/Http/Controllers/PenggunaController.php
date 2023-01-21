@@ -24,9 +24,8 @@ class PenggunaController extends Controller
         $admin = DB::table('admin')->count();
         $manajemen = DB::table('manajemen')->count();
         $kaprog = DB::table('kaprog')->count();
-        $levelUser = $this->getlevelUser();
 
-        return view('pengguna.index', compact('data', 'admin', 'manajemen', 'kaprog', 'levelUser'));
+        return view('pengguna.index', compact('data', 'admin', 'manajemen', 'kaprog' ));
     }
 
     public function search(Request $request){
@@ -43,25 +42,27 @@ class PenggunaController extends Controller
         $admin = DB::table('admin')->count();
         $manajemen = DB::table('manajemen')->count();
         $kaprog = DB::table('kaprog')->count();
-        $levelUser = $this->getlevelUser();
-
-        return view('pengguna.index', compact('data', 'admin', 'manajemen', 'kaprog', 'levelUser'));
+        return view('pengguna.index', compact('data', 'admin', 'manajemen', 'kaprog' ));
     }
 
 
-    // public function formTambah(){
-    //     $levelUser = $this->getlevelUser();
+    public function formTambah(){
+        $levelUser = $this->getlevelUser();
 
-    //     return view('pengguna.formtambah', compact('levelUser'));
-    // }
+        return view('pengguna.formtambah', compact('levelUser'));
+    }
 
     public function store(Request $request)
     {
         $request->validate([
-            'email' => 'required|unique:pengguna,email|email:dns',
+            'username' => 'unique:pengguna,username',
+            'email' => 'unique:pengguna,email|email:dns',
             'nip' => 'max:18',
-            'username' => 'required|unique:pengguna,username',
-            'kontak' => 'required|numeric'
+        ],
+        [
+            'username.unique' => 'Username tersebut sudah digunakan!',
+            'email.unique' => 'Email tersebut sudah digunakan!',
+            'nip.max' => 'Tidak boleh lebih dari 18 karakter!',
         ]) ;
         try {
             // dd($request->all());
@@ -75,9 +76,13 @@ class PenggunaController extends Controller
                 'kontak' => $request->input('kontak'),
             ]);
 
-        if ($tambahUser)
+        if ($tambahUser){
+            flash()->options([
+                'timeout' => 3000, // 3 seconds
+                'position' => 'top-center',
+            ])->addSuccess('Data berhasil disimpan.');
             return redirect('pengguna');
-        else
+        }else
             return "input data gagal";
         } catch (\Exception $e) {
         return  $e->getMessage();
@@ -142,9 +147,13 @@ class PenggunaController extends Controller
                 'kontak' => $request->input('kontak'),
             ]);
 
-        if ($updateUser)
+        if ($updateUser){
+            flash()->options([
+                'timeout' => 3000, // 3 seconds
+                'position' => 'top-center',
+            ])->addSuccess('Data berhasil diubah.');
             return redirect('pengguna');
-        else
+        }else
             return "input data gagal";
         } catch (\Exception $e) {
         return  $e->getMessage();
@@ -158,9 +167,13 @@ class PenggunaController extends Controller
                 'kode' => $id
             ]);
 
-        if ($deleteUser)
+        if ($deleteUser){
+            flash()->options([
+                'timeout' => 3000, // 3 seconds
+                'position' => 'top-center',
+            ])->addSuccess('Data berhasil dihapus.');
             return redirect('pengguna');
-        else
+        }else
             return "delete data gagal";
         } catch (\Exception $e) {
         return  $e->getMessage();

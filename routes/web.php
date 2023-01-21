@@ -43,6 +43,7 @@ Route::get('/dashboard',[DashboardController::class,'dashboard']);
 Route::get('/barang',[ BarangController::class,'index']);
 Route::get('/barang/search',[ BarangController::class,'search']);
 Route::get('/barang/detail/{id}',[ BarangController::class,'detail']);
+Route::get('/barang/detail/spesifik/{id}',[ BarangController::class,'spesifik']);
 Route::get('/barang/detail/search/{id}',[ BarangController::class,'searchdetail']);
 Route::post('/barang/detail/update/{id}',[ BarangController::class,'update']);
 
@@ -102,14 +103,16 @@ Route::post('/barangMasuk/tambah/simpan',[ BarangMasukController::class,'store']
 
 Route::get('/supplier',[ SupplierController::class,'index']);
 Route::get('/supplier/search',[ SupplierController::class,'search']);
-Route::post('/supplier/tambah',[ SupplierController::class,'store']);
-Route::post('/supplier/update/{id}',[ SupplierController::class,'update']);
+Route::get('/supplier/tambah',[ SupplierController::class,'formTambah']);
+Route::post('/supplier/simpan',[ SupplierController::class,'store']);
+Route::get('/supplier/edit/{id}',[SupplierController::class,'edit']);
+Route::post('/supplier/editsimpan',[ SupplierController::class,'update']);
 Route::get('/supplier/hapus/{id}',[SupplierController::class,'hapus']);
 
 Route::get('/pengguna',[ PenggunaController::class,'index']);
 Route::get('/pengguna/search',[ PenggunaController::class,'search']);
-// Route::get('/pengguna/tambah',[ PenggunaController::class,'formTambah']);
-Route::post('/pengguna/tambah',[ PenggunaController::class,'store']);
+Route::get('/pengguna/tambah',[ PenggunaController::class,'formTambah']);
+Route::post('/pengguna/simpan',[ PenggunaController::class,'store']);
 Route::get('/pengguna/edit/{id}',[PenggunaController::class,'edit']);
 Route::post('/pengguna/edit/editsimpan',[ PenggunaController::class,'editsimpan']);
 Route::get('/pengguna/hapus/{id}',[PenggunaController::class,'hapus']);
@@ -165,10 +168,10 @@ Route::get('/perawatan/hapus/{id}',[PerawatanController::class,'hapus']);
 
 Route::get('/ruangan',[ RuanganController::class,'index']);
 Route::get('/ruangan/search',[ RuanganController::class,'search']);
-// Route::get('/ruangan/tambah',[ RuanganController::class,'formTambah']);
-Route::post('/ruangan/tambah',[ RuanganController::class,'store']);
-// Route::get('/ruangan/edit/{id}',[RuanganController::class,'edit']);
-Route::post('/ruangan/update/{id}',[ RuanganController::class,'update']);
+Route::get('/ruangan/tambah',[ RuanganController::class,'formTambah']);
+Route::post('/ruangan/simpan',[ RuanganController::class,'store']);
+Route::get('/ruangan/edit/{id}',[RuanganController::class,'edit']);
+Route::post('/ruangan/editsimpan',[ RuanganController::class,'update']);
 Route::get('/ruangan/hapus/{id}',[RuanganController::class,'hapus']);
 
 

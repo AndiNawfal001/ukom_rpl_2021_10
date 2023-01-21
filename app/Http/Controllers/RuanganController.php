@@ -28,21 +28,25 @@ class RuanganController extends Controller
         return view('ruangan.index', compact('data' ));
     }
 
+    public function formTambah(){
+
+        return view('ruangan.formtambah');
+    }
+
     public function store(Request $request)
     {
+        $request->validate([
+            'nama_ruangan' => 'unique:ruangan,nama_ruangan',
+        ],
+        [
+            'nama_ruangan.unique' => 'Nama tersebut sudah digunakan!',
+        ]);
         try {
 
         // if($request->file('image')){
         //     $image = $request->file('image')->store('images');
         // }
-        $x = Validator::make($request->all(), [
-            'nama_ruangan' => 'required|unique:ruangan,nama_ruangan'
-        ]);
 
-        if ($x->fails()) {
-            flash()->addError('There was a problem submitting your form.');
-            return back()->withErrors($x);
-        }
 
         $dariFunction = DB::select('SELECT newIdRuangan() AS id_ruangan');
         $array = Arr::pluck($dariFunction, 'id_ruangan');
@@ -57,7 +61,10 @@ class RuanganController extends Controller
 
 
         if ($tambah_ruangan){
-            flash()->addSuccess('Data berhasil ditambahkan.');
+            flash()->options([
+                'timeout' => 3000, // 3 seconds
+                'position' => 'top-center',
+            ])->addSuccess('Data berhasil disimpan.');
             return redirect('ruangan');
         }
         else
@@ -68,7 +75,20 @@ class RuanganController extends Controller
     }
 
 
-    public function update(Request $request, $id = null)
+    private function getRuangan($id)
+    {
+        return collect(DB::select('SELECT * FROM ruangan WHERE id_ruangan = ?', [$id]))->firstOrFail();
+    }
+
+    public function edit($id = null)
+    {
+
+        $edit = $this->getRuangan($id);
+
+        return view('ruangan.editform', compact('edit'));
+    }
+
+    public function update(Request $request)
     {
         try {
 
@@ -78,14 +98,14 @@ class RuanganController extends Controller
             //     }
             //     $image = $request->file('image')->store('images');
             // }
-
+            // dd($request->all());
             $data = [
                 'nama_ruangan' => $request->input('nama_ruangan'),
                 'penanggung_jawab' => $request->input('penanggung_jawab'),
                 'ket' => $request->input('ket'),
                 // 'image' => $image,
             ];
-                RuanganModel::where('id_ruangan', '=', $id)
+                RuanganModel::where('id_ruangan', '=', $request->input('id_ruangan'))
                         ->update($data);
                 flash()->addSuccess('Data berhasil diubah.');
                 return redirect('ruangan');
@@ -112,8 +132,12 @@ class RuanganController extends Controller
             $hapus = RuanganModel::where('id_ruangan',$id)
                             ->delete();
             if($hapus){
-                flash()->addSuccess('Data berhasil dihapus.');
-                return redirect('ruangan');
+                flash()->options([
+                    'timeout' => 3000, // 3 seconds
+                    'position' => 'top-center',
+                ])
+                ->addSuccess('Data berhasil dihapus.');
+                return back();
             }
         }catch(\Exception $e){
             $e->getMessage();

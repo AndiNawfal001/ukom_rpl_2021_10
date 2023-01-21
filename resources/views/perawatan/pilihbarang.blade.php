@@ -2,8 +2,21 @@
 @section('container')
 
 <div class="pt-6 px-4">
-    <div class="bg-base-100 shadow rounded-md p-4 sm:p-6 xl:p-8 ">
-        <h1 class="text-xl pb-3 font-semibold leading-loose">Pilih Barang untuk dirawat</h1>
+    <div class="alert alert-info shadow-lg mb-4 rounded-md ">
+        <div>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <span>Pastikan dulu barangnya sudah ada</span>
+        </div>
+    </div>
+    <div class="bg-base-100 static shadow rounded-md p-4 sm:p-6 xl:p-8 ">
+        <div class="flex justify-between">
+            <h1 class="text-xl pb-3 font-semibold leading-loose">Pilih Barang untuk dirawat</h1>
+            <div class="">
+                <a href="/perawatan" class="btn btn-sm btn-square">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                </a>
+            </div>
+        </div>
         <form action="/perawatan/pilihBarang/search" method="GET">
             @csrf
                 <div class="form-control mb-2">
@@ -16,22 +29,14 @@
                 </div>
         </form>
         <div class="">
-            <div class="lg:flex flex-row-reverse gap-5">
-                <div class="basis-1/4">
-                    <div class="alert alert-info shadow-lg mb-4 rounded-md">
-                        <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        <span>Pastikan dulu barangnya sudah ada</span>
-                        </div>
-                    </div>
-                </div>
-                <div class=" basis-3/4">
+            <div>
+                <div >
                     <div class="overflow-x-auto overflow-y-auto">
-                        <table class="table table-compact table-zebra w-full ">
+                        <table class="table table-zebra w-full ">
                             <thead>
                                 <tr>
                                     {{-- <th>No</th> --}}
-                                    <th>Kode Barang</th>
+                                    <th>Barang</th>
                                     <th>Kondisi</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
@@ -41,12 +46,29 @@
                             @forelse($data as $key)
                             <tr>
                             {{-- <th>{{ $no++ }}</th> --}}
-                            <td>{{ $key->kode_barang }}</td>
-                            <td>{{ $key->kondisi_barang }}</td>
-                            <td>{{ $key->status }}</td>
+                            <th>
+                                <div class="flex items-center space-x-3">
+                                    <div>
+                                        <div class="font-bold text-lg">{{ $key->nama_barang }}</div>
+                                        <div class="text-sm opacity-50">{{ $key->kode_barang }}</div>
+                                    </div>
+                                </div>
+                            </th>
+                            <td class="
+                            {{ ($key->kondisi_barang === 'rusak') ? 'text-yellow-500' : '' }}
+                            {{ ($key->kondisi_barang === 'baik') ? 'text-sky-500' : '' }}
+                            ">
+                                {{ $key->kondisi_barang }}
+                            </td>
+                            <td class="
+                                {{ ($key->status === 'nonaktif') ? 'text-red-500' : '' }}
+                                {{ ($key->status === 'aktif') ? 'text-green-500' : '' }}
+                            ">
+                                {{ $key->status }}
+                            </td>
                             <td>
                                 <a href="/perawatan/tambah/{{$key->kode_barang}}">
-                                  <div class="tooltip tooltip-warning" data-tip="lakukan perbaikan">
+                                  <div class="tooltip tooltip-warning" data-tip="lakukan perawatan">
                                     <button class="btn btn-sm btn-warning btn-square btn-outline">
                                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11"></path></svg>
                                       </button>

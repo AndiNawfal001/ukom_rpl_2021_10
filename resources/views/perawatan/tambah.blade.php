@@ -4,15 +4,13 @@
  <div class="shadow-md rounded-md mx-auto  bg-base-100 p-5">
  <form action="/perawatan/simpanperawatan" method="POST" enctype="multipart/form-data">
  @csrf
-    <div class="flex justify-between">
-        <div class="order-last">
+    <div class="lg:flex justify-between">
+        <h2 class="text-2xl font-bold">Form perawatan</h2>
+        <div class="my-2 lg:my-0">
             Kode barang :
             <div class="btn btn-sm btn-outline no-animation">{{ $perawatan->kode_barang }}</div>
-
         </div>
-        <h2 class="text-2xl font-bold">Form perawatan</h2>
     </div>
-    <br>
     <div class="form-control hidden">
         <label class="label">
         <span class="label-text">Kode Barang</span>

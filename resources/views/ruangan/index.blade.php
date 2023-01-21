@@ -2,12 +2,16 @@
 @section('container')
 
 <div class="pt-6 px-4">
+    {{-- <div class="text-sm breadcrumbs">
+        <ul>
+          <li><a>Home</a></li>
+          <li><a>Documents</a></li>
+          <li>Add Document</li>
+        </ul>
+      </div> --}}
     <div class="bg-base-100 shadow rounded-md p-4 sm:p-6 xl:p-8 ">
 
         <h1 class="text-xl pb-3 font-semibold leading-loose">Daftar Ruangan</h1>
-        @error('nama_ruangan')
-                        <p class="text-red-500">{{ $message }}</p>
-                    @enderror
         <div class="lg:flex justify-between mb-2">
             <form action="/ruangan/search" method="GET">
                 @csrf
@@ -20,11 +24,11 @@
                         </div>
                     </div>
             </form>
-            <div class="">
-                <label for="tambahruangan" class="btn btn-success gap-2">
+            <a href="/ruangan/tambah">
+                <button class="btn btn-success gap-2">
                     Tambah Ruangan <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                </label>
-            </div>
+                </button>
+            </a>
         </div>
         <div class="">
             <div class="overflow-x-auto overflow-y-auto">
@@ -52,11 +56,12 @@
                         </a>
                     </td> --}}
                     <td>
-                        <label for="editruangan{{$key->id_ruangan}}" class="btn btn-sm btn-warning btn-square btn-outline">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                        </label>
-                        <a href="/ruangan/hapus/{{$key->id_ruangan}}">
-                            {{-- DELETE --}}
+                        <a href="ruangan/edit/{{$key->id_ruangan}}">
+                            <button class="btn btn-sm btn-warning btn-square btn-outline">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                            </button>
+                        </a>
+                        <a href="ruangan/hapus/{{$key->id_ruangan}}">
                             <button class="btn btn-sm btn-error btn-square btn-outline">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                             </button>
@@ -89,106 +94,4 @@
     <br>
 </div>
 
-@endsection
-
-@section('modal')
-
-    {{-- TAMBAH Ruangan --}}
-    <input type="checkbox" id="tambahruangan" class="modal-toggle" />
-    <label for="tambahruangan" class="modal cursor-pointer">
-        <label class="modal-box relative" for="">
-            <form action="ruangan/tambah" method="POST">
-                @csrf
-                <h2 class="text-2xl font-bold">Form Tambah Ruangan</h2>
-                <br>
-                <div class="form-control">
-                    <label class="label">
-                    <span class="label-text">Nama Ruangan</span>
-                    </label>
-                    <input type="text" name="nama_ruangan" class="input input-bordered" required/>
-                </div>
-                <div class="form-control">
-                    <label class="label">
-                    <span class="label-text">Penanggung jawab</span>
-                    </label>
-                    <input type="text" name="penanggung_jawab" class="input input-bordered" required/>
-                </div>
-                <div class="form-control">
-                    <label class="label">
-                        <span class="label-text">Keterangan</span>
-                    </label>
-                    <input type="text" name="ket" class="input input-bordered" required/>
-                </div>
-                {{-- <div class="form-control">
-                    <label class="label">
-                        <span class="label-text">Gambar</span>
-                    </label>
-                    <input type="file" name="image" id="image" class="file-input file-input-bordered w-full max-w-xs" onchange="previewImage()" required/>
-                    <br>
-                    <img src="" class="img-preview object-scale-down w-1/2 md:w-1/4" alt="">
-                </div> --}}
-
-                    <div class="form-control mt-6">
-                    <button type="submit" value="simpan" class="btn btn-primary">Simpan</button>
-                    </div>
-            </form>
-        </label>
-    </label>
-
-    {{-- EDIT Ruangan --}}
-    @foreach($data as $key)
-    <input type="checkbox" id="editruangan{{ $key->id_ruangan }}" class="modal-toggle" />
-    <label for="editruangan{{ $key->id_ruangan }}" class="modal cursor-pointer">
-    <label class="modal-box relative" for="">
-        <form action="/ruangan/update/{{ $key->id_ruangan }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <h2 class="text-2xl font-bold">Form Edit Barang</h2>
-            <br>
-            <div class="form-control">
-                <label class="label">
-                <span class="label-text">Nama Supplier</span>
-                </label>
-                <input type="text" name="nama_ruangan" class="input input-bordered"
-                value="{{ old('nama', $key->nama_ruangan) }}"/>
-                <input type="hidden"  name="id_ruangan" value="{{$key->id_ruangan}}" />
-            </div>
-            <div class="form-control">
-                <label class="label">
-                <span class="label-text">penanggung_jawab</span>
-                </label>
-                <input type="text" name="penanggung_jawab" class="input input-bordered"
-                value="{{ old('penanggung_jawab', $key->penanggung_jawab) }}"/>
-            </div>
-            <div class="form-control">
-                <label class="label">
-                    <span class="label-text">ket</span>
-                </label>
-                <input type="text" name="ket" class="input input-bordered"
-                value="{{ old('ket', $key->ket) }}"/>
-            </div>
-            {{-- <div class="form-control">
-                <label class="label">
-                    <span class="label-text">Gambar</span>
-                </label>
-
-                <input type="file" name="image" id="image" class="file-input file-input-bordered w-full max-w-xs" onchange="previewImage()" required/>
-                <br>
-                <input type="hidden" name="oldImage" value="{{ $edit->image }}">
-
-                @if($edit->image)
-                    <img src="{{ asset('storage/'.$edit->image) }}" class="img-preview object-scale-down w-1/2 md:w-1/4" alt="">
-                @else
-                <img class="img-preview object-scale-down w-1/2 md:w-1/4" alt="">
-
-                @endif
-            </div> --}}
-
-                <div class="form-control mt-6">
-                <button type="submit" value="simpan" class="btn btn-primary">Simpan</button>
-                </div>
-        </form>
-    </label>
-    </label>
-
-    @endforeach
 @endsection

@@ -24,9 +24,30 @@ class SupplierController extends Controller
                 ->paginate(5);
         return view('supplier.index', compact('data'));
     }
+    public function formTambah(){
+        return view('supplier.formtambah');
+    }
+    private function getSupplier($id)
+    {
+        return collect(DB::select('SELECT * FROM supplier WHERE id_supplier = ?', [$id]))->firstOrFail();
+    }
+    public function edit($id = null)
+    {
 
+        $edit = $this->getSupplier($id);
+
+        return view('supplier.editform', compact('edit'));
+    }
     public function store(Request $request)
     {
+        $request->validate([
+            'nama' => 'unique:supplier,nama',
+            'kontak' => 'unique:supplier,kontak'
+        ],
+        [
+            'nama.unique' => 'Nama tersebut sudah digunakan!',
+            'kontak.unique' => 'Kontak tersebut sudah digunakan!',
+        ]);
         try {
         $dariFunction = DB::select('SELECT newIdSupplier() AS id_supplier');
         // dd($dariFunction);
@@ -39,16 +60,20 @@ class SupplierController extends Controller
             'kontak' => $request->input('kontak'),
             'alamat' => $request->input('alamat')
         ]);
-        if ($tambahSupplier)
+        if ($tambahSupplier){
+            flash()->options([
+                'timeout' => 3000, // seconds
+                'position' => 'top-center',
+            ])->addSuccess('Data berhasil disimpan.');
             return redirect('supplier');
-        else
+        }else
             return "input data gagal";
         } catch (\Exception $e) {
         return  $e->getMessage();
         }
     }
 
-    public function update(Request $request, $id = null)
+    public function update(Request $request )
     {
         try {
             // dd($request->all());
@@ -57,9 +82,11 @@ class SupplierController extends Controller
                 'kontak' => $request->input('kontak'),
                 'alamat' => $request->input('alamat')
             ];
-            SupplierModel::where('id_supplier', '=', $id)->update($data);
-
-            Alert::success('Success Title', 'Success Message');
+            SupplierModel::where('id_supplier', '=', $request->input('id_supplier'))->update($data);
+            flash()->options([
+                'timeout' => 3000, // seconds
+                'position' => 'top-center',
+            ])->addSuccess('Data berhasil diubah.');
             return redirect('supplier');
 
         } catch (\Exception $e) {
@@ -72,8 +99,11 @@ class SupplierController extends Controller
         try{
             $hapus = SupplierModel::where('id_supplier',$id)->delete();
             if($hapus){
-                Alert::question('Question Title', 'Question Message');
-                return redirect('supplier');
+                flash()->options([
+                'timeout' => 3000, // seconds
+                'position' => 'top-center',
+                ])->addSuccess('Data berhasil dihapus.');
+                return back();
             }
         }catch(\Exception $e){
             $e->getMessage();

@@ -51,6 +51,30 @@ class BarangController extends Controller
         // dd($data);
         return view('barang.detail', compact('id_barang','data'));
     }
+
+    private function getSpesifik($id)
+    {
+        return collect(DB::select('
+        SELECT detail_barang.*, barang.nama_barang, jenis_barang.nama_jenis
+        FROM barang
+        JOIN detail_barang
+        ON barang.id_barang = detail_barang.id_barang
+        JOIN jenis_barang
+        ON barang.id_jenis_brg = jenis_barang.id_jenis_brg
+        WHERE detail_barang.kode_barang = ?', [$id])
+        )->firstOrFail();
+    }
+
+    public function spesifik($id=null){
+        $data = $this->getSpesifik($id);
+        $modal = DB::table('barang')
+        ->join('jenis_barang', 'barang.id_jenis_brg', '=', 'jenis_barang.id_jenis_brg')
+        ->join('detail_barang', 'barang.id_barang', '=', 'detail_barang.id_barang')
+        ->where('detail_barang.kode_barang', $id)
+        ->paginate(10);
+        // dd($data);
+        return view('barang.spesifik', compact('data', 'modal'));
+    }
     public function searchdetail(Request $request, $id=null){
         // dd($id);
         $id_barang = $id;
@@ -86,8 +110,11 @@ class BarangController extends Controller
             DB::table('detail_barang')
                         ->where('kode_barang', '=', $id)
                         ->update($data);
-
-            return redirect('/barang/detail/'.$request->input('id_barang'));
+            flash()->options([
+                'timeout' => 3000, // 3 seconds
+                'position' => 'top-center',
+            ])->addSuccess('Data Berhasil diubah.');
+            return redirect('/barang/detail/spesifik/'.$request->input('kode_barang'));
 
         } catch (\Exception $e) {
             return $e->getMessage();
