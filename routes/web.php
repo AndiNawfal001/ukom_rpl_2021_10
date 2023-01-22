@@ -97,7 +97,8 @@ Route::get('/User/kaprog', [KaprogController::class, 'index']);
 
 // });
 Route::get('/barangMasuk',[ BarangMasukController::class,'index']);
-Route::get('/barangMasuk/search',[ BarangMasukController::class,'search']);
+Route::get('/barangMasuk/searchPengajuan',[ BarangMasukController::class,'searchPengajuan']);
+Route::get('/barangMasuk/searchBarangMasuk',[ BarangMasukController::class,'searchBarangMasuk']);
 Route::get('/barangMasuk/tambah/{id}',[ BarangMasukController::class,'formTambah']);
 Route::post('/barangMasuk/tambah/simpan',[ BarangMasukController::class,'store']);
 

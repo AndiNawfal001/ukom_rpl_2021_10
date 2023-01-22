@@ -31,7 +31,11 @@
                     <tr>
                         <th>{{ $key->id_log }}</th>
                         <td>{{ $key->username }}</td>
-                        <td>{{ $key->aktifitas }}</td>
+                        <td><p class="badge badge-outline
+                            {{ ($key->aktifitas === 'tambah barang') ? 'badge-success' : '' }}
+                            {{ ($key->aktifitas === 'approve pemutihan' OR $key->aktifitas === 'disapprove pemutihan') ? 'badge-warning' : '' }}
+                            {{ ($key->aktifitas === 'barang diperbaiki' OR $key->aktifitas === 'barang rusak') ? 'badge-info' : '' }}
+                            ">{{ $key->aktifitas }}</p> </td>
                         <td>{{ $key->tgl }}</td>
                     </tr>
                     @empty

@@ -10,11 +10,21 @@
  <div class="shadow-md rounded-md mx-auto  bg-base-100 p-5">
  <form action="simpan" method="POST"  enctype="multipart/form-data">
  @csrf
-    <h2 class="text-2xl font-bold">Form Tambah Barang</h2>
+    <div class="flex justify-between">
+        <div>
+            <h2 class="text-2xl font-bold">Form Tambah Barang</h2>
+            <p class="badge badge-lg badge-outline badge-info my-2">{{ $tambah->nama_barang }}</p>
+        </div>
+        <div>
+            <a href="/barangMasuk" class="btn btn-sm btn-square">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </a>
+        </div>
+    </div>
     <br>
       <div class="lg:flex flex-row gap-5">
             <div class="basis-1/2">
-                <div class="form-control">
+                <div class="form-control hidden">
                     <label class="label">
                     <span class="label-text">Nama Barang</span>
                     </label>
@@ -46,7 +56,7 @@
                     <select class="select select-bordered w-full max-w-xs" name="supplier" required>
                         <option disabled selected>-- Pilih Supplier --</option>
                         @foreach ($supplier as $item)
-                            <option value="{{ $item->id_supplier }} ">{{ $item->nama }}</option>
+                            <option value="{{ $item->id_supplier }}" {{ old('supplier') == $item->id_supplier ? 'selected' : null}}>{{ $item->nama }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -65,7 +75,7 @@
                     <select class="select select-bordered w-full max-w-xs" name="jenis_barang" required>
                         <option disabled selected>-- Pilih Jenis Barang --</option>
                         @foreach ($jenisBarang as $item)
-                            <option value="{{ $item->id_jenis_brg }}">{{ $item->nama_jenis }}</option>
+                            <option value="{{ $item->id_jenis_brg }}" {{ old('jenis_barang') == $item->id_jenis_brg ? 'selected' : null}}>{{ $item->nama_jenis }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -74,6 +84,9 @@
                         <span class="label-text">Foto Barang</span>
                     </label>
                     <input type="file" name="image" id="image" class="file-input file-input-bordered w-full max-w-xs" onchange="previewImage()" required/>
+                    @error('image')
+                        <p class="text-red-500">{{ $message }}</p>
+                    @enderror
                     <br>
                     <img src="" class="img-preview object-scale-down w-1/2 md:w-1/4" alt="">
                 </div>

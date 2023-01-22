@@ -15,29 +15,26 @@ class BarangMasukController extends Controller
 {
     // public function paginate($perPage = 15, $columns = ['*'], $pageName = 'page', $page = null) {
     // }
-    public function index(){
-        $data = DB::select('SELECT * FROM barang_masuk');
-        $jenisBarang = DB::table('jenis_barang')->get();
-        $approved = DB::table('pengajuan_bb')->where('status_approval','setuju')->paginate(5);
-        $jenisBarang = DB::table('jenis_barang')->get();
-        // $jenisBarang->setPageName('jenisBarang');
-        // $jenisBarang = DB::table('jenis_barang')->paginate(5, ['*'], 'jenisBarang');
-        // DB::table('jenis_barang')->paginate(5, '[*]', 'jenisBarang');
-        // $jenisBarang = DB::table('jenis_barang')->paginate(5, ['*'], 'jenisBarang');
-        // $approved = DB::table('pengajuan_bb')->where('status_approval','setuju')->paginate(1, '['*']', 'approved');
-
-
-        return view('barangMasuk.index', compact('data', 'approved', 'jenisBarang'));
+    private function getPengajuanBbInfo($id)
+    {
+        return collect(DB::select('SELECT * FROM pengajuan_bb WHERE id_pengajuan_bb = ? AND status_approval = "setuju" ', [$id]))->firstOrFail();
     }
 
-    public function search(Request $request){
+    public function index(){
+        $data = DB::table('barang_masuk')->get();
+        $info = DB::table('pengajuan_bb')->get();
+        $jenisBarang = DB::table('jenis_barang')->get();
+        $approved = DB::table('pengajuan_bb')->where('status_approval','setuju')->paginate(5);
+
+
+        return view('barangMasuk.index', compact('data', 'info', 'approved', 'jenisBarang'));
+    }
+
+    public function searchPengajuan(Request $request){
         $search = $request->input('search');
 
-        $data = DB::select('SELECT * FROM barang_masuk');
-        // $jenisBarang = DB::table('jenis_barang')->get();
-        // $approved = DB::table('pengajuan_bb')->where('status_approval','setuju')->paginate(5);
-        // $jenisBarang = DB::table('jenis_barang')->paginate(5);
-        // $jenisBarang->setPageName('jenisBarang');
+        $data = DB::table('barang_masuk')->get();
+        $info = DB::table('pengajuan_bb')->get();
         $approved = DB::table('pengajuan_bb')
                 ->where('status_approval','setuju')
                 ->where('nama_barang','like',"%".$search."%")
@@ -46,8 +43,25 @@ class BarangMasukController extends Controller
         $jenisBarang = DB::table('jenis_barang')
                 ->paginate(5, ['*'], 'jenisBarang');
 
-        return view('barangMasuk.index', compact('data', 'approved', 'jenisBarang'));
+        return view('barangMasuk.index', compact('data', 'info', 'approved', 'jenisBarang'));
     }
+
+    public function searchBarangMasuk(Request $request){
+        $search = $request->input('search');
+
+        $data = DB::table('barang_masuk')
+                ->where('nama_barang','like',"%".$search."%")
+                ->orWhere('tgl_masuk','like',"%".$search."%")
+                ->orWhere('jml_masuk','like',"%".$search."%")
+                ->orWhere('status_pembelian','like',"%".$search."%")
+                ->get();
+        $info = DB::table('pengajuan_bb')->get();
+        $approved = DB::table('pengajuan_bb')->where('status_approval','setuju')->paginate(5, ['*'], 'approved');
+        $jenisBarang = DB::table('jenis_barang')->paginate(5, ['*'], 'jenisBarang');
+
+        return view('barangMasuk.index', compact('data', 'info', 'approved', 'jenisBarang'));
+    }
+
 
     public function getJumlahPengajuan(){
         $data = DB::select('SELECT COUNT(id_pengajuan_bb) AS jumlah FROM pengajuan_bb WHERE status_approval = "setuju"');
@@ -98,7 +112,10 @@ class BarangMasukController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_barang' => 'required|exists:pengajuan_bb,nama_barang'
+            'image' => 'mimes:jpeg,jpg,png'
+        ],
+        [
+            'image.mimes' => 'File harus bertipe: jpeg, jpg, png!',
         ]);
         try {
         $image = $request->file('image')->store('barang');

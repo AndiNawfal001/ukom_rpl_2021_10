@@ -38,14 +38,12 @@
                                     <td>{{ $key->nama_barang }}</td>
                                     <td>{{ $key->total_harga }}</td>
                                     <td>{{ $key->tgl }}</td>
-                                    <td class="
-                                    {{ ($key->status_approval === 'tidak') ? 'text-red-500' : '' }}
-                                    {{ ($key->status_approval === 'setuju') ? 'text-green-500' : '' }}
-                                    {{ ($key->status_approval === 'pending') ? 'text-yellow-500' : '' }}
-                                    ">
-                                        {{ $key->status_approval }}
-
-                                    </td>
+                                    <td>
+                                        <p class="badge badge-outline
+                                        {{ ($key->status_approval === 'setuju') ? 'badge-success' : '' }}
+                                        {{ ($key->status_approval === 'pending') ? 'badge-warning' : '' }}
+                                        {{ ($key->status_approval === 'tidak') ? 'badge-error' : '' }}
+                                        ">{{ $key->status_approval }}</p>
                                     <td>
                                         <label for="approvalbbdetail{{ $key->id_pengajuan_bb }}" class="btn btn-sm  btn-info btn-square btn-outline">
                                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -80,49 +78,42 @@
 </div>
 @endsection
 @section('modal')
-@foreach($data as $key)
-<input type="checkbox" id="approvalbbdetail{{ $key->id_pengajuan_bb }}" class="modal-toggle" />
-<div class="modal">
-    <div class="modal-box w-11/12 max-w-5xl">
-        <h1 class="text-xl font-semibold leading-loose">Detail </h1>
-        <div class="modal-action fixed right-5 top-0">
-            <label for="approvalbbdetail{{ $key->id_pengajuan_bb }}" class="btn btn-sm btn-square">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-            </label>
-        </div>
-        <hr class="border">
-        <div class="p-6 space-y-6">
-            <div class="p-5 lg:p-0 lg:w-10/12 mx-auto">
-                <div class="flex border">
-                    <span class="p-3 basis-2/5 text-right bg-base-200 font-semibold">Nama Barang</span>
-                    <span class="p-3 basis-3/5 md:basis-3/4 bg-base-100">{{ $key->nama_barang }}</span>
-                </div>
-                <div class="flex border">
-                    <span class="p-3 basis-2/5 text-right bg-base-200 font-semibold">Harga Satuan</span>
-                    <span class="p-3 basis-3/5 md:basis-3/4 bg-base-100">Rp. {{ $key->harga_satuan }}</span>
-                </div>
-                <div class="flex border">
-                    <span class="p-3 basis-2/5 text-right bg-base-200 font-semibold">Total Harga</span>
-                    <span class="p-3 basis-3/5 md:basis-3/4 bg-base-100">Rp. {{ $key->total_harga }}</span>
-                </div>
-                <div class="flex border">
-                    <span class="p-3 basis-2/5 text-right bg-base-200 font-semibold">Jumlah Barang</span>
-                    <span class="p-3 basis-3/5 md:basis-3/4 bg-base-100">{{ $key->jumlah }}</span>
-                </div>
-                <div class="flex border">
-                    <span class="p-3 basis-2/5 text-right bg-base-200 font-semibold">Tanggal Pengajuan</span>
-                    <span class="p-3 basis-3/5 md:basis-3/4 bg-base-100">{{ $key->tgl }}</span>
-                </div>
-                <div class="flex border">
-                    <span class="p-3 basis-2/5 text-right bg-base-200 font-semibold">Spesifikasi</span>
-                    <span class="p-3 basis-3/5 md:basis-3/4 bg-base-100">{{ $key->spesifikasi }} </span>
-                </div>
-                <div class="flex border">
-                    <span class="p-3 basis-2/5 text-right bg-base-200 font-semibold">Untuk Ruangan</span>
-                    <span class="p-3 basis-3/5 md:basis-3/4 bg-base-100">{{ $key->ruangan }}</span>
-                </div>
+@foreach ($data as $key)
+    <input type="checkbox" id="approvalbbdetail{{ $key->id_pengajuan_bb }}" class="modal-toggle" />
+    <label for="approvalbbdetail{{ $key->id_pengajuan_bb }}" class="modal cursor-pointer">
+    <label class="modal-box relative rounded-md" for="">
+        <div class="badge badge-lg badge-outline mb-5
+        {{ ($key->status_approval === 'setuju') ? 'badge-success' : '' }}
+        {{ ($key->status_approval === 'pending') ? 'badge-warning' : '' }}
+        {{ ($key->status_approval === 'tidak') ? 'badge-error' : '' }}
+        ">{{ $key->status_approval }}</div><br>
+        <h3 class="text-xl font-bold">{{ $key->nama_barang }}</h3>
+        <h3 class="text-md">diajukan {{ $key->tgl }}</h3>
 
-                @if($key->status_approval == "pending")
+        <div class="py-4">
+            <p class="font-light">Spesifikasi</p>
+            <p class="font-medium ">{{ $key->spesifikasi }} </p>
+        </div>
+        <div class="py-4">
+            <p class="font-light">Untuk Ruangan</p>
+            <p class="font-medium ">{{ $key->ruangan }} </p>
+        </div>
+        <div class="py-4 flex gap-7">
+            <div>
+                <span class="text-md font-light">Harga Satuan</span>
+                <p class="font-semibold">{{ $key->harga_satuan }}</p>
+            </div>
+            <div>
+                <span class="text-md font-light">Jumlah</span>
+                <p class="font-semibold">{{ $key->jumlah }}</p>
+            </div>
+            <div>
+                <span class="text-md font-light">Total Harga</span>
+                <p class="font-semibold">{{ $key->total_harga }}</p>
+            </div>
+        </div>
+        <div class="flex flex-row-reverse">
+            @if($key->status_approval == "pending")
                     <div class="py-5 flex flex-row-reverse gap-3">
                         <a href="/approval/BB/tidaksetuju/{{$key->id_pengajuan_bb}}"><button class="btn btn-sm btn-outline btn-error">Tidak Setuju</button></a>
                         <a href="/approval/BB/setuju/{{$key->id_pengajuan_bb}}"><button class="btn btn-sm btn-outline btn-success">Setuju</button></a>
@@ -130,10 +121,9 @@
                 @else
 
                 @endif
-            </div>
         </div>
 
-    </div>
-</div>
+    </label>
+    </label>
 @endforeach
 @endsection

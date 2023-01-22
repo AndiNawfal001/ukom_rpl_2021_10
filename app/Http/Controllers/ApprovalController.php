@@ -66,6 +66,11 @@ class ApprovalController extends Controller
                             ->where('id_pengajuan_bb',$id)
                             ->update($status);
             if($hapus){
+                flash()->options([
+                    'timeout' => 3000, // 3 seconds
+                    'position' => 'top-center',
+                ])
+                ->addSuccess('Data berhasil disimpan.');
                 return redirect('approval/BB');
             }
         }catch(\Exception $e){
@@ -90,6 +95,11 @@ class ApprovalController extends Controller
                             ->where('id_pengajuan_bb',$id)
                             ->update($status);
             if($hapus){
+                flash()->options([
+                    'timeout' => 3000, // 3 seconds
+                    'position' => 'top-center',
+                ])
+                ->addSuccess('Data berhasil disimpan.');
                 return redirect('approval/BB');
             }
         }catch(\Exception $e){
@@ -104,7 +114,7 @@ class ApprovalController extends Controller
 
 
     public function indexPerbaikan(){
-        $data = DB::table('perbaikan')->whereNotNull('tgl_selesai_perbaikan')->paginate(10);
+        $data = DB::table('perbaikan')->join('barang_masuk_perbaikan', 'perbaikan.kode_barang', '=', 'barang_masuk_perbaikan.kode_barang')->whereNotNull('tgl_selesai_perbaikan')->paginate(10);
         return view('approval.perbaikan.index', compact('data'));
     }
 
@@ -119,7 +129,7 @@ class ApprovalController extends Controller
 
     private function getPengajuanPb($id)
     {
-        return collect(DB::select('SELECT * FROM perbaikan WHERE id_perbaikan = ?', [$id]))->firstOrFail();
+        return collect(DB::select('SELECT perbaikan.*, barang_masuk_perbaikan.* FROM perbaikan JOIN barang_masuk_perbaikan ON perbaikan.kode_barang = barang_masuk_perbaikan.kode_barang WHERE perbaikan.id_perbaikan = ?', [$id]))->firstOrFail();
     }
     public function detailPerbaikan($id = null)
     {
@@ -146,6 +156,11 @@ class ApprovalController extends Controller
                             ->update($status);
             // dd('berhasil');
             if($hapus){
+                flash()->options([
+                    'timeout' => 3000, // 3 seconds
+                    'position' => 'top-center',
+                ])
+                ->addSuccess('Data berhasil disimpan.');
                 return redirect('approval/PB');
             }
         }catch(\Exception $e){
@@ -181,6 +196,11 @@ class ApprovalController extends Controller
                             ->update($kondisi);
 
             if($perbaikan AND $detail_barang){
+                flash()->options([
+                    'timeout' => 3000, // 3 seconds
+                    'position' => 'top-center',
+                ])
+                ->addSuccess('Data berhasil disimpan.');
                 return redirect('approval/PB');
             // dd("berhasil");
 
@@ -247,6 +267,11 @@ class ApprovalController extends Controller
                             ->update($status);
 
             if($pemutihan){
+                flash()->options([
+                    'timeout' => 3000, // 3 seconds
+                    'position' => 'top-center',
+                ])
+                ->addSuccess('Data berhasil disimpan.');
                 return redirect('approval/pemutihan');
             }
         }catch(\Exception $e){
@@ -274,6 +299,11 @@ class ApprovalController extends Controller
                             ->update($approve);
 
             if($pemutihan){
+                flash()->options([
+                    'timeout' => 3000, // 3 seconds
+                    'position' => 'top-center',
+                ])
+                ->addSuccess('Data berhasil disimpan.');
                 return redirect('approval/pemutihan');
             // dd("berhasil");
 

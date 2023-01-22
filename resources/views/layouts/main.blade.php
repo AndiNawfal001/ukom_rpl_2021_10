@@ -14,7 +14,7 @@
 
 <div class="lg:flex ">
     <div class="hidden lg:block sidebar">
-        <aside id="sidebar" class=" fixed z-20 h-full top-0 left-0 pt-16 flex lg:flex flex-shrink-0 flex-col w-64 transition-width duration-75" aria-label="Sidebar">
+        <aside id="sidebar" class=" fixed z-20 h-full top-0 bottom-0 left-0 pt-16 flex lg:flex flex-shrink-0 flex-col w-64 transition-width duration-75" aria-label="Sidebar">
             @include('partials.sidebar')
         </aside>
     </div>

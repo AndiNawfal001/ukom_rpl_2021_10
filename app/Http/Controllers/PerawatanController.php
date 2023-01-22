@@ -64,6 +64,12 @@ class PerawatanController extends Controller{
 
     public function simpanperawatan(Request $request)
     {
+        $request->validate([
+            'image' => 'mimes:jpeg,jpg,png'
+        ],
+        [
+            'image.mimes' => 'File harus bertipe: jpeg, jpg, png!',
+        ]);
         try {
 
             $dariFunction = DB::select('SELECT newIdPerawatan() AS id_perawatan');

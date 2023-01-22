@@ -2,6 +2,12 @@
 @section('container')
 
 <div class="pt-6 px-4">
+    <div class="alert alert-info shadow-lg mb-4 rounded-md">
+        <div>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <span>Pastikan dulu barangnya sudah ada</span>
+        </div>
+    </div>
     <div class="bg-base-100 shadow rounded-md p-4 sm:p-6 xl:p-8 ">
         <h1 class="text-xl pb-3 font-semibold leading-loose">Pilih Barang yang ingin diperbaiki</h1>
         <form action="/pengajuan/PB/pilihBarang/search" method="GET">
@@ -16,31 +22,42 @@
             </div>
         </form>
         <div class="">
-            <div class="lg:flex flex-row-reverse gap-5">
-                <div class="basis-1/4 mb-4">
-                    <div class="alert alert-info shadow-lg rounded-md">
-                        <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        <span>Pastikan dulu barangnya sudah ada</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="overflow-x-auto overflow-y-auto basis-3/4">
+            <div class="">
+                <div class="overflow-x-auto overflow-y-auto">
                     <table class="table w-full ">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nama Barang</th>
-                                <th>Kode Barang</th>
-                                <th>Aksi</th>
+                                <td>Barang</td>
+                                <td>Kondisi</td>
+                                <td>Status</td>
+                                <td>Aksi</td>
                             </tr>
                         </thead>
                         <?php $no=1;?>
                         @forelse($data as $key => $item)
                         <tr>
                         <th>{{ $data->firstItem() + $key }}</th>
-                        <td>{{ $item->nama_barang }}</td>
-                        <td>{{ $item->kode_barang }}</td>
+                        <th>
+                            <div class="flex items-center space-x-3">
+                                <div>
+                                    <div class="font-bold text-lg">{{ $item->nama_barang }}</div>
+                                    <div class="text-sm opacity-50">{{ $item->kode_barang }}</div>
+                                </div>
+                            </div>
+                        </th>
+                        <td>
+                            <p class="badge badge-outline
+                            {{ ($item->kondisi_barang === 'baik') ? 'badge-info' : '' }}
+                            {{ ($item->kondisi_barang === 'rusak') ? 'badge-warning' : '' }}
+                            ">{{ $item->kondisi_barang }}</p>
+                        </td>
+                        <td>
+                            <p class="badge badge-outline
+                            {{ ($item->status === 'aktif') ? 'badge-success' : '' }}
+                            {{ ($item->status === 'nonaktif') ? 'badge-error' : '' }}
+                            ">{{ $item->status }}</p>
+                        </td>
                         <td>
                             {{-- <a href="/pengajuan/PB/perbaikan/{{$item->kode_barang}}"> --}}
                             {{-- <div class="tooltip tooltip-warning" data-tip="lakukan perbaikan">
@@ -88,13 +105,12 @@
     <label class="modal-box relative" for="">
         <form action="/pengajuan/PB/perbaikan/simpanperbaikan" method="POST">
             @csrf
-            <div class="flex justify-between">
-                <div class="order-last">
+            <div class="lg:flex justify-between">
+                <h2 class="text-2xl font-bold">Form Perbaikan</h2>
+                <div class="my-2 lg:my-0">
                     Kode barang :
                     <div class="btn btn-sm btn-outline no-animation">{{ $key->kode_barang }}</div>
-
                 </div>
-                <h2 class="text-2xl font-bold">Form Perbaikan</h2>
             </div>
             <br>
             <div class="form-control hidden">

@@ -43,9 +43,13 @@ class JenisBarangController extends Controller
             'nama_jenis' => $request->input('nama_jenis'),
         ]);
 
-        if ($tambah_jenisbrg)
+        if ($tambah_jenisbrg){
+            flash()->options([
+                'timeout' => 3000, // 3 seconds
+                'position' => 'top-center',
+            ])->addSuccess('Barang Berhasil disimpan.');
             return redirect('barangMasuk');
-        else
+        }else
             return "input data gagal";
         } catch (\Exception $e) {
         return  $e->getMessage();
@@ -97,6 +101,10 @@ class JenisBarangController extends Controller
                             ->where('id_jenis_brg',$id)
                             ->delete();
             if($hapus){
+                flash()->options([
+                'timeout' => 3000, // 3 seconds
+                'position' => 'top-center',
+            ])->addSuccess('Barang Berhasil dihapus.');
                 return redirect('barangMasuk');
             }
         }catch(\Exception $e){

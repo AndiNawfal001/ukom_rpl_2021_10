@@ -84,7 +84,7 @@ class BarangController extends Controller
         ->join('jenis_barang', 'barang.id_jenis_brg', '=', 'jenis_barang.id_jenis_brg')
         ->join('detail_barang', 'barang.id_barang', '=', 'detail_barang.id_barang')
         ->where('detail_barang.id_barang', $id)
-        ->where('barang.nama_barang','like',"%".$search."%")
+        ->orWhere('barang.nama_barang','like',"%".$search."%")
         ->orWhere('kode_barang','like',"%".$search."%")
         ->orWhere('kondisi_barang','like',"%".$search."%")
         ->orWhere('status','like',"%".$search."%")

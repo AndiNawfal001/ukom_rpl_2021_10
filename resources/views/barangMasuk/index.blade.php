@@ -6,7 +6,7 @@
         <div class="lg:flex gap-5">
             <div class="bg-base-100 shadow rounded-lg p-4 sm:p-6  basis-3/5">
                 <h1 class="text-xl pb-3 font-semibold leading-loose">Pengajuan yang sudah disetujui</h1>
-                <form action="/barangMasuk/search" method="GET">
+                <form action="/barangMasuk/searchPengajuan" method="GET">
                     @csrf
                         <div class="form-control mb-2">
                             <div class="input-group ">
@@ -31,21 +31,25 @@
                             </thead>
                             @forelse($approved as $key)
                             <tr>
-                            <td>{{ $key->nama_barang }}</td>
+                                <th>
+                                    <div class="flex items-center space-x-3">
+
+                                      <div>
+                                        <div class="font-bold">{{ $key->nama_barang }}</div>
+                                        @if($key->status_pembelian == 'selesai')
+                                            <div class="badge badge-sm badge-outline badge-success my-2">Completed</div>
+                                        @else
+                                            <div class="badge badge-sm badge-outline badge-warning my-2">In Progress</div>
+                                        @endif
+                                      </div>
+                                    </div>
+                                </th>
                             <td>{{ $key->jumlah}}</td>
                             <td>{{ $key->tgl_approve }}</td>
                             <td>
-                                <label for="detailpengajuanbb{{$key->id_pengajuan_bb}}" class="btn btn-sm btn-info btn-square btn-outline">
+                                <label for="my-modal-4{{ $key->id_pengajuan_bb }}" class="btn btn-sm btn-info btn-square btn-outline">
                                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 </label>
-                                @if($key->status_pembelian === NULL OR $key->status_pembelian === "outstanding")
-                                    <a href="/barangMasuk/tambah/{{ $key->id_pengajuan_bb }}">
-                                        {{-- PLUS --}}
-                                        <button class="btn btn-sm btn-success btn-square btn-outline">
-                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-                                        </button>
-                                    </a>
-                                @endif
                             </td>
                             {{-- <td>{{ $key->password }}</td> --}}
                             @empty
@@ -80,7 +84,7 @@
                         </label>
                     </div>
                 </div>
-                <div class="overflow-x-auto    mb-4">
+                <div class="overflow-x-auto  mb-4">
                     <table class="table table-compact w-full">
                         <thead>
                             <tr>
@@ -130,11 +134,22 @@
 
         <div class="bg-base-100 shadow rounded-lg p-4 sm:p-6 xl:p-8">
             <h1 class="text-xl pb-3 font-semibold leading-loose">Barang yang sudah masuk</h1>
+            <form action="/barangMasuk/searchBarangMasuk" method="GET">
+                @csrf
+                    <div class="form-control mb-2">
+                        <div class="input-group ">
+                        <input type="text" name="search" placeholder="Search…" class="input input-bordered" />
+                        <button class="btn btn-square" type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                        </button>
+                        </div>
+                    </div>
+            </form>
             <div class=" overflow-x-auto overflow-y-auto">
-                <table class="table w-full ">
+                <table class="table w-full">
                     <thead>
                         <tr>
-                            <th></th>
+                            <th>No</th>
                             <th>Nama Barang</th>
                             <th>Jumlah Barang</th>
                             <th>Tgl Masuk</th>
@@ -148,10 +163,12 @@
                         <td>{{ $key->nama_barang }}</td>
                         <td>{{ $key->jml_masuk }}</td>
                         <td>{{ $key->tgl_masuk }}</td>
-                        <td class="
-                            {{ ($key->status_pembelian === 'outstanding') ? 'text-yellow-500' : '' }}
-                            {{ ($key->status_pembelian === 'selesai') ? 'text-green-500' : '' }}
-                        ">{{ $key->status_pembelian }}</td>
+                        <td>
+                            <p class="badge badge-outline
+                                        {{ ($key->status_pembelian === 'selesai') ? 'badge-success' : '' }}
+                                        {{ ($key->status_pembelian === 'outstanding') ? 'badge-warning' : '' }}
+                                        ">{{ $key->status_pembelian }}</p>
+                        </td>
                         {{-- <td>{{ $key->password }}</td> --}}
                         @empty
                         <tr>
@@ -174,6 +191,52 @@
 @endsection
 
 @section('modal')
+@foreach ($info as $key)
+    <input type="checkbox" id="my-modal-4{{ $key->id_pengajuan_bb }}" class="modal-toggle" />
+    <label for="my-modal-4{{ $key->id_pengajuan_bb }}" class="modal cursor-pointer">
+    <label class="modal-box relative rounded-md" for="">
+        @if($key->status_pembelian == 'selesai')
+                <div class="badge badge-lg badge-outline badge-success my-2">Completed</div>
+            @else
+                <div class="badge badge-lg badge-outline badge-warning my-2">In Progress</div>
+            @endif
+        <br>
+        <h3 class="text-xl font-bold">{{ $key->nama_barang }}</h3>
+        <h3 class="text-md">diajukan {{ $key->tgl }}</h3>
+
+        <div class="py-4">
+            <p class="font-light text-gray-500">Spesifikasi</p>
+            <p class="font-medium">{{ $key->spesifikasi }} </p>
+        </div>
+        <div class="py-4">
+            <p class="font-light text-gray-500">Untuk Ruangan</p>
+            <p class="font-medium ">{{ $key->ruangan }} </p>
+        </div>
+        <div class="py-4 flex gap-7">
+            <div>
+                <span class="text-md font-light">Harga Satuan</span>
+                <p class="font-semibold">{{ $key->harga_satuan }}</p>
+            </div>
+            <div>
+                <span class="text-md font-light">Jumlah</span>
+                <p class="font-semibold">{{ $key->jumlah }}</p>
+            </div>
+            <div>
+                <span class="text-md font-light">Total Harga</span>
+                <p class="font-semibold">{{ $key->total_harga }}</p>
+            </div>
+        </div>
+        <div class="flex flex-row-reverse">
+            @if($key->status_pembelian == "outstanding" OR $key->status_pembelian == "")
+                <a href="/barangMasuk/tambah/{{ $key->id_pengajuan_bb }}"><button class="btn btn-sm btn-outline btn-success">Tambah Barang</button></a>
+            @else
+            @endif
+        </div>
+
+    </label>
+    </label>
+@endforeach
+
 <input type="checkbox" id="tambahjenisBarang" class="modal-toggle" />
     <label for="tambahjenisBarang" class="modal cursor-pointer">
         <label class="modal-box relative" for="">
