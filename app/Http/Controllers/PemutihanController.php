@@ -32,6 +32,13 @@ class PemutihanController extends Controller
     // LANGSUNG
 
     public function pilihbarangPemutihanLangsung(){
+        // $data = DB::table('barang_masuk_perbaikan')
+        // ->select('nama_barang', 'asli', 'spesifikasi', 'kondisi_barang', 'status')
+        // ->whereNull('kode_barang')
+        // ->where('submitter', $submitter)
+        // ->where('approve_perbaikan', 'rusak')
+        // ->paginate(10);
+
         $data = DB::table('barang_masuk_perbaikan')
         ->select('*')
         ->where('kondisi_barang', 'baik')

@@ -29,6 +29,7 @@ class ApprovalController extends Controller
                     ->where('nama_barang','like',"%".$search."%")
                     ->orWhere('total_harga','like',"%".$search."%")
                     ->orWhere('tgl','like',"%".$search."%")
+                    ->orWhere('status_approval','like',"%".$search."%")
                     ->paginate(10);
 
         return view('approval.barang_baru.index', compact('data'));
@@ -114,7 +115,9 @@ class ApprovalController extends Controller
 
 
     public function indexPerbaikan(){
-        $data = DB::table('perbaikan')->join('barang_masuk_perbaikan', 'perbaikan.kode_barang', '=', 'barang_masuk_perbaikan.kode_barang')->whereNotNull('tgl_selesai_perbaikan')->paginate(10);
+        $data = DB::table('barang_masuk_perbaikan')
+                ->whereNotNull('tgl_selesai_perbaikan')
+                ->paginate(10);
         return view('approval.perbaikan.index', compact('data'));
     }
 
@@ -129,7 +132,7 @@ class ApprovalController extends Controller
 
     private function getPengajuanPb($id)
     {
-        return collect(DB::select('SELECT perbaikan.*, barang_masuk_perbaikan.* FROM perbaikan JOIN barang_masuk_perbaikan ON perbaikan.kode_barang = barang_masuk_perbaikan.kode_barang WHERE perbaikan.id_perbaikan = ?', [$id]))->firstOrFail();
+        return collect(DB::select('SELECT * FROM barang_masuk_perbaikan WHERE id_perbaikan = ?', [$id]))->firstOrFail();
     }
     public function detailPerbaikan($id = null)
     {

@@ -16,11 +16,12 @@ return new class extends Migration
     {
         DB::unprepared(
             "CREATE OR REPLACE VIEW barang_masuk_perbaikan AS (
-              SELECT
+             SELECT
                 barang.nama_barang,
-                detail_barang.kode_barang, detail_barang.spesifikasi, detail_barang.kondisi_barang, detail_barang.status
+                detail_barang.kode_barang AS asli, detail_barang.spesifikasi, detail_barang.kondisi_barang, detail_barang.status, perbaikan.*
                 FROM detail_barang
-                JOIN barang ON detail_barang.id_barang = barang.id_barang
+                LEFT JOIN perbaikan ON detail_barang.kode_barang = perbaikan.kode_barang
+                LEFT JOIN barang ON detail_barang.id_barang = barang.id_barang
             )"
           );
     }

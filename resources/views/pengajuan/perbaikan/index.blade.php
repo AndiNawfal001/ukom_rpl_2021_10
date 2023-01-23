@@ -1,4 +1,4 @@
-@extends('layouts.main')
+    @extends('layouts.main')
 @section('container')
 
 <div class="pt-6 px-4">
@@ -27,7 +27,7 @@
                     <table class="table w-full">
                         <thead>
                             <tr>
-                                <th>Kode Barang</th>
+                                <th>Barang</th>
                                 <th>Tgl Perbaikan</th>
                                 <th>Selesai Perbaikan</th>
                                 <th>Approval perbaikan</th>
@@ -37,37 +37,50 @@
                         <?php $no=1;?>
                         @forelse($data as $key)
                         <tr>
-                            <td>{{ $key->kode_barang }}</td>
+                            <th>
+                                <div class="flex items-center space-x-3">
+                                    <div>
+                                        <div class="font-bold text-lg">{{ $key->nama_barang }}</div>
+                                        <div class="text-sm opacity-50">{{ $key->asli }}</div>
+                                    </div>
+                                </div>
+                            </th>
                             <td>{{ $key->tgl_perbaikan }}</td>
                             <td>
                                 @if($key->tgl_selesai_perbaikan == NULL)
-                                    <span class="text-yellow-500">belum selesai</span>
+                                    <div class="badge badge-warning badge-outline">belum selesai</div>
                                 @else
-                                    <span class="text-green-500">sudah selesai</span>
+                                    <div class="badge badge-success badge-outline">sudah selesai</div>
                                 @endif
                             </td>
-                            <td class="
-                            {{ ($key->approve_perbaikan === 'pending') ? 'text-yellow-500' : '' }}
-                            {{ ($key->approve_perbaikan === 'sudah diperbaiki') ? 'text-green-500' : '' }}
-                            {{ ($key->approve_perbaikan === 'rusak') ? 'text-red-500' : '' }}
-                            ">{{ $key->approve_perbaikan }}</td>
+                            <td>
+                                <p class="badge badge-outline
+                                {{ ($key->approve_perbaikan === 'sudah diperbaiki') ? 'badge-success' : '' }}
+                                {{ ($key->approve_perbaikan === 'pending') ? 'badge-warning' : '' }}
+                                {{ ($key->approve_perbaikan === 'rusak') ? 'badge-error' : '' }}
+                                ">{{ $key->approve_perbaikan }}</p>
+                            </td>
                             <td>
                                 @if($key->tgl_selesai_perbaikan == NULL)
-                                    {{-- <a href="/PB/selesaiPerbaikan/{{$key->id_perbaikan}}">
+                                    <a href="/PB/selesaiPerbaikan/{{$key->id_perbaikan}}">
                                         <div class="tooltip tooltip-warning" data-tip="Selesai perbaikan">
                                         <button class="btn btn-sm  btn-warning btn-square btn-outline">
                                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                                         </button>
                                         </div>
-                                    </a> --}}
-                                    <label for="tambahperbaikan{{$key->id_perbaikan}}" class="btn btn-sm  btn-warning btn-square btn-outline">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                    </label>
+                                    </a>
                                 @else
                                 <a href="PB/detail/{{$key->id_perbaikan}}">
                                     {{-- INFO --}}
                                     <button class="btn btn-sm  btn-info btn-square btn-outline">
                                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    </button>
+                                </a>
+                                @endif
+                                @if($key->nama_teknisi == NULL)
+                                <a href="/pengajuan/PB/hapus/{{$key->id_perbaikan}}">
+                                    <button class="btn btn-sm btn-error btn-square btn-outline">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                                     </button>
                                 </a>
                                 @endif
@@ -97,86 +110,4 @@
 </div>
 
 
-@endsection
-
-@section('modal')
-    @foreach($data as $key)
-    <input type="checkbox" id="tambahperbaikan{{$key->id_perbaikan}}" class="modal-toggle" />
-    <div class="modal">
-        <div class="modal-box w-11/12 max-w-5xl">
-            <form action="/PB/selesaiPerbaikan/simpanSelesaiPerbaikan" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="modal-action fixed right-5 top-0">
-                    <label for="tambahperbaikan{{$key->id_perbaikan}}" class="btn btn-sm btn-square">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                    </label>
-                </div>
-                <div class=" ">
-                    <h2 class="text-2xl font-bold">Form Selesai Perbaikan</h2>
-                    <div class=" ">
-                        Kode barang :
-                        <div class="btn btn-sm btn-outline no-animation">{{ $key->kode_barang }}</div>
-                    </div>
-                </div>
-                <br>
-                <div class="form-control hidden">
-                    <label class="label">
-                    <span class="label-text">Kode Barang</span>
-                    </label>
-                    <input type="text" name="id_perbaikan" class="input input-bordered "
-                    value="{{ old('nama', $key->id_perbaikan) }}"/>
-                </div>
-                <div class="lg:flex flex-row gap-5">
-                    <div class="basis-1/2">
-                        <div class="form-control">
-                            <label class="label">
-                                <span class="label-text">Nama Teknisi</span>
-                            </label>
-                            <input type="text" name="nama_teknisi" class="input input-bordered" required/>
-                        </div>
-                        <div class="form-control">
-                            <label class="label">
-                            <span class="label-text">Penyebab Keluhan</span>
-                            </label>
-                            <textarea name="penyebab_keluhan" cols="20" rows="5" class="textarea textarea-bordered" required></textarea>
-                        </div>
-                        <div class="form-control">
-                            <label class="label">
-                                <span class="label-text">Gambar saat perbaikan</span>
-                            </label>
-                            <input type="file" name="image" id="image" class="file-input file-input-bordered w-full max-w-xs" onchange="previewImage()" required/>
-                            <br>
-                            <img src="" class="img-preview object-scale-down w-1/2 md:w-1/4" alt="">
-                        </div>
-                    </div>
-                    <div class="basis-1/2">
-                        <div class="form-control">
-                            <label class="label">
-                                <span class="label-text">Status Barang</span>
-                                </label>
-                            <div class="flex items-center pl-4 rounded-t border">
-                                <input id="bordered-radio-1" type="radio" value="bisa diperbaiki" name="status_perbaikan" class="radio radio-success">
-                                <label for="bordered-radio-1" class="py-4 ml-2 text-success w-full text-sm font-medium ">Bisa Diperbaiki</label>
-                            </div>
-                            <div class="flex items-center pl-4 rounded-b border">
-                                <input id="bordered-radio-2" type="radio" value="tidak bisa diperbaiki" name="status_perbaikan" class="radio radio-error">
-                                <label for="bordered-radio-2" class="py-4 ml-2 text-error w-full text-sm font-medium ">Tidak Bisa Diperbaiki</label>
-                            </div>
-                        </div>
-                        <div class="form-control">
-                            <label class="label">
-                            <span class="label-text">Solusi Keluhan</span>
-                            </label>
-                            <textarea name="solusi_barang" cols="20" rows="5" class="textarea textarea-bordered" placeholder="Silahkan Dikosongkan Jika Status Barang tidak bisa diperbaiki" ></textarea>
-                        </div>
-                    </div>
-                </div>
-
-                    <div class="form-control mt-6">
-                    <button type="submit" value="simpan" class="btn btn-primary">Simpan</button>
-                    </div>
-            </form>
-        </div>
-    </div>
-    @endforeach
 @endsection

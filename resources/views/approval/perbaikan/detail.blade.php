@@ -34,11 +34,11 @@
                 </div>
                 <div class="pb-3">
                     <p class="font-light">Nama Teknisi</p>
-                    <p class="font-medium ">{{ $detail->keluhan }} </p>
+                    <p class="font-medium ">{{ $detail->nama_teknisi }} </p>
                 </div>
                 <div class="pb-3">
                     <p class="font-light">Penyebab Keluhan</p>
-                    <p class="font-medium ">{{ $detail->ruangan }} Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit perspiciatis consequuntur unde neque eaque laboriosam, corporis labore at inventore debitis, fuga autem dolor ut illum tempore iusto dignissimos corrupti doloremque!</p>
+                    <p class="font-medium ">{{ $detail->penyebab_keluhan }} Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit perspiciatis consequuntur unde neque eaque laboriosam, corporis labore at inventore debitis, fuga autem dolor ut illum tempore iusto dignissimos corrupti doloremque!</p>
                 </div>
                 <div class="flex ">
                     <div class="badge badge-lg badge-outline
@@ -49,7 +49,7 @@
                 </div>
                 @if($detail->approve_perbaikan == "pending")
                         <div class="py-5 flex flex-row-reverse gap-3">
-                            <a href="/approval/PB/tidaksetuju/{{$detail->id_perbaikan}}/{{ $detail->kode_barang }}"><button class="btn btn-sm btn-outline btn-error">Rusak</button></a>
+                            <a href="/approval/PB/tidaksetuju/{{$detail->id_perbaikan}}/{{ $detail->asli }}"><button class="btn btn-sm btn-outline btn-error">Rusak</button></a>
                             <a href="/approval/PB/setuju/{{$detail->id_perbaikan}}"><button class="btn btn-sm btn-outline btn-success">Sudah Diperbaiki</button></a>
                         </div>
                 @endif

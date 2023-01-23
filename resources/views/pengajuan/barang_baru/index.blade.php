@@ -45,13 +45,12 @@
                                     <td>{{ $key->nama_barang }}</td>
                                     <td>{{ $key->total_harga }}</td>
                                     <td>{{ $key->tgl }}</td>
-                                    <td class="
-                                    {{ ($key->status_approval === 'tidak') ? 'text-red-500' : '' }}
-                                    {{ ($key->status_approval === 'setuju') ? 'text-green-500' : '' }}
-                                    {{ ($key->status_approval === 'pending') ? 'text-yellow-500' : '' }}
-                                    ">
-                                        {{ $key->status_approval }}
-
+                                    <td>
+                                        <p class="badge badge-outline
+                                        {{ ($key->status_approval === 'setuju') ? 'badge-success' : '' }}
+                                        {{ ($key->status_approval === 'pending') ? 'badge-warning' : '' }}
+                                        {{ ($key->status_approval === 'tidak') ? 'badge-error' : '' }}
+                                        ">{{ $key->status_approval }}</p>
                                     </td>
                                     <td>
                                         @if($key->status_approval == "pending")

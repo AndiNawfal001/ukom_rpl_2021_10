@@ -13,9 +13,11 @@ class PerbaikanController extends Controller
 {
     public function index(){
         $submitter= Auth::user()->id_pengguna;
-        $data = DB::table('perbaikan')
+
+        $data = DB::table('barang_masuk_perbaikan')
                 ->where('submitter', $submitter)
                 ->paginate(10);
+        // $data = DB::table('perbaikan')->join('barang_masuk_perbaikan', 'perbaikan.kode_barang', '=', 'barang_masuk_perbaikan.kode_barang')->where('submitter',$submitter)->paginate(10);
         return view('pengajuan.perbaikan.index', compact('data' ));
     }
 
@@ -38,11 +40,29 @@ class PerbaikanController extends Controller
     public function pilihBarang(){
         $ruangan = $this->getRuangan();
 
+        // VIEW
         $data = DB::table('barang_masuk_perbaikan')
-        ->select('*')
+        ->distinct()
+        ->select('nama_barang', 'asli', 'kondisi_barang', 'status', 'submitter', 'approve_perbaikan')
         ->where('status', 'aktif')
         ->where('kondisi_barang', 'baik')
+        ->whereNull('submitter')
+        ->orWhere('approve_perbaikan', 'sudah diperbaiki')
+        // ->orWhere(function($query) {
+        //     $query->where('approve_perbaikan', 'sudah diperbaiki')
+        //           ;
+        // })
+        // ->whereNull('approve_perbaikan')
+        // ->orWhereNull('id_perbaikan')
+        // ->orWhere('approve_perbaikan','sudah diperbaiki')
         ->paginate(10);
+        // $data = DB::table('barang_masuk_perbaikan')
+        // ->select('*')
+        // ->where('status', 'aktif')
+        // ->where('kondisi_barang', 'baik')
+        // // ->whereNull('id_perbaikan')
+        // // ->where('approve_perbaikan','sudah diperbaiki')
+        // ->paginate(10);
         return view('pengajuan.perbaikan.pilihbarang', compact('data', 'ruangan'));
     }
 
@@ -92,9 +112,13 @@ class PerbaikanController extends Controller
 
             ]);
 
-            if ($tambah_pengajuan_pb)
+            if ($tambah_pengajuan_pb){
+                flash()->options([
+                    'timeout' => 3000, // 3 seconds
+                    'position' => 'top-center',
+                ])->addSuccess('Data berhasil disimpan.');
                 return redirect('pengajuan/PB');
-            else
+            }else
                 return "input data gagal";
             } catch (\Exception $e) {
             return  $e->getMessage();
@@ -103,7 +127,8 @@ class PerbaikanController extends Controller
 
     private function getPengajuanPb($id)
     {
-        return collect(DB::select('SELECT * FROM perbaikan WHERE id_perbaikan = ?', [$id]))->firstOrFail();
+        // return collect(DB::select('SELECT perbaikan.*, barang_masuk_perbaikan.* FROM perbaikan JOIN barang_masuk_perbaikan ON perbaikan.kode_barang = barang_masuk_perbaikan.kode_barang WHERE perbaikan.id_perbaikan = ?', [$id]))->firstOrFail();
+        return collect(DB::select('SELECT * FROM barang_masuk_perbaikan WHERE id_perbaikan = ?', [$id]))->firstOrFail();
     }
 
     public function detail($id = null)
@@ -114,10 +139,14 @@ class PerbaikanController extends Controller
 
     public function hapus($id=null){
         try{
-            $hapus = DB::table('pengajuan_pb')
+            $hapus = DB::table('perbaikan')
                             ->where('id_perbaikan',$id)
                             ->delete();
             if($hapus){
+                flash()->options([
+                    'timeout' => 3000, // 3 seconds
+                    'position' => 'top-center',
+                ])->addSuccess('Data berhasil dihapus.');
                 return redirect('pengajuan/PB');
             }
         }catch(\Exception $e){
@@ -135,7 +164,7 @@ class PerbaikanController extends Controller
     {
         $image = $request->file('image')->store('perbaikan');
 
-        // dd($image);
+        // dd($request->input('id_perbaikan'));
         try {
             $data = [
                 'nama_teknisi' => $request->input('nama_teknisi'),
@@ -152,6 +181,10 @@ class PerbaikanController extends Controller
                         ->where('id_perbaikan', '=', $request->input('id_perbaikan'))
                         ->update($data);
             if($upd){
+                flash()->options([
+                    'timeout' => 3000, // 3 seconds
+                    'position' => 'top-center',
+                ])->addSuccess('Data berhasil disimpan.');
                 return redirect('pengajuan/PB');
             // dd("berhasil", $upd);
             }

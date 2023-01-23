@@ -138,7 +138,7 @@ Route::get('/pengajuan/PB/edit/{id}',[PerbaikanController::class,'edit']);
 Route::post('/pengajuan/PB/perbaikan/simpanperbaikan',[PerbaikanController::class,'simpanperbaikan']);
 Route::post('/pengajuan/PB/edit/editsimpan',[ PerbaikanController::class,'editsimpan']);
 Route::get('/pengajuan/PB/hapus/{id}',[PerbaikanController::class,'hapus']);
-// Route::get('/PB/selesaiPerbaikan/{id}',[PerbaikanController::class,'selesaiPerbaikan']);
+Route::get('/PB/selesaiPerbaikan/{id}',[PerbaikanController::class,'selesaiPerbaikan']);
 Route::post('/PB/selesaiPerbaikan/simpanSelesaiPerbaikan',[ PerbaikanController::class,'simpanSelesaiPerbaikan']);
 Route::get('/pengajuan/PB/detail/{id}',[PerbaikanController::class,'detail']);
 

@@ -35,7 +35,7 @@
                                 <div class="flex items-center space-x-3">
                                     <div>
                                         <div class="font-bold text-lg">{{ $key->nama_barang }}</div>
-                                        <div class="text-sm opacity-50">{{ $key->kode_barang }}</div>
+                                        <div class="text-sm opacity-50">{{ $key->asli }}</div>
                                     </div>
                                 </div>
                             </th>

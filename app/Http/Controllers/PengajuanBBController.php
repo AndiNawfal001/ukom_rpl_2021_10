@@ -83,9 +83,13 @@ class PengajuanBBController extends Controller
                 'ruangan' => $request->input('ruangan'),
 
             ]);
-        if ($tambah_pengajuan_bb)
+        if ($tambah_pengajuan_bb){
+            flash()->options([
+                'timeout' => 3000, // 3 seconds
+                'position' => 'top-center',
+            ])->addSuccess('Data berhasil disimpan.');
             return redirect('pengajuan/BB');
-        else
+        }else
             return "input data gagal";
         } catch (\Exception $e) {
         return  $e->getMessage();
@@ -122,6 +126,10 @@ class PengajuanBBController extends Controller
                         ->where('id_pengajuan_bb', '=', $id)
                         ->update($data);
             if($upd){
+                flash()->options([
+                    'timeout' => 3000, // 3 seconds
+                    'position' => 'top-center',
+                ])->addSuccess('Data berhasil diubah.');
                 return redirect('pengajuan/BB');
             }
             // dd("berhasil", $upd);
@@ -138,6 +146,10 @@ class PengajuanBBController extends Controller
                             ->where('id_pengajuan_bb',$id, 'AND status_approval = "pending" ')
                             ->delete();
             if($hapus){
+                flash()->options([
+                    'timeout' => 3000, // 3 seconds
+                    'position' => 'top-center',
+                ])->addSuccess('Data berhasil dihapus.');
                 return redirect('pengajuan/BB');
             }
         }catch(\Exception $e){

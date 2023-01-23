@@ -2,60 +2,51 @@
 @section('container')
 <div class="pt-6 px-4">
     <div class="bg-base-100 shadow rounded-md p-4 sm:p-6 xl:p-8 ">
-        <h1 class="text-xl font-semibold leading-loose">Detail </h1>
-        <div class="">
-            <div class="p-5 lg:p-0 lg:w-3/4 mx-auto">
-                <div class="bg-primary-content flex border">
-                    <span class="p-3 basis-1/2 md:basis-1/4 text-right bg-base-200 font-semibold">Nama Barang</span>
-                    <span class="p-3 basis-1/2 md:basis-3/4 bg-base-100">{{ $detail->kode_barang }}</span>
+            <div class="flex justify-between">
+                <h1 class="text-xl font-semibold leading-loose">Detail </h1>
+                <div>
+                    <a href="/pengajuan/PB" class="btn btn-sm btn-square">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </a>
                 </div>
-                <div class="bg-primary-content flex border">
-                    <span class="p-3 basis-1/2 md:basis-1/4 text-right bg-base-200 font-semibold">Tanggal Perbaikan</span>
-                    <span class="p-3 basis-1/2 md:basis-3/4 bg-base-100">{{ $detail->tgl_perbaikan }}</span>
+            </div>
+        <div class="lg:flex gap-10">
+            <div class="basis-1/2 mb-5 lg:mb-0">
+                <div class=" border-2 border-base-300 rounded-md p-3 bg-base-200">
+                    <a href="{{ asset('storage/'.$detail->gambar_pelaksanaan) }}" target="_blank" class="group">
+                        <img src="{{ asset('storage/'.$detail->gambar_pelaksanaan) }}" class="mx-auto shadow  group-hover:brightness-50 ">
+                    </a>
                 </div>
-                <div class="bg-primary-content flex border">
-                    <span class="p-3 basis-1/2 md:basis-1/4 text-right bg-base-200 font-semibold">Keluhan</span>
-                    <span class="p-3 basis-1/2 md:basis-3/4 bg-base-100">{{ $detail->keluhan }}</span>
+            </div>
+            <div class="basis-1/2">
+                <p class="btn btn-sm btn-outline mb-3">{{ $detail->asli }}</p>
+                <p class="text-2xl font-semibold">{{ $detail->nama_barang }}</p>
+                <div class="lg:flex gap-5">
+                    <p class="text-md lg:border-r-2 lg:pr-5">diajukan {{ $detail->tgl_perbaikan }}</p>
+                    <p class="text-md font-medium">Selesai diperbaiki pada {{ $detail->tgl_selesai_perbaikan }}</p>
                 </div>
-                <div class="bg-primary-content flex border">
-                    <span class="p-3 basis-1/2 md:basis-1/4 text-right bg-base-200 font-semibold">Dari Ruangan</span>
-                    <span class="p-3 basis-1/2 md:basis-3/4 bg-base-100">{{ $detail->ruangan }}</span>
+                <div class="pb-3">
+                    <p class="font-light">Dari Ruangan <span class="font-medium">{{ $detail->ruangan }}</span> </p>
                 </div>
-                <div class="bg-primary-content flex border">
-                    <span class="p-3 basis-1/2 md:basis-1/4 text-right bg-base-200 font-semibold">Tanggal Perbaikan</span>
-                    <span class="p-3 basis-1/2 md:basis-3/4 bg-base-100">{{ $detail->tgl_perbaikan }}</span>
+                <div class="pb-3">
+                    <p class="font-light">Keluhan</p>
+                    <p class="font-medium ">{{ $detail->keluhan }} </p>
                 </div>
-
-                <br><hr class="border"><br>
-
-                    <div class="bg-primary-content flex border">
-                        <span class="p-3 basis-1/2 md:basis-1/4 text-right bg-base-200 font-semibold">Nama Teknisi</span>
-                        <span class="p-3 basis-1/2 md:basis-3/4 bg-base-100">{{ $detail->nama_teknisi }}</span>
+                <div class="pb-3">
+                    <p class="font-light">Nama Teknisi</p>
+                    <p class="font-medium ">{{ $detail->nama_teknisi }} </p>
+                </div>
+                <div class="pb-3">
+                    <p class="font-light">Penyebab Keluhan</p>
+                    <p class="font-medium ">{{ $detail->penyebab_keluhan }} Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit perspiciatis consequuntur unde neque eaque laboriosam, corporis labore at inventore debitis, fuga autem dolor ut illum tempore iusto dignissimos corrupti doloremque!</p>
+                </div>
+                <div class="flex ">
+                    <div class="badge badge-lg badge-outline
+                        {{ ($detail->status_perbaikan === 'bisa diperbaiki') ? 'badge-success' : '' }}
+                        {{ ($detail->status_perbaikan === 'tidak bisa diperbaiki') ? 'badge-error' : '' }}
+                        ">{{ $detail->status_perbaikan}}
                     </div>
-                    <div class="bg-primary-content flex border">
-                        <span class="p-3 basis-1/2 md:basis-1/4 text-right bg-base-200 font-semibold">Penyebab Keluhan</span>
-                        <span class="p-3 basis-1/2 md:basis-3/4 bg-base-100">{{ $detail->penyebab_keluhan }}</span>
-                    </div>
-                    <div class="bg-primary-content flex flex-wrap border">
-                        <div class="p-3 basis-4/4 w-full md:basis-1/4 md:text-right bg-base-200 font-semibold">Gambar Pelaksanaan</div>
-                        <div class="p-3 basis-4/4 w-full md:basis-3/4 bg-base-100 grid place-content-center md:place-content-start">
-                            <a href="{{ asset('storage/'.$detail->gambar_pelaksanaan) }}" target="_blank" class="group">
-                                <img src="{{ asset('storage/'.$detail->gambar_pelaksanaan) }}" class="w-52 shadow  group-hover:brightness-50 ">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="bg-primary-content flex border">
-                        <span class="p-3 basis-1/2 md:basis-1/4 text-right bg-base-200 font-semibold">Tanggal Selesai Perbaikan</span>
-                        <span class="p-3 basis-1/2 md:basis-3/4 bg-base-100">{{ $detail->tgl_selesai_perbaikan }}</span>
-                    </div>
-                    <div class="bg-primary-content flex border">
-                        <span class="p-3 basis-1/2 md:basis-1/4 text-right bg-base-200 font-semibold">Status Perbaikan</span>
-                        <span class="p-3 basis-1/2 md:basis-3/4 bg-base-100
-                        {{ ($detail->status_perbaikan === 'tidak bisa diperbaiki') ? 'text-red-500' : '' }}
-                        {{ ($detail->status_perbaikan === 'bisa diperbaiki') ? 'text-green-500' : '' }}">
-                            {{ $detail->status_perbaikan }}
-                        </span>
-                    </div>
+                </div>
             </div>
         </div>
     </div>
