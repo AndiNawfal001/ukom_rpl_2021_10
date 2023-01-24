@@ -11,9 +11,15 @@ class PemutihanController extends Controller
     public function index(){
         $submitter = Auth::user()->id_pengguna;
 
-        $data = DB::table('pemutihan')
+        // $data = DB::table('pemutihan')
+        //         ->where('submitter', $submitter)
+        //         ->paginate(10);
+        $data = DB::table('detail_barang')
+                ->rightJoin('pemutihan', 'detail_barang.kode_barang', '=', 'pemutihan.kode_barang')
+                ->join('barang','detail_barang.id_barang', '=', 'barang.id_barang')
                 ->where('submitter', $submitter)
                 ->paginate(10);
+        // dd($data);
         return view('pengajuan.pemutihan.index', compact('data'));
     }
 
@@ -39,8 +45,14 @@ class PemutihanController extends Controller
         // ->where('approve_perbaikan', 'rusak')
         // ->paginate(10);
 
-        $data = DB::table('barang_masuk_perbaikan')
-        ->select('*')
+        // $data = DB::table('barang_masuk_perbaikan')
+        // ->select('*')
+        // ->where('kondisi_barang', 'baik')
+        // ->where('status', 'aktif')
+        // ->paginate(10);
+
+        $data = DB::table('detail_barang')
+        ->join('barang', 'detail_barang.id_barang', '=', 'barang.id_barang')
         ->where('kondisi_barang', 'baik')
         ->where('status', 'aktif')
         ->paginate(10);

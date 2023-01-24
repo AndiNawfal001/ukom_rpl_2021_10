@@ -2,6 +2,12 @@
 @section('container')
 
 <div class="pt-6 px-4">
+    <div class="alert alert-info shadow-lg mb-4 rounded-md">
+        <div>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <span>Pastikan dulu barangnya sudah ada</span>
+        </div>
+    </div>
     <div class="bg-base-100 shadow rounded-md p-4 sm:p-6 xl:p-8 ">
         <h1 class="text-xl pb-3 font-semibold leading-loose">Pilih Barang untuk pemutihan</h1>
         <form action="/pemutihanLangsung/pilihBarang/searchPLangsung" method="GET">
@@ -16,22 +22,15 @@
                 </div>
         </form>
         <div class="">
-            <div class="lg:flex flex-row-reverse gap-5">
-                <div class="basis-1/4">
-                    <div class="alert alert-info shadow-lg mb-4 rounded-md">
-                        <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        <span>Pastikan dulu barangnya sudah ada</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="overflow-x-auto overflow-y-auto basis-3/4">
+            <div class="">
+                <div class="overflow-x-auto overflow-y-auto ">
                     <table class="table w-full ">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nama Barang</th>
-                                <th>Kode Barang</th>
+                                <th>Barang</th>
+                                <th>Kondisi</th>
+                                <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -39,8 +38,26 @@
                         @forelse($data as $key)
                         <tr>
                         <th>{{ $no++ }}</th>
-                        <td>{{ $key->nama_barang }}</td>
-                        <td>{{ $key->kode_barang }}</td>
+                        <th>
+                            <div class="flex items-center space-x-3">
+                                <div>
+                                    <div class="font-bold text-lg">{{ $key->nama_barang }}</div>
+                                    <div class="text-sm opacity-50">{{ $key->kode_barang }}</div>
+                                </div>
+                            </div>
+                        </th>
+                        <td>
+                            <p class="badge badge-outline
+                            {{ ($key->kondisi_barang === 'baik') ? 'badge-info' : '' }}
+                            {{ ($key->kondisi_barang === 'rusak') ? 'badge-warning' : '' }}
+                            ">{{ $key->kondisi_barang }}</p>
+                        </td>
+                        <td>
+                            <p class="badge badge-outline
+                            {{ ($key->status === 'aktif') ? 'badge-success' : '' }}
+                            {{ ($key->status === 'nonaktif') ? 'badge-error' : '' }}
+                            ">{{ $key->status }}</p>
+                        </td>
                         <td>
                             {{-- <a href="/pemutihan/pemutihanLangung/{{$key->kode_barang}}">
                             <div class="tooltip tooltip-warning" data-tip="lakukan perbaikan">
@@ -87,15 +104,11 @@
     <label class="modal-box relative" for="">
         <form action="/pemutihan/pemutihanLangsung/simpanpemutihanLangsung" method="POST">
             @csrf
-            <div class="flex justify-between">
-                <div class="order-last">
+                <h2 class="text-2xl font-bold">Pemutihan Langsung</h2>
+                <div class="order-last my-2">
                     Kode barang :
                     <div class="btn btn-sm btn-outline no-animation">{{ $key->kode_barang }}</div>
-
                 </div>
-                <h2 class="text-2xl font-bold">Form pemutihanLangsung</h2>
-            </div>
-            <br>
             <div class="form-control hidden">
                 <label class="label">
                 <span class="label-text">Kode Barang</span>

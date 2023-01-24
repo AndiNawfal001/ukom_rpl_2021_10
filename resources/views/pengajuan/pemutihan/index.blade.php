@@ -53,7 +53,13 @@
                         <td>{{ $key->kode_barang }}</td>
                         <td>{{ $key->tgl_pemutihan }}</td>
                         <td>{{ $key->ket_pemutihan }}</td>
-                        <td>{{ $key->approve_penonaktifan }}</td>
+                        <td>
+                            <p class="badge badge-outline
+                            {{ ($key->approve_penonaktifan === 'setuju') ? 'badge-success' : '' }}
+                            {{ ($key->approve_penonaktifan === 'pending') ? 'badge-warning' : '' }}
+                            {{ ($key->approve_penonaktifan === 'tidak setuju') ? 'badge-error' : '' }}
+                            ">{{ $key->approve_penonaktifan }}</p>
+                        </td>
                         <td>
                             <a href="pemutihan/detail/{{$key->id_pemutihan}}">
                                 {{-- INFO --}}
