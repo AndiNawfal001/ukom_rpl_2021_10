@@ -22,7 +22,9 @@
                 <tr>
                     <th>No</th>
                     <th>Nama Barang</th>
-                    <th>Jumlah Barang</th>
+                    <th>Total Barang</th>
+                    <th>Barang Rusak</th>
+                    <th>Barang Non Aktif</th>
                     <th>Aksi</th>
                 </tr>
               </thead>
@@ -41,6 +43,20 @@
                       </div>
                     </td>
                     <td>{{ $key->jml_barang }}</td>
+                    <td>
+                        @if($key->barang_rusak == 0)
+                        <p class="badge badge-outline badge-info">{{ $key->barang_rusak }}</p>
+                        @else
+                        <p class="badge badge-outline badge-warning">{{ $key->barang_rusak }}</p>
+                        @endif
+                    </td>
+                    <td>
+                        @if($key->barang_nonaktif == 0)
+                        <p class="badge badge-outline badge-success">{{ $key->barang_nonaktif }}</p>
+                        @else
+                        <p class="badge badge-outline badge-error">{{ $key->barang_nonaktif }}</p>
+                        @endif
+                    </td>
                     <th>
                         <a href="/barang/detail/{{ $key->id_barang }}">
                             <button class="btn btn-sm btn-outline btn-info">Detail</button>

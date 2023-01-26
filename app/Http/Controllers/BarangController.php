@@ -12,12 +12,18 @@ class BarangController extends Controller
     //
     public function index(){
 
-        $data = DB::table('barang')
-        ->join('jenis_barang', 'barang.id_jenis_brg', '=', 'jenis_barang.id_jenis_brg')
-        ->orderBy('id_barang')
-        ->select('jenis_barang.nama_jenis', 'barang.*')
-        ->paginate(10);
+        // $data = DB::table('barang')
+        // ->join('jenis_barang', 'barang.id_jenis_brg', '=', 'jenis_barang.id_jenis_brg')
+        // ->orderBy('id_barang')
+        // ->select('jenis_barang.nama_jenis', 'barang.*')
+        // ->paginate(10);
 
+        $data = DB::table('barang_aktif_rusak')->paginate(10);
+
+        // $jumlah_barang_rusak = DB::table('barang')
+        // ->join('detail_barang', 'barang.id_barang', '=', 'detail_barang.id_barang')
+        // ->where('detail_barang.kondisi_barang', 'rusak')
+        // ->count('detail_barang.kondisi_barang');
         return view('barang.index', compact('data'));
     }
 

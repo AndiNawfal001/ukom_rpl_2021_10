@@ -3,50 +3,40 @@
 
 <div class="pt-6 px-4">
     <div class="bg-base-100 shadow rounded-md p-4 sm:p-6 xl:p-8 ">
-        <div class="flex justify-between">
-            <h1 class="text-xl font-semibold leading-loose">Detail </h1>
-            <div >
-                <a href="/barang/detail/{{ $data->id_barang}}" class="btn btn-sm btn-square">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                </a>
+            <div class="flex justify-between">
+                <h1 class="text-xl font-semibold leading-loose">Detail </h1>
+                <div>
+                    <a href="/barang/detail/{{ $data->id_barang }}" class="btn btn-sm btn-square">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </a>
+                </div>
             </div>
-        </div>
-        <hr class="border mb-4">
-        <div class="">
-            <div class="lg:w-10/12 mx-auto">
-                <div class="flex border">
-                    <span class="p-3 basis-2/5 text-right bg-base-200 font-semibold">Nama Barang</span>
-                    <span class="p-3 basis-3/5 md:basis-3/4 bg-base-100">{{ $data->nama_barang }}</span>
+        <div class="lg:flex gap-10">
+            <div class="basis-1/2 mb-5 lg:mb-0">
+                <div class=" border-2 border-base-300 rounded-md p-3 bg-base-200">
+                    <a href="{{ asset('storage/'.$data->foto_barang) }}" target="_blank" class="group">
+                        <img src="{{ asset('storage/'.$data->foto_barang) }}" class="mx-auto shadow  group-hover:brightness-50 ">
+                    </a>
                 </div>
-                <div class="flex border">
-                    <span class="p-3 basis-2/5 text-right bg-base-200 font-semibold">Kode Barang</span>
-                    <span class="p-3 basis-3/5 md:basis-3/4 bg-base-100">{{ $data->kode_barang }}</span>
+            </div>
+            <div class="basis-1/2">
+                <p class="btn btn-sm btn-outline mb-3">{{ $data->kode_barang }}</p>
+                <p class="text-2xl font-semibold">{{ $data->nama_barang }}</p>
+                <div class="pb-3">
+                    <p class="font-medium">{{ $data->nama_jenis }}</p>
                 </div>
-                <div class="flex border">
-                    <span class="p-3 basis-2/5 text-right bg-base-200 font-semibold">Jenis Barang</span>
-                    <span class="p-3 basis-3/5 md:basis-3/4 bg-base-100">{{ $data->nama_jenis }}</span>
+                <div class="pb-3">
+                    <p class="font-light">Spesifikasi</p>
+                    <p class="font-medium ">{{ $data->spesifikasi }} Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit perspiciatis consequuntur unde neque eaque laboriosam, corporis labore at inventore debitis, fuga autem dolor ut illum tempore iusto dignissimos corrupti doloremque!</p>
                 </div>
-                <div class="flex border">
-                    <span class="p-3 basis-2/5 text-right bg-base-200 font-semibold">Spesifikasi</span>
-                    <span class="p-3 basis-3/5 md:basis-3/4 bg-base-100">{{ $data->spesifikasi }} </span>
-                </div>
-                <div class="flex border">
-                    <div class="p-3 basis-2/5 text-right bg-base-200 font-semibold">Foto Barang</div>
-                    <div class="p-3 basis-3/5 md:basis-3/4 bg-base-100 grid place-content-center md:place-content-start">
-                        <a href="{{ asset('storage/'.$data->foto_barang) }}" target="_blank" class="group">
-                            <img src="{{ asset('storage/'.$data->foto_barang) }}" class="w-52 shadow  group-hover:brightness-50 "/>
-                        </a>
+                <div class="flex flex-row-reverse">
+                    <label for="editdetailbarang{{$data->kode_barang}}" class="btn btn-sm btn-outline btn-warning">
+                        Edit
+                    </label>
                     </div>
                 </div>
-                <div class="flex flex-row-reverse my-2">
-                    <label for="editdetailbarang{{$data->kode_barang}}"class="btn btn-warning btn-outline gap-2"> EDIT
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                    </label>
-                </div>
             </div>
-
         </div>
-
     </div>
     <br>
 </div>
