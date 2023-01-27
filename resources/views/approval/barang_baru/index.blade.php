@@ -36,7 +36,7 @@
                                 <tr>
                                     <th>{{ $no++ }}</th>
                                     <td>{{ $key->nama_barang }}</td>
-                                    <td>{{ $key->total_harga }}</td>
+                                    <td>{{ number_format($key->total_harga, 0, '.', '.') }}</td>
                                     <td>{{ $key->tgl }}</td>
                                     <td>
                                         <p class="badge badge-outline
@@ -101,7 +101,7 @@
         <div class="py-4 flex gap-7">
             <div>
                 <span class="text-md font-light">Harga Satuan</span>
-                <p class="font-semibold">{{ $key->harga_satuan }}</p>
+                <p class="font-semibold">{{ number_format($key->harga_satuan, 0, '.', '.') }}</p>
             </div>
             <div>
                 <span class="text-md font-light">Jumlah</span>
@@ -109,7 +109,7 @@
             </div>
             <div>
                 <span class="text-md font-light">Total Harga</span>
-                <p class="font-semibold">{{ $key->total_harga }}</p>
+                <p class="font-semibold">{{ number_format($key->total_harga, 0, '.', '.') }}</p>
             </div>
         </div>
         <div class="flex flex-row-reverse">

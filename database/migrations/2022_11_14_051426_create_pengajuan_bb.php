@@ -22,8 +22,8 @@ return new class extends Migration
             $table->integer('submitter');
             $table->char('nama_barang');
             $table->string('spesifikasi');
-            $table->string('harga_satuan');
-            $table->string('total_harga');
+            $table->biginteger('harga_satuan');
+            $table->biginteger('total_harga');
             $table->integer('jumlah');
             $table->date('tgl');
             $table->string('ruangan');

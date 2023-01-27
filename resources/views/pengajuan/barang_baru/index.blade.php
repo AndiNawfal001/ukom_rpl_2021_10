@@ -43,7 +43,7 @@
                                 <tr>
                                     <th>{{ $no++ }}</th>
                                     <td>{{ $key->nama_barang }}</td>
-                                    <td>{{ $key->total_harga }}</td>
+                                    <td>{{ number_format($key->total_harga, 0, '.', '.') }}</td>
                                     <td>{{ $key->tgl }}</td>
                                     <td>
                                         <p class="badge badge-outline
@@ -54,6 +54,9 @@
                                     </td>
                                     <td>
                                         @if($key->status_approval == "pending")
+                                                <label for="pengajuanbbdetail{{ $key->id_pengajuan_bb }}" class="btn btn-sm  btn-info btn-square btn-outline">
+                                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                                </label>
                                                 <label for="editpengajuanbb{{$key->id_pengajuan_bb}}" class="btn btn-sm btn-warning btn-square btn-outline">
                                                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
                                                 </label>
@@ -64,7 +67,7 @@
                                                     </button>
                                                 </a>
                                             @elseif($key->status_approval === 'setuju')
-                                            <label for="detailpengajuanbb{{$key->id_pengajuan_bb}}" class="btn btn-sm btn-info btn-square btn-outline">
+                                            <label for="pengajuanbbdetail{{ $key->id_pengajuan_bb }}" class="btn btn-sm  btn-info btn-square btn-outline">
                                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                             </label>
                                             @elseif($key->status_approval === 'tidak')
@@ -142,14 +145,14 @@
                             <label class="label">
                                 <span class="label-text">Harga Satuan</span>
                             </label>
-                            <input type="text" name="harga_satuan" class="input input-bordered" required/>
+                            <input type="number" name="harga_satuan" class="input input-bordered" required/>
                         </div>
-                        <div class="form-control">
+                        {{-- <div class="form-control">
                             <label class="label">
                                 <span class="label-text">Total Harga</span>
                             </label>
                             <input type="text" name="total_harga" class="input input-bordered" required/>
-                        </div>
+                        </div> --}}
                         <div class="form-control">
                             <label class="label">
                                 <span class="label-text">Jumlah Barang</span>
@@ -212,26 +215,18 @@
                             </div>
                             <div class="form-control">
                                 <label class="label">
-                                <span class="label-text">spesifikasi</span>
+                                <span class="label-text">Spesifikasi</span>
                                 </label>
-                                <input type="text" name="spesifikasi" class="input input-bordered"
-                                value="{{ old('spesifikasi', $key->spesifikasi) }}"/>
-                            </div>
-                            <div class="form-control">
-                                <label class="label">
-                                    <span class="label-text">harga_satuan</span>
-                                </label>
-                                <input type="text" name="harga_satuan" class="input input-bordered"
-                                value="{{ old('harga_satuan', $key->harga_satuan) }}"/>
+                                <textarea name="spesifikasi" cols="20" rows="5" class="textarea textarea-bordered" required>{{ $key->spesifikasi }}</textarea>
                             </div>
                         </div>
                         <div class="basis-1/2">
                             <div class="form-control">
                                 <label class="label">
-                                    <span class="label-text">total_harga</span>
+                                    <span class="label-text">Harga Satuan</span>
                                 </label>
-                                <input type="text" name="total_harga" class="input input-bordered"
-                                value="{{ old('total_harga', $key->total_harga) }}"/>
+                                <input type="number" name="harga_satuan" class="input input-bordered"
+                                value="{{ old('harga_satuan', $key->harga_satuan) }}"/>
                             </div>
                             <div class="form-control">
                                 <label class="label">
@@ -240,6 +235,17 @@
                                 <input type="number" name="jumlah" class="input input-bordered"
                                 value="{{ old('jumlah', $key->jumlah) }}"/>
                             </div>
+                            {{-- <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text">Untuk Ruangan..</span>
+                                </label>
+                                <select class="select select-bordered w-full max-w-xs" name="ruangan" required>
+                                    <option disabled selected>-- Pilih Ruangan --</option>
+                                    @foreach ($ruangan as $item)
+                                        <option value="{{ $item->nama_ruangan }}" {{ old('ruangan') == $item->nama_ruangan ? 'selected' : null}}>{{ $item->nama_ruangan }}</option>
+                                    @endforeach
+                                </select>
+                            </div> --}}
                         </div>
                     </div>
                         <div class="form-control mt-6">
@@ -250,59 +256,44 @@
         </div>
     @endforeach
 
-    @foreach($data as $key)
+    @foreach ($data as $key)
+    <input type="checkbox" id="pengajuanbbdetail{{ $key->id_pengajuan_bb }}" class="modal-toggle" />
+    <label for="pengajuanbbdetail{{ $key->id_pengajuan_bb }}" class="modal cursor-pointer">
+    <label class="modal-box relative rounded-md" for="">
+        <div class="badge badge-lg badge-outline mb-5
+        {{ ($key->status_approval === 'setuju') ? 'badge-success' : '' }}
+        {{ ($key->status_approval === 'pending') ? 'badge-warning' : '' }}
+        {{ ($key->status_approval === 'tidak') ? 'badge-error' : '' }}
+        ">{{ $key->status_approval }}</div><br>
+        <h3 class="text-xl font-bold">{{ $key->nama_barang }}</h3>
+        <h3 class="text-md">diajukan {{ $key->tgl }}</h3>
 
-        <!-- Put this part before </body> tag -->
-        <input type="checkbox" id="detailpengajuanbb{{$key->id_pengajuan_bb}}" class="modal-toggle" />
-        <div class="modal">
-            <div class="modal-box w-11/12 max-w-5xl">
-
-
-                <div class="">
-
-                    <div class="p-5 lg:p-0 lg:w-3/4 mx-auto">
-                        <div class="my-2">
-                            <div class="modal-action fixed right-5 top-0">
-                                <label for="detailpengajuanbb{{$key->id_pengajuan_bb}}" class="btn btn-sm btn-square">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                                </label>
-                            </div>
-                            <h1 class="text-xl font-semibold leading-loose">Detail </h1>
-                        </div>
-                        <div class="bg-primary-content flex border">
-                            <span class="p-3 basis-1/2 md:basis-1/4 text-right bg-base-200 font-semibold">Nama Barang</span>
-                            <span class="p-3 basis-1/2 md:basis-3/4 bg-base-100">{{ $key->nama_barang }}</span>
-                        </div>
-                        <div class="bg-primary-content flex border">
-                            <span class="p-3 basis-1/2 md:basis-1/4 text-right bg-base-200 font-semibold">Harga Satuan</span>
-                            <span class="p-3 basis-1/2 md:basis-3/4 bg-base-100">Rp. {{ $key->harga_satuan }}</span>
-                        </div>
-                        <div class="bg-primary-content flex border">
-                            <span class="p-3 basis-1/2 md:basis-1/4 text-right bg-base-200 font-semibold">Total Harga</span>
-                            <span class="p-3 basis-1/2 md:basis-3/4 bg-base-100">Rp. {{ $key->total_harga }}</span>
-                        </div>
-                        <div class="bg-primary-content flex border">
-                            <span class="p-3 basis-1/2 md:basis-1/4 text-right bg-base-200 font-semibold">Jumlah Barang</span>
-                            <span class="p-3 basis-1/2 md:basis-3/4 bg-base-100">{{ $key->jumlah }}</span>
-                        </div>
-                        <div class="bg-primary-content flex border">
-                            <span class="p-3 basis-1/2 md:basis-1/4 text-right bg-base-200 font-semibold">Tanggal Pengajuan</span>
-                            <span class="p-3 basis-1/2 md:basis-3/4 bg-base-100">{{ $key->tgl }}</span>
-                        </div>
-                        <div class="bg-primary-content flex border">
-                            <span class="p-3 basis-1/2 md:basis-1/4 text-right bg-base-200 font-semibold">Spesifikasi</span>
-                            <span class="p-3 basis-1/2 md:basis-3/4 bg-base-100">{{ $key->spesifikasi }}</span>
-                        </div>
-                        <div class="bg-primary-content flex border">
-                            <span class="p-3 basis-1/2 md:basis-1/4 text-right bg-base-200 font-semibold">Untuk Ruangan</span>
-                            <span class="p-3 basis-1/2 md:basis-3/4 bg-base-100">{{ $key->ruangan }}</span>
-                        </div>
-                    </div>
-                </div>
+        <div class="py-4">
+            <p class="font-light">Spesifikasi</p>
+            <p class="font-medium ">{{ $key->spesifikasi }} </p>
+        </div>
+        <div class="py-4">
+            <p class="font-light">Untuk Ruangan</p>
+            <p class="font-medium ">{{ $key->ruangan }} </p>
+        </div>
+        <div class="py-4 flex gap-7">
+            <div>
+                <span class="text-md font-light">Harga Satuan</span>
+                <p class="font-semibold">{{ number_format($key->harga_satuan, 0, '.', '.') }}</p>
+            </div>
+            <div>
+                <span class="text-md font-light">Jumlah</span>
+                <p class="font-semibold">{{ $key->jumlah }}</p>
+            </div>
+            <div>
+                <span class="text-md font-light">Total Harga</span>
+                <p class="font-semibold">{{ number_format($key->total_harga, 0, '.', '.') }}</p>
             </div>
         </div>
-    @endforeach
 
+    </label>
+    </label>
+@endforeach
 
 @endsection
 

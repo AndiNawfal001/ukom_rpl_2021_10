@@ -67,17 +67,18 @@ class PengajuanBBController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_barang' => 'required|unique:pengajuan_bb,nama_barang'
+            'nama_barang' => 'required|unique:pengajuan_bb,nama_barang',
+            // 'harga_satuan' => 'max:15'
         ]) ;
         try {
             $submitter_id = Auth::user()->id_pengguna;
-
+            $total_harga = $request->input('harga_satuan') * $request->input('jumlah');
             $tambah_pengajuan_bb = DB::table('pengajuan_bb')->insert([
                 'submitter' => $submitter_id,
                 'nama_barang' => $request->input('nama_barang'),
                 'spesifikasi' => $request->input('spesifikasi'),
                 'harga_satuan' => $request->input('harga_satuan'),
-                'total_harga' => $request->input('total_harga'),
+                'total_harga' => $total_harga,
                 'jumlah' => $request->input('jumlah'),
                 'tgl' => NOW(),
                 'ruangan' => $request->input('ruangan'),
@@ -115,17 +116,17 @@ class PengajuanBBController extends Controller
     public function update(Request $request, $id = null)
     {
         try {
+            $total_harga = $request->input('harga_satuan') * $request->input('jumlah');
             $data = [
                 'nama_barang' => $request->input('nama_barang'),
                 'spesifikasi' => $request->input('spesifikasi'),
                 'harga_satuan' => $request->input('harga_satuan'),
-                'total_harga' => $request->input('total_harga'),
+                'total_harga' => $total_harga,
                 'jumlah' => $request->input('jumlah')
             ];
-            $upd = DB::table('pengajuan_bb')
+            DB::table('pengajuan_bb')
                         ->where('id_pengajuan_bb', '=', $id)
                         ->update($data);
-            if($upd){
                 flash()->options([
                     'timeout' => 3000, // 3 seconds
                     'position' => 'top-center',
@@ -133,7 +134,7 @@ class PengajuanBBController extends Controller
                 return redirect('pengajuan/BB');
             }
             // dd("berhasil", $upd);
-        } catch (\Exception $e) {
+        catch (\Exception $e) {
             return $e->getMessage();
             dd("gagal");
         }

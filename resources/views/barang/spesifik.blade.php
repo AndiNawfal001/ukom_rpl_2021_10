@@ -27,7 +27,25 @@
                 </div>
                 <div class="pb-3">
                     <p class="font-light">Spesifikasi</p>
-                    <p class="font-medium ">{{ $data->spesifikasi }} Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit perspiciatis consequuntur unde neque eaque laboriosam, corporis labore at inventore debitis, fuga autem dolor ut illum tempore iusto dignissimos corrupti doloremque!</p>
+                    <p class="font-medium ">{{ $data->spesifikasi }}</p>
+                </div>
+                <div class="pb-3 flex gap-5">
+                    <div class="pb-3">
+                        <p class="font-light">Kondisi</p>
+                        <span class="badge badge-lg badge-outline
+                            {{ ($data->kondisi_barang === 'baik') ? 'badge-info' : '' }}
+                            {{ ($data->kondisi_barang === 'rusak') ? 'badge-warning' : '' }}
+                            ">{{ $data->kondisi_barang}}
+                        </span>
+                    </div>
+                    <div class="pb-3">
+                        <p class="font-light">Status</p>
+                        <span class="badge badge-lg badge-outline
+                            {{ ($data->status === 'aktif') ? 'badge-success' : '' }}
+                            {{ ($data->status === 'nonaktif') ? 'badge-error' : '' }}
+                            ">{{ $data->status}}
+                        </span>
+                    </div>
                 </div>
                 <div class="flex flex-row-reverse">
                     <label for="editdetailbarang{{$data->kode_barang}}" class="btn btn-sm btn-outline btn-warning">
