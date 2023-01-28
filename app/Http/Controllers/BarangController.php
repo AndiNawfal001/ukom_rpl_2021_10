@@ -29,10 +29,7 @@ class BarangController extends Controller
 
     public function search(Request $request){
         $search = $request->input('search');
-        $data = DB::table('barang')
-        ->join('jenis_barang', 'barang.id_jenis_brg', '=', 'jenis_barang.id_jenis_brg')
-        ->orderBy('id_barang')
-        ->select('jenis_barang.nama_jenis', 'barang.*')
+        $data = DB::table('barang_aktif_rusak')
         ->where('nama_jenis','like',"%".$search."%")
         ->orWhere('nama_barang','like',"%".$search."%")
         ->paginate(10);
@@ -89,8 +86,8 @@ class BarangController extends Controller
         $data = DB::table('barang')
         ->join('jenis_barang', 'barang.id_jenis_brg', '=', 'jenis_barang.id_jenis_brg')
         ->join('detail_barang', 'barang.id_barang', '=', 'detail_barang.id_barang')
-        ->where('detail_barang.id_barang', $id)
-        ->orWhere('barang.nama_barang','like',"%".$search."%")
+        ->where('barang.id_barang', $id)
+        ->where('barang.nama_barang','like',"%".$search."%")
         ->orWhere('kode_barang','like',"%".$search."%")
         ->orWhere('kondisi_barang','like',"%".$search."%")
         ->orWhere('status','like',"%".$search."%")

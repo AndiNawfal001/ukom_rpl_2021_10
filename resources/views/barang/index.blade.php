@@ -42,19 +42,19 @@
                         </div>
                       </div>
                     </td>
-                    <td>{{ $key->jml_barang }}</td>
+                    <td>{{ number_format($key->jml_barang, 0, '.', '.') }}</td>
                     <td>
                         @if($key->barang_rusak == 0)
-                        <p class="badge badge-outline badge-info">{{ $key->barang_rusak }}</p>
+                        <p class="badge badge-outline badge-info">{{ number_format($key->barang_rusak, 0, '.', '.') }}</p>
                         @else
-                        <p class="badge badge-outline badge-warning">{{ $key->barang_rusak }}</p>
+                        <p class="badge badge-outline badge-warning">{{ number_format($key->barang_rusak, 0, '.', '.') }}</p>
                         @endif
                     </td>
                     <td>
                         @if($key->barang_nonaktif == 0)
-                        <p class="badge badge-outline badge-success">{{ $key->barang_nonaktif }}</p>
+                        <p class="badge badge-outline badge-success">{{ number_format($key->barang_nonaktif, 0, '.', '.') }}</p>
                         @else
-                        <p class="badge badge-outline badge-error">{{ $key->barang_nonaktif }}</p>
+                        <p class="badge badge-outline badge-error">{{ number_format($key->barang_nonaktif, 0, '.', '.') }}</p>
                         @endif
                     </td>
                     <th>

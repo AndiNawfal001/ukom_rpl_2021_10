@@ -72,10 +72,10 @@ class PerbaikanController extends Controller
         $search = $request->input('search');
         $data = DB::table('barang_masuk_perbaikan')
         ->select('*')
+        ->where('asli','like',"%".$search."%")
+        ->orWhere('nama_barang','like',"%".$search."%")
         ->where('status', 'aktif')
         ->where('kondisi_barang', 'baik')
-        ->where('kode_barang','like',"%".$search."%")
-        ->orWhere('nama_barang','like',"%".$search."%")
         ->paginate(10);
         return view('pengajuan.perbaikan.pilihbarang', compact('data','ruangan'));
     }

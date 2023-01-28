@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             KaprogSeeder::class,
             RuanganSeeder::class,
-            // PengajuanBBSeeder::class,
+            PengajuanBBSeeder::class,
 
         ]);
     }
