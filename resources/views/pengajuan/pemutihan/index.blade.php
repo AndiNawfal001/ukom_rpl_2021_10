@@ -108,19 +108,39 @@
     <input type="checkbox" id="my-modal-4{{ $key->id_pemutihan }}" class="modal-toggle" />
     <label for="my-modal-4{{ $key->id_pemutihan }}" class="modal cursor-pointer">
     <label class="modal-box relative rounded-md" for="">
-                <div class="badge badge-lg badge-outline my-2
+        <div class="flex justify-between items-center mb-3">
+            <div class="badge badge-lg badge-outline
                     {{ ($key->approve_penonaktifan === 'pending') ? 'badge-warning' : '' }}
                     {{ ($key->approve_penonaktifan === 'setuju') ? 'badge-success' : '' }}
                     {{ ($key->approve_penonaktifan === 'tidak setuju') ? 'badge-error' : '' }}
                 ">{{ $key->approve_penonaktifan }}</div>
-        <br>
+            <p class="btn btn-sm btn-outline">{{ $key->kode_barang }}</p>
+        </div>
         <h3 class="text-xl font-bold">{{ $key->nama_barang }}</h3>
         <h3 class="text-md">diajukan {{ $key->tgl_pemutihan }}</h3>
 
         <div class="py-4">
-            <p class="font-light text-gray-500">Keteragan Pemutihan</p>
-            <p class="font-medium">{{ $key->ket_pemutihan }} Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed optio, minus eum provident labore ea laborum aliquid, cum explicabo atque dicta laboriosam, recusandae id pariatur quae veritatis aspernatur fuga sit.</p>
+            <p class="font-light text-gray-500">Keterangan Pemutihan</p>
+            <p class="font-medium">{{ $key->ket_pemutihan }}</p>
         </div>
+
+        @if($key->id_perbaikan == NULL)
+        @else
+        <div class="py-2">
+            <p class="font-light text-gray-500">Nama Teknisi</p>
+            <p class="font-medium">{{ $key->nama_teknisi }}</p>
+        </div>
+        <div class="py-2 flex gap-7">
+            <div>
+                <p class="font-light text-gray-500">Tgl Perbaikan</p>
+                <p class="font-medium">{{ $key->tgl_perbaikan }}</p>
+            </div>
+            <div>
+                <p class="font-light text-gray-500">Tgl Selesai</p>
+                <p class="font-medium">{{ $key->tgl_selesai_perbaikan }}</p>
+            </div>
+        </div>
+        @endif
 
     </label>
     </label>

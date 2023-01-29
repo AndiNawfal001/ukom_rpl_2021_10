@@ -13,10 +13,14 @@ class PemutihanController extends Controller
 
         $data = DB::table('pemutihan')
                 ->join('nama_kode_barang', 'pemutihan.kode_barang', '=', 'nama_kode_barang.kode_barang')
-                // ->leftJoin('perbaikan', 'pemutihan.id_perbaikan', '=', 'perbaikan.id_perbaikan')
-                ->select('pemutihan.*', 'nama_kode_barang.nama_barang')
-                ->where('submitter', $submitter)
+                ->leftJoin('perbaikan', 'pemutihan.id_perbaikan', '=', 'perbaikan.id_perbaikan')
+                ->select('pemutihan.*', 'nama_kode_barang.nama_barang',
+                    'tgl_perbaikan', 'penyebab_keluhan', 'tgl_selesai_perbaikan',
+                    'nama_teknisi'
+                )
+                ->where('pemutihan.submitter', $submitter)
                 ->paginate(10);
+        // dd($data);
         // $data = DB::table('detail_barang')
         //         ->rightJoin('pemutihan', 'detail_barang.kode_barang', '=', 'pemutihan.kode_barang')
         //         ->join('barang','detail_barang.id_barang', '=', 'barang.id_barang')
