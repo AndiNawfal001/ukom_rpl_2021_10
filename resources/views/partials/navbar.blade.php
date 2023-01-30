@@ -57,12 +57,11 @@
 
       <label tabindex="0" class="btn btn-ghost btn-circle avatar">
         <div class="w-10 rounded-full">
-            <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path clip-rule="evenodd" fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-5.5-2.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0zM10 12a5.99 5.99 0 00-4.793 2.39A6.483 6.483 0 0010 16.5a6.483 6.483 0 004.793-2.11A5.99 5.99 0 0010 12z"></path>
-              </svg>
+           @auth
+               <img src="{{ Avatar::create(Auth::user()->username) }}" alt="">
+           @endauth
         </div>
       </label>
-      <a href="https://www.google.com/">
 
         <ul tabindex="0" class="mt-3 p-3 shadow-lg menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
             @auth
@@ -79,7 +78,6 @@
 
             <button class="btn btn-sm btn-primary">Logout</button>
         </ul>
-    </a>
 
     </div>
   </div>

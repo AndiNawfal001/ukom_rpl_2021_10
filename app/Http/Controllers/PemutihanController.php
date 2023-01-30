@@ -179,7 +179,6 @@ class PemutihanController extends Controller
                 'submitter' => $submitter_id,
                 'tgl_pemutihan' => NOW(),
                 'ket_pemutihan' => $request->input('ket_pemutihan')
-
             ]);
 
             if ($tambah_pengajuan_pb)
