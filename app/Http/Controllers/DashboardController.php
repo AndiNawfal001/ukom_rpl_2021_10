@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Auth;
 class DashboardController extends Controller
 {
     public function dashboard () {
+        $ceklogin = Auth::user();
+        if($ceklogin == null){
+            return redirect('login');
+        }
         $submitter = Auth::user()?->id_pengguna;
 
         $barang_masuk = DB::table('barang_masuk')->sum('jml_masuk');

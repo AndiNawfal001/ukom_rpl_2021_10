@@ -58,12 +58,14 @@ class BarangController extends Controller
     private function getSpesifik($id)
     {
         return collect(DB::select('
-        SELECT detail_barang.*, barang.nama_barang, jenis_barang.nama_jenis
+        SELECT detail_barang.*, barang.nama_barang, jenis_barang.nama_jenis, ruangan.nama_ruangan
         FROM barang
         JOIN detail_barang
         ON barang.id_barang = detail_barang.id_barang
         JOIN jenis_barang
         ON barang.id_jenis_brg = jenis_barang.id_jenis_brg
+        LEFT JOIN ruangan
+        ON detail_barang.ruangan = ruangan.id_ruangan
         WHERE detail_barang.kode_barang = ?', [$id])
         )->firstOrFail();
     }

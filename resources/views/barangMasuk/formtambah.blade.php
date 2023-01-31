@@ -89,6 +89,7 @@
                     @enderror
                     <br>
                     <img src="" class="img-preview object-scale-down w-1/2 md:w-1/4" alt="">
+                    <input type="hidden" name="ruangan" class="input input-bordered" value="{{ $tambah->ruangan }}" required/>
                 </div>
             </div>
       </div>

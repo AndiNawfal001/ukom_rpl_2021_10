@@ -12,10 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class SupplierController extends Controller
 {
     public function index(){
-        $ceklogin = Auth::user();
-        if($ceklogin == null){
-            return redirect('login');
-        }
+
         $data = SupplierModel::paginate(5);
         return view('supplier.index', compact('data'));
     }

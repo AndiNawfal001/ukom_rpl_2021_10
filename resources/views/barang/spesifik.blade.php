@@ -26,6 +26,10 @@
                     <p class="font-medium">{{ $data->nama_jenis }}</p>
                 </div>
                 <div class="pb-3">
+                    <p class="font-light">Dari Ruangan</p>
+                    <p class="font-medium ">{{ $data->nama_ruangan }}</p>
+                </div>
+                <div class="pb-3">
                     <p class="font-light">Spesifikasi</p>
                     <p class="font-medium ">{{ $data->spesifikasi }}</p>
                 </div>

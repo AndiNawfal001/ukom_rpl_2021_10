@@ -210,7 +210,7 @@
         </div>
         <div class="py-4">
             <p class="font-light text-gray-500">Untuk Ruangan</p>
-            <p class="font-medium ">{{ $key->ruangan }} </p>
+            <p class="font-medium ">{{ $key->nama_ruangan }} </p>
         </div>
         <div class="py-4 flex gap-7">
             <div>

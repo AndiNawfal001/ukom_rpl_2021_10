@@ -24,12 +24,21 @@ return new class extends Migration
             $table->string('kondisi_barang');
             $table->enum('status', ['aktif ', 'nonaktif'])->default('aktif');
             $table->string('foto_barang');
+            $table->char('ruangan', 6);
 
             // Foreign key untuk barang
             $table
             ->foreign('id_barang')
             ->references('id_barang')
             ->on('barang')
+            ->cascadeOnUpdate()
+            ->cascadeOnDelete();
+
+            // Foreign key untuk ruangan
+            $table
+            ->foreign('ruangan')
+            ->references('id_ruangan')
+            ->on('ruangan')
             ->cascadeOnUpdate()
             ->cascadeOnDelete();
         });

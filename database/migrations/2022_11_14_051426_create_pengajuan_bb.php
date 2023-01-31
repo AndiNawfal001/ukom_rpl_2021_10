@@ -26,7 +26,7 @@ return new class extends Migration
             $table->biginteger('total_harga');
             $table->integer('jumlah');
             $table->date('tgl');
-            $table->string('ruangan');
+            $table->char('ruangan', 6);
             $table->enum('status_approval', ['setuju ', 'tidak', 'pending'])->default('pending')->nullable();
             $table->date('tgl_approve')->nullable();
             $table->enum('status_pembelian', ['outstanding ', 'selesai'])->nullable();
@@ -61,6 +61,14 @@ return new class extends Migration
             ->foreign('submitter')
             ->references('id_pengguna')
             ->on('pengguna')
+            ->cascadeOnUpdate()
+            ->cascadeOnDelete();
+
+            // Foreign key untuk ruangan
+            $table
+            ->foreign('ruangan')
+            ->references('id_ruangan')
+            ->on('ruangan')
             ->cascadeOnUpdate()
             ->cascadeOnDelete();
         });

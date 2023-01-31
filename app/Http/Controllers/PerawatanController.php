@@ -41,6 +41,8 @@ class PerawatanController extends Controller{
                 ->where('kondisi_barang','baik')
                 ->where('status','aktif')
                 ->where('kode_barang','like',"%".$search."%")
+                ->orWhere('kondisi_barang','like',"%".$search."%")
+                ->orWhere('status','like',"%".$search."%")
                 ->paginate(10);
         return view('perawatan.pilihbarang', compact('data'));
     }

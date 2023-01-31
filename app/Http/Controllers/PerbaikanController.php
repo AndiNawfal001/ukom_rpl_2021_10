@@ -63,6 +63,7 @@ class PerbaikanController extends Controller
         // // ->whereNull('id_perbaikan')
         // // ->where('approve_perbaikan','sudah diperbaiki')
         // ->paginate(10);
+        // dd($data);
         return view('pengajuan.perbaikan.pilihbarang', compact('data', 'ruangan'));
     }
 
@@ -101,12 +102,12 @@ class PerbaikanController extends Controller
             $id_perbaikan = Arr::get($array, '0');
             // dd($id_perbaikan);
             $submitter_id = Auth::user()->id_pengguna;
-
+            // dd($request->input('ruangan'));
             $tambah_pengajuan_pb = DB::table('perbaikan')->insert([
                 'id_perbaikan' => $id_perbaikan,
                 'kode_barang' => $request->input('kode_barang'),
                 'submitter' => $submitter_id,
-                'ruangan' => $request->input('ruangan'),
+                // 'ruangan' => $request->input('ruangan'),
                 'tgl_perbaikan' => NOW(),
                 'keluhan' => $request->input('keluhan'),
 
@@ -128,7 +129,11 @@ class PerbaikanController extends Controller
     private function getPengajuanPb($id)
     {
         // return collect(DB::select('SELECT perbaikan.*, barang_masuk_perbaikan.* FROM perbaikan JOIN barang_masuk_perbaikan ON perbaikan.kode_barang = barang_masuk_perbaikan.kode_barang WHERE perbaikan.id_perbaikan = ?', [$id]))->firstOrFail();
-        return collect(DB::select('SELECT * FROM barang_masuk_perbaikan WHERE id_perbaikan = ?', [$id]))->firstOrFail();
+        return collect(DB::select('SELECT barang_masuk_perbaikan.*, ruangan.nama_ruangan
+        FROM barang_masuk_perbaikan
+        LEFT JOIN detail_barang ON barang_masuk_perbaikan.kode_barang = detail_barang.kode_barang
+        LEFT JOIN ruangan ON detail_barang.ruangan = ruangan.id_ruangan
+        WHERE barang_masuk_perbaikan.id_perbaikan = ?', [$id]))->firstOrFail();
     }
 
     public function detail($id = null)

@@ -166,7 +166,7 @@
                             <select class="select select-bordered w-full max-w-xs" name="ruangan" required>
                                 <option disabled selected>-- Pilih Ruangan --</option>
                                 @foreach ($ruangan as $item)
-                                    <option value="{{ $item->nama_ruangan }} ">{{ $item->nama_ruangan }}</option>
+                                    <option value="{{ $item->id_ruangan }} ">{{ $item->nama_ruangan }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -274,7 +274,7 @@
         </div>
         <div class="py-4">
             <p class="font-light">Untuk Ruangan</p>
-            <p class="font-medium ">{{ $key->ruangan }} </p>
+            <p class="font-medium ">{{ $key->nama_ruangan }} </p>
         </div>
         <div class="py-4 flex gap-7">
             <div>

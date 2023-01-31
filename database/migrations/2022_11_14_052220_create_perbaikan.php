@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('kode_barang');
             $table->integer('approver')->nullable();
             $table->integer('submitter');
-            $table->string('ruangan');
+            // $table->char('ruangan',6);
             $table->text('keluhan');
             $table->date('tgl_perbaikan');
 
@@ -72,6 +72,14 @@ return new class extends Migration
             ->on('pengguna')
             ->cascadeOnUpdate()
             ->cascadeOnDelete();
+
+            // Foreign key untuk ruangan
+            // $table
+            // ->foreign('ruangan')
+            // ->references('id_ruangan')
+            // ->on('ruangan')
+            // ->cascadeOnUpdate()
+            // ->cascadeOnDelete();
 
         });
     }

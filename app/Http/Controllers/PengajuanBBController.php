@@ -32,6 +32,7 @@ class PengajuanBBController extends Controller
         $ruangan = $this->getRuangan();
         $submitter = Auth::user()->id_pengguna;
         $data = DB::table('pengajuan_bb')
+                ->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')
                 ->where('submitter', $submitter)
                 ->paginate(10);
 

@@ -16,7 +16,7 @@ class ApprovalController extends Controller
     public function indexBarangBaru(){
 
         // data pending manajemen
-        $data = DB::table('pengajuan_bb')->paginate(10);
+        $data = DB::table('pengajuan_bb')->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')->paginate(10);
 
         return view('approval.barang_baru.index', compact('data'));
     }
@@ -25,7 +25,7 @@ class ApprovalController extends Controller
         $search = $request->input('search');
 
         // data pending manajemen
-        $data = DB::table('pengajuan_bb')
+        $data = DB::table('pengajuan_bb')->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')
                     ->where('nama_barang','like',"%".$search."%")
                     ->orWhere('total_harga','like',"%".$search."%")
                     ->orWhere('tgl','like',"%".$search."%")

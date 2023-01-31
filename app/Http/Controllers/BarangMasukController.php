@@ -22,7 +22,7 @@ class BarangMasukController extends Controller
 
     public function index(){
         $data = DB::table('barang_masuk')->get();
-        $info = DB::table('pengajuan_bb')->get();
+        $info = DB::table('pengajuan_bb')->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')->get();
         $jenisBarang = DB::table('jenis_barang')->get();
         $approved = DB::table('pengajuan_bb')->where('status_approval','setuju')->paginate(5);
 
@@ -34,7 +34,7 @@ class BarangMasukController extends Controller
         $search = $request->input('search');
 
         $data = DB::table('barang_masuk')->get();
-        $info = DB::table('pengajuan_bb')->get();
+        $info = DB::table('pengajuan_bb')->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')->get();
         $approved = DB::table('pengajuan_bb')
                 ->where('status_approval','setuju')
                 ->where('nama_barang','like',"%".$search."%")
@@ -121,7 +121,7 @@ class BarangMasukController extends Controller
         $image = $request->file('image')->store('barang');
 
             // dd($request->all());
-        $tambahBarangMasuk = DB::insert("CALL tambah_barangmasuk( :nama_barang, :jml_barang, :spesifikasi, :kondisi_barang, :supplier, :adder, :jenis_barang, :foto_barang)", [
+        $tambahBarangMasuk = DB::insert("CALL tambah_barangmasuk( :nama_barang, :jml_barang, :spesifikasi, :kondisi_barang, :supplier, :adder, :jenis_barang, :foto_barang, :ruangan)", [
 
             'nama_barang' => $request->input('nama_barang'),
             'jml_barang' => $request->input('jml_barang'),
@@ -131,6 +131,7 @@ class BarangMasukController extends Controller
             'adder' => $request->input('adder'),
             'jenis_barang' => $request->input('jenis_barang'),
             'foto_barang' => $image,
+            'ruangan' => $request->input('ruangan'),
             // dd($request->all())
         ]);
             // dd($tambahBarangMasuk);
