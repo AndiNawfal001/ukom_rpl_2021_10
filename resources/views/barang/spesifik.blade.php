@@ -80,7 +80,7 @@
                 <span class="label-text">Spesifikasi</span>
                 </label>
                 <input type="text" name="spesifikasi" class="input input-bordered"
-                value="{{ old('spesifikasi', $key->spesifikasi) }}"/>
+                value="{{ old('spesifikasi', $key->spesifikasi) }}" required/>
                 <input type="hidden"  name="kode_barang" value="{{$key->kode_barang}}" />
                 {{-- <input type="hidden"  name="id_barang" value="{{$key->id_barang}}" /> --}}
             </div>

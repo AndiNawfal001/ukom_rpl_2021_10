@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('id_pengajuan_bb',true);
             $table->integer('approver')->nullable();
             $table->integer('submitter');
-            $table->char('nama_barang');
+            $table->string('nama_barang');
             $table->string('spesifikasi');
             $table->biginteger('harga_satuan');
             $table->biginteger('total_harga');

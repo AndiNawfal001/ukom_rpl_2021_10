@@ -19,21 +19,21 @@ class LevelUserSeeder extends Seeder
         $leveluser = collect([
             [
 
-                'id_level' => 'B001',
+                'id_level' => 'U01',
                 'nama_level' => 'admin',
                 'ket' => 'ini admin',
 
             ],
             [
 
-                'id_level' => 'B002',
+                'id_level' => 'U02',
                 'nama_level' => 'manajemen',
                 'ket' => 'ini manajemen',
 
             ],
             [
 
-                'id_level' => 'B003',
+                'id_level' => 'U03',
                 'nama_level' => 'kaprog',
                 'ket' => 'ini kaprog',
 

@@ -20,7 +20,7 @@ return new class extends Migration
 
             $table->integer('id_pengguna',true);
 
-            $table->string('id_level', 4);
+            $table->char('id_level', 3);
             $table->string('username');
             $table->string('email');
             $table->string('password');

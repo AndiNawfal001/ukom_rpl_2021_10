@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('id_barang_masuk', true);
             // $table->integer('kode_barang');
             $table->integer('id_pengajuan')->nullable();
-            $table->string('supplier');
+            $table->char('supplier', 6);
             $table->integer('adder');
             $table->string('nama_barang');
             $table->integer('jml_masuk');

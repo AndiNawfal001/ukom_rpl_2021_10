@@ -18,7 +18,7 @@ return new class extends Migration
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_general_ci';
             $table->integer('id_barang', true);
-            $table->string('id_jenis_brg');
+            $table->char('id_jenis_brg',5);
             $table->string('nama_barang');
             $table->integer('jml_barang');
             // $table->string('foto_barang');

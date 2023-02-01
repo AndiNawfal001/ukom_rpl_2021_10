@@ -18,7 +18,7 @@ return new class extends Migration
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_general_ci';
             $table->char('id_perbaikan',6)->primary();
-            $table->string('kode_barang');
+            $table->char('kode_barang',17);
             $table->integer('approver')->nullable();
             $table->integer('submitter');
             // $table->char('ruangan',6);

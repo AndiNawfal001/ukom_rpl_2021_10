@@ -26,7 +26,7 @@
                     <p class="text-md font-medium">Selesai diperbaiki pada {{ $detail->tgl_selesai_perbaikan }}</p>
                 </div>
                 <div class="pb-3">
-                    <p class="font-light">Dari Ruangan <span class="font-medium">{{ $detail->ruangan }}</span> </p>
+                    <p class="font-light">Dari Ruangan <span class="font-medium">{{ $detail->nama_ruangan }}</span> </p>
                 </div>
                 <div class="pb-3">
                     <p class="font-light">Keluhan</p>

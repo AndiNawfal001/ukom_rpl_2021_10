@@ -132,7 +132,13 @@ class ApprovalController extends Controller
 
     private function getPengajuanPb($id)
     {
-        return collect(DB::select('SELECT * FROM barang_masuk_perbaikan WHERE id_perbaikan = ?', [$id]))->firstOrFail();
+        return collect(DB::select('SELECT barang_masuk_perbaikan.*, ruangan.nama_ruangan
+        FROM barang_masuk_perbaikan
+        LEFT JOIN detail_barang
+        ON barang_masuk_perbaikan.asli = detail_barang.kode_barang
+        LEFT JOIN ruangan
+        ON detail_barang.ruangan = ruangan.id_ruangan
+        WHERE barang_masuk_perbaikan.id_perbaikan = ?', [$id]))->firstOrFail();
     }
     public function detailPerbaikan($id = null)
     {

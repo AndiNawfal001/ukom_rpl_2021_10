@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('id_pemutihan', true);
             $table->char('id_perbaikan',6)->nullable();
             $table->integer('approver')->nullable();
-            $table->string('kode_barang');
+            $table->char('kode_barang',17);
             $table->integer('submitter');
             // $table->string('nama_pelaksana');
             $table->date('tgl_pemutihan');
