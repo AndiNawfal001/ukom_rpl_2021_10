@@ -224,7 +224,14 @@ class ApprovalController extends Controller
     //
 
     public function indexPemutihan(){
-        $data = DB::table('pemutihan')->paginate(10);
+        $data = DB::table('pemutihan')
+        ->join('nama_kode_barang', 'pemutihan.kode_barang', '=', 'nama_kode_barang.kode_barang')
+        ->leftJoin('perbaikan', 'pemutihan.id_perbaikan', '=', 'perbaikan.id_perbaikan')
+        ->select('pemutihan.*', 'nama_kode_barang.nama_barang',
+            'tgl_perbaikan', 'penyebab_keluhan', 'tgl_selesai_perbaikan',
+            'nama_teknisi'
+        )
+        ->paginate(10);
         return view('approval.pemutihan.index', compact('data'));
     }
 

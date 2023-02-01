@@ -22,9 +22,8 @@
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>Kode Barang</th>
+                                <th>Barang</th>
                                 <th>Tanggal Pemutihan</th>
-                                <th>Keterangan Pemutihan</th>
                                 <th>Penonaktifan</th>
                                 <th>Aksi</th>
                             </tr>
@@ -33,17 +32,26 @@
                         @forelse($data as $key)
                         <tr>
                         <th>{{ $no++ }}</th>
-                        <td>{{ $key->kode_barang }}</td>
+                        <th>
+                            <div class="flex items-center space-x-3">
+                                <div>
+                                    <div class="font-bold text-lg">{{ $key->nama_barang }}</div>
+                                    <div class="text-sm opacity-50">{{ $key->kode_barang }}</div>
+                                </div>
+                            </div>
+                        </th>
                         <td>{{ $key->tgl_pemutihan }}</td>
-                        <td>{{ $key->ket_pemutihan }}</td>
-                        <td>{{ $key->approve_penonaktifan }}</td>
                         <td>
-                            <a href="pemutihan/detail/{{$key->id_pemutihan}}">
-                                {{-- INFO --}}
-                                <button class="btn btn-sm  btn-info btn-square btn-outline">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                </button>
-                            </a>
+                            <p class="badge badge-outline
+                            {{ ($key->approve_penonaktifan === 'setuju') ? 'badge-success' : '' }}
+                            {{ ($key->approve_penonaktifan === 'pending') ? 'badge-warning' : '' }}
+                            {{ ($key->approve_penonaktifan === 'tidak setuju') ? 'badge-error' : '' }}
+                            ">{{ $key->approve_penonaktifan }}</p>
+                        </td>
+                        <td>
+                            <label for="pemutihandetail{{ $key->id_pemutihan }}" class="btn btn-sm  btn-info btn-square btn-outline">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </label>
                         </td>
                         @empty
                         <tr>
@@ -66,6 +74,55 @@
     <br>
 </div>
 
+@endsection
 
+@section('modal')
+@foreach ($data as $key)
+    <input type="checkbox" id="pemutihandetail{{ $key->id_pemutihan }}" class="modal-toggle" />
+    <label for="pemutihandetail{{ $key->id_pemutihan }}" class="modal cursor-pointer">
+        <label class="modal-box relative rounded-md" for="">
+            <div class="flex justify-between items-center mb-3">
+                <div class="badge badge-lg badge-outline
+                        {{ ($key->approve_penonaktifan === 'pending') ? 'badge-warning' : '' }}
+                        {{ ($key->approve_penonaktifan === 'setuju') ? 'badge-success' : '' }}
+                        {{ ($key->approve_penonaktifan === 'tidak setuju') ? 'badge-error' : '' }}
+                    ">{{ $key->approve_penonaktifan }}</div>
+                <p class="btn btn-sm btn-outline">{{ $key->kode_barang }}</p>
+            </div>
+            <h3 class="text-xl font-bold">{{ $key->nama_barang }}</h3>
+            <h3 class="text-md">diajukan {{ $key->tgl_pemutihan }}</h3>
+
+            <div class="py-4">
+                <p class="font-light text-gray-500">Keterangan Pemutihan</p>
+                <p class="font-medium">{{ $key->ket_pemutihan }}</p>
+            </div>
+
+            @if($key->id_perbaikan == NULL)
+            @else
+            <div class="py-2">
+                <p class="font-light text-gray-500">Nama Teknisi</p>
+                <p class="font-medium">{{ $key->nama_teknisi }}</p>
+            </div>
+            <div class="py-2 flex gap-7">
+                <div>
+                    <p class="font-light text-gray-500">Tgl Perbaikan</p>
+                    <p class="font-medium">{{ $key->tgl_perbaikan }}</p>
+                </div>
+                <div>
+                    <p class="font-light text-gray-500">Tgl Selesai</p>
+                    <p class="font-medium">{{ $key->tgl_selesai_perbaikan }}</p>
+                </div>
+            </div>
+            @endif
+            @if($key->approve_penonaktifan == "pending")
+                    <br>
+                        <div class="flex flex-row-reverse gap-3">
+                            <a href="/approval/pemutihan/tidaksetuju/{{$key->id_pemutihan}}"><button class="btn btn-sm btn-outline btn-error">Tidak Setuju</button></a>
+                            <a href="/approval/pemutihan/setuju/{{$key->id_pemutihan}}/{{ $key->kode_barang }}"><button class="btn btn-sm btn-outline btn-success">Setuju</button></a>
+                        </div>
+                    @endif
+        </label>
+    </label>
+@endforeach
 
 @endsection
