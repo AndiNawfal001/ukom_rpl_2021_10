@@ -55,7 +55,23 @@ class PerawatanController extends Controller{
 
     private function getPerawatan($id)
     {
-        return collect(DB::select('SELECT * FROM perawatan WHERE id_perawatan = ?', [$id]))->firstOrFail();
+        return collect(DB::select('SELECT nama_kode_barang.nama_barang, perawatan.*, ruangan.nama_ruangan
+        FROM perawatan
+        LEFT JOIN detail_barang
+        ON perawatan.kode_barang = detail_barang.kode_barang
+        LEFT JOIN ruangan
+        ON detail_barang.ruangan = ruangan.id_ruangan
+        LEFT JOIN nama_kode_barang
+        ON perawatan.kode_barang = nama_kode_barang.kode_barang
+        WHERE perawatan.id_perawatan = ?', [$id]
+        ))->firstOrFail();
+    }
+
+    public function detail($id = null)
+    {
+        $detail = $this->getPerawatan($id);
+        // dd($detail);
+        return view('perawatan.detail', compact('detail'));
     }
 
     public function perawatan($id = null)
@@ -104,11 +120,6 @@ class PerawatanController extends Controller{
             }
     }
 
-    public function detail($id = null)
-    {
-        $detail = $this->getPerawatan($id);
-        return view('perawatan.detail', compact('detail'));
-    }
 
     public function edit($id = null)
     {
@@ -150,7 +161,7 @@ class PerawatanController extends Controller{
                     'position' => 'top-center',
                 ])->addSuccess('Data berhasil diubah.');
                 // return redirect('perawatan/detail/'.$id_perawatan);
-                return redirect('perawatan');
+                return back();
             }
             // dd("berhasil", $upd);
         } catch (\Exception $e) {

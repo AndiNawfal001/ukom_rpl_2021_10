@@ -54,17 +54,17 @@
                                     </div>
                                 </div>
                             </th>
-                            <td class="
-                            {{ ($key->kondisi_barang === 'rusak') ? 'text-yellow-500' : '' }}
-                            {{ ($key->kondisi_barang === 'baik') ? 'text-sky-500' : '' }}
-                            ">
-                                {{ $key->kondisi_barang }}
+                            <td>
+                                <p class="badge badge-outline
+                                {{ ($key->kondisi_barang === 'baik') ? 'badge-info' : '' }}
+                                {{ ($key->kondisi_barang === 'rusak') ? 'badge-warning' : '' }}
+                                ">{{ $key->kondisi_barang }}</p>
                             </td>
-                            <td class="
-                                {{ ($key->status === 'nonaktif') ? 'text-red-500' : '' }}
-                                {{ ($key->status === 'aktif') ? 'text-green-500' : '' }}
-                            ">
-                                {{ $key->status }}
+                            <td>
+                                <p class="badge badge-outline
+                                {{ ($key->status === 'nonaktif') ? 'badge-error' : '' }}
+                                {{ ($key->status === 'aktif') ? 'badge-success' : '' }}
+                                ">{{ $key->status }}</p>
                             </td>
                             <td>
                                 <a href="/perawatan/tambah/{{$key->kode_barang}}">

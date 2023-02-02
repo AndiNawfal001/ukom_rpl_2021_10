@@ -162,7 +162,7 @@ Route::get('/perawatan/pilihBarang/search',[ PerawatanController::class,'searchp
 Route::get('/perawatan/tambah/{id}',[PerawatanController::class,'perawatan'])->middleware('auth');
 Route::post('/perawatan/simpanperawatan',[PerawatanController::class,'simpanperawatan'])->middleware('auth');
 Route::get('/perawatan/detail/{id}',[PerawatanController::class,'detail'])->middleware('auth');
-Route::get('/perawatan/edit/{id}',[PerawatanController::class,'edit'])->middleware('auth');
+// Route::get('/perawatan/edit/{id}',[PerawatanController::class,'edit'])->middleware('auth');
 Route::post('/perawatan/edit/editsimpan',[ PerawatanController::class,'editsimpan'])->middleware('auth');
 Route::get('/perawatan/hapus/{id}',[PerawatanController::class,'hapus'])->middleware('auth');
 
