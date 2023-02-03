@@ -129,8 +129,7 @@ class RuanganController extends Controller
             // $price = Arr::get($flattened, '0');
             // Storage::delete($price); //HAPUS FILE DI STORAGE
 
-            $hapus = RuanganModel::where('id_ruangan',$id)
-                            ->delete();
+            $hapus = RuanganModel::where('id_ruangan',$id)->delete();
             if($hapus){
                 flash()->options([
                     'timeout' => 3000, // 3 seconds

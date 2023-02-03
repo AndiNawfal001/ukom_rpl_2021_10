@@ -11,7 +11,10 @@ use Illuminate\Support\Facades\Auth;
 
 class PerawatanController extends Controller{
     public function index(){
-        $data = DB::table('perawatan')->paginate(5);
+        $data = DB::table('perawatan')
+        ->select('perawatan.*', 'nama_kode_barang.nama_barang')
+        ->leftJoin('nama_kode_barang', 'perawatan.kode_barang', 'nama_kode_barang.kode_barang')
+        ->paginate(10);
         return view('perawatan.index', compact('data'));
     }
 

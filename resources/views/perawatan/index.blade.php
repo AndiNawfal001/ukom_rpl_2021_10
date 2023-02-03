@@ -18,10 +18,10 @@
                         </div>
                 </form>
                 <a href="/perawatan/pilihBarang">
-                <button type="submit" class="btn btn-success gap-2" >
-                    Tambah Pengajuan
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                </button>
+                    <button type="submit" class="btn btn-success gap-2" >
+                        Tambah Perawatan
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </button>
                 </a>
             </div>
             <div class="">
@@ -30,10 +30,9 @@
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>Kode Barang</th>
+                                <th>Barang</th>
                                 <th>Tanggal Perawatan</th>
                                 <th>Nama Pelaksana</th>
-                                <th>Keterangan</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -41,10 +40,16 @@
                         @forelse($data as $key)
                         <tr>
                         <th>{{ $no++ }}</th>
-                        <td>{{ $key->kode_barang }}</td>
+                        <th>
+                            <div class="flex items-center space-x-3">
+                                <div>
+                                    <div class="font-bold text-lg">{{ $key->nama_barang }}</div>
+                                    <div class="text-sm opacity-50">{{ $key->kode_barang }}</div>
+                                </div>
+                            </div>
+                        </th>
                         <td>{{ $key->tgl_perawatan }}</td>
                         <td>{{ $key->nama_pelaksana }}</td>
-                        <td>{{ $key->ket_perawatan }}</td>
                         <td>
                             <a href="perawatan/detail/{{$key->id_perawatan}}">
                                 {{-- INFO --}}
