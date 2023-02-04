@@ -151,7 +151,7 @@
                         <tr>
                             <th>No</th>
                             <th>Nama Barang</th>
-                            <th>Jumlah Barang</th>
+                            <th>Progress</th>
                             <th>Tgl Masuk</th>
                             <th>Status Pembelian</th>
                         </tr>
@@ -161,7 +161,7 @@
                     <tr>
                         <th>{{ $no++ }}</th>
                         <td>{{ $key->nama_barang }}</td>
-                        <td>{{ $key->jml_masuk }}</td>
+                        <td>{{ $key->kurangtw }} / {{ $key->jumlah }}</td>
                         <td>{{ $key->tgl_masuk }}</td>
                         <td>
                             <p class="badge badge-outline

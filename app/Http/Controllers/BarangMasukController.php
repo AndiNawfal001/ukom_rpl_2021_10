@@ -21,7 +21,8 @@ class BarangMasukController extends Controller
     }
 
     public function index(){
-        $data = DB::table('barang_masuk')->get();
+        $data = DB::table('data_barang_masuk')->get();
+        // dd($data);
         $info = DB::table('pengajuan_bb')->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')->get();
         $jenisBarang = DB::table('jenis_barang')->get();
         $approved = DB::table('pengajuan_bb')->where('status_approval','setuju')->paginate(5);
