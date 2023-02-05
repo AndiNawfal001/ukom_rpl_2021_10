@@ -19,12 +19,11 @@ return new class extends Migration
             $table->collation = 'utf8mb4_general_ci';
 
             $table->integer('id_pengguna',true);
-
             $table->char('id_level', 3);
             $table->string('username');
             $table->string('email');
             $table->string('password');
-            // $table->string('foto')->nullable();
+            $table->string('foto');
 
             // Foreign key untuk id_level
             $table

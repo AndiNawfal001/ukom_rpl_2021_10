@@ -5,14 +5,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Auth;
 
 // use Illuminate\Support\Collection;
 
 class PerawatanController extends Controller{
     public function index(){
         $data = DB::table('perawatan')
-        ->select('perawatan.*', 'nama_kode_barang.nama_barang')
+        ->select('perawatan.*', 'nama_kode_barang.nama_barang', 'ruangan.nama_ruangan')
+        ->leftJoin('detail_barang', 'perawatan.kode_barang', '=', 'detail_barang.kode_barang')
+        ->leftJoin('ruangan', 'detail_barang.ruangan', '=', 'ruangan.id_ruangan')
         ->leftJoin('nama_kode_barang', 'perawatan.kode_barang', 'nama_kode_barang.kode_barang')
         ->paginate(10);
         return view('perawatan.index', compact('data'));
@@ -50,39 +51,6 @@ class PerawatanController extends Controller{
         return view('perawatan.pilihbarang', compact('data'));
     }
 
-
-    private function databarangPerawatan($id)
-    {
-        return collect(DB::select('SELECT * FROM detail_barang WHERE kode_barang = ?', [$id]))->firstOrFail();
-    }
-
-    private function getPerawatan($id)
-    {
-        return collect(DB::select('SELECT nama_kode_barang.nama_barang, perawatan.*, ruangan.nama_ruangan
-        FROM perawatan
-        LEFT JOIN detail_barang
-        ON perawatan.kode_barang = detail_barang.kode_barang
-        LEFT JOIN ruangan
-        ON detail_barang.ruangan = ruangan.id_ruangan
-        LEFT JOIN nama_kode_barang
-        ON perawatan.kode_barang = nama_kode_barang.kode_barang
-        WHERE perawatan.id_perawatan = ?', [$id]
-        ))->firstOrFail();
-    }
-
-    public function detail($id = null)
-    {
-        $detail = $this->getPerawatan($id);
-        // dd($detail);
-        return view('perawatan.detail', compact('detail'));
-    }
-
-    public function perawatan($id = null)
-    {
-        $perawatan = $this->databarangPerawatan($id);
-        return view('perawatan.tambah', compact('perawatan'));
-    }
-
     public function simpanperawatan(Request $request)
     {
         $request->validate([
@@ -99,15 +67,12 @@ class PerawatanController extends Controller{
             $id_perawatan = Arr::get($array, '0');
             // dd($id_perawatan);
 
-            $image = $request->file('image')->store('perawatan');
-
             $tambahPerawatan = DB::table('perawatan')->insert([
                 'id_perawatan' => $id_perawatan,
                 'kode_barang' => $request->input('kode_barang'),
                 'nama_pelaksana' => $request->input('nama_pelaksana'),
                 'ket_perawatan' => $request->input('ket_perawatan'),
                 'tgl_perawatan' => NOW(),
-                'foto_perawatan' => $image
 
             ]);
             if ($tambahPerawatan){
@@ -176,17 +141,6 @@ class PerawatanController extends Controller{
     public function hapus($id=null){
 
         try{
-            // dd($id);
-            $x = DB::table('perawatan')
-                        ->where('id_perawatan', '=', $id)
-                        ->get(); //AMBIL DATA FILE
-            // dd($x);
-            $flattened = Arr::pluck($x, 'foto_perawatan');
-            // $y = Arr::flatten($flattened);
-            $price = Arr::get($flattened, '0');
-            // dd($price);
-            Storage::delete($price); //HAPUS FILE DI STORAGE
-
             $hapus = DB::table('perawatan')
                             ->where('id_perawatan',$id)
                             ->delete();

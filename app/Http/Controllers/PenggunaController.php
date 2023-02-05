@@ -6,21 +6,23 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
-
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Arr;
+use Laravolt\Avatar\Facade as Avatar;
 
 class PenggunaController extends Controller
 {
-    private function getlevelUser(): Collection
-    {
-        return collect(DB::select('SELECT * FROM level_user'));
-    }
 
     public function index(){
-        $data = DB::table('banyak_pengguna')
-        ->select('*')
+        $data = DB::table('pengguna')
+        ->select('pengguna.*', 'level_user.nama_level', 'admin.nama as admin', 'manajemen.nama as manajemen', 'kaprog.nama as kaprog' )
+        ->leftJoin('level_user', 'pengguna.id_level', '=', 'level_user.id_level')
+        ->leftJoin('admin','pengguna.id_pengguna', '=', 'admin.id_pengguna')
+        ->leftJoin('manajemen','pengguna.id_pengguna', '=', 'manajemen.id_pengguna')
+        ->leftJoin('kaprog','pengguna.id_pengguna', '=', 'kaprog.id_pengguna')
         ->orderBy('id_level')
         ->paginate(5);
-
+        // dd($data);
         $admin = DB::table('admin')->count();
         $manajemen = DB::table('manajemen')->count();
         $kaprog = DB::table('kaprog')->count();
@@ -45,6 +47,10 @@ class PenggunaController extends Controller
         return view('pengguna.index', compact('data', 'admin', 'manajemen', 'kaprog' ));
     }
 
+    private function getlevelUser(): Collection
+    {
+        return collect(DB::select('SELECT * FROM level_user'));
+    }
 
     public function formTambah(){
         $levelUser = $this->getlevelUser();
@@ -65,8 +71,15 @@ class PenggunaController extends Controller
             'nip.max' => 'Tidak boleh lebih dari 18 karakter!',
         ]) ;
         try {
+            if($request->file('image') == null){
+                $image = 'pengguna/'.$request->input('username').'.png';
+                Avatar::create($request->input('username'))->save('storage/pengguna/'.$request->input('username').'.png');
+            }else{
+                $image = $request->file('image')->store('pengguna');
+            }
+
             // dd($request->all());
-            $tambahUser = DB::insert("CALL tambah_user(:username, :levelUser, :email, :password, :nip, :nama, :kontak)", [
+            $tambahUser = DB::insert("CALL tambah_user(:username, :levelUser, :email, :password, :nip, :nama, :kontak, :foto)", [
                 'username' => $request->input('username'),
                 'levelUser' => $request->input('levelUser'),
                 'email' => $request->input('email'),
@@ -74,6 +87,7 @@ class PenggunaController extends Controller
                 'nip' => $request->input('nip'),
                 'nama' => $request->input('nama'),
                 'kontak' => $request->input('kontak'),
+                'foto' => $image,
             ]);
 
         if ($tambahUser){
@@ -139,14 +153,28 @@ class PenggunaController extends Controller
     {
         try {
             // dd($request->all());
-            $updateUser = DB::update("CALL update_user(:kode, :username, :email, :nama, :kontak)", [
-                'kode' => $request->input('kode'),
-                'username' => $request->input('username'),
-                'email' => $request->input('email'),
-                'nama' => $request->input('nama'),
-                'kontak' => $request->input('kontak'),
-            ]);
+            if($request->file('image') == null){
+                $updateUser = DB::update("CALL update_user(:kode, :username, :email, :nama, :kontak, :foto)", [
+                    'kode' => $request->input('kode'),
+                    'username' => $request->input('username'),
+                    'email' => $request->input('email'),
+                    'nama' => $request->input('nama'),
+                    'kontak' => $request->input('kontak'),
+                    'foto' => $request->oldImage,
+                ]);
+            }else{
+                $image = $request->file('image')->store('pengguna');
+                $updateUser = DB::update("CALL update_user(:kode, :username, :email, :nama, :kontak, :foto)", [
+                    'kode' => $request->input('kode'),
+                    'username' => $request->input('username'),
+                    'email' => $request->input('email'),
+                    'nama' => $request->input('nama'),
+                    'kontak' => $request->input('kontak'),
+                    'foto' => $image,
+                ]);
+                Storage::delete($request->oldImage);
 
+            }
         if ($updateUser){
             flash()->options([
                 'timeout' => 3000, // 3 seconds
@@ -163,10 +191,14 @@ class PenggunaController extends Controller
     public function hapus($id=null){
         try {
             // dd($id);
+            $x = DB::table('pengguna')->where('id_pengguna', $id)->get();
+            $flattened = Arr::pluck($x, 'foto');
+            $price = Arr::get($flattened, '0');
+            // dd($price);
+            Storage::delete($price); //HAPUS FILE DI STORAGE
             $deleteUser = DB::delete("CALL delete_user(:kode)", [
                 'kode' => $id
             ]);
-
         if ($deleteUser){
             flash()->options([
                 'timeout' => 3000, // 3 seconds

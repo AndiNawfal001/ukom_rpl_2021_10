@@ -4,11 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Storage;
 use App\Models\RuanganModel;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Validator;
 
 class RuanganController extends Controller
 {
@@ -74,20 +71,6 @@ class RuanganController extends Controller
         }
     }
 
-
-    private function getRuangan($id)
-    {
-        return collect(DB::select('SELECT * FROM ruangan WHERE id_ruangan = ?', [$id]))->firstOrFail();
-    }
-
-    public function edit($id = null)
-    {
-
-        $edit = $this->getRuangan($id);
-
-        return view('ruangan.editform', compact('edit'));
-    }
-
     public function update(Request $request)
     {
         try {
@@ -105,11 +88,12 @@ class RuanganController extends Controller
                 'ket' => $request->input('ket'),
                 // 'image' => $image,
             ];
-                RuanganModel::where('id_ruangan', '=', $request->input('id_ruangan'))
-                        ->update($data);
-                flash()->addSuccess('Data berhasil diubah.');
-                return redirect('ruangan');
-            // dd("berhasil", $upd);
+            RuanganModel::where('id_ruangan', '=', $request->input('id_ruangan'))->update($data);
+            flash()->options([
+                'timeout' => 3000, // 3 seconds
+                'position' => 'top-center',
+            ])->addSuccess('Data berhasil disimpan.');
+            return redirect('ruangan');
         } catch (\Exception $e) {
             return $e->getMessage();
             dd("gagal");

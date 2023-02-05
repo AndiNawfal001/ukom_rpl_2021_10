@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Arr;
 use App\Models\SupplierModel;
-use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Support\Facades\Auth;
 
 class SupplierController extends Controller
 {
@@ -26,20 +24,11 @@ class SupplierController extends Controller
                 ->paginate(5);
         return view('supplier.index', compact('data'));
     }
+
     public function formTambah(){
         return view('supplier.formtambah');
     }
-    private function getSupplier($id)
-    {
-        return collect(DB::select('SELECT * FROM supplier WHERE id_supplier = ?', [$id]))->firstOrFail();
-    }
-    public function edit($id = null)
-    {
 
-        $edit = $this->getSupplier($id);
-
-        return view('supplier.editform', compact('edit'));
-    }
     public function store(Request $request)
     {
         $request->validate([

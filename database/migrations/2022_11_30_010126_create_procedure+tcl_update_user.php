@@ -22,7 +22,8 @@ return new class extends Migration
                 username VARCHAR(30),
                 email VARCHAR(30),
                 nama VARCHAR(255),
-                kontak VARCHAR(255)
+                kontak VARCHAR(255),
+                foto VARCHAR(255)
             )
             BEGIN
             DECLARE cek_admin INT;
@@ -46,13 +47,13 @@ return new class extends Migration
 
             SAVEPOINT insert_table;
                 IF(cek_admin = 1) THEN
-                    UPDATE pengguna SET pengguna.username = username, pengguna.email = email WHERE id_pengguna = kode;
+                    UPDATE pengguna SET pengguna.username = username, pengguna.email = email, pengguna.foto = foto WHERE id_pengguna = kode;
                     UPDATE admin SET nama = nama, kontak = kontak WHERE id_pengguna = kode;
                 ELSEIF(cek_manajemen = 1) THEN
-                    UPDATE pengguna SET pengguna.username = username, pengguna.email = email WHERE id_pengguna = kode;
+                    UPDATE pengguna SET pengguna.username = username, pengguna.email = email, pengguna.foto = foto WHERE id_pengguna = kode;
                     UPDATE manajemen SET nama = nama, kontak = kontak WHERE id_pengguna = id_pengguna;
                 ELSEIF(cek_kaprog = 1) THEN
-                    UPDATE pengguna SET pengguna.username = username, pengguna.email = email WHERE id_pengguna = kode;
+                    UPDATE pengguna SET pengguna.username = username, pengguna.email = email, pengguna.foto = foto WHERE id_pengguna = kode;
                     UPDATE kaprog SET nama = nama, kontak = kontak WHERE id_pengguna = id_pengguna;
                 END IF;
 

@@ -3,7 +3,7 @@
 <div class="p-5">
 
 <div class="shadow-md rounded-md mx-auto  bg-base-100 p-5">
-    <form action="simpan" method="POST">
+    <form action="simpan" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="flex justify-between">
             <h2 class="text-2xl font-bold">Form Tambah Pengguna</h2>
@@ -82,6 +82,14 @@
                     <p class="text-red-500">{{ $message }}</p>
 
                     @enderror
+                </div>
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text">Foto (optional)</span>
+                    </label>
+                    <input type="file" name="image" id="image" class="file-input file-input-bordered w-full max-w-xs" onchange="previewImage()"/>
+                    <br>
+                    <img src="" class="img-preview object-scale-down w-1/2 md:w-1/4" alt="">
                 </div>
             </div>
         </div>

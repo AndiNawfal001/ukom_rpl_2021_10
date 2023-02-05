@@ -42,19 +42,12 @@
                         <td>{{ $key->kontak }}</td>
                         <td>{{ $key->alamat }}</td>
                         <td>
-                            <a href="supplier/edit/{{$key->id_supplier}}">
-                                <button class="btn btn-sm btn-warning btn-square btn-outline">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                                </button>
-                            </a>
+                            <label for="editsupplier{{ $key->id_supplier }}" class="btn btn-sm btn-warning btn-square btn-outline">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                            </label>
                             <label for="delete{{ $key->id_supplier }}" class="btn btn-sm btn-error btn-square btn-outline">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                             </label>
-                            {{-- <a href="supplier/hapus/{{$key->id_supplier}}">
-                                <button class="btn btn-sm btn-error btn-square btn-outline">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                                </button>
-                            </a> --}}
                         </td>
                     </tr>
                     @empty
@@ -82,6 +75,49 @@
 @endsection
 
 @section('modal')
+
+{{-- EDIT --}}
+@foreach ( $data as $key )
+<input type="checkbox" id="editsupplier{{ $key->id_supplier }}" class="modal-toggle" />
+<label for="editsupplier{{ $key->id_supplier }}" class="modal cursor-pointer">
+  <label class="modal-box relative" for="">
+    <form action="/supplier/editsimpan" method="POST">
+        @csrf
+
+        <h2 class="text-2xl font-bold">Edit Supplier</h2>
+           <br>
+           <div class="form-control">
+               <label class="label">
+               <span class="label-text">Nama Supplier</span>
+               </label>
+               <input type="text" name="nama" class="input input-bordered"
+               value="{{ old('nama', $key->nama) }}"/>
+               <input type="hidden"  name="id_supplier" value="{{$key->id_supplier}}" />
+           </div>
+           <div class="form-control">
+               <label class="label">
+               <span class="label-text">Kontak</span>
+               </label>
+               <input type="number" name="kontak" class="input input-bordered"
+               value="{{ old('kontak', $key->kontak) }}"/>
+           </div>
+           <div class="form-control">
+               <label class="label">
+                   <span class="label-text">Alamat</span>
+               </label>
+               <input type="text" name="alamat" class="input input-bordered"
+               value="{{ old('alamat', $key->alamat) }}"/>
+           </div>
+               <div class="form-control mt-6">
+                 <button type="submit" value="simpan" class="btn btn-primary">Simpan</button>
+               </div>
+    </form>
+  </label>
+</label>
+@endforeach
+
+
+{{-- HAPUS --}}
 @foreach($data as $key)
 <input type="checkbox" id="delete{{ $key->id_supplier }}" class="modal-toggle" />
 <label for="delete{{ $key->id_supplier }}" class="modal cursor-pointer">

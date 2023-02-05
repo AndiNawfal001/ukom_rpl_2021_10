@@ -24,7 +24,8 @@ return new class extends Migration
                 password VARCHAR(255),
                 nip CHAR(18),
                 nama VARCHAR(50),
-                kontak VARCHAR(20)
+                kontak VARCHAR(20),
+                foto VARCHAR(255)
             )
             BEGIN
             DECLARE id_pengguna INT;
@@ -43,8 +44,8 @@ return new class extends Migration
 
             SELECT level_user.id_level INTO level_user FROM level_user WHERE level_user.nama_level = levelUser;
 
-            INSERT INTO pengguna (id_level, username, email, password)
-            VALUES (level_user, username, email, password);
+            INSERT INTO pengguna (id_level, username, email, password, foto)
+            VALUES (level_user, username, email, password, foto);
 
             IF kodeError != '00000' THEN
                 ROLLBACK TO initial;

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('nama_pelaksana');
             // $table->string('jml_perawatan');
             $table->text('ket_perawatan');
-            $table->string('foto_perawatan')->nullable();
+            // $table->string('foto_perawatan')->nullable();
             $table->date('tgl_perawatan');
 
             // Foreign key untuk kode_barang

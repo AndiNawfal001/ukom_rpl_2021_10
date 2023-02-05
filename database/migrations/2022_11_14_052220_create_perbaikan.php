@@ -30,7 +30,7 @@ return new class extends Migration
             $table->enum('status_perbaikan', ['bisa diperbaiki', 'tidak bisa diperbaiki'])->nullable();
             $table->text('solusi_barang')->nullable();
             $table->date('tgl_selesai_perbaikan')->nullable();
-            $table->string('gambar_pelaksanaan')->nullable();
+            // $table->string('gambar_pelaksanaan')->nullable();
 
             $table->enum('approve_perbaikan', ['sudah diperbaiki', 'rusak', 'pending'])->default('pending')->nullable();
             $table->date('tgl_approve')->nullable();

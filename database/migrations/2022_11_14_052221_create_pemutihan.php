@@ -25,6 +25,7 @@ return new class extends Migration
             // $table->string('nama_pelaksana');
             $table->date('tgl_pemutihan');
             $table->text('ket_pemutihan');
+            $table->string('foto_kondisi_terakhir');
             $table->enum('approve_penonaktifan', ['setuju', 'tidak setuju', 'pending'])->default('pending');
             $table->date('tgl_approve')->nullable();
 

@@ -113,6 +113,8 @@
 
 @endsection
 @section('modal')
+
+{{-- KONFIRMASI DELETE --}}
 @foreach($data as $key)
 <input type="checkbox" id="delete{{ $key->id_pengguna }}" class="modal-toggle" />
 <label for="delete{{ $key->id_pengguna }}" class="modal cursor-pointer">

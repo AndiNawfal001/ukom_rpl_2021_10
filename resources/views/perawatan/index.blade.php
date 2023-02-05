@@ -51,18 +51,12 @@
                         <td>{{ $key->tgl_perawatan }}</td>
                         <td>{{ $key->nama_pelaksana }}</td>
                         <td>
-                            <a href="perawatan/detail/{{$key->id_perawatan}}">
-                                {{-- INFO --}}
-                                <button class="btn btn-sm  btn-info btn-square btn-outline">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                </button>
-                            </a>
-                            <a href="perawatan/hapus/{{$key->id_perawatan}}">
-                                {{-- DELETE --}}
-                                <button class="btn btn-sm btn-error btn-square btn-outline">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                                </button>
-                            </a>
+                            <label for="detailperawatan{{ $key->id_perawatan }}" class="btn btn-sm  btn-info btn-square btn-outline">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </label>
+                            <label for="delete{{ $key->id_perawatan }}" class="btn btn-sm btn-error btn-square btn-outline">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                            </label>
                         </td>
                         @empty
                         <tr>
@@ -93,4 +87,102 @@
 
 
 
+@endsection
+
+
+
+
+@section('modal')
+
+{{-- DETAIL --}}
+@foreach($data as $key)
+<input type="checkbox" id="detailperawatan{{ $key->id_perawatan }}" class="modal-toggle" />
+<label for="detailperawatan{{ $key->id_perawatan }}" class="modal cursor-pointer">
+  <label class="modal-box relative" for="">
+    <div >
+        <p class="btn btn-sm btn-outline mb-3">{{ $key->kode_barang }}</p>
+        <p class="text-2xl font-semibold">{{ $key->nama_barang }}</p>
+        <div class="pb-3">
+            <p class="text-md ">diajukan {{ $key->tgl_perawatan }}</p>
+        </div>
+        <div class="pb-3">
+            <p class="font-light">Dari Ruangan <span class="font-medium">{{ $key->nama_ruangan }}</span> </p>
+        </div>
+        <div class="pb-3">
+            <p class="font-light">Nama Pelaksana</p>
+            <p class="font-medium ">{{ $key->nama_pelaksana }} </p>
+        </div>
+        <div class="pb-3">
+            <p class="font-light">Keterangan Perawatan</p>
+            <p class="font-medium ">{{ $key->ket_perawatan }} Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit perspiciatis consequuntur unde neque eaque laboriosam, corporis labore at inventore debitis, fuga autem dolor ut illum tempore iusto dignissimos corrupti doloremque!</p>
+        </div>
+        <div class="py-5 flex flex-row-reverse gap-3">
+                <label for="editperawatan{{$key->kode_barang}}" for="detailperawatan{{ $key->id_perawatan }}" class="btn btn-sm btn-outline btn-warning">
+                    Edit
+                </label>
+        </div>
+    </div>
+  </label>
+</label>
+@endforeach
+
+
+{{-- EDIT --}}
+@foreach ( $data as  $key)
+<input type="checkbox" id="editperawatan{{ $key->kode_barang }}" class="modal-toggle" />
+<label for="editperawatan{{ $key->kode_barang }}" class="modal cursor-pointer">
+  <label class="modal-box relative" for="">
+    <form action="/perawatan/edit/editsimpan" method="POST" enctype="multipart/form-data">
+        @csrf
+        <h2 class="text-2xl font-bold">Edit Perawatan</h2>
+        <br>
+        <div class="form-control">
+            <label class="label">
+            <span class="label-text">Nama Pelaksana</span>
+            </label>
+            <input type="text" name="nama_pelaksana" class="input input-bordered"
+            value="{{ old('nama_pelaksana', $key->nama_pelaksana) }}" required/>
+            <input type="hidden"  name="id_perawatan" value="{{$key->id_perawatan}}" />
+        </div>
+        <div class="form-control">
+            <label class="label">
+            <span class="label-text">Keterangan Perawatan</span>
+            </label>
+            <input type="text" name="ket_perawatan" class="input input-bordered"
+            value="{{ old('ket_perawatan', $key->ket_perawatan) }}" required/>
+            {{-- <input type="hidden"  name="id_barang" value="{{$key->id_barang}}" /> --}}
+        </div>
+
+            <div class="form-control mt-6">
+            <button type="submit" value="simpan" class="btn btn-primary">Simpan</button>
+            </div>
+    </form>
+  </label>
+</label>
+@endforeach
+
+
+{{-- HAPUS --}}
+@foreach($data as $key)
+<input type="checkbox" id="delete{{ $key->id_perawatan }}" class="modal-toggle" />
+<label for="delete{{ $key->id_perawatan }}" class="modal cursor-pointer">
+  <div class="modal-box border-t-2 border-error">
+    <svg fill="none" class="text-error w-1/4 mx-auto" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"></path>
+    </svg>
+    <div class="text-center">
+        <h3 class="font-bold text-2xl">Anda yakin ?</h3>
+        {{-- <p class="py-4 text-md">Menghapus pengguna <b>permanen</b> membuat pengguna tersebut tidak bisa lagi login</p> --}}
+    </div>
+    <div class="flex justify-center pt-4 gap-3">
+        <label for="delete{{ $key->id_perawatan }}" class="btn btn-sm btn-outline btn-info">Cancel</label>
+        <label class="btn btn-sm btn-error btn-outline">
+            <a href="/perawatan/hapus/{{$key->id_perawatan}}">
+                Delete
+            </a>
+        </label>
+    </div>
+  </div>
+</label>
+@endforeach
 @endsection

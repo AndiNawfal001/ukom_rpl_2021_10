@@ -67,13 +67,11 @@
                                 ">{{ $key->status }}</p>
                             </td>
                             <td>
-                                <a href="/perawatan/tambah/{{$key->kode_barang}}">
                                   <div class="tooltip tooltip-warning" data-tip="lakukan perawatan">
-                                    <button class="btn btn-sm btn-warning btn-square btn-outline">
+                                    <label for="tambahperawatan{{ $key->kode_barang }}" class="btn btn-sm btn-warning btn-square btn-outline">
                                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11"></path></svg>
-                                      </button>
+                                      </label>
                                   </div>
-                                </a>
                               </td>
                             @empty
                             <tr>
@@ -106,4 +104,47 @@
 
 
 
+@endsection
+
+
+@section('modal')
+@foreach($data as $key)
+<input type="checkbox" id="tambahperawatan{{ $key->kode_barang }}" class="modal-toggle" />
+<label for="tambahperawatan{{ $key->kode_barang }}" class="modal cursor-pointer">
+  <label class="modal-box relative" for="">
+    <form action="/perawatan/simpanperawatan" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="lg:flex justify-between">
+            <h2 class="text-2xl font-bold">Form perawatan</h2>
+            <div class="my-2 lg:my-0">
+                Kode barang :
+                <div class="btn btn-sm btn-outline no-animation">{{ $key->kode_barang }}</div>
+            </div>
+        </div>
+        <div class="form-control hidden">
+            <label class="label">
+            <span class="label-text">Kode Barang</span>
+            </label>
+            <input type="text" name="kode_barang" class="input input-bordered "
+            value="{{ old('nama', $key->kode_barang) }}"/>
+        </div>
+        <div class="form-control">
+            <label class="label">
+                <span class="label-text">Nama Pelaksana</span>
+            </label>
+            <input type="text" name="nama_pelaksana" class="input input-bordered" required/>
+        </div>
+        <div class="form-control">
+            <label class="label">
+            <span class="label-text">Keterangan Perawatan</span>
+            </label>
+            <textarea name="ket_perawatan" cols="20" rows="5" class="textarea textarea-bordered" " required></textarea>
+        </div>
+            <div class="form-control mt-6">
+            <button type="submit" value="simpan" class="btn btn-primary">Simpan</button>
+            </div>
+    </form>
+  </label>
+</label>
+@endforeach
 @endsection

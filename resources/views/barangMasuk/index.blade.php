@@ -20,7 +20,7 @@
                 <div class="">
 
                     <div class="overflow-x-auto overflow-y-auto mb-4">
-                        <table class="table w-full">
+                        <table class="table table-compact w-full">
                             <thead>
                                 <tr>
                                     <th>Nama Barang</th>
