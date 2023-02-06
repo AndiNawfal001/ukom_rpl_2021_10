@@ -9,7 +9,7 @@
                 <ul class="grid gap-6 w-full md:grid-cols-2 mb-4">
                     <li>
                         <a href="/pemutihanLangsung/pilihBarang">
-                            <label for="hosting-small" class="inline-flex justify-between items-center p-5 w-full bg-base-100 rounded-lg border cursor-pointer hover:bg-base-300">
+                            <label for="hosting-small" class="inline-flex justify-between items-center p-5 w-full bg-base-100 rounded-lg border border-warning cursor-pointer hover:bg-base-300">
                                 <div class="block">
                                     <div class="w-full text-lg font-semibold">Pemutihan langsung</div>
                                     <div class="w-full">seperti barang tua</div>
@@ -21,7 +21,7 @@
                     <li>
 
                         <a href="/pemutihan/pilihbarang">
-                            <label for="hosting-small" class="inline-flex justify-between items-center p-5 w-full bg-base-100 rounded-lg border  cursor-pointer hover:bg-base-300
+                            <label for="hosting-small" class="inline-flex justify-between items-center p-5 w-full bg-base-100 rounded-lg border border-info cursor-pointer hover:bg-base-300
                             ">
                                 <div class="block">
                                     <div class="w-full text-lg font-semibold">Pemutihan dari perbaikan</div>
@@ -38,10 +38,8 @@
                     <table class="table w-full ">
                         <thead>
                             <tr>
-                                {{-- <th></th> --}}
                                 <th>Barang</th>
                                 <th>Tanggal Pemutihan</th>
-                                {{-- <th>Keterangan Pemutihan</th> --}}
                                 <th>Penonaktifan</th>
                                 <th>Aksi</th>
                             </tr>
@@ -49,7 +47,6 @@
                         <?php $no=1;?>
                         @forelse($data as $key)
                         <tr>
-                        {{-- <th>{{ $no++ }}</th> --}}
                         <th>
                             <div class="flex items-center space-x-3">
                                 <div>
@@ -59,7 +56,6 @@
                             </div>
                         </th>
                         <td>{{ $key->tgl_pemutihan }}</td>
-                        {{-- <td>{{ $key->ket_pemutihan }}</td> --}}
                         <td>
                             <p class="badge badge-outline
                             {{ ($key->approve_penonaktifan === 'setuju') ? 'badge-success' : '' }}
@@ -68,12 +64,6 @@
                             ">{{ $key->approve_penonaktifan }}</p>
                         </td>
                         <td>
-                            {{-- <a href="pemutihan/detail/{{$key->id_pemutihan}}">
-                                INFO
-                                <button class="btn btn-sm  btn-info btn-square btn-outline">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                </button>
-                            </a> --}}
                             <label for="my-modal-4{{ $key->id_pemutihan }}" class="btn btn-sm btn-info btn-square btn-outline">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             </label>
@@ -106,43 +96,90 @@
 @section('modal')
 @foreach ($data as $key)
     <input type="checkbox" id="my-modal-4{{ $key->id_pemutihan }}" class="modal-toggle" />
+    @if($key->id_perbaikan == NULL)
+    {{-- DARI PEMUTIHAN LANGSUNG --}}
     <label for="my-modal-4{{ $key->id_pemutihan }}" class="modal cursor-pointer">
-    <label class="modal-box relative rounded-md" for="">
-        <div class="flex justify-between items-center mb-3">
-            <div class="badge badge-lg badge-outline
+        <label class="modal-box relative rounded-md" for="">
+            <div class="flex justify-between items-center mb-5">
+                    <p class="badge badge-lg badge-outline badge-warning">Pemutihan langsung</p>
+                <div class="badge badge-lg badge-outline
                     {{ ($key->approve_penonaktifan === 'pending') ? 'badge-warning' : '' }}
                     {{ ($key->approve_penonaktifan === 'setuju') ? 'badge-success' : '' }}
                     {{ ($key->approve_penonaktifan === 'tidak setuju') ? 'badge-error' : '' }}
-                ">{{ $key->approve_penonaktifan }}</div>
+                ">
+                    {{ $key->approve_penonaktifan }}
+                </div>
+        </div>
             <p class="btn btn-sm btn-outline">{{ $key->kode_barang }}</p>
-        </div>
-        <h3 class="text-xl font-bold">{{ $key->nama_barang }}</h3>
-        <h3 class="text-md">diajukan {{ $key->tgl_pemutihan }}</h3>
+            <h3 class="text-xl font-bold">{{ $key->nama_barang }}</h3>
+            <h3 class="text-md">diajukan {{ $key->tgl_pemutihan }}</h3>
 
-        <div class="py-4">
-            <p class="font-light text-gray-500">Keterangan Pemutihan</p>
-            <p class="font-medium">{{ $key->ket_pemutihan }}</p>
-        </div>
-
-        @if($key->id_perbaikan == NULL)
-        @else
-        <div class="py-2">
-            <p class="font-light text-gray-500">Nama Teknisi</p>
-            <p class="font-medium">{{ $key->nama_teknisi }}</p>
-        </div>
-        <div class="py-2 flex gap-7">
-            <div>
-                <p class="font-light text-gray-500">Tgl Perbaikan</p>
-                <p class="font-medium">{{ $key->tgl_perbaikan }}</p>
+            <div class="py-4">
+                <p class="font-light text-gray-500">Keterangan Pemutihan</p>
+                <p class="font-medium">{{ $key->ket_pemutihan }}</p>
             </div>
-            <div>
-                <p class="font-light text-gray-500">Tgl Selesai</p>
-                <p class="font-medium">{{ $key->tgl_selesai_perbaikan }}</p>
+            <p class="font-light text-gray-500 pb-2">Foto Kondisi Terakhir Barang</p>
+            <div class=" border-2 border-base-300 rounded-md p-3 bg-base-200">
+                <a href="{{ asset('storage/'.$key->foto_kondisi_terakhir) }}" target="_blank" class="group">
+                    <img src="{{ asset('storage/'.$key->foto_kondisi_terakhir) }}" class="mx-auto shadow  group-hover:brightness-50 ">
+                </a>
+            </div>
+        </label>
+    </label>
+    @else
+    {{-- DARI PEMUTIHAN PERBAIKAN --}}
+    <label for="my-modal-4{{ $key->id_pemutihan }}" class="modal cursor-pointer">
+        <div class="modal-box max-w-5xl">
+            <div class="flex justify-between items-center mb-5">
+                    <div class="">
+                        <p class="badge badge-lg badge-outline badge-info">Pemutihan dari perbaikan</p>
+                    </div>
+                    <div class="badge badge-lg badge-outline
+                        {{ ($key->approve_penonaktifan === 'pending') ? 'badge-warning' : '' }}
+                        {{ ($key->approve_penonaktifan === 'setuju') ? 'badge-success' : '' }}
+                        {{ ($key->approve_penonaktifan === 'tidak setuju') ? 'badge-error' : '' }}
+                    ">
+                        {{ $key->approve_penonaktifan }}
+                    </div>
+            </div>
+            <div class="lg:flex gap-10">
+                <div class="basis-1/2">
+                    <p class="btn btn-sm btn-outline">{{ $key->kode_barang }}</p>
+                    <h3 class="text-xl font-bold">{{ $key->nama_barang }}</h3>
+                    <h3 class="text-md">diajukan {{ $key->tgl_pemutihan }}</h3>
+
+                    <div class="py-4">
+                        <p class="font-light text-gray-500">Keterangan Pemutihan</p>
+                        <p class="font-medium">{{ $key->ket_pemutihan }}</p>
+                    </div>
+
+
+                    <div class="py-2">
+                        <p class="font-light text-gray-500">Nama Teknisi</p>
+                        <p class="font-medium">{{ $key->nama_teknisi }}</p>
+                    </div>
+                    <div class="py-2 flex gap-7">
+                        <div>
+                            <p class="font-light text-gray-500">Tgl Perbaikan</p>
+                            <p class="font-medium">{{ $key->tgl_perbaikan }}</p>
+                        </div>
+                        <div>
+                            <p class="font-light text-gray-500">Tgl Selesai</p>
+                            <p class="font-medium">{{ $key->tgl_selesai_perbaikan }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="basis-1/2">
+                    <p class="font-light text-gray-500 pb-2">Foto Kondisi Terakhir Barang</p>
+                    <div class=" border-2 border-base-300 rounded-md p-3 bg-base-200">
+                        <a href="{{ asset('storage/'.$key->foto_kondisi_terakhir) }}" target="_blank" class="group">
+                            <img src="{{ asset('storage/'.$key->foto_kondisi_terakhir) }}" class="mx-auto shadow  group-hover:brightness-50 ">
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-        @endif
-
     </label>
-    </label>
+    @endif
 @endforeach
 @endsection

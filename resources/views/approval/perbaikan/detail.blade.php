@@ -12,11 +12,11 @@
             </div>
         <div class="lg:flex gap-10">
             <div class="basis-1/2 mb-5 lg:mb-0">
-                <div class=" border-2 border-base-300 rounded-md p-3 bg-base-200">
+                {{-- <div class=" border-2 border-base-300 rounded-md p-3 bg-base-200">
                     <a href="{{ asset('storage/'.$detail->gambar_pelaksanaan) }}" target="_blank" class="group">
                         <img src="{{ asset('storage/'.$detail->gambar_pelaksanaan) }}" class="mx-auto shadow  group-hover:brightness-50 ">
                     </a>
-                </div>
+                </div> --}}
             </div>
             <div class="basis-1/2">
                 <p class="btn btn-sm btn-outline mb-3">{{ $detail->kode_barang }}</p>

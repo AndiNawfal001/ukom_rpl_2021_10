@@ -20,43 +20,12 @@ class PemutihanController extends Controller
                 )
                 ->where('pemutihan.submitter', $submitter)
                 ->paginate(10);
-        // dd($data);
-        // $data = DB::table('detail_barang')
-        //         ->rightJoin('pemutihan', 'detail_barang.kode_barang', '=', 'pemutihan.kode_barang')
-        //         ->join('barang','detail_barang.id_barang', '=', 'barang.id_barang')
-        //         ->where('submitter', $submitter)
-        //         ->paginate(10);
-        // dd($data);
         return view('pengajuan.pemutihan.index', compact('data'));
     }
-
-    private function getPemutihan($id)
-    {
-        return collect(DB::select('SELECT * FROM pemutihan WHERE id_pemutihan = ?', [$id]))->firstOrFail();
-    }
-    public function detail($id = null)
-    {
-        $detail = $this->getPemutihan($id);
-        return view('pengajuan.pemutihan.detail', compact('detail'));
-    }
-
-
 
     // LANGSUNG
 
     public function pilihbarangPemutihanLangsung(){
-        // $data = DB::table('barang_masuk_perbaikan')
-        // ->select('nama_barang', 'asli', 'spesifikasi', 'kondisi_barang', 'status')
-        // ->whereNull('kode_barang')
-        // ->where('submitter', $submitter)
-        // ->where('approve_perbaikan', 'rusak')
-        // ->paginate(10);
-
-        // $data = DB::table('barang_masuk_perbaikan')
-        // ->select('*')
-        // ->where('kondisi_barang', 'baik')
-        // ->where('status', 'aktif')
-        // ->paginate(10);
 
         $data = DB::table('detail_barang')
         ->leftJoin('barang', 'detail_barang.id_barang', '=', 'barang.id_barang')
@@ -68,13 +37,6 @@ class PemutihanController extends Controller
 
     public function searchPLangsung(Request $request){
         $search = $request->input('search');
-        // $data = DB::table('barang_masuk_perbaikan')
-        // ->select('*')
-        // ->where('kondisi_barang', 'baik')
-        // ->where('status', 'aktif')
-        // ->where('kode_barang','like',"%".$search."%")
-        // ->orWhere('nama_barang','like',"%".$search."%")
-        // ->paginate(10);
         $data = DB::table('detail_barang')
         ->leftJoin('barang', 'detail_barang.id_barang', '=', 'barang.id_barang')
         ->where('detail_barang.kode_barang','like',"%".$search."%")
@@ -86,20 +48,11 @@ class PemutihanController extends Controller
         return view('pengajuan.pemutihan.pemutihanLangsung.pilihbarang', compact('data'));
     }
 
-    private function inputDataPemutihanLangsung($id)
-    {
-        return collect(DB::select('SELECT * FROM detail_barang WHERE kode_barang = ?', [$id]))->firstOrFail();
-    }
-
-    public function pemutihanLangsung($id = null)
-    {
-        $pemutihanLangsung = $this->inputDataPemutihanLangsung($id);
-        return view('pengajuan.pemutihan.pemutihanLangsung.tambah', compact('pemutihanLangsung'));
-    }
-
     public function simpanpemutihanLangsung(Request $request)
     {
         try {
+            $image = $request->file('image')->store('pemutihan');
+
             $submitter_id = Auth::user()->id_pengguna;
 
             $x = DB::table('pemutihan')->insert([
@@ -107,8 +60,8 @@ class PemutihanController extends Controller
                 'kode_barang' => $request->input('kode_barang'),
                 'submitter' => $submitter_id,
                 'tgl_pemutihan' => NOW(),
-                'ket_pemutihan' => $request->input('ket_pemutihan')
-
+                'ket_pemutihan' => $request->input('ket_pemutihan'),
+                'foto_kondisi_terakhir' => $image
             ]);
 
             if ($x)
@@ -123,11 +76,6 @@ class PemutihanController extends Controller
 
 
     // DARI PERBAIKAN
-
-    private function inputDataPemutihan($id)
-    {
-        return collect(DB::select('SELECT * FROM perbaikan WHERE id_perbaikan = ?', [$id]))->firstOrFail();
-    }
 
     public function pilihbarang()
     {
@@ -159,18 +107,11 @@ class PemutihanController extends Controller
         return view('pengajuan.pemutihan.pilihbarang', compact('data'));
     }
 
-    public function pemutihan($id = null)
-    {
-        $submitter = Auth::user()->id_pengguna;
-
-        $pemutihan = $this->inputDataPemutihan($id);
-        return view('pengajuan.pemutihan.tambah', compact('pemutihan', 'submitter'));
-    }
-
-
     public function simpanpemutihan(Request $request)
     {
         try {
+            $image = $request->file('image')->store('pemutihan');
+
             $submitter_id = Auth::user()->id_pengguna;
 
             $tambah_pengajuan_pb = DB::table('pemutihan')->insert([
@@ -178,7 +119,8 @@ class PemutihanController extends Controller
                 'kode_barang' => $request->input('kode_barang'),
                 'submitter' => $submitter_id,
                 'tgl_pemutihan' => NOW(),
-                'ket_pemutihan' => $request->input('ket_pemutihan')
+                'ket_pemutihan' => $request->input('ket_pemutihan'),
+                'foto_kondisi_terakhir' => $image
             ]);
 
             if ($tambah_pengajuan_pb)

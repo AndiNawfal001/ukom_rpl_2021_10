@@ -21,7 +21,6 @@
                     <table class="table w-full ">
                         <thead>
                             <tr>
-                                {{-- <th>No</th> --}}
                                 <th>Barang</th>
                                 <th>Tgl Selesai Perbaikan</th>
                                 <th>Status Perbaikan</th>
@@ -32,7 +31,6 @@
                         <?php $no=1;?>
                         @forelse($data as $key)
                         <tr>
-                        {{-- <th>{{ $no++ }}</th> --}}
                         <th>
                             <div class="flex items-center space-x-3">
                                 <div>
@@ -45,18 +43,10 @@
                         <td><p class="badge badge-outline badge-warning">{{ $key->status_perbaikan }}</p></td>
                         <td><p class="badge badge-outline badge-error">{{ $key->approve_perbaikan }}</p></td>
                         <td>
-                            {{-- <a href="/pemutihan/pemutihan/{{$key->id_perbaikan}}">
-                            <div class="tooltip tooltip-warning" data-tip="lakukan pemutihan">
-                                <button class="btn btn-sm btn-warning btn-square btn-outline">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11"></path></svg>
-                                </button>
-                            </div>
-                            </a> --}}
                             <label for="pemutihan{{ $key->kode_barang }}" class="btn btn-sm btn-warning btn-square btn-outline">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11"></path></svg>
                             </label>
                         </td>
-                        {{-- <td>{{ $key->password }}</td> --}}
                         @empty
                         <tr>
                             <td colspan="5">
@@ -82,11 +72,13 @@
 @endsection
 
 @section('modal')
+
+{{-- pemutihan --}}
 @foreach($data as $key)
 <input type="checkbox" id="pemutihan{{ $key->kode_barang }}" class="modal-toggle" />
 <label for="pemutihan{{ $key->kode_barang }}" class="modal cursor-pointer">
     <label class="modal-box relative" for="">
-        <form action="/pemutihan/pemutihan/simpanpemutihan" method="POST">
+        <form action="/pemutihan/pemutihan/simpanpemutihan" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="flex justify-between">
                 <div class="order-last">
@@ -117,6 +109,14 @@
                 <span class="label-text">Keterangan Pemutihan</span>
                 </label>
                 <textarea name="ket_pemutihan" cols="20" rows="5" class="textarea textarea-bordered" placeholder="contoh : barang sudah rusak" required></textarea>
+            </div>
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">Foto kondisi terakhir barang</span>
+                </label>
+                <input type="file" name="image" id="image" class="file-input file-input-bordered w-full max-w-xs" onchange="previewImage()" required/>
+                <br>
+                <img src="" class="img-preview object-scale-down w-1/2 md:w-1/4" alt="">
             </div>
                 <div class="form-control mt-6">
                 <button type="submit" value="simpan" class="btn btn-primary">Simpan</button>

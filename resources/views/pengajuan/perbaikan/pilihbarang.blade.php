@@ -99,6 +99,8 @@
 @endsection
 
 @section('modal')
+
+{{-- perbaikan --}}
 @foreach($data as $key)
 <input type="checkbox" id="perbaikan{{ $key->asli }}" class="modal-toggle" />
 <label for="perbaikan{{ $key->asli }}" class="modal cursor-pointer">
@@ -120,17 +122,6 @@
                 <input type="text" name="kode_barang" class="input input-bordered "
                 value="{{ old('nama', $key->asli) }}"/>
             </div>
-            {{-- <div class="form-control">
-                <label class="label">
-                    <span class="label-text">Untuk Ruangan..</span>
-                </label>
-                <select class="select select-bordered w-full max-w-xs" name="ruangan" required>
-                    <option disabled selected>-- Pilih Ruangan --</option>
-                    @foreach ($ruangan as $item)
-                        <option value="{{ $item->id_ruangan }} ">{{ $item->nama_ruangan }}</option>
-                    @endforeach
-                </select>
-            </div> --}}
             <div class="form-control">
                 <label class="label">
                 <span class="label-text">Keluhan</span>

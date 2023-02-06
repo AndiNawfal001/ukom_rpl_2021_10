@@ -1,4 +1,4 @@
-<div class="relative flex-1 flex flex-col min-h-0 shadow bg-base-100 bg-opacity-80 pt-0">
+<div class="relative flex-1 flex flex-col min-h-0 shadow bg-base-100 pt-0">
     <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
        <div class="flex-1 px-3 divide-y space-y-1">
         <ul class="space-y-2">

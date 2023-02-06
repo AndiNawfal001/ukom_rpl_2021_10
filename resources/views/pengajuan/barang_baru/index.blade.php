@@ -132,12 +132,6 @@
                             </label>
                             <input type="number" name="harga_satuan" class="input input-bordered" required/>
                         </div>
-                        {{-- <div class="form-control">
-                            <label class="label">
-                                <span class="label-text">Total Harga</span>
-                            </label>
-                            <input type="text" name="total_harga" class="input input-bordered" required/>
-                        </div> --}}
                         <div class="form-control">
                             <label class="label">
                                 <span class="label-text">Jumlah Barang</span>
@@ -155,12 +149,6 @@
                                 @endforeach
                             </select>
                         </div>
-                        {{-- <div class="form-control">
-                            <label class="label">
-                                <span class="label-text">Untuk Ruangan..</span>
-                            </label>
-                            <input type="text" name="ruangan" class="input input-bordered" required/>
-                        </div> --}}
                     </div>
                 </div>
 
@@ -174,18 +162,11 @@
 
     {{-- EDIT --}}
     @foreach($data as $key)
-
-        <!-- Put this part before </body> tag -->
         <input type="checkbox" id="editpengajuanbb{{$key->id_pengajuan_bb}}" class="modal-toggle" />
-        <div class="modal">
+        <label for="editpengajuanbb{{$key->id_pengajuan_bb}}" class="modal cursor-pointer">
             <div class="modal-box w-11/12 max-w-5xl">
                 <form action="/pengajuan/BB/update/{{$key->id_pengajuan_bb}}" method="POST">
                     @csrf
-                    <div class="modal-action fixed right-5 top-0">
-                        <label for="editpengajuanbb{{$key->id_pengajuan_bb}}" class="btn btn-sm btn-square">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                        </label>
-                    </div>
                     <h2 class="text-2xl font-bold">Edit Pengajuan</h2>
                     <br>
                     <div class="lg:flex flex-row gap-5">
@@ -220,17 +201,6 @@
                                 <input type="number" name="jumlah" class="input input-bordered"
                                 value="{{ old('jumlah', $key->jumlah) }}"/>
                             </div>
-                            {{-- <div class="form-control">
-                                <label class="label">
-                                    <span class="label-text">Untuk Ruangan..</span>
-                                </label>
-                                <select class="select select-bordered w-full max-w-xs" name="ruangan" required>
-                                    <option disabled selected>-- Pilih Ruangan --</option>
-                                    @foreach ($ruangan as $item)
-                                        <option value="{{ $item->nama_ruangan }}" {{ old('ruangan') == $item->nama_ruangan ? 'selected' : null}}>{{ $item->nama_ruangan }}</option>
-                                    @endforeach
-                                </select>
-                            </div> --}}
                         </div>
                     </div>
                         <div class="form-control mt-6">
@@ -238,7 +208,7 @@
                         </div>
                 </form>
             </div>
-        </div>
+        </label>
     @endforeach
 
     {{-- DETAIL --}}
@@ -292,7 +262,6 @@
         </svg>
         <div class="text-center">
             <h3 class="font-bold text-2xl">Anda yakin ?</h3>
-            {{-- <p class="py-4 text-md">Menghapus pengguna <b>permanen</b> membuat pengguna tersebut tidak bisa lagi login</p> --}}
         </div>
         <div class="flex justify-center pt-4 gap-3">
             <label for="delete{{ $key->id_pengajuan_bb }}" class="btn btn-sm btn-outline btn-info">Cancel</label>
