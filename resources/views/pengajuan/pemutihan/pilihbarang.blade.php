@@ -3,7 +3,12 @@
 
 <div class="pt-6 px-4">
     <div class="bg-base-100 shadow rounded-md p-4 sm:p-6 xl:p-8 ">
-        <h1 class="text-xl pb-3 font-semibold leading-loose">Pilih Barang yang rusak</h1>
+        <div class="flex justify-between pb-3 items-center">
+            <h1 class="text-xl pb-3 font-semibold leading-loose">Pilih Barang yang rusak</h1>
+            <a href="/pemutihan" class="btn btn-sm btn-square">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </a>
+        </div>
         <form action="/pemutihan/pilihbarang/search" method="GET">
             @csrf
                 <div class="form-control mb-2">

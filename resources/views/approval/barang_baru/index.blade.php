@@ -49,7 +49,6 @@
                                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                         </label>
                                     </td>
-                                    {{-- <td>{{ $key->password }}</td> --}}
                                     @empty
                                     <tr>
                                         <td colspan="6">
@@ -78,11 +77,12 @@
 </div>
 @endsection
 @section('modal')
+{{-- DETAIL --}}
 @foreach ($data as $key)
     <input type="checkbox" id="approvalbbdetail{{ $key->id_pengajuan_bb }}" class="modal-toggle" />
     <label for="approvalbbdetail{{ $key->id_pengajuan_bb }}" class="modal cursor-pointer">
     <label class="modal-box relative rounded-md" for="">
-        <div class="badge badge-lg badge-outline mb-5
+        <div class="badge badge-lg badge-outline mb-4
         {{ ($key->status_approval === 'setuju') ? 'badge-success' : '' }}
         {{ ($key->status_approval === 'pending') ? 'badge-warning' : '' }}
         {{ ($key->status_approval === 'tidak') ? 'badge-error' : '' }}
@@ -92,7 +92,7 @@
 
         <div class="py-4">
             <p class="font-light">Spesifikasi</p>
-            <p class="font-medium ">{{ $key->spesifikasi }} </p>
+            <p class="font-medium ">{{ $key->spesifikasi }}</p>
         </div>
         <div class="py-4">
             <p class="font-light">Untuk Ruangan</p>

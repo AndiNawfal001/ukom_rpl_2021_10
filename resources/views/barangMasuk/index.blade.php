@@ -145,7 +145,7 @@
                         </div>
                     </div>
             </form>
-            <div class=" overflow-x-auto overflow-y-auto">
+            <div class="overflow-x-auto overflow-y-auto">
                 <table class="table w-full">
                     <thead>
                         <tr>

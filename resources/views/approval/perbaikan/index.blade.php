@@ -55,11 +55,10 @@
                                 ">{{ $key->approve_perbaikan }}</p>
                             </td>
                             <td>
-                                <a href="/approval/PB/detail/{{ $key->id_perbaikan }}" class="btn btn-sm  btn-info btn-square btn-outline">
+                                <label for="detail{{ $key->id_perbaikan }}" class="btn btn-sm  btn-info btn-square btn-outline">
                                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                </a>
+                                </label>
                             </td>
-                            {{-- <td>{{ $key->password }}</td> --}}
                             @empty
                             <tr>
                                 <td colspan="5">
@@ -83,4 +82,51 @@
 </div>
 
 
+@endsection
+
+@section('modal')
+{{-- DETAIL --}}
+@foreach($data as $key)
+    <input type="checkbox" id="detail{{ $key->id_perbaikan }}" class="modal-toggle" />
+    <label for="detail{{ $key->id_perbaikan }}" class="modal cursor-pointer">
+    <div class="modal-box">
+        <div>
+            <p class="btn btn-sm btn-outline mb-3">{{ $key->asli }}</p>
+            <p class="text-2xl font-semibold">{{ $key->nama_barang }}</p>
+            <div class="lg:flex gap-5">
+                <p class="text-md lg:border-r-2 lg:pr-5">diajukan {{ $key->tgl_perbaikan }}</p>
+                <p class="text-md font-medium">Selesai diperbaiki pada {{ $key->tgl_selesai_perbaikan }}</p>
+            </div>
+            <div class="pb-3">
+                <p class="font-light">Dari Ruangan <span class="font-medium">{{ $key->nama_ruangan }}</span> </p>
+            </div>
+            <div class="pb-3">
+                <p class="font-light">Keluhan</p>
+                <p class="font-medium ">{{ $key->keluhan }} </p>
+            </div>
+            <div class="pb-3">
+                <p class="font-light">Nama Teknisi</p>
+                <p class="font-medium ">{{ $key->nama_teknisi }} </p>
+            </div>
+            <div class="pb-3">
+                <p class="font-light">Penyebab Keluhan</p>
+                <p class="font-medium ">{{ $key->penyebab_keluhan }} Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit perspiciatis consequuntur unde neque eaque laboriosam, corporis labore at inventore debitis, fuga autem dolor ut illum tempore iusto dignissimos corrupti doloremque!</p>
+            </div>
+            <div class="flex ">
+                <div class="badge badge-lg badge-outline
+                    {{ ($key->status_perbaikan === 'bisa diperbaiki') ? 'badge-success' : '' }}
+                    {{ ($key->status_perbaikan === 'tidak bisa diperbaiki') ? 'badge-error' : '' }}
+                    ">{{ $key->status_perbaikan}}
+                </div>
+            </div>
+            @if($key->approve_perbaikan == "pending")
+                <div class="py-5 flex flex-row-reverse gap-3">
+                    <a href="/approval/PB/tidaksetuju/{{$key->id_perbaikan}}/{{ $key->asli }}"><button class="btn btn-sm btn-outline btn-error">Rusak</button></a>
+                    <a href="/approval/PB/setuju/{{$key->id_perbaikan}}"><button class="btn btn-sm btn-outline btn-success">Sudah Diperbaiki</button></a>
+                </div>
+            @endif
+        </div>
+    </div>
+    </label>
+@endforeach
 @endsection

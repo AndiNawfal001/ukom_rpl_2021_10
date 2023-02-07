@@ -16,7 +16,7 @@ class PemutihanController extends Controller
                 ->leftJoin('perbaikan', 'pemutihan.id_perbaikan', '=', 'perbaikan.id_perbaikan')
                 ->select('pemutihan.*', 'nama_kode_barang.nama_barang',
                     'tgl_perbaikan', 'penyebab_keluhan', 'tgl_selesai_perbaikan',
-                    'nama_teknisi'
+                    'nama_teknisi', 'status_perbaikan'
                 )
                 ->where('pemutihan.submitter', $submitter)
                 ->paginate(10);

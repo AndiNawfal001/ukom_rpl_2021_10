@@ -64,7 +64,7 @@
                             ">{{ $key->approve_penonaktifan }}</p>
                         </td>
                         <td>
-                            <label for="my-modal-4{{ $key->id_pemutihan }}" class="btn btn-sm btn-info btn-square btn-outline">
+                            <label for="detailpemutihan{{ $key->id_pemutihan }}" class="btn btn-sm btn-info btn-square btn-outline">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             </label>
                         </td>
@@ -95,56 +95,31 @@
 
 @section('modal')
 @foreach ($data as $key)
-    <input type="checkbox" id="my-modal-4{{ $key->id_pemutihan }}" class="modal-toggle" />
-    @if($key->id_perbaikan == NULL)
-    {{-- DARI PEMUTIHAN LANGSUNG --}}
-    <label for="my-modal-4{{ $key->id_pemutihan }}" class="modal cursor-pointer">
-        <label class="modal-box relative rounded-md" for="">
-            <div class="flex justify-between items-center mb-5">
-                    <p class="badge badge-lg badge-outline badge-warning">Pemutihan langsung</p>
-                <div class="badge badge-lg badge-outline
-                    {{ ($key->approve_penonaktifan === 'pending') ? 'badge-warning' : '' }}
-                    {{ ($key->approve_penonaktifan === 'setuju') ? 'badge-success' : '' }}
-                    {{ ($key->approve_penonaktifan === 'tidak setuju') ? 'badge-error' : '' }}
-                ">
-                    {{ $key->approve_penonaktifan }}
-                </div>
-        </div>
-            <p class="btn btn-sm btn-outline">{{ $key->kode_barang }}</p>
-            <h3 class="text-xl font-bold">{{ $key->nama_barang }}</h3>
-            <h3 class="text-md">diajukan {{ $key->tgl_pemutihan }}</h3>
-
-            <div class="py-4">
-                <p class="font-light text-gray-500">Keterangan Pemutihan</p>
-                <p class="font-medium">{{ $key->ket_pemutihan }}</p>
-            </div>
-            <p class="font-light text-gray-500 pb-2">Foto Kondisi Terakhir Barang</p>
-            <div class=" border-2 border-base-300 rounded-md p-3 bg-base-200">
-                <a href="{{ asset('storage/'.$key->foto_kondisi_terakhir) }}" target="_blank" class="group">
-                    <img src="{{ asset('storage/'.$key->foto_kondisi_terakhir) }}" class="mx-auto shadow  group-hover:brightness-50 ">
-                </a>
-            </div>
-        </label>
-    </label>
-    @else
-    {{-- DARI PEMUTIHAN PERBAIKAN --}}
-    <label for="my-modal-4{{ $key->id_pemutihan }}" class="modal cursor-pointer">
+    <input type="checkbox" id="detailpemutihan{{ $key->id_pemutihan }}" class="modal-toggle" />
+    <label for="detailpemutihan{{ $key->id_pemutihan }}" class="modal cursor-pointer">
         <div class="modal-box max-w-5xl">
-            <div class="flex justify-between items-center mb-5">
-                    <div class="">
-                        <p class="badge badge-lg badge-outline badge-info">Pemutihan dari perbaikan</p>
-                    </div>
-                    <div class="badge badge-lg badge-outline
-                        {{ ($key->approve_penonaktifan === 'pending') ? 'badge-warning' : '' }}
-                        {{ ($key->approve_penonaktifan === 'setuju') ? 'badge-success' : '' }}
-                        {{ ($key->approve_penonaktifan === 'tidak setuju') ? 'badge-error' : '' }}
-                    ">
-                        {{ $key->approve_penonaktifan }}
-                    </div>
-            </div>
             <div class="lg:flex gap-10">
                 <div class="basis-1/2">
-                    <p class="btn btn-sm btn-outline">{{ $key->kode_barang }}</p>
+                    <p class="font-light text-gray-500 pb-2">Foto Kondisi Terakhir Barang</p>
+                    <div class=" border-2 border-base-300 rounded-md p-3 bg-base-200">
+                        <a href="{{ asset('storage/'.$key->foto_kondisi_terakhir) }}" target="_blank" class="group">
+                            <img src="{{ asset('storage/'.$key->foto_kondisi_terakhir) }}" class="mx-auto shadow  group-hover:brightness-50 ">
+                        </a>
+                    </div>
+                </div>
+                <div class="basis-1/2">
+                    <div class="lg:flex justify-between items-center my-5">
+                        <div class="mb-2 lg:mb-0">
+                        @if($key->id_perbaikan == NULL)
+                            <p class="badge badge-lg badge-outline badge-warning">Pemutihan langsung</p>
+                        @else
+                            <p class="badge badge-lg badge-outline badge-info">Pemutihan dari perbaikan</p>
+                        @endif
+                        </div>
+                        <div>
+                            <p class="btn btn-sm btn-outline">{{ $key->kode_barang }}</p>
+                        </div>
+                    </div>
                     <h3 class="text-xl font-bold">{{ $key->nama_barang }}</h3>
                     <h3 class="text-md">diajukan {{ $key->tgl_pemutihan }}</h3>
 
@@ -153,10 +128,18 @@
                         <p class="font-medium">{{ $key->ket_pemutihan }}</p>
                     </div>
 
-
+                    @if($key->id_perbaikan == NULL)
+                    @else
                     <div class="py-2">
                         <p class="font-light text-gray-500">Nama Teknisi</p>
                         <p class="font-medium">{{ $key->nama_teknisi }}</p>
+                    </div>
+                    <div class="py-2">
+                        <p class="font-light text-gray-500">Status Perbaikan</p>
+                        <p class="badge badge-md badge-outline
+                            {{ ($key->status_perbaikan === 'bisa diperbaiki') ? 'badge-success' : '' }}
+                            {{ ($key->status_perbaikan === 'tidak bisa diperbaiki') ? 'badge-error' : '' }}
+                        ">{{ $key->status_perbaikan }}</p>
                     </div>
                     <div class="py-2 flex gap-7">
                         <div>
@@ -168,18 +151,20 @@
                             <p class="font-medium">{{ $key->tgl_selesai_perbaikan }}</p>
                         </div>
                     </div>
-                </div>
-                <div class="basis-1/2">
-                    <p class="font-light text-gray-500 pb-2">Foto Kondisi Terakhir Barang</p>
-                    <div class=" border-2 border-base-300 rounded-md p-3 bg-base-200">
-                        <a href="{{ asset('storage/'.$key->foto_kondisi_terakhir) }}" target="_blank" class="group">
-                            <img src="{{ asset('storage/'.$key->foto_kondisi_terakhir) }}" class="mx-auto shadow  group-hover:brightness-50 ">
-                        </a>
+                    @endif
+                    <div class="pt-4">
+                        <div class="badge badge-lg badge-outline
+                                {{ ($key->approve_penonaktifan === 'pending') ? 'badge-warning' : '' }}
+                                {{ ($key->approve_penonaktifan === 'setuju') ? 'badge-success' : '' }}
+                                {{ ($key->approve_penonaktifan === 'tidak setuju') ? 'badge-error' : '' }}
+                            ">
+                                {{ $key->approve_penonaktifan }}
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </label>
-    @endif
 @endforeach
 @endsection
