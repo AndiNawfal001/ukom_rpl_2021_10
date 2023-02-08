@@ -47,7 +47,7 @@
                             <td>{{ $key->jumlah}}</td>
                             <td>{{ $key->tgl_approve }}</td>
                             <td>
-                                <label for="my-modal-4{{ $key->id_pengajuan_bb }}" class="btn btn-sm btn-info btn-square btn-outline">
+                                <label for="detailPengajuanApproved{{ $key->id_pengajuan_bb }}" class="btn btn-sm btn-info btn-square btn-outline">
                                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 </label>
                             </td>
@@ -102,12 +102,9 @@
                                     <th>{{ $no++ }}</th>
                                     <td>{{ $key->nama_jenis }}</td>
                                     <td>
-                                        <a href="/jenisBarang/hapus/{{$key->id_jenis_brg}}">
-                                            {{-- DELETE --}}
-                                            <button class="btn btn-sm btn-error btn-square btn-outline">
-                                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                                            </button>
-                                        </a>
+                                        <label for="delete{{ $key->id_jenis_brg }}" class="btn btn-sm btn-error btn-square btn-outline">
+                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                        </label>
                                     </td>
                                 </tr>
                             @empty
@@ -191,9 +188,11 @@
 @endsection
 
 @section('modal')
+
+{{-- DETAIL --}}
 @foreach ($info as $key)
-    <input type="checkbox" id="my-modal-4{{ $key->id_pengajuan_bb }}" class="modal-toggle" />
-    <label for="my-modal-4{{ $key->id_pengajuan_bb }}" class="modal cursor-pointer">
+    <input type="checkbox" id="detailPengajuanApproved{{ $key->id_pengajuan_bb }}" class="modal-toggle" />
+    <label for="detailPengajuanApproved{{ $key->id_pengajuan_bb }}" class="modal cursor-pointer">
     <label class="modal-box relative rounded-md" for="">
         @if($key->status_pembelian == 'selesai')
                 <div class="badge badge-lg badge-outline badge-success my-2">Completed</div>
@@ -237,6 +236,8 @@
     </label>
 @endforeach
 
+
+{{-- TAMBAH JENIS BARANG --}}
 <input type="checkbox" id="tambahjenisBarang" class="modal-toggle" />
     <label for="tambahjenisBarang" class="modal cursor-pointer">
         <label class="modal-box relative" for="">
@@ -257,4 +258,27 @@
             </form>
         </label>
     </label>
+
+{{-- HAPUS --}}
+@foreach($jenisBarang as $key)
+<input type="checkbox" id="delete{{ $key->id_jenis_brg }}" class="modal-toggle" />
+<label for="delete{{ $key->id_jenis_brg }}" class="modal cursor-pointer">
+  <div class="modal-box border-t-2 border-error">
+    <svg fill="none" class="text-error w-1/4 mx-auto" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"></path>
+    </svg>
+    <div class="text-center">
+        <h3 class="font-bold text-2xl">Anda yakin ?</h3>
+    </div>
+    <div class="flex justify-center pt-4 gap-3">
+        <label for="delete{{ $key->id_jenis_brg }}" class="btn btn-sm btn-outline btn-info">Cancel</label>
+        <label class="btn btn-sm btn-error btn-outline">
+            <a href="/jenisBarang/hapus/{{$key->id_jenis_brg}}">
+                Delete
+            </a>
+        </label>
+    </div>
+  </div>
+</label>
+@endforeach
 @endsection

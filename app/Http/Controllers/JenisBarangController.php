@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Arr;
 
@@ -29,11 +28,6 @@ class JenisBarangController extends Controller
             'nama_jenis' => 'required|unique:jenis_barang,nama_jenis'
         ]);
         try {
-
-        // if($request->file('image')){
-        //     $image = $request->file('image')->store('images');
-        // }
-
         $dariFunction = DB::select('SELECT newIdJenisbrg() AS id_jenis_brg');
         $array = Arr::pluck($dariFunction, 'id_jenis_brg');
         $kode_baru = Arr::get($array, '0');
@@ -61,14 +55,6 @@ class JenisBarangController extends Controller
     {
 
         try {
-
-            // if($request->file('image')){
-            //     if($request->oldImage){
-            //         Storage::delete($request->oldImage);
-            //     }
-            //     $image = $request->file('image')->store('images');
-            // }
-
             $data = [
                 'nama_jenis' => $request->input('nama_jenis'),
                 // 'image' => $image,
@@ -87,16 +73,6 @@ class JenisBarangController extends Controller
     public function hapus($id=null){
 
         try{
-            // dd($id);
-            // $x = DB::table('ruangan')
-            //             ->where('id_ruangan', '=', $id)
-            //             ->get(); //AMBIL DATA FILE
-            // // dd($x);
-            // $flattened = Arr::pluck($x, 'image');
-            // // $y = Arr::flatten($flattened);
-            // $price = Arr::get($flattened, '0');
-            // Storage::delete($price); //HAPUS FILE DI STORAGE
-
             $hapus = DB::table('jenis_barang')
                             ->where('id_jenis_brg',$id)
                             ->delete();

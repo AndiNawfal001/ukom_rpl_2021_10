@@ -62,7 +62,7 @@ class PenggunaController extends Controller
     {
         $request->validate([
             'username' => 'unique:pengguna,username',
-            'email' => 'unique:pengguna,email|email:dns',
+            'email' => ['email:dns','unique:pengguna,email'],
             'nip' => 'max:18',
         ],
         [

@@ -8,17 +8,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Pagination\Paginator;
 // use Termwind\Components\Dd;
 
 class BarangMasukController extends Controller
 {
-    // public function paginate($perPage = 15, $columns = ['*'], $pageName = 'page', $page = null) {
-    // }
-    private function getPengajuanBbInfo($id)
-    {
-        return collect(DB::select('SELECT * FROM pengajuan_bb WHERE id_pengajuan_bb = ? AND status_approval = "setuju" ', [$id]))->firstOrFail();
-    }
 
     public function index(){
         $data = DB::table('data_barang_masuk')->get();

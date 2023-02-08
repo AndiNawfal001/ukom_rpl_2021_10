@@ -3,7 +3,7 @@
 
 <div class="pt-6 px-4">
     <div class="w-full grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4">
-        <div class="bg-base-100 border-l-4 border-primary shadow rounded-lg p-4 sm:p-6 xl:p-8  2xl:col-span-2">
+        <div class="bg-base-100 border-l-2 border-primary shadow rounded-lg p-4 sm:p-6 xl:p-8  2xl:col-span-2">
            <div class="flex items-center justify-between mb-4">
               <div class="flex-shrink-0">
                  <span class="text-2xl sm:text-4xl leading-none font-bold">
@@ -130,8 +130,7 @@
         </div>
         </div>
         @can('admin')
-            <div class="bg-gradient-to-r from-red-500 to-orange-500 shadow rounded-lg p-1">
-                <div class="bg-base-100 rounded-lg p-3 h-full sm:p-5 xl:p-7 ">
+                <div class="bg-base-100 border-t-2 border-error rounded-lg p-3 h-full sm:p-5 xl:p-7 ">
                     <div class="mb-4 flex items-center justify-between">
                         <div>
                             <h3 class="text-xl font-bold mb-2">Latest logging activity</h3>
@@ -187,12 +186,12 @@
 
                     </div>
                 </div>
-            </div>
+            {{-- <div class="bg-gradient-to-r from-red-500 to-orange-500 shadow rounded-lg p-1">
+            </div> --}}
         @endcan
 
         @can('manajemen')
-            <div class="bg-gradient-to-r from-lime-400 to-lime-500 shadow rounded-lg p-1">
-                <div class="bg-base-100 rounded-lg p-3 h-full sm:p-5 xl:p-7 ">
+                <div class="bg-base-100 border-t-2 border-success rounded-lg p-3 h-full sm:p-5 xl:p-7 ">
                     <div class="mb-4 flex items-center justify-between">
                         <div>
                             <h3 class="text-xl font-bold mb-2">Pengajuan Barang Baru</h3>
@@ -248,12 +247,12 @@
 
                     </div>
                 </div>
-            </div>
+            {{-- <div class="bg-gradient-to-r from-lime-400 to-lime-500 shadow rounded-lg p-1">
+            </div> --}}
         @endcan
 
         @can('kaprog')
-            <div class="bg-gradient-to-r from-indigo-400 to-cyan-400 shadow rounded-lg p-1">
-                <div class="bg-base-100 rounded-lg p-3 h-full sm:p-5 xl:p-7 ">
+                <div class="bg-base-100 border-t-2 border-info rounded-lg p-3 h-full sm:p-5 xl:p-7 ">
                     <div class="mb-4 flex items-center justify-between">
                         <div>
                             <h3 class="text-xl font-bold mb-2">Daftar Barang Rusak untuk Pemutihan</h3>
@@ -309,7 +308,8 @@
 
                     </div>
                 </div>
-            </div>
+            {{-- <div class="bg-gradient-to-r from-indigo-400 to-cyan-400 shadow rounded-lg p-1">
+            </div> --}}
         @endcan
     </div>
 
