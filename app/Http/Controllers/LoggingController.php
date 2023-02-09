@@ -11,7 +11,7 @@ class LoggingController extends Controller
     //
     public function index()
     {
-        $data = LogModel::paginate(10);
+        $data = LogModel::orderByDesc('id_log')->paginate(10);
         return view('logging.index', compact('data'));
     }
 
@@ -23,6 +23,7 @@ class LoggingController extends Controller
                 ->orWhere('aktifitas','like',"%".$search."%")
                 ->orWhere('id_log','like',"%".$search."%")
                 ->orWhere('tgl','like',"%".$search."%")
+                ->orderByDesc('id_log')
                 ->paginate(10);
         return view('logging.index', compact('data'));
     }

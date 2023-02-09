@@ -143,49 +143,26 @@ class BarangMasukController extends Controller
         }
     }
 
-    // public function storeLangsung(Request $request)
-    // {
-    //     try {
+    private function getBarangMasuk($id)
+    {
+        return collect(DB::table('barang_masuk')
+        ->leftJoin('supplier', 'barang_masuk.supplier', '=', 'supplier.id_supplier')
+        ->where('barang_masuk.id_pengajuan', $id)
+        ->get());
+    }
 
-    //         $i = 1;
+    private function getPengajuanBbProgress($id)
+    {
+        return collect(DB::table('pengajuan_bb')
+        ->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')
+        ->where('pengajuan_bb.id_pengajuan_bb', $id)
+        ->get());
+    }
 
-    //     $tambahBarangMasuk = DB::table('barang_masuk')->insert([
-    //         'manajemen' => $request->input('manajemen'),
-    //         'nama_barang' => $request->input('nama_barang'),
-    //         'jml_masuk' => $request->input('jml_masuk'),
-    //         'tgl_masuk' => $request->input('tgl_masuk'),
-    //         'manajemen' => $request->input('manajemen')
-    //     ]);
-    //     $tambahBarang = DB::table('barang')->insert([
-    //         // 'id_jenis_brg' => $request->input('jenis'),
-    //         'nama_barang' => $request->input('nama_barang'),
-    //         'jml_barang' => $request->input('jml_masuk')
-    //     ]);
-
-    //     $a = DB::select('SELECT LPAD("a","a")');
-    //     dd($a);
-    //     while($i <= $request->input('jml_masuk')){
-
-
-    //         DB::table('detail_barang')->insert([
-    //             'manajemen' => $request->input('manajemen'),
-    //             'nama_barang' => $request->input('nama_barang'),
-    //             'jml_masuk' => $request->input('jml_masuk'),
-    //             'tgl_masuk' => $request->input('tgl_masuk'),
-    //             'manajemen' => $request->input('manajemen')
-    //         ]);
-
-    //         $i++;
-    //     }
-
-    //         // dd($tambahBarangMasuk);
-
-    //     if ($tambahBarangMasuk)
-    //         return redirect('barangMasuk');
-    //     else
-    //         return "input data gagal";
-    //     } catch (\Exception $e) {
-    //     return  $e->getMessage();
-    //     }
-    // }
+    public function detailBarangMasuk($id=null){
+        $data = $this->getBarangMasuk($id);
+        $card = $this->getPengajuanBbProgress($id);
+        // dd($card);
+        return view('barangMasuk.historybarangMasuk', compact('data', 'card'));
+    }
 }

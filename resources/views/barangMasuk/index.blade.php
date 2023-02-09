@@ -149,8 +149,8 @@
                             <th>No</th>
                             <th>Nama Barang</th>
                             <th>Progress</th>
-                            <th>Tgl Masuk</th>
                             <th>Status Pembelian</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <?php $no=1;?>
@@ -158,15 +158,24 @@
                     <tr>
                         <th>{{ $no++ }}</th>
                         <td>{{ $key->nama_barang }}</td>
-                        <td>{{ $key->kurangtw }} / {{ $key->jumlah }}</td>
-                        <td>{{ $key->tgl_masuk }}</td>
+                        <td>{{ $key->progress }} / {{ $key->target }}</td>
                         <td>
                             <p class="badge badge-outline
-                                        {{ ($key->status_pembelian === 'selesai') ? 'badge-success' : '' }}
-                                        {{ ($key->status_pembelian === 'outstanding') ? 'badge-warning' : '' }}
-                                        ">{{ $key->status_pembelian }}</p>
+                                        {{ ($key->progress < $key->target) ? 'badge-warning' : '' }}
+                                        {{ ($key->progress = $key->target) ? 'badge-success' : '' }}
+                                        ">
+                            @if(($key->progress < $key->target))
+                                outstanding
+                            @else
+                                selesai
+                            @endif
+                            </p>
                         </td>
-                        {{-- <td>{{ $key->password }}</td> --}}
+                        <td>
+                            <a href="/barangMasuk/history/{{ $key->id_pengajuan_bb }}" class="btn btn-sm btn-info btn-square btn-outline">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </a>
+                        </td>
                         @empty
                         <tr>
                             <td colspan="6">

@@ -42,17 +42,46 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0118 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3l1.5 1.5 3-3.75"></path>
                       </svg>
                     <span class="flex-1 ml-3 text-left whitespace-nowrap " sidebar-toggle-item>Approval</span>
+
+                    @if(
+                        DB::table('pemutihan')->whereNull('approver')->count('id_pemutihan') == 0
+                        or
+                        DB::table('pengajuan_bb')->whereNull('approver')->count('id_pengajuan_bb') == 0
+                        or
+                        DB::table('perbaikan')->whereNull('approver')->count('id_perbaikan') == 0
+                    )
+                    @else
+                        <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info"></span>
+                    @endif
                     <svg sidebar-toggle-item class="w-6 h-6 group-hover:text-base-content" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                 </button>
                 <ul class="py-2 space-y-2 dropdown-container {{ request()->is('approval/BB*', 'approval/PB*' ,'approval/pemutihan*') ? 'block' : 'hidden' }}">
-                    <li>
-                        <a href="/approval/BB" class="flex items-center p-2 pl-11 w-full text-base border-primary font-normal rounded-sm transition duration-75 group hover:bg-base-200 {{ request()->is('approval/BB*') ? 'bg-base-300 border-r-2' : '' }}">Barang Baru</a>
+                    <li >
+                        <a href="/approval/BB" class="flex justify-between items-center p-2 pl-11 w-full text-base border-primary font-normal rounded-sm transition duration-75 group hover:bg-base-200 {{ request()->is('approval/BB*') ? 'bg-base-300 border-r-2 m-[2px]' : '' }}">
+                            Barang Baru
+                            @if(DB::table('pengajuan_bb')->whereNull('approver')->count('id_pengajuan_bb') == 0)
+                            @else
+                                <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info"></span>
+                            @endif
+                        </a>
                     </li>
                     <li>
-                        <a href="/approval/PB" class="flex items-center p-2 pl-11 w-full text-base border-primary font-normal rounded-sm transition duration-75 group hover:bg-base-200 {{ request()->is('approval/PB*') ? 'bg-base-300 border-r-2' : '' }}">Perbaikan</a>
+                        <a href="/approval/PB" class="flex justify-between items-center p-2 pl-11 w-full text-base border-primary font-normal rounded-sm transition duration-75 group hover:bg-base-200 {{ request()->is('approval/PB*') ? 'bg-base-300 border-r-2 m-[2px]' : '' }}">
+                            Perbaikan
+                            @if(DB::table('perbaikan')->whereNull('approver')->count('id_perbaikan') == 0)
+                            @else
+                                <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info"></span>
+                            @endif
+                        </a>
                     </li>
                     <li>
-                        <a href="/approval/pemutihan" class="flex items-center p-2 pl-11 w-full text-base border-primary font-normal rounded-sm transition duration-75 group hover:bg-base-200 {{ request()->is('approval/pemutihan*') ? 'bg-base-300 border-r-2' : '' }}">Pemutihan</a>
+                        <a href="/approval/pemutihan" class="flex justify-between items-center p-2 pl-11 w-full text-base border-primary font-normal rounded-sm transition duration-75 group hover:bg-base-200 {{ request()->is('approval/pemutihan*') ? 'bg-base-300 border-r-2 m-[2px]' : '' }}">
+                            Pemutihan
+                            @if(DB::table('pemutihan')->whereNull('approver')->count('id_pemutihan') == 0)
+                            @else
+                                <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info"></span>
+                            @endif
+                        </a>
                     </li>
 
                 </ul>
@@ -108,28 +137,22 @@
             </li>
             <li class="transition hover:bg-base-200 border-primary rounded-sm group {{ request()->is('supplier*') ? 'bg-base-300 border-r-2' : '' }}">
                 <a href="/supplier" class="flex items-center p-2">
-                    <svg class="w-6 h-6 text-gray-500 group-hover:text-base-content {{ request()->is('supplier*') ? 'text-base-content' : '' }}" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <svg class="w-6 h-6 flex-shrink-0 text-gray-500 group-hover:text-base-content {{ request()->is('supplier*') ? 'text-base-content' : '' }}" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"></path>
-                      </svg>
-                <span class="flex-1 ml-3 whitespace-nowrap">Supplier</span>
+                    </svg>
+                    <span class="flex-1 ml-3 whitespace-nowrap">Supplier</span>
+                    {{-- <span class="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-info-content bg-info rounded-full">
+                        {{ DB::table('supplier')->count('id_supplier') }}
+                    </span> --}}
                 </a>
             </li>
-            {{-- <li class="collapse collapse-arrow ">
-                <input type="checkbox"/>
-                <div class="collapse-title bg-primary text-primary-content -p-2">
-                  Pengajuan
-                </div>
-                <div class="collapse-content bg-primary text-primary-content ">
-                  <p>hello</p>
-                </div>
-            </li> --}}
 
             <li class="transition hover:bg-base-200 border-primary rounded-sm group {{ request()->is('ruangan*') ? 'bg-base-300 border-r-2' : '' }}">
                 <a href="/ruangan" class="flex items-center p-2 ">
-                    <svg class="w-6 h-6 text-gray-500 group-hover:text-base-content {{ request()->is('ruangan*') ? 'text-base-content' : '' }}" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <svg class="w-6 h-6 flex-shrink-0 text-gray-500 group-hover:text-base-content {{ request()->is('ruangan*') ? 'text-base-content' : '' }}" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z"></path>
                       </svg>
-                <span class="flex-1 ml-3 whitespace-nowrap">Ruangan</span>
+                    <span class="flex-1 ml-3 whitespace-nowrap">Ruangan</span>
                 </a>
             </li>
 

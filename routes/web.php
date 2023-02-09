@@ -16,6 +16,7 @@ use App\Http\Controllers\PerawatanController;
 use App\Http\Controllers\PerbaikanController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\RuanganController;
+use App\Models\BarangMasukModel;
 use App\Models\PenggunaModel;
 
 // use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -83,6 +84,9 @@ Route::group(['middleware' => ['auth','level:admin,manajemen']], function (){
     // JENIS BARANG
     Route::post('/jenisBarang/tambah',[ JenisBarangController::class,'store'])->middleware('auth');
     Route::get('/jenisBarang/hapus/{id}',[ JenisBarangController::class,'hapus'])->middleware('auth');
+
+    // HISTORY BARANGMASUK
+    Route::get('/barangMasuk/history/{id}',[ BarangMasukController::class,'detailBarangMasuk'])->middleware('auth');
 });
 
 // BARANG
