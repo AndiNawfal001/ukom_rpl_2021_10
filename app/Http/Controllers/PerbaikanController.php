@@ -46,14 +46,23 @@ class PerbaikanController extends Controller
         $ruangan = $this->getRuangan();
 
         // VIEW
-        $data = DB::table('barang_masuk_perbaikan')
-        ->distinct()
-        ->select('nama_barang', 'asli', 'kondisi_barang', 'status', 'submitter', 'approve_perbaikan')
-        ->where('status', 'aktif')
-        ->where('kondisi_barang', 'baik')
-        ->whereNull('submitter')
-        ->orWhere('approve_perbaikan', 'sudah diperbaiki')
-        ->paginate(10);
+        // $data = DB::table('barang_masuk_perbaikan')
+        // ->distinct()
+        // ->select('nama_barang', 'asli', 'kondisi_barang', 'status', 'submitter', 'approve_perbaikan')
+        // ->where('status', 'aktif')
+        // ->where('kondisi_barang', 'baik')
+        // ->whereNull('submitter')
+        // ->orWhere('approve_perbaikan', 'sudah diperbaiki')
+        // ->paginate(10);
+        $data = DB::table('detail_barang')
+            ->distinct()
+            ->select('detail_barang.*')
+            ->leftJoin('perbaikan', 'detail_barang.kode_barang', '=', 'perbaikan.kode_barang')
+            ->where('detail_barang.kondisi_barang', 'baik')
+            ->where('detail_barang.status', 'aktif')
+            ->orderBy('detail_barang.kode_barang', 'asc')
+            ->paginate(10);
+        // dd($data);
         return view('pengajuan.perbaikan.pilihbarang', compact('data', 'ruangan'));
     }
 

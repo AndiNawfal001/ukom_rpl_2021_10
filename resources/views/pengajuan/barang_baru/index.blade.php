@@ -94,7 +94,7 @@
 @section('modal')
     {{-- TAMBAH --}}
     <input type="checkbox" id="tambahpengajuanbb" class="modal-toggle" />
-    <div class="modal">
+    <label for="tambahpengajuanbb" class="modal cursor-pointer">
         <div class="modal-box w-11/12 max-w-5xl">
             <form action="/pengajuan/BB/tambah" method="POST">
                 @csrf
@@ -153,7 +153,7 @@
                     </div>
             </form>
         </div>
-    </div>
+    </label>
 
     {{-- EDIT --}}
     @foreach($data as $key)

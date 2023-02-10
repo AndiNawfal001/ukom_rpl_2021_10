@@ -3,7 +3,7 @@
 
 <div class="pt-6 px-4">
     <div class="w-full grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4">
-        <div class="bg-base-100 border-l-2 border-primary shadow rounded-lg p-4 sm:p-6 xl:p-8  2xl:col-span-2">
+        <div class="bg-base-100 border-t-2 border-primary shadow rounded-lg p-4 sm:p-6 xl:p-8  2xl:col-span-2">
            <div class="flex items-center justify-between mb-4">
               <div class="flex-shrink-0">
                  <span class="text-2xl sm:text-4xl leading-none font-bold">
@@ -162,7 +162,13 @@
                                                 <span class="font-semibold">{{ $key->id_log }}</span>
                                             </td>
                                             <td class="p-4 whitespace-nowrap text-sm font-normal">
-                                                {{ $key->aktifitas }}
+                                                <p class="badge badge-outline
+                                                    {{ ($key->aktifitas === 'tambah barang') ? 'badge-success' : '' }}
+                                                    {{ ($key->aktifitas === 'approve pemutihan' OR $key->aktifitas === 'disapprove pemutihan') ? 'badge-warning' : '' }}
+                                                    {{ ($key->aktifitas === 'barang diperbaiki' OR $key->aktifitas === 'barang rusak') ? 'badge-info' : '' }}
+                                                    ">
+                                                        {{ $key->aktifitas }}
+                                                </p>
                                             </td>
                                             <td class="p-4 whitespace-nowrap text-sm font-normal">
                                                 {{ $key->tgl }}

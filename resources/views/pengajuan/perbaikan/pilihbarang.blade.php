@@ -49,7 +49,8 @@
                             <div class="flex items-center space-x-3">
                                 <div>
                                     <div class="font-bold text-lg">{{ $item->nama_barang }}</div>
-                                    <div class="text-sm opacity-50">{{ $item->asli }}</div>
+                                    {{-- <div class="text-sm opacity-50">{{ $item->kode_barang }}</div> --}}
+                                    <div class="text-sm opacity-50">{{ $item->kode_barang }}</div>
                                 </div>
                             </div>
                         </th>
@@ -66,9 +67,12 @@
                             ">{{ $item->status }}</p>
                         </td>
                         <td>
-                            <label for="perbaikan{{ $item->asli }}" class="btn btn-sm btn-warning btn-square btn-outline">
+                            {{-- @if(DB::select('SELECT approve_perbaikan FROM perbaikan WHERE approve_perbaikan = "pending" AND approve_perbaikan.kode_barang= ?', ($item_kode_barang) ))
+                            @else --}}
+                            <label for="perbaikan{{ $item->kode_barang }}" class="btn btn-sm btn-warning btn-square btn-outline">
                                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11"></path></svg>
                             </label>
+                            {{-- @endif --}}
                         </td>
                         {{-- <td>{{ $key->password }}</td> --}}
                         @empty
@@ -102,8 +106,8 @@
 
 {{-- perbaikan --}}
 @foreach($data as $key)
-<input type="checkbox" id="perbaikan{{ $key->asli }}" class="modal-toggle" />
-<label for="perbaikan{{ $key->asli }}" class="modal cursor-pointer">
+<input type="checkbox" id="perbaikan{{ $key->kode_barang }}" class="modal-toggle" />
+<label for="perbaikan{{ $key->kode_barang }}" class="modal cursor-pointer">
     <label class="modal-box relative" for="">
         <form action="/pengajuan/PB/perbaikan/simpanperbaikan" method="POST">
             @csrf
@@ -111,7 +115,7 @@
                 <h2 class="text-2xl font-bold">Form Perbaikan</h2>
                 <div class="my-2 lg:my-0">
                     Kode barang :
-                    <div class="btn btn-sm btn-outline no-animation">{{ $key->asli }}</div>
+                    <div class="btn btn-sm btn-outline no-animation">{{ $key->kode_barang }}</div>
                 </div>
             </div>
             <br>
@@ -120,7 +124,7 @@
                 <span class="label-text">Kode Barang</span>
                 </label>
                 <input type="text" name="kode_barang" class="input input-bordered "
-                value="{{ old('nama', $key->asli) }}"/>
+                value="{{ old('nama', $key->kode_barang) }}"/>
             </div>
             <div class="form-control">
                 <label class="label">
