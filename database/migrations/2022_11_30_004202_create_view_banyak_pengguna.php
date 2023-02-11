@@ -12,21 +12,21 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
-    {
-        DB::unprepared(
-            "CREATE OR REPLACE VIEW banyak_pengguna AS (
-                SELECT
-                pengguna.*,
-                level_user.nama_level
+    // public function up()
+    // {
+    //     DB::unprepared(
+    //         "CREATE OR REPLACE VIEW banyak_pengguna AS (
+    //             SELECT
+    //             pengguna.*,
+    //             level_user.nama_level
 
-                FROM pengguna
-                JOIN level_user
-                    ON pengguna.id_level = level_user.id_level
+    //             FROM pengguna
+    //             JOIN level_user
+    //                 ON pengguna.id_level = level_user.id_level
 
-            )"
-          );
-    }
+    //         )"
+    //       );
+    // }
 
     /**
      * Reverse the migrations.

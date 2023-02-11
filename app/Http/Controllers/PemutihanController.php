@@ -28,9 +28,8 @@ class PemutihanController extends Controller
     public function pilihbarangPemutihanLangsung(){
 
         $data = DB::table('detail_barang')
-        ->leftJoin('barang', 'detail_barang.id_barang', '=', 'barang.id_barang')
-        ->where('detail_barang.kondisi_barang', 'baik')
         ->where('status', 'aktif')
+        ->where('kondisi_barang', 'baik')
         ->paginate(10);
         return view('pengajuan.pemutihan.pemutihanLangsung.pilihbarang', compact('data'));
     }

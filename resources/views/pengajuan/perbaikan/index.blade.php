@@ -41,7 +41,7 @@
                                 <div class="flex items-center space-x-3">
                                     <div>
                                         <div class="font-bold text-lg">{{ $key->nama_barang }}</div>
-                                        <div class="text-sm opacity-50">{{ $key->asli }}</div>
+                                        <div class="text-sm opacity-50">{{ $key->kode_barang }}</div>
                                     </div>
                                 </div>
                             </th>
@@ -111,7 +111,7 @@
     <label for="detail{{ $key->id_perbaikan }}" class="modal cursor-pointer">
     <div class="modal-box">
         <div>
-            <p class="btn btn-sm btn-outline mb-3">{{ $key->asli }}</p>
+            <p class="btn btn-sm btn-outline mb-3">{{ $key->kode_barang }}</p>
             <p class="text-2xl font-semibold">{{ $key->nama_barang }}</p>
             <div class="lg:flex gap-5">
                 <p class="text-md lg:border-r-2 lg:pr-5">diajukan {{ $key->tgl_perbaikan }}</p>
@@ -154,7 +154,7 @@
             <h2 class="text-2xl font-bold">Form Selesai Perbaikan</h2>
                 <div class="pt-2">
                     Kode barang :
-                    <div class="btn btn-sm btn-outline no-animation">{{ $key->asli }}</div>
+                    <div class="btn btn-sm btn-outline no-animation">{{ $key->kode_barang }}</div>
                 </div>
             <br>
             <div class="form-control hidden">
@@ -185,11 +185,11 @@
                             <span class="label-text">Status Barang</span>
                             </label>
                         <div class="flex items-center pl-4 rounded-t border">
-                            <input id="bordered-radio-1" type="radio" value="bisa diperbaiki" name="status_perbaikan" class="radio radio-success">
+                            <input id="bordered-radio-1" type="radio" value="bisa diperbaiki" name="status_perbaikan" class="radio radio-success" required>
                             <label for="bordered-radio-1" class="py-4 ml-2 text-success w-full text-sm font-medium ">Bisa Diperbaiki</label>
                         </div>
                         <div class="flex items-center pl-4 rounded-b border">
-                            <input id="bordered-radio-2" type="radio" value="tidak bisa diperbaiki" name="status_perbaikan" class="radio radio-error">
+                            <input id="bordered-radio-2" type="radio" value="tidak bisa diperbaiki" name="status_perbaikan" class="radio radio-error" required>
                             <label for="bordered-radio-2" class="py-4 ml-2 text-error w-full text-sm font-medium ">Tidak Bisa Diperbaiki</label>
                         </div>
                     </div>

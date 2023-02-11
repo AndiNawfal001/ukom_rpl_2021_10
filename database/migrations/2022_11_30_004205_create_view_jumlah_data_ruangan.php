@@ -12,14 +12,14 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
-    {
-        DB::unprepared(
-            "CREATE OR REPLACE VIEW jumlah_data_ruangan AS(
-                SELECT COUNT(id_ruangan) FROM ruangan
-            )"
-          );
-    }
+    // public function up()
+    // {
+    //     DB::unprepared(
+    //         "CREATE OR REPLACE VIEW jumlah_data_ruangan AS(
+    //             SELECT COUNT(id_ruangan) FROM ruangan
+    //         )"
+    //       );
+    // }
 
     /**
      * Reverse the migrations.

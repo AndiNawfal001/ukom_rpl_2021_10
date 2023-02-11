@@ -134,7 +134,7 @@
                     <div class="mb-4 flex items-center justify-between">
                         <div>
                             <h3 class="text-xl font-bold mb-2">Latest logging activity</h3>
-                            <span class="text-base font-normal ">This is a list of latest logginf activity</span>
+                            <span class="text-base font-normal ">This is a list of latest logging activity</span>
                         </div>
                     </div>
                     <div class="flex flex-col mt-8">

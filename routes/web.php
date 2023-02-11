@@ -108,11 +108,13 @@ Route::get('/supplier/hapus/{id}',[SupplierController::class,'hapus'])->middlewa
 // PENGGUNA
 Route::get('/pengguna',[ PenggunaController::class,'index'])->middleware('auth');
 Route::get('/pengguna/search',[ PenggunaController::class,'search'])->middleware('auth');
-Route::get('/pengguna/tambah',[ PenggunaController::class,'formTambah'])->middleware('auth');
-Route::post('/pengguna/simpan',[ PenggunaController::class,'store'])->middleware('auth');
-Route::get('/pengguna/edit/{id}',[PenggunaController::class,'edit'])->middleware('auth');
-Route::post('/pengguna/edit/editsimpan',[ PenggunaController::class,'editsimpan'])->middleware('auth');
-Route::get('/pengguna/hapus/{id}',[PenggunaController::class,'hapus'])->middleware('auth');
+Route::group(['middleware' => ['auth','level:admin']], function (){
+    Route::get('/pengguna/tambah',[ PenggunaController::class,'formTambah'])->middleware('auth');
+    Route::post('/pengguna/simpan',[ PenggunaController::class,'store'])->middleware('auth');
+    Route::get('/pengguna/edit/{id}',[PenggunaController::class,'edit'])->middleware('auth');
+    Route::post('/pengguna/edit/editsimpan',[ PenggunaController::class,'editsimpan'])->middleware('auth');
+    Route::get('/pengguna/hapus/{id}',[PenggunaController::class,'hapus'])->middleware('auth');
+});
 
 // PENGAJUAN BARANG BARU
 Route::get('/pengajuan/BB',[ PengajuanBBController::class,'index'])->middleware('auth');

@@ -13,11 +13,17 @@ class PerbaikanController extends Controller
     public function index(){
         $submitter= Auth::user()->id_pengguna;
 
-        $data = DB::table('barang_masuk_perbaikan')
-                ->select('barang_masuk_perbaikan.*', 'ruangan.nama_ruangan')
-                ->leftJoin('detail_barang', 'barang_masuk_perbaikan.asli', '=', 'detail_barang.kode_barang')
+        // $data = DB::table('barang_masuk_perbaikan')
+        //         ->select('barang_masuk_perbaikan.*', 'ruangan.nama_ruangan')
+        //         ->leftJoin('detail_barang', 'barang_masuk_perbaikan.asli', '=', 'detail_barang.kode_barang')
+        //         ->leftJoin('ruangan', 'detail_barang.ruangan', '=', 'ruangan.id_ruangan')
+        //         ->where('submitter', $submitter)
+        //         ->paginate(10);
+        $data = DB::table('detail_barang')
+                ->select('detail_barang.*', 'perbaikan.id_perbaikan', 'perbaikan.tgl_perbaikan', 'perbaikan.tgl_selesai_perbaikan', 'perbaikan.approve_perbaikan','perbaikan.nama_teknisi', 'perbaikan.keluhan', 'perbaikan.penyebab_keluhan', 'perbaikan.status_perbaikan', 'perbaikan.submitter', 'ruangan.nama_ruangan')
+                ->leftJoin('perbaikan', 'detail_barang.kode_barang', '=', 'perbaikan.kode_barang')
                 ->leftJoin('ruangan', 'detail_barang.ruangan', '=', 'ruangan.id_ruangan')
-                ->where('submitter', $submitter)
+                ->where('perbaikan.submitter', $submitter)
                 ->paginate(10);
         // dd($data);
         return view('pengajuan.perbaikan.index', compact('data' ));
@@ -44,16 +50,6 @@ class PerbaikanController extends Controller
 
     public function pilihBarang(){
         $ruangan = $this->getRuangan();
-
-        // VIEW
-        // $data = DB::table('barang_masuk_perbaikan')
-        // ->distinct()
-        // ->select('nama_barang', 'asli', 'kondisi_barang', 'status', 'submitter', 'approve_perbaikan')
-        // ->where('status', 'aktif')
-        // ->where('kondisi_barang', 'baik')
-        // ->whereNull('submitter')
-        // ->orWhere('approve_perbaikan', 'sudah diperbaiki')
-        // ->paginate(10);
         $data = DB::table('detail_barang')
             ->distinct()
             ->select('detail_barang.*')
@@ -70,13 +66,16 @@ class PerbaikanController extends Controller
         $ruangan = $this->getRuangan();
 
         $search = $request->input('search');
-        $data = DB::table('barang_masuk_perbaikan')
-        ->select('*')
-        ->where('asli','like',"%".$search."%")
-        ->orWhere('nama_barang','like',"%".$search."%")
-        ->where('status', 'aktif')
-        ->where('kondisi_barang', 'baik')
-        ->paginate(10);
+        $data = DB::table('detail_barang')
+            ->distinct()
+            ->select('detail_barang.*')
+            ->leftJoin('perbaikan', 'detail_barang.kode_barang', '=', 'perbaikan.kode_barang')
+            ->where('detail_barang.kondisi_barang', 'baik')
+            ->where('detail_barang.status', 'aktif')
+            ->where('detail_barang.kode_barang','like',"%".$search."%")
+            ->orWhere('detail_barang.nama_barang','like',"%".$search."%")
+            ->orderBy('detail_barang.kode_barang', 'asc')
+            ->paginate(10);
         return view('pengajuan.perbaikan.pilihbarang', compact('data','ruangan'));
     }
 
@@ -120,27 +119,6 @@ class PerbaikanController extends Controller
             } catch (\Exception $e) {
             return  $e->getMessage();
             }
-    }
-
-    private function getPengajuanPb($id)
-    {
-        return collect(DB::select('SELECT barang_masuk_perbaikan.*, ruangan.nama_ruangan
-        FROM barang_masuk_perbaikan
-        LEFT JOIN detail_barang ON barang_masuk_perbaikan.kode_barang = detail_barang.kode_barang
-        LEFT JOIN ruangan ON detail_barang.ruangan = ruangan.id_ruangan
-        WHERE barang_masuk_perbaikan.id_perbaikan = ?', [$id]))->firstOrFail();
-    }
-
-    public function detail($id = null)
-    {
-        $detail = $this->getPengajuanPb($id);
-        return view('pengajuan.perbaikan.detail', compact('detail'));
-    }
-
-    public function selesaiPerbaikan($id=null){
-        $edit = $this->getPengajuanPb($id);
-
-        return view('pengajuan.perbaikan.selesaiperbaikan', compact('edit'));
     }
 
     public function simpanSelesaiPerbaikan(Request $request)

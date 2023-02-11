@@ -13,21 +13,21 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
-    {
-        DB::unprepared(
-            "CREATE OR REPLACE VIEW barang_detail AS (
-                SELECT
-                barang.id_barang, barang.nama_barang,
-                detail_barang.kode_barang, detail_barang.spesifikasi
+    // public function up()
+    // {
+    //     DB::unprepared(
+    //         "CREATE OR REPLACE VIEW barang_detail AS (
+    //             SELECT
+    //             barang.id_barang, barang.nama_barang,
+    //             detail_barang.kode_barang, detail_barang.spesifikasi
 
-                FROM barang
-                JOIN detail_barang
-                    ON barang.id_barang = detail_barang.kode_barang
+    //             FROM barang
+    //             JOIN detail_barang
+    //                 ON barang.id_barang = detail_barang.kode_barang
 
-            )"
-          );
-    }
+    //         )"
+    //       );
+    // }
 
     /**
      * Reverse the migrations.
