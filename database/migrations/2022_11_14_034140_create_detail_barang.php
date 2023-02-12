@@ -18,7 +18,6 @@ return new class extends Migration
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_general_ci';
             $table->char('kode_barang',17)->primary();
-            $table->string('nama_barang');
             $table->integer('id_barang');
             $table->string('spesifikasi');
             $table->string('kondisi_barang');

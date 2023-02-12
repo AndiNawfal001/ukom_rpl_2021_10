@@ -79,13 +79,6 @@ class BarangMasukController extends Controller
 
     public function formTambah($id = null)
     {
-        // dd($id);
-        // $manajemen = DB::table('pengguna_manajemen')
-        // ->select('nama')
-        // ->where('username',Auth::user()->username)
-        // ->get();
-        // $array = Arr::pluck($manajemen, 'nama');
-        // $kode_baru = Arr::get($array, '0');
         $adder = Auth::user()->username;
         $tambah = $this->getPengajuanBb($id);
         $jenisBarang = $this->getJenisBarang();
@@ -97,9 +90,6 @@ class BarangMasukController extends Controller
         $jml_masuk = Arr::get($array, '0');
         $jml_pengajuan = $tambah->jumlah;
         $max_input = $jml_pengajuan - $jml_masuk;
-        // dd($tambah);
-        // dd($jenisBarang);
-        // dd($kode_baru);
         return view('barangMasuk.formtambah', compact('jenisBarang', 'supplier', 'tambah', 'adder', 'max_input'));
     }
 

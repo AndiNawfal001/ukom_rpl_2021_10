@@ -21,7 +21,6 @@ return new class extends Migration
             $table->char('kode_barang',17);
             $table->integer('approver')->nullable();
             $table->integer('submitter');
-            // $table->char('ruangan',6);
             $table->text('keluhan');
             $table->date('tgl_perbaikan');
 
@@ -30,7 +29,6 @@ return new class extends Migration
             $table->enum('status_perbaikan', ['bisa diperbaiki', 'tidak bisa diperbaiki'])->nullable();
             $table->text('solusi_barang')->nullable();
             $table->date('tgl_selesai_perbaikan')->nullable();
-            // $table->string('gambar_pelaksanaan')->nullable();
 
             $table->enum('approve_perbaikan', ['sudah diperbaiki', 'rusak', 'pending'])->default('pending')->nullable();
             $table->date('tgl_approve')->nullable();
@@ -40,22 +38,6 @@ return new class extends Migration
             ->foreign('kode_barang')
             ->references('kode_barang')
             ->on('detail_barang');
-
-            // // Foreign key untuk manajemen
-            // $table
-            // ->foreign('manajemen')
-            // ->references('nip')
-            // ->on('manajemen')
-            // ->cascadeOnUpdate()
-            // ->cascadeOnDelete();
-
-            // // Foreign key untuk kaprog
-            // $table
-            // ->foreign('kaprog')
-            // ->references('nip')
-            // ->on('kaprog')
-            // ->cascadeOnUpdate()
-            // ->cascadeOnDelete();
 
             // Foreign key untuk approver
             $table
@@ -72,14 +54,6 @@ return new class extends Migration
             ->on('pengguna')
             ->cascadeOnUpdate()
             ->cascadeOnDelete();
-
-            // Foreign key untuk ruangan
-            // $table
-            // ->foreign('ruangan')
-            // ->references('id_ruangan')
-            // ->on('ruangan')
-            // ->cascadeOnUpdate()
-            // ->cascadeOnDelete();
 
         });
     }

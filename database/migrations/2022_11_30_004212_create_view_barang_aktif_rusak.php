@@ -15,6 +15,7 @@ return new class extends Migration
      */
     public function up()
     {
+        // VIEW UNTUK BARANG INDEX
         DB::unprepared(
         "CREATE OR REPLACE VIEW barang_aktif_rusak AS (
             SELECT DISTINCT

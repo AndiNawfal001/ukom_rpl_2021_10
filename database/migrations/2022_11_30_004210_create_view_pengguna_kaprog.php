@@ -12,18 +12,18 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
-    {
-        DB::unprepared(
-            "CREATE OR REPLACE VIEW pengguna_kaprog AS (
-             SELECT pengguna.id_pengguna, pengguna.username,
-                kaprog.nama
-                FROM pengguna
-                JOIN kaprog
-                ON pengguna.id_pengguna = kaprog.id_pengguna
-            )"
-          );
-    }
+    // public function up()
+    // {
+    //     DB::unprepared(
+    //         "CREATE OR REPLACE VIEW pengguna_kaprog AS (
+    //          SELECT pengguna.id_pengguna, pengguna.username,
+    //             kaprog.nama
+    //             FROM pengguna
+    //             JOIN kaprog
+    //             ON pengguna.id_pengguna = kaprog.id_pengguna
+    //         )"
+    //       );
+    // }
 
     /**
      * Reverse the migrations.

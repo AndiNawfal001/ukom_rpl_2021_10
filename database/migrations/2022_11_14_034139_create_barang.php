@@ -21,7 +21,6 @@ return new class extends Migration
             $table->char('id_jenis_brg',5);
             $table->string('nama_barang');
             $table->integer('jml_barang');
-            // $table->string('foto_barang');
 
             // Foreign key untuk id_jenis_brg
             $table

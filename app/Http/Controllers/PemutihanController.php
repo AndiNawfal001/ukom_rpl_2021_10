@@ -28,6 +28,8 @@ class PemutihanController extends Controller
     public function pilihbarangPemutihanLangsung(){
 
         $data = DB::table('detail_barang')
+        ->select('detail_barang.*', 'barang.nama_barang')
+        ->leftJoin('barang', 'detail_barang.id_barang', '=', 'barang.id_barang')
         ->where('status', 'aktif')
         ->where('kondisi_barang', 'baik')
         ->paginate(10);
@@ -36,6 +38,7 @@ class PemutihanController extends Controller
 
     public function searchPLangsung(Request $request){
         $search = $request->input('search');
+
         $data = DB::table('detail_barang')
         ->leftJoin('barang', 'detail_barang.id_barang', '=', 'barang.id_barang')
         ->where('detail_barang.kode_barang','like',"%".$search."%")

@@ -166,9 +166,9 @@
                     {{Auth::user()->username}}
                     -
                     <span class="font-semibold
-                        {{ (Auth::user()->level_user->nama_level === 'admin') ? 'text-red-500' : '' }}
-                        {{ (Auth::user()->level_user->nama_level === 'manajemen') ? 'text-green-500' : '' }}
-                        {{ (Auth::user()->level_user->nama_level === 'kaprog') ? 'text-sky-500' : '' }}
+                        {{ (Auth::user()->level_user->nama_level === 'admin') ? 'text-error' : '' }}
+                        {{ (Auth::user()->level_user->nama_level === 'manajemen') ? 'text-success' : '' }}
+                        {{ (Auth::user()->level_user->nama_level === 'kaprog') ? 'text-info' : '' }}
                     ">
                         {{ Auth::user()->level_user->nama_level }}
                     </span>

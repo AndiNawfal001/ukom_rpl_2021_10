@@ -14,6 +14,8 @@ return new class extends Migration
      */
     public function up()
     {
+        // VIEW GABUNGAN BARANG DAN KODE BARANG
+        // UNTUK TABLE YANG MENGAKSES KODE BARANG TAPI TIDAK MEMLIKI ID BARANG
         DB::unprepared(
         "CREATE OR REPLACE VIEW nama_kode_barang AS (
             SELECT

@@ -31,23 +31,6 @@ return new class extends Migration
             $table->date('tgl_approve')->nullable();
             $table->enum('status_pembelian', ['outstanding ', 'selesai'])->nullable();
 
-
-            // Foreign key untuk manajemen
-            // $table
-            // ->foreign('manajemen')
-            // ->references('nip')
-            // ->on('manajemen')
-            // ->cascadeOnUpdate()
-            // ->cascadeOnDelete();
-
-            // Foreign key untuk kaprog
-            // $table
-            // ->foreign('kaprog')
-            // ->references('nip')
-            // ->on('kaprog')
-            // ->cascadeOnUpdate()
-            // ->cascadeOnDelete();
-
             // Foreign key untuk approver
             $table
             ->foreign('approver')

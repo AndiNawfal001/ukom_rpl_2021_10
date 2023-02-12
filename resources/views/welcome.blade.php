@@ -129,55 +129,28 @@
             </div>
         </div>
     </body>
-</html> --}}
-
+</html>
+ --}}
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MyStock</title>
+    <link rel="shortcut icon" href="{{ asset('image/aa.png') }}" sizes="16x16">
     @vite('resources/css/app.css')
-    <title>Document</title>
 </head>
 <body>
-
-    
-
     <div class="hero min-h-screen bg-base-200">
-        <div class="hero-content lg:w-3/4 flex-col lg:flex-row-reverse gap-7">
-            <div class="text-center lg:text-left">
-            <h1 class="text-5xl font-bold">Login now!</h1>
-            <p class="py-6">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, laboriosam ratione odit expedita aliquid eos. Porro quas sit repellendus quo mollitia dolor eum impedit temporibus, ab architecto, nulla, a dicta. Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam reiciendis animi rem eligendi eos corrupti, cupiditate ex autem dolor? Qui vel ea dolore sed blanditiis repudiandae sapiente exercitationem, suscipit itaque.</p>
-            </div>
-            <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-            <div class="card-body">
-                <div class="form-control">
-                <label class="label">
-                    <span class="label-text" for="email">Username</span>
-                </label>
-
-                <input type="email"name="email" id="email" placeholder="email" class="input input-bordered" autofocus required />
-                
-                </div>
-                <div class="form-control">
-                <label class="label" for="password">
-                    <span class="label-text" name="password" id="password">Password</span>
-                </label>
-                <input type="text" placeholder="password" class="input input-bordered" />
-                <label class="label">
-                    <a href="#" class="label-text-alt link link-hover">Forgot password?</a>
-                </label>
-                </div>
-                <div class="form-control mt-6 w-full">
-                {{-- <button class="btn btn-primary"><a href="/main">Login</a></button> --}}
-                <a href="/dashboard" class="w-full"><button class="btn btn-info">Login</button></a>
-                </div>
-            </div>
-            </div>
+        <div class="hero-content text-center">
+          <div class="max-w-md">
+            <h1 class="text-5xl font-bold">Hello there</h1>
+            <p class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
+            <a href="login" class="btn btn-primary">Get Started</a>
+          </div>
         </div>
-    </div>
-<script src="{{ asset('js/index.js') }}"></script>
+      </div>
 </body>
 </html>

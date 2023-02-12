@@ -1,4 +1,4 @@
-    @extends('layouts.main')
+@extends('layouts.main')
 @section('container')
 
 <div class="pt-6 px-4">

@@ -98,9 +98,10 @@ class ApprovalController extends Controller
 
 
     public function indexPerbaikan(){
-        $data = DB::table('barang_masuk_perbaikan')
-                ->select('barang_masuk_perbaikan.*', 'ruangan.nama_ruangan')
-                ->leftJoin('detail_barang', 'barang_masuk_perbaikan.asli', '=', 'detail_barang.kode_barang')
+        $data = DB::table('perbaikan')
+                ->select('perbaikan.*', 'barang.nama_barang', 'ruangan.nama_ruangan')
+                ->leftJoin('detail_barang', 'perbaikan.kode_barang', '=', 'detail_barang.kode_barang')
+                ->leftJoin('barang', 'detail_barang.id_barang', '=', 'barang.id_barang')
                 ->leftJoin('ruangan', 'detail_barang.ruangan', '=', 'ruangan.id_ruangan')
                 ->whereNotNull('tgl_selesai_perbaikan')
                 ->paginate(10);
@@ -110,9 +111,13 @@ class ApprovalController extends Controller
     public function searchindexPerbaikan(Request $request){
         $search = $request->input('search');
         $data = DB::table('perbaikan')
-                    ->whereNotNull('tgl_selesai_perbaikan')
-                    ->where('kode_barang','like',"%".$search."%")
-                    ->paginate(10);
+                ->select('perbaikan.*', 'barang.nama_barang', 'ruangan.nama_ruangan')
+                ->leftJoin('detail_barang', 'perbaikan.kode_barang', '=', 'detail_barang.kode_barang')
+                ->leftJoin('barang', 'detail_barang.id_barang', '=', 'barang.id_barang')
+                ->leftJoin('ruangan', 'detail_barang.ruangan', '=', 'ruangan.id_ruangan')
+                ->whereNotNull('tgl_selesai_perbaikan')
+                ->where('perbaikan.kode_barang','like',"%".$search."%")
+                ->paginate(10);
         return view('approval.perbaikan.index', compact('data'));
     }
 

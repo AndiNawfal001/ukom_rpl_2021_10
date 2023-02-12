@@ -22,30 +22,11 @@ return new class extends Migration
             $table->integer('approver')->nullable();
             $table->char('kode_barang',17);
             $table->integer('submitter');
-            // $table->string('nama_pelaksana');
             $table->date('tgl_pemutihan');
             $table->text('ket_pemutihan');
             $table->string('foto_kondisi_terakhir');
             $table->enum('approve_penonaktifan', ['setuju', 'tidak setuju', 'pending'])->default('pending');
             $table->date('tgl_approve')->nullable();
-
-            // $table->string('foto_barang');
-
-            // // Foreign key untuk manajemen
-            // $table
-            // ->foreign('manajemen')
-            // ->references('nip')
-            // ->on('manajemen')
-            // ->cascadeOnUpdate()
-            // ->cascadeOnDelete();
-
-            // // Foreign key untuk kaprog
-            // $table
-            // ->foreign('kaprog')
-            // ->references('nip')
-            // ->on('kaprog')
-            // ->cascadeOnUpdate()
-            // ->cascadeOnDelete();
 
             // Foreign key untuk approver
             $table

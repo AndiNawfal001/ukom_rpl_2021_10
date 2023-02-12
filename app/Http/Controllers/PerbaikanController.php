@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,82 +11,51 @@ class PerbaikanController extends Controller
 {
     public function index(){
         $submitter= Auth::user()->id_pengguna;
-
-        // $data = DB::table('barang_masuk_perbaikan')
-        //         ->select('barang_masuk_perbaikan.*', 'ruangan.nama_ruangan')
-        //         ->leftJoin('detail_barang', 'barang_masuk_perbaikan.asli', '=', 'detail_barang.kode_barang')
-        //         ->leftJoin('ruangan', 'detail_barang.ruangan', '=', 'ruangan.id_ruangan')
-        //         ->where('submitter', $submitter)
-        //         ->paginate(10);
-        $data = DB::table('detail_barang')
-                ->select('detail_barang.*', 'perbaikan.id_perbaikan', 'perbaikan.tgl_perbaikan', 'perbaikan.tgl_selesai_perbaikan', 'perbaikan.approve_perbaikan','perbaikan.nama_teknisi', 'perbaikan.keluhan', 'perbaikan.penyebab_keluhan', 'perbaikan.status_perbaikan', 'perbaikan.submitter', 'ruangan.nama_ruangan')
-                ->leftJoin('perbaikan', 'detail_barang.kode_barang', '=', 'perbaikan.kode_barang')
-                ->leftJoin('ruangan', 'detail_barang.ruangan', '=', 'ruangan.id_ruangan')
-                ->where('perbaikan.submitter', $submitter)
+        $data = DB::table('perbaikan_detailbarang')
+                ->where('perbaikan_detailbarang.submitter', $submitter)
                 ->paginate(10);
-        // dd($data);
         return view('pengajuan.perbaikan.index', compact('data' ));
     }
 
     public function search(Request $request){
         $submitter= Auth::user()->id_pengguna;
         $search = $request->input('search');
-
-        $data = DB::table('perbaikan')
-                ->select('barang_masuk_perbaikan.*', 'ruangan.nama_ruangan')
-                ->leftJoin('detail_barang', 'perbaikan.kode_barang', '=', 'detail_barang.kode_barang')
-                ->leftJoin('ruangan', 'detail_barang.ruangan', '=', 'ruangan.id_ruangan')
-                ->where('perbaikan.submitter', $submitter)
-                ->where('perbaikan.kode_barang','like',"%".$search."%")
+        $data = DB::table('perbaikan_detailbarang')
+                ->where('perbaikan_detailbarang.submitter', $submitter)
+                ->where('submitter', $submitter)
+                ->where('nama_barang','like',"%".$search."%")
+                ->orWhere('kode_barang','like',"%".$search."%")
                 ->paginate(10);
         return view('pengajuan.perbaikan.index', compact('data' ));
     }
 
-    private function getRuangan(): Collection
-    {
-        return collect(DB::select('SELECT * FROM ruangan'));
-    }
-
     public function pilihBarang(){
-        $ruangan = $this->getRuangan();
         $data = DB::table('detail_barang')
             ->distinct()
-            ->select('detail_barang.*')
-            ->leftJoin('perbaikan', 'detail_barang.kode_barang', '=', 'perbaikan.kode_barang')
+            ->select('detail_barang.*', 'barang.nama_barang')
+            ->leftJoin('barang', 'detail_barang.id_barang', '=', 'barang.id_barang')
             ->where('detail_barang.kondisi_barang', 'baik')
             ->where('detail_barang.status', 'aktif')
             ->orderBy('detail_barang.kode_barang', 'asc')
             ->paginate(10);
         // dd($data);
-        return view('pengajuan.perbaikan.pilihbarang', compact('data', 'ruangan'));
+        return view('pengajuan.perbaikan.pilihbarang', compact('data'));
     }
 
     public function searchpilihbarang(Request $request){
-        $ruangan = $this->getRuangan();
 
         $search = $request->input('search');
         $data = DB::table('detail_barang')
             ->distinct()
-            ->select('detail_barang.*')
-            ->leftJoin('perbaikan', 'detail_barang.kode_barang', '=', 'perbaikan.kode_barang')
+            ->select('detail_barang.*', 'barang.nama_barang')
+            ->leftJoin('barang', 'detail_barang.id_barang', '=', 'barang.id_barang')
             ->where('detail_barang.kondisi_barang', 'baik')
             ->where('detail_barang.status', 'aktif')
             ->where('detail_barang.kode_barang','like',"%".$search."%")
             ->orWhere('detail_barang.nama_barang','like',"%".$search."%")
             ->orderBy('detail_barang.kode_barang', 'asc')
             ->paginate(10);
-        return view('pengajuan.perbaikan.pilihbarang', compact('data','ruangan'));
-    }
-
-    private function inputDataPerbaikan($id)
-    {
-        return collect(DB::select('SELECT * FROM detail_barang WHERE kode_barang = ?', [$id]))->firstOrFail();
-    }
-
-    public function perbaikan($id = null)
-    {
-        $perbaikan = $this->inputDataPerbaikan($id);
-        return view('pengajuan.perbaikan.perbaikan', compact('perbaikan' ));
+        return view('pengajuan.perbaikan.pilihbarang', compact('data'));
     }
 
     public function simpanperbaikan(Request $request)

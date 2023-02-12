@@ -35,7 +35,7 @@
                                 <div class="flex items-center space-x-3">
                                     <div>
                                         <div class="font-bold text-lg">{{ $key->nama_barang }}</div>
-                                        <div class="text-sm opacity-50">{{ $key->asli }}</div>
+                                        <div class="text-sm opacity-50">{{ $key->kode_barang }}</div>
                                     </div>
                                 </div>
                             </th>
@@ -91,7 +91,7 @@
     <label for="detail{{ $key->id_perbaikan }}" class="modal cursor-pointer">
     <div class="modal-box">
         <div>
-            <p class="btn btn-sm btn-outline mb-3">{{ $key->asli }}</p>
+            <p class="btn btn-sm btn-outline mb-3">{{ $key->kode_barang }}</p>
             <p class="text-2xl font-semibold">{{ $key->nama_barang }}</p>
             <div class="lg:flex gap-5">
                 <p class="text-md lg:border-r-2 lg:pr-5">diajukan {{ $key->tgl_perbaikan }}</p>
@@ -121,7 +121,7 @@
             </div>
             @if($key->approve_perbaikan == "pending")
                 <div class="py-5 flex flex-row-reverse gap-3">
-                    <a href="/approval/PB/tidaksetuju/{{$key->id_perbaikan}}/{{ $key->asli }}"><button class="btn btn-sm btn-outline btn-error">Rusak</button></a>
+                    <a href="/approval/PB/tidaksetuju/{{$key->id_perbaikan}}/{{ $key->kode_barang }}"><button class="btn btn-sm btn-outline btn-error">Rusak</button></a>
                     <a href="/approval/PB/setuju/{{$key->id_perbaikan}}"><button class="btn btn-sm btn-outline btn-success">Sudah Diperbaiki</button></a>
                 </div>
             @endif

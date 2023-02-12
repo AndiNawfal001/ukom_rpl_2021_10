@@ -32,8 +32,10 @@ class PerawatanController extends Controller{
 
     public function pilihbarangPerawatan(){
         $data = DB::table('detail_barang')
+                ->select('detail_barang.*', 'nama_kode_barang.nama_barang')
+                ->leftJoin('nama_kode_barang', 'detail_barang.kode_barang', '=', 'nama_kode_barang.kode_barang')
                 ->where('kondisi_barang','baik')
-                ->Where('status','aktif')
+                ->where('status','aktif')
                 ->paginate(10);
         return view('perawatan.pilihbarang', compact('data'));
     }
@@ -42,9 +44,12 @@ class PerawatanController extends Controller{
         $search = $request->input('search');
 
         $data = DB::table('detail_barang')
+                ->select('detail_barang.*', 'nama_kode_barang.nama_barang')
+                ->leftJoin('nama_kode_barang', 'detail_barang.kode_barang', '=', 'nama_kode_barang.kode_barang')
                 ->where('kondisi_barang','baik')
                 ->where('status','aktif')
-                ->where('kode_barang','like',"%".$search."%")
+                ->where('nama_kode_barang.nama_barang','like',"%".$search."%")
+                ->orWhere('detail_barang.kode_barang','like',"%".$search."%")
                 ->orWhere('kondisi_barang','like',"%".$search."%")
                 ->orWhere('status','like',"%".$search."%")
                 ->paginate(10);
@@ -86,15 +91,6 @@ class PerawatanController extends Controller{
             } catch (\Exception $e) {
             return  $e->getMessage();
             }
-    }
-
-
-    public function edit($id = null)
-    {
-
-        $edit = $this->getPerawatan($id);
-
-        return view('perawatan.editform', compact('edit'));
     }
 
     public function editsimpan(Request $request)

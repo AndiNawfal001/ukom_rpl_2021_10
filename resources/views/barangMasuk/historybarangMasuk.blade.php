@@ -19,8 +19,8 @@
                 </a>
             </div>
         </div>
-        <div class="flex gap-4">
-            <div class="w-2/5 bg-base-300 p-4 rounded-md ">
+        <div class="md:flex gap-4">
+            <div class="mb-4 md:mb-0 md:w-2/5 bg-base-300 p-4 rounded-md ">
                 @foreach ($card as $key)
 
                     <h3 class="text-xl font-bold">{{ $key->nama_barang }}</h3>
@@ -51,7 +51,7 @@
 
                 @endforeach
             </div>
-            <div class="w-3/5">
+            <div class="md:w-3/5">
 
                 <div class="overflow-x-auto overflow-y-auto">
                     <table class="table table-compact w-full ">

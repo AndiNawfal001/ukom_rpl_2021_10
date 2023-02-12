@@ -53,16 +53,16 @@ return new class extends Migration
         DECLARE sekarang TIME;
 
         -- TCL
-        DECLARE kodeError CHAR(5) DEFAULT '00000';
-        DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
-        BEGIN
-            GET DIAGNOSTICS CONDITION 1
-            kodeError = RETURNED_SQLSTATE;
-        END;
+        -- DECLARE kodeError CHAR(5) DEFAULT '00000';
+        -- DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
+        -- BEGIN
+        --     GET DIAGNOSTICS CONDITION 1
+        --     kodeError = RETURNED_SQLSTATE;
+        -- END;
 
-        START TRANSACTION;
+        -- START TRANSACTION;
 
-        SAVEPOINT initial;
+        -- SAVEPOINT initial;
         -- cek jika ada barang yg sama sebelumnya
         SELECT jenis_barang.id_jenis_brg INTO jenis_brg FROM jenis_barang WHERE jenis_barang.id_jenis_brg = jenis_barang;
         SELECT pengajuan_bb.id_pengajuan_bb INTO pengajuan FROM pengajuan_bb WHERE pengajuan_bb.nama_barang = nama_barang;
@@ -72,7 +72,7 @@ return new class extends Migration
 
         SELECT pengguna.id_pengguna INTO adder_id FROM pengguna WHERE pengguna.username = adder;
 
-        SAVEPOINT jikaadabarang_masuk;
+        -- SAVEPOINT jikaadabarang_masuk;
 
         -- cek jika ada barang_masuk yg sama sebelumnya
         SELECT COUNT(id_barang_masuk) INTO cek_barang_masuk FROM barang_masuk WHERE barang_masuk.id_pengajuan = pengajuan;
@@ -120,11 +120,11 @@ return new class extends Migration
         END IF;
 
 
-        IF kodeError != '00000' THEN
-            ROLLBACK TO jikaadabarang_masuk;
-        END IF;
+        -- IF kodeError != '00000' THEN
+        --     ROLLBACK TO jikaadabarang_masuk;
+        -- END IF;
 
-        SAVEPOINT insert_barang;
+        -- SAVEPOINT insert_barang;
 
         SELECT barang.id_barang INTO idBarang FROM barang WHERE barang.nama_barang = nama_barang;
 
@@ -137,16 +137,16 @@ return new class extends Migration
             SET idBarangBaru = CONCAT(0,0, idBarang);
             SET kode_jenisBaru = SUBSTR(kode_jenis, 3);
             SET kode_baru = CONCAT(idBarangBaru, kode_jenisBaru, sekarang, a);
-            INSERT INTO detail_barang (kode_barang, nama_barang, id_barang, spesifikasi, kondisi_barang, foto_barang, ruangan)
-            VALUES (kode_baru, nama_barang, idBarang, spesifikasi, kondisi_barang, foto_barang, ruangan);
+            INSERT INTO detail_barang (kode_barang, id_barang, spesifikasi, kondisi_barang, foto_barang, ruangan)
+            VALUES (kode_baru, idBarang, spesifikasi, kondisi_barang, foto_barang, ruangan);
             SET i = i + 1;
         END WHILE;
 
-        IF kodeError != '00000' THEN
-            ROLLBACK TO insert_barang;
-        END IF;
+        -- IF kodeError != '00000' THEN
+        --     ROLLBACK TO insert_barang;
+        -- END IF;
 
-        COMMIT;
+        -- COMMIT;
 
         END;"
     );

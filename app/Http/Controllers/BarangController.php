@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
 
 class BarangController extends Controller
@@ -37,6 +36,23 @@ class BarangController extends Controller
         return view('barang.detail', compact('id_barang','data'));
     }
 
+    public function searchdetail(Request $request, $id=null){
+        // dd($id);
+        $id_barang = $id;
+        $search = $request->input('search');
+
+        $data = DB::table('barang')
+        ->join('jenis_barang', 'barang.id_jenis_brg', '=', 'jenis_barang.id_jenis_brg')
+        ->join('detail_barang', 'barang.id_barang', '=', 'detail_barang.id_barang')
+        ->where('barang.id_barang', $id)
+        ->where('barang.nama_barang','like',"%".$search."%")
+        ->orWhere('kode_barang','like',"%".$search."%")
+        ->orWhere('kondisi_barang','like',"%".$search."%")
+        ->orWhere('status','like',"%".$search."%")
+        ->paginate(10);
+        return view('barang.detail', compact('id_barang','data'));
+    }
+
     private function getSpesifik($id)
     {
         return collect(DB::select('
@@ -61,22 +77,6 @@ class BarangController extends Controller
         ->paginate(10);
         // dd($data);
         return view('barang.spesifik', compact('data', 'modal'));
-    }
-    public function searchdetail(Request $request, $id=null){
-        // dd($id);
-        $id_barang = $id;
-        $search = $request->input('search');
-
-        $data = DB::table('barang')
-        ->join('jenis_barang', 'barang.id_jenis_brg', '=', 'jenis_barang.id_jenis_brg')
-        ->join('detail_barang', 'barang.id_barang', '=', 'detail_barang.id_barang')
-        ->where('barang.id_barang', $id)
-        ->where('barang.nama_barang','like',"%".$search."%")
-        ->orWhere('kode_barang','like',"%".$search."%")
-        ->orWhere('kondisi_barang','like',"%".$search."%")
-        ->orWhere('status','like',"%".$search."%")
-        ->paginate(10);
-        return view('barang.detail', compact('id_barang','data'));
     }
 
     public function update(Request $request, $id=null)

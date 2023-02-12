@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -12,14 +11,13 @@ return new class extends Migration
      *
      * @return void
      */
-    // public function up()
-    // {
-    //     DB::unprepared(
-    //         "CREATE OR REPLACE VIEW jumlah_data_ruangan AS(
-    //             SELECT COUNT(id_ruangan) FROM ruangan
-    //         )"
-    //       );
-    // }
+    public function up()
+    {
+        Schema::create('view_agregat_jml_pemutihan_s', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+        });
+    }
 
     /**
      * Reverse the migrations.
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('view_jumlah_data_ruangan');
+        Schema::dropIfExists('view_agregat_jml_pemutihan_s');
     }
 };
