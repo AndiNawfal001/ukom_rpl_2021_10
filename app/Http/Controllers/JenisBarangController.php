@@ -8,19 +8,6 @@ use Illuminate\Support\Arr;
 
 class JenisBarangController extends Controller
 {
-    public function index(){
-        $data = DB::table('jenis_barang')->paginate(5);
-        return view('jenisbarang.index', compact('data' ));
-    }
-
-    public function search(Request $request){
-        $search = $request->input('search');
-
-        $data = DB::table('jenis_barang')
-                ->where('nama_jenis','like',"%".$search."%")
-                ->paginate(5);
-        return view('jenisbarang.index', compact('data' ));
-    }
 
     public function store(Request $request)
     {
@@ -47,26 +34,6 @@ class JenisBarangController extends Controller
             return "input data gagal";
         } catch (\Exception $e) {
         return  $e->getMessage();
-        }
-    }
-
-
-    public function update(Request $request, $id = null)
-    {
-
-        try {
-            $data = [
-                'nama_jenis' => $request->input('nama_jenis'),
-                // 'image' => $image,
-            ];
-            DB::table('jenis_barang')
-                        ->where('id_jenis_brg', '=', $id)
-                        ->update($data);
-                return redirect('jenis_barang');
-            // dd("berhasil", $upd);
-        } catch (\Exception $e) {
-            return $e->getMessage();
-            dd("gagal");
         }
     }
 

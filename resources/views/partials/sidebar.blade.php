@@ -47,7 +47,7 @@
                         $perbaikan =  DB::table('perbaikan')->whereNull('approver')->count('id_perbaikan');
                         $pemutihan =  DB::table('pemutihan')->whereNull('approver')->count('id_pemutihan');
                     @endphp
-                    @if($pemutihan == 0 or $pengajuan_bb == 0 or $perbaikan == 0)
+                    @if($pemutihan == 0 || $pengajuan_bb == 0 || $perbaikan == 0)
                     @else
                         <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info"></span>
                     @endif

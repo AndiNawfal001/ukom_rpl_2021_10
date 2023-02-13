@@ -23,23 +23,12 @@ class PenggunaController extends Controller
         ->orderBy('id_level')
         ->paginate(5);
         // dd($data);
-        $admin = DB::table('admin')->count();
-        $manajemen = DB::table('manajemen')->count();
-        $kaprog = DB::table('kaprog')->count();
 
-        return view('pengguna.index', compact('data', 'admin', 'manajemen', 'kaprog' ));
+        return view('pengguna.index', compact('data'));
     }
 
     public function search(Request $request){
         $search = $request->input('search');
-
-        // $data = DB::table('banyak_pengguna')
-        // ->select('*')
-        // ->where('username','like',"%".$search."%")
-        // ->orWhere('email','like',"%".$search."%")
-        // ->orWhere('nama_level','like',"%".$search."%")
-        // ->orderBy('id_level')
-        // ->paginate(5);
         $data = DB::table('pengguna')
         ->select('pengguna.*', 'level_user.nama_level', 'admin.nama as admin', 'manajemen.nama as manajemen', 'kaprog.nama as kaprog' )
         ->leftJoin('level_user', 'pengguna.id_level', '=', 'level_user.id_level')
@@ -52,10 +41,7 @@ class PenggunaController extends Controller
         ->orderBy('level_user.id_level')
         ->paginate(5);
 
-        $admin = DB::table('admin')->count();
-        $manajemen = DB::table('manajemen')->count();
-        $kaprog = DB::table('kaprog')->count();
-        return view('pengguna.index', compact('data', 'admin', 'manajemen', 'kaprog' ));
+        return view('pengguna.index', compact('data'));
     }
 
     private function getlevelUser(): Collection

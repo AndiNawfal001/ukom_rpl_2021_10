@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -13,10 +14,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('view_agregat_jml_ruangan', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
+        // VIEW JUMLAH PENGAJUAN BB YANG SEUDAH DISETUJUI
+        DB::unprepared(
+            "CREATE OR REPLACE VIEW jumlah_pengajuan_bb_s AS (
+                SELECT COUNT(id_pengajuan_bb) AS jml_pengajuan_bb_s FROM pengajuan_bb WHERE status_approval = 'setuju'
+            )"
+        );
     }
 
     /**
@@ -26,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('view_agregat_jml_ruangan');
+        Schema::dropIfExists('view_agregat_jml_pengajuan_bb_s');
     }
 };

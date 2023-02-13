@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -13,10 +14,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('view_agregat_jml_pengajuan_bb_s', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
+        // VIEW TOTAL JML MASUK DARI TABLE BARANG MASUK
+        DB::unprepared(
+            "CREATE OR REPLACE VIEW total_barang_masuk AS (
+                SELECT SUM(jml_masuk) AS ttl_barang_masuk FROM barang_masuk
+            )"
+        );
     }
 
     /**
@@ -26,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('view_agregat_jml_pengajuan_bb_s');
+        Schema::dropIfExists('view_agregat_total_barang_masuk');
     }
 };

@@ -15,12 +15,21 @@ class DashboardController extends Controller
             return redirect('login');
         }
         $submitter = Auth::user()->id_pengguna;
-
-        $barang_masuk = DB::table('barang_masuk')->sum('jml_masuk');
-        $supplier = DB::table('supplier')->count();
-        $ruangan = DB::table('ruangan')->count();
-        $pengajuan_bb = DB::table('pengajuan_bb')->where('status_approval', 'setuju')->count();
-        $pemutihan = DB::table('pemutihan')->where('approve_penonaktifan', 'setuju')->count();
+        $barang_masuk = collect(DB::select("SELECT * FROM total_barang_masuk"))
+                    ->firstOrFail()
+                    ->ttl_barang_masuk;
+        $supplier = collect(DB::select("SELECT * FROM jumlah_supplier"))
+                    ->firstOrFail()
+                    ->jml_supplier;
+        $ruangan = collect(DB::select("SELECT * FROM jumlah_ruangan"))
+                    ->firstOrFail()
+                    ->jml_ruangan;
+        $pengajuan_bb = collect(DB::select("SELECT * FROM jumlah_pengajuan_bb_s"))
+                    ->firstOrFail()
+                    ->jml_pengajuan_bb_s;
+        $pemutihan = collect(DB::select("SELECT * FROM jumlah_pemutihan_s"))
+                    ->firstOrFail()
+                    ->jml_pemutihan_s;
         $latest_detail_barang = DB::table('barang')
                                 ->select('detail_barang.kode_barang', 'jenis_barang.nama_jenis')
                                 ->join('detail_barang', 'barang.id_barang', '=', 'detail_barang.id_barang')

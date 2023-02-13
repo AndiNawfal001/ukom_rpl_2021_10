@@ -14,15 +14,10 @@ return new class extends Migration
      */
     public function up()
     {
-        // VIEW GABUNGAN BARANG DAN KODE BARANG
-        // UNTUK TABLE YANG MENGAKSES KODE BARANG TAPI TIDAK MEMLIKI ID BARANG
+        // VIEW JUMLAH PEMUTIHAN YANG SUDAH DISETUJUI
         DB::unprepared(
-            "CREATE OR REPLACE VIEW nama_kode_barang AS (
-                SELECT
-                barang.nama_barang, detail_barang.kode_barang
-                FROM barang
-                JOIN detail_barang
-                    ON barang.id_barang = detail_barang.id_barang
+            "CREATE OR REPLACE VIEW jumlah_pemutihan_s AS (
+                SELECT COUNT(id_pemutihan) AS jml_pemutihan_s FROM pemutihan WHERE approve_penonaktifan = 'setuju'
             )"
         );
     }
@@ -34,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('view_nama_kode_barang');
+        Schema::dropIfExists('view_agregat_jml_pemutihan_s');
     }
 };
