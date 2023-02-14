@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="md:flex gap-4">
-            <div class="mb-4 md:mb-0 md:w-2/5 bg-base-300 p-4 rounded-md ">
+            <div class="mb-4 md:mb-0 md:w-2/5 bg-base-300 hover:shadow-xl duration-300 p-4 rounded-md ">
                 @foreach ($card as $key)
 
                     <h3 class="text-xl font-bold">{{ $key->nama_barang }}</h3>

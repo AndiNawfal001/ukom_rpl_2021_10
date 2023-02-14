@@ -18,7 +18,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"></path>
                           </svg>
                     <span class="flex-1 ml-3 whitespace-nowrap">Logging</span>
-                    <span class="inline-flex justify-center items-center px-2 ml-3 text-sm font-medium text-gray-800 bg-gray-200 rounded-full">Pro</span>
+                    <span class="inline-flex justify-center items-center px-2 ml-3 text-sm font-medium bg-base-content text-base-100 rounded-full duration-300">Pro</span>
                     </a>
                 </li>
             @endcan
@@ -34,7 +34,17 @@
                     </a>
                 </li>
             @endcan
+            @php
+                $pengajuan_bb =  DB::table('pengajuan_bb')->whereNull('approver')->count('id_pengajuan_bb');
+                $perbaikan =  DB::table('perbaikan')->whereNull('approver')->count('id_perbaikan');
+                $pemutihan =  DB::table('pemutihan')->whereNull('approver')->count('id_pemutihan');
 
+                // $pemutihan_kaprog = DB::table('perbaikan_pemutihan')
+                //                 ->select('status_perbaikan')
+                //                 ->where('approve_perbaikan', 'rusak')
+                //                 ->where('submitter', Auth::user()->id_pengguna)
+                //                 ->get();
+            @endphp
             @can('admin+manajemen')
             <li class="transition group">
                 <button type="button" class="flex items-center p-2 w-full text-base font-normal rounded-sm hover:bg-base-200 dropdown-btn" >
@@ -42,13 +52,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0118 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3l1.5 1.5 3-3.75"></path>
                       </svg>
                     <span class="flex-1 ml-3 text-left whitespace-nowrap " sidebar-toggle-item>Approval</span>
-                    @php
-                        $pengajuan_bb =  DB::table('pengajuan_bb')->whereNull('approver')->count('id_pengajuan_bb');
-                        $perbaikan =  DB::table('perbaikan')->whereNull('approver')->count('id_perbaikan');
-                        $pemutihan =  DB::table('pemutihan')->whereNull('approver')->count('id_pemutihan');
-                    @endphp
-                    @if($pemutihan == 0 || $pengajuan_bb == 0 || $perbaikan == 0)
-                    @else
+                    @if($pemutihan >= 1 or $pengajuan_bb >=1 or $perbaikan >= 1)
                         <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info"></span>
                     @endif
                     <svg sidebar-toggle-item class="w-6 h-6 group-hover:text-base-content" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
@@ -57,8 +61,7 @@
                     <li >
                         <a href="/approval/BB" class="flex justify-between items-center p-2 pl-11 w-full text-base border-primary font-normal rounded-sm transition duration-75 group hover:bg-base-200 {{ request()->is('approval/BB*') ? 'bg-base-300 border-r-2 m-[2px]' : '' }}">
                             Barang Baru
-                            @if(DB::table('pengajuan_bb')->whereNull('approver')->count('id_pengajuan_bb') == 0)
-                            @else
+                            @if($pengajuan_bb >= 1)
                                 <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info"></span>
                             @endif
                         </a>
@@ -66,8 +69,7 @@
                     <li>
                         <a href="/approval/PB" class="flex justify-between items-center p-2 pl-11 w-full text-base border-primary font-normal rounded-sm transition duration-75 group hover:bg-base-200 {{ request()->is('approval/PB*') ? 'bg-base-300 border-r-2 m-[2px]' : '' }}">
                             Perbaikan
-                            @if(DB::table('perbaikan')->whereNull('approver')->count('id_perbaikan') == 0)
-                            @else
+                            @if($perbaikan >= 1)
                                 <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info"></span>
                             @endif
                         </a>
@@ -75,8 +77,7 @@
                     <li>
                         <a href="/approval/pemutihan" class="flex justify-between items-center p-2 pl-11 w-full text-base border-primary font-normal rounded-sm transition duration-75 group hover:bg-base-200 {{ request()->is('approval/pemutihan*') ? 'bg-base-300 border-r-2 m-[2px]' : '' }}">
                             Pemutihan
-                            @if(DB::table('pemutihan')->whereNull('approver')->count('id_pemutihan') == 0)
-                            @else
+                            @if($pemutihan >= 1)
                                 <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info"></span>
                             @endif
                         </a>
@@ -102,7 +103,12 @@
                         <a href="/pengajuan/PB" class="flex items-center p-2 pl-11 w-full text-base border-primary font-normal rounded-sm transition duration-75 group hover:bg-base-200 {{ request()->is('pengajuan/PB*') ? 'bg-base-300 border-r-2' : '' }}">Perbaikan</a>
                     </li>
                     <li>
-                        <a href="/pemutihan" class="flex items-center p-2 pl-11 w-full text-base border-primary font-normal rounded-sm transition duration-75 group hover:bg-base-200 {{ request()->is('pemutihan*') ? 'bg-base-300 border-r-2' : '' }}">Pemutihan</a>
+                        <a href="/pemutihan" class="flex justify-between items-center p-2 pl-11 w-full text-base border-primary font-normal rounded-sm transition duration-75 group hover:bg-base-200 {{ request()->is('pemutihan*') ? 'bg-base-300 border-r-2 m-[2px]' : '' }}">
+                            Pemutihan
+                            @if($pemutihan >= 1)
+                                <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info"></span>
+                            @endif
+                        </a>
                     </li>
                 </ul>
             </li>
@@ -162,7 +168,7 @@
         <ul class="pt-4 mt-4 space-y-2 place-content-end lg:hidden">
             <li class="transition select-none text-center">
                 @auth
-                <span >
+                <span class="transition">
                     {{Auth::user()->username}}
                     -
                     <span class="font-semibold

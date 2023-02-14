@@ -3,7 +3,7 @@
 
 <div class="pt-6 px-4">
     <div class="w-full grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4">
-        <div class="bg-base-100 border-t-2 border-primary shadow rounded-lg p-4 sm:p-6 xl:p-8  2xl:col-span-2">
+        <div class="bg-base-100 border-t-2 border-primary shadow rounded-lg p-4 sm:p-6 xl:p-8  2xl:col-span-2 hover:shadow-2xl duration-300">
            <div class="flex items-center justify-between mb-4">
               <div class="flex-shrink-0">
                  <span class="text-2xl sm:text-4xl leading-none font-bold">
@@ -20,7 +20,7 @@
               </div>
            </div>
         </div>
-        <div class="bg-base-100 shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
+        <div class="bg-base-100 shadow rounded-lg p-4 sm:p-6 xl:p-8 hover:shadow-2xl duration-300">
          {{-- bg-[url('https://placeimg.com/640/480/nature')] bg-opacity-25 bg-no-repeat bg-cover --}}
 
            <div class="mb-4 flex items-center justify-between">
@@ -41,7 +41,7 @@
         </div>
     </div>
     <div class="mt-4 w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-        <div class="bg-base-100 shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
+        <div class="bg-base-100 shadow rounded-lg p-4 sm:p-6 xl:p-8 hover:shadow-2xl duration-300">
            <div class="flex items-center">
               <div class="flex-shrink-0">
                  <span class="text-2xl sm:text-3xl leading-none font-bold">{{ $supplier }}</span>
@@ -52,7 +52,7 @@
               </div>
            </div>
         </div>
-        <div class="bg-base-100 shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
+        <div class="bg-base-100 shadow rounded-lg p-4 sm:p-6 xl:p-8 hover:shadow-2xl duration-300">
            <div class="flex items-center">
               <div class="flex-shrink-0">
                  <span class="text-2xl sm:text-3xl leading-none font-bold">{{ $ruangan }}</span>
@@ -63,7 +63,7 @@
               </div>
            </div>
         </div>
-        <div class="bg-base-100 shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
+        <div class="bg-base-100 shadow rounded-lg p-4 sm:p-6 xl:p-8 hover:shadow-2xl duration-300">
            <div class="flex items-center">
               <div class="flex-shrink-0">
                  <span class="text-2xl sm:text-3xl leading-none font-bold">{{ $pemutihan }}</span>
@@ -79,7 +79,7 @@
 
     <div class="w-full grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4 mt-4">
         {{-- <div></div> --}}
-        <div class="bg-base-100 shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
+        <div class="bg-base-100 shadow rounded-lg p-4 sm:p-6 xl:p-8 duration-300">
             <div class="mb-4 flex items-center justify-between">
                 <div>
                     <h3 class="text-xl font-bold mb-2">Latest Input Barang</h3>
@@ -130,7 +130,7 @@
         </div>
         </div>
         @can('admin')
-                <div class="bg-base-100 border-t-2 border-error rounded-lg p-3 h-full sm:p-5 xl:p-7 ">
+                <div class="bg-base-100 border-t-2 border-error rounded-lg p-3 h-full sm:p-5 xl:p-7 duration-300">
                     <div class="mb-4 flex items-center justify-between">
                         <div>
                             <h3 class="text-xl font-bold mb-2">Latest logging activity</h3>
@@ -197,7 +197,7 @@
         @endcan
 
         @can('manajemen')
-                <div class="bg-base-100 border-t-2 border-success rounded-lg p-3 h-full sm:p-5 xl:p-7 ">
+                <div class="bg-base-100 border-t-2 border-success rounded-lg p-3 h-full sm:p-5 xl:p-7 duration-300">
                     <div class="mb-4 flex items-center justify-between">
                         <div>
                             <h3 class="text-xl font-bold mb-2">Pengajuan Barang Baru</h3>
@@ -258,7 +258,7 @@
         @endcan
 
         @can('kaprog')
-                <div class="bg-base-100 border-t-2 border-info rounded-lg p-3 h-full sm:p-5 xl:p-7 ">
+                <div class="bg-base-100 border-t-2 border-info rounded-lg p-3 h-full sm:p-5 xl:p-7 duration-300">
                     <div class="mb-4 flex items-center justify-between">
                         <div>
                             <h3 class="text-xl font-bold mb-2">Daftar Barang Rusak untuk Pemutihan</h3>
