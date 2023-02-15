@@ -5,22 +5,20 @@
     <div class="bg-base-100 shadow rounded-md p-4 sm:p-6 xl:p-8 ">
         <h1 class="text-xl pb-3 font-semibold leading-loose">Daftar Supplier</h1>
         <div class="lg:flex justify-between mb-2">
-            <form action="/supplier/search" method="GET">
+            <form action="/supplier" method="GET">
                 @csrf
                     <div class="form-control mb-2">
                         <div class="input-group ">
-                        <input type="text" name="search" placeholder="Search…" class="input input-bordered" />
+                        <input type="text" name="search" placeholder="Search…" class="input input-bordered"  value="{{ request("search") }}" autocomplete="off"/>
                         <button class="btn btn-square" type="submit">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                         </button>
                         </div>
                     </div>
             </form>
-            <a href="/supplier/tambah">
-                <button class="btn btn-success gap-2">
+                <label for="tambahsupplier" class="btn btn-success gap-2">
                     Tambah Supplier <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                </button>
-            </a>
+                </label>
         </div>
         <div class="">
             <div class="overflow-x-auto overflow-y-auto">
@@ -76,6 +74,45 @@
 
 @section('modal')
 
+{{-- CREATE --}}
+<input type="checkbox" id="tambahsupplier" class="modal-toggle" />
+<label for="tambahsupplier" class="modal cursor-pointer">
+  <label class="modal-box relative" for="">
+    <form action="/supplier/simpan" method="POST">
+        @csrf
+            <h2 class="text-2xl font-bold">Tambah Supplier</h2>
+           <br>
+           <div class="form-control">
+               <label class="label">
+               <span class="label-text">Nama Supplier</span>
+               </label>
+               <input type="text" name="nama" class="input input-bordered @error('nama') input-error @enderror" value="{{ old('nama') }}" required/>
+               @error('nama')
+                <p class="text-red-500">{{ $message }}</p>
+               @enderror
+           </div>
+           <div class="form-control">
+               <label class="label">
+               <span class="label-text">Kontak</span>
+               </label>
+               <input type="number" name="kontak" class="input input-bordered @error('kontak') input-error @enderror" value="{{ old('kontak') }}" required/>
+               @error('kontak')
+                <p class="text-red-500">{{ $message }}</p>
+               @enderror
+           </div>
+           <div class="form-control">
+               <label class="label">
+                   <span class="label-text">Alamat</span>
+               </label>
+               <input type="text" name="alamat" class="input input-bordered" value="{{ old('alamat') }}"  required/>
+           </div>
+               <div class="form-control mt-6">
+                 <button type="submit" value="simpan" class="btn btn-primary">Simpan</button>
+               </div>
+    </form>
+  </label>
+</label>
+
 {{-- EDIT --}}
 @foreach ( $data as $key )
 <input type="checkbox" id="editsupplier{{ $key->id_supplier }}" class="modal-toggle" />
@@ -90,16 +127,22 @@
                <label class="label">
                <span class="label-text">Nama Supplier</span>
                </label>
-               <input type="text" name="nama" class="input input-bordered"
+               <input type="text" name="nama" class="input input-bordered @error('nama') input-error @enderror"
                value="{{ old('nama', $key->nama) }}"/>
+               @error('nama')
+                <p class="text-red-500">{{ $message }}</p>
+               @enderror
                <input type="hidden"  name="id_supplier" value="{{$key->id_supplier}}" />
            </div>
            <div class="form-control">
                <label class="label">
                <span class="label-text">Kontak</span>
                </label>
-               <input type="number" name="kontak" class="input input-bordered"
+               <input type="number" name="kontak" class="input input-bordered @error('kontak') input-error @enderror"
                value="{{ old('kontak', $key->kontak) }}"/>
+               @error('kontak')
+                <p class="text-red-500">{{ $message }}</p>
+               @enderror
            </div>
            <div class="form-control">
                <label class="label">
@@ -140,4 +183,13 @@
   </div>
 </label>
 @endforeach
+
+@php
+    if($errors->has('nama')) {
+        flash()->addError('Nama tersebut sudah digunakan!');
+    }
+    if($errors->has('kontak')) {
+        flash()->addError('Kontak tersebut sudah digunakan!');
+    }
+@endphp
 @endsection

@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
-    public function login () {
+    public function login()
+    {
 
-        return view ('login.index');
-
+        return view('login.index');
     }
 
     public function authenticate(Request $request)
@@ -29,10 +29,11 @@ class LoginController extends Controller
             //dd(Auth::user()->username);
             $request->session()->regenerate();
             //ddd($request);
+            flash()->addSuccess('Berhasil Login.');
             return redirect()->intended('/dashboard');
         }
-
-        return back()->withErrors(['password' => 'wrong username or password']);
+        flash()->addError('Wrong username or password');
+        return back();
     }
 
     public function logout(Request $request)
@@ -44,14 +45,14 @@ class LoginController extends Controller
     }
 
     //syntax suntuk membuat innerjoin
-        // public function innerjoin(){
+    // public function innerjoin(){
 
-        //     $result = DB::table('level_user')
-        //     ->join('pengguna', 'level_user.id_level', '=' , 'pengguna.' . auth()->user()->id_level)
-        //     ->select('level_user.nama_level','pengguna.' . auth()->user()->id_level)
-        //     ->get();
-        //     return $result;
-        // }
+    //     $result = DB::table('level_user')
+    //     ->join('pengguna', 'level_user.id_level', '=' , 'pengguna.' . auth()->user()->id_level)
+    //     ->select('level_user.nama_level','pengguna.' . auth()->user()->id_level)
+    //     ->get();
+    //     return $result;
+    // }
 
 
 }

@@ -19,23 +19,13 @@
                         <img src="{{ asset('image/aa.png') }}" class="mx-auto w-14">
                         <h1 class="text-2xl font-light my-2 ">Sign in to MyStock</h1>
                     </div>
-                @if($errors->any())
-                @foreach($errors->all() as $err)
-                <div class="alert alert-error shadow-lg" >
-                    <span>{{ $err }}</span>
-                    <button class="btn-sm">
-                        <svg  class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                    </button>
-                </div>
-                @endforeach
-                @endif
                 <form action="login" method="POST">
                     @csrf
                     <div class="form-control">
                     <label class="label">
                         <span class="" for="email">Email</span>
                     </label>
-                    <input type="email" name="email" id="email" placeholder="email" class="input input-bordered @error('email') @enderror"  autofocus required value="{{ old ('email') }}"/>
+                    <input type="email" name="email" id="email" placeholder="email" class="input input-bordered @error('email') @enderror"  autofocus required value="{{ old ('email') }}" autocomplete="off"/>
 
                     @error('email')
                         <span class="text-red-500">{{ $message }}</span>

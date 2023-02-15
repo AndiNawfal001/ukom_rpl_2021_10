@@ -28,7 +28,7 @@
                     <input type="hidden" name="oldImage" value="{{ $edit->foto }}">
                     <input type="file" name="image" id="image" class="file-input file-input-bordered w-full max-w-xs" onchange="previewImage()"/>
                     <br>
-                    <img src="" class="img-preview object-scale-down w-1/2 md:w-1/4" alt="">
+                    <img class="img-preview object-scale-down w-1/2 md:w-1/4" alt="">
                 </div>
             </div>
             <div class="basis-1/2">

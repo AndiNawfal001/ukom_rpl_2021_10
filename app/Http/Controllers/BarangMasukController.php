@@ -13,51 +13,55 @@ use Illuminate\Support\Facades\Auth;
 class BarangMasukController extends Controller
 {
 
-    public function index(){
+    public function index()
+    {
         $data = DB::table('data_barang_masuk')->get();
         // dd($data);
         $info = DB::table('pengajuan_bb')->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')->get();
         $jenisBarang = DB::table('jenis_barang')->get();
-        $approved = DB::table('pengajuan_bb')->where('status_approval','setuju')->paginate(5);
+        $approved = DB::table('pengajuan_bb')->where('status_approval', 'setuju')->paginate(5);
 
 
         return view('barangMasuk.index', compact('data', 'info', 'approved', 'jenisBarang'));
     }
 
-    public function searchPengajuan(Request $request){
+    public function searchPengajuan(Request $request)
+    {
         $search = $request->input('search');
 
         $data = DB::table('barang_masuk')->get();
         $info = DB::table('pengajuan_bb')->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')->get();
         $approved = DB::table('pengajuan_bb')
-                ->where('status_approval','setuju')
-                ->where('nama_barang','like',"%".$search."%")
-                ->orWhere('jumlah','like',"%".$search."%")
-                ->paginate(5, ['*'], 'approved');
+            ->where('status_approval', 'setuju')
+            ->where('nama_barang', 'like', "%" . $search . "%")
+            ->orWhere('jumlah', 'like', "%" . $search . "%")
+            ->paginate(5, ['*'], 'approved');
         $jenisBarang = DB::table('jenis_barang')
-                ->paginate(5, ['*'], 'jenisBarang');
+            ->paginate(5, ['*'], 'jenisBarang');
 
         return view('barangMasuk.index', compact('data', 'info', 'approved', 'jenisBarang'));
     }
 
-    public function searchBarangMasuk(Request $request){
+    public function searchBarangMasuk(Request $request)
+    {
         $search = $request->input('search');
 
         $data = DB::table('barang_masuk')
-                ->where('nama_barang','like',"%".$search."%")
-                ->orWhere('tgl_masuk','like',"%".$search."%")
-                ->orWhere('jml_masuk','like',"%".$search."%")
-                ->orWhere('status_pembelian','like',"%".$search."%")
-                ->get();
+            ->where('nama_barang', 'like', "%" . $search . "%")
+            ->orWhere('tgl_masuk', 'like', "%" . $search . "%")
+            ->orWhere('jml_masuk', 'like', "%" . $search . "%")
+            ->orWhere('status_pembelian', 'like', "%" . $search . "%")
+            ->get();
         $info = DB::table('pengajuan_bb')->get();
-        $approved = DB::table('pengajuan_bb')->where('status_approval','setuju')->paginate(5, ['*'], 'approved');
+        $approved = DB::table('pengajuan_bb')->where('status_approval', 'setuju')->paginate(5, ['*'], 'approved');
         $jenisBarang = DB::table('jenis_barang')->paginate(5, ['*'], 'jenisBarang');
 
         return view('barangMasuk.index', compact('data', 'info', 'approved', 'jenisBarang'));
     }
 
 
-    public function getJumlahPengajuan(){
+    public function getJumlahPengajuan()
+    {
         $data = DB::select('SELECT COUNT(id_pengajuan_bb) AS jumlah FROM pengajuan_bb WHERE status_approval = "setuju"');
         return view('partials.sidebar', compact('data'));
     }
@@ -85,7 +89,7 @@ class BarangMasukController extends Controller
         $supplier = $this->getSupplier();
 
         // SISA PENGAJUAN
-        $x= (DB::select('SELECT SUM(jml_masuk) AS jml FROM barang_masuk WHERE id_pengajuan = ' .$tambah->id_pengajuan_bb));
+        $x = (DB::select('SELECT SUM(jml_masuk) AS jml FROM barang_masuk WHERE id_pengajuan = ' . $tambah->id_pengajuan_bb));
         $array = Arr::pluck($x, 'jml');
         $jml_masuk = Arr::get($array, '0');
         $jml_pengajuan = $tambah->jumlah;
@@ -95,61 +99,61 @@ class BarangMasukController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'image' => 'mimes:jpeg,jpg,png'
-        ],
-        [
-            'image.mimes' => 'File harus bertipe: jpeg, jpg, png!',
-        ]);
+        $request->validate(
+            [
+                'image' => 'mimes:jpeg,jpg,png'
+            ],
+            [
+                'image.mimes' => 'File harus bertipe: jpeg, jpg, png!',
+            ]
+        );
         try {
-        $image = $request->file('image')->store('barang');
+            $image = $request->file('image')->store('barang');
 
             // dd($request->all());
-        $tambahBarangMasuk = DB::insert("CALL tambah_barangmasuk( :nama_barang, :jml_barang, :spesifikasi, :kondisi_barang, :supplier, :adder, :jenis_barang, :foto_barang, :ruangan)", [
+            $tambahBarangMasuk = DB::insert("CALL tambah_barangmasuk( :nama_barang, :jml_barang, :spesifikasi, :kondisi_barang, :supplier, :adder, :jenis_barang, :foto_barang, :ruangan)", [
 
-            'nama_barang' => $request->input('nama_barang'),
-            'jml_barang' => $request->input('jml_barang'),
-            'spesifikasi' => $request->input('spesifikasi'),
-            'kondisi_barang' => ('baik'),
-            'supplier' => $request->input('supplier'),
-            'adder' => $request->input('adder'),
-            'jenis_barang' => $request->input('jenis_barang'),
-            'foto_barang' => $image,
-            'ruangan' => $request->input('ruangan'),
-            // dd($request->all())
-        ]);
+                'nama_barang' => $request->input('nama_barang'),
+                'jml_barang' => $request->input('jml_barang'),
+                'spesifikasi' => $request->input('spesifikasi'),
+                'kondisi_barang' => ('baik'),
+                'supplier' => $request->input('supplier'),
+                'adder' => $request->input('adder'),
+                'jenis_barang' => $request->input('jenis_barang'),
+                'foto_barang' => $image,
+                'ruangan' => $request->input('ruangan'),
+                // dd($request->all())
+            ]);
             // dd($tambahBarangMasuk);
 
-        if ($tambahBarangMasuk){
-            flash()->options([
-                'timeout' => 3000, // 3 seconds
-                'position' => 'top-center',
-            ])->addSuccess('Barang Berhasil Masuk.');
-            return redirect('barangMasuk');
-        }else
-            return "input data gagal";
+            if ($tambahBarangMasuk) {
+                flash()->addSuccess('Barang Berhasil Masuk.');
+                return redirect('barangMasuk');
+            } else
+                return "input data gagal";
         } catch (\Exception $e) {
-        return  $e->getMessage();
+            return  $e->getMessage();
         }
     }
 
     private function getBarangMasuk($id)
     {
         return collect(DB::table('barang_masuk')
-        ->leftJoin('supplier', 'barang_masuk.supplier', '=', 'supplier.id_supplier')
-        ->where('barang_masuk.id_pengajuan', $id)
-        ->get());
+            ->leftJoin('supplier', 'barang_masuk.supplier', '=', 'supplier.id_supplier')
+            ->where('barang_masuk.id_pengajuan', $id)
+            ->get());
     }
 
     private function getPengajuanBbProgress($id)
     {
         return collect(DB::table('pengajuan_bb')
-        ->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')
-        ->where('pengajuan_bb.id_pengajuan_bb', $id)
-        ->get());
+            ->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')
+            ->where('pengajuan_bb.id_pengajuan_bb', $id)
+            ->get());
     }
 
-    public function detailBarangMasuk($id=null){
+    public function detailBarangMasuk($id = null)
+    {
         $data = $this->getBarangMasuk($id);
         $card = $this->getPengajuanBbProgress($id);
         // dd($card);

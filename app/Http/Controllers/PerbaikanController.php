@@ -9,27 +9,30 @@ use Illuminate\Support\Facades\Auth;
 
 class PerbaikanController extends Controller
 {
-    public function index(){
-        $submitter= Auth::user()->id_pengguna;
+    public function index()
+    {
+        $submitter = Auth::user()->id_pengguna;
         $data = DB::table('perbaikan_detailbarang')
-                ->where('perbaikan_detailbarang.submitter', $submitter)
-                ->paginate(10);
-        return view('pengajuan.perbaikan.index', compact('data' ));
+            ->where('perbaikan_detailbarang.submitter', $submitter)
+            ->paginate(10);
+        return view('pengajuan.perbaikan.index', compact('data'));
     }
 
-    public function search(Request $request){
-        $submitter= Auth::user()->id_pengguna;
+    public function search(Request $request)
+    {
+        $submitter = Auth::user()->id_pengguna;
         $search = $request->input('search');
         $data = DB::table('perbaikan_detailbarang')
-                ->where('perbaikan_detailbarang.submitter', $submitter)
-                ->where('submitter', $submitter)
-                ->where('nama_barang','like',"%".$search."%")
-                ->orWhere('kode_barang','like',"%".$search."%")
-                ->paginate(10);
-        return view('pengajuan.perbaikan.index', compact('data' ));
+            ->where('perbaikan_detailbarang.submitter', $submitter)
+            ->where('submitter', $submitter)
+            ->where('nama_barang', 'like', "%" . $search . "%")
+            ->orWhere('kode_barang', 'like', "%" . $search . "%")
+            ->paginate(10);
+        return view('pengajuan.perbaikan.index', compact('data'));
     }
 
-    public function pilihBarang(){
+    public function pilihBarang()
+    {
         $data = DB::table('detail_barang')
             ->distinct()
             ->select('detail_barang.*', 'barang.nama_barang')
@@ -42,7 +45,8 @@ class PerbaikanController extends Controller
         return view('pengajuan.perbaikan.pilihbarang', compact('data'));
     }
 
-    public function searchpilihbarang(Request $request){
+    public function searchpilihbarang(Request $request)
+    {
 
         $search = $request->input('search');
         $data = DB::table('detail_barang')
@@ -51,8 +55,8 @@ class PerbaikanController extends Controller
             ->leftJoin('barang', 'detail_barang.id_barang', '=', 'barang.id_barang')
             ->where('detail_barang.kondisi_barang', 'baik')
             ->where('detail_barang.status', 'aktif')
-            ->where('detail_barang.kode_barang','like',"%".$search."%")
-            ->orWhere('detail_barang.nama_barang','like',"%".$search."%")
+            ->where('detail_barang.kode_barang', 'like', "%" . $search . "%")
+            ->orWhere('detail_barang.nama_barang', 'like', "%" . $search . "%")
             ->orderBy('detail_barang.kode_barang', 'asc')
             ->paginate(10);
         return view('pengajuan.perbaikan.pilihbarang', compact('data'));
@@ -76,17 +80,14 @@ class PerbaikanController extends Controller
 
             ]);
 
-            if ($tambah_pengajuan_pb){
-                flash()->options([
-                    'timeout' => 3000, // 3 seconds
-                    'position' => 'top-center',
-                ])->addSuccess('Data berhasil disimpan.');
+            if ($tambah_pengajuan_pb) {
+                flash()->addSuccess('Data berhasil disimpan.');
                 return redirect('pengajuan/PB');
-            }else
+            } else
                 return "input data gagal";
-            } catch (\Exception $e) {
+        } catch (\Exception $e) {
             return  $e->getMessage();
-            }
+        }
     }
 
     public function simpanSelesaiPerbaikan(Request $request)
@@ -98,19 +99,16 @@ class PerbaikanController extends Controller
                 'status_perbaikan' => $request->input('status_perbaikan'),
                 'solusi_barang' => $request->input('solusi_barang'),
                 'tgl_selesai_perbaikan' => NOW(),
-            //    dd($request->all())
+                //    dd($request->all())
             ];
 
             $upd = DB::table('perbaikan')
-                        ->where('id_perbaikan', '=', $request->input('id_perbaikan'))
-                        ->update($data);
-            if($upd){
-                flash()->options([
-                    'timeout' => 3000, // 3 seconds
-                    'position' => 'top-center',
-                ])->addSuccess('Data berhasil disimpan.');
+                ->where('id_perbaikan', '=', $request->input('id_perbaikan'))
+                ->update($data);
+            if ($upd) {
+                flash()->addSuccess('Data berhasil disimpan.');
                 return redirect('pengajuan/PB');
-            // dd("berhasil", $upd);
+                // dd("berhasil", $upd);
             }
             // dd("berhasil", $upd);
         } catch (\Exception $e) {
@@ -120,19 +118,17 @@ class PerbaikanController extends Controller
     }
 
 
-    public function hapus($id=null){
-        try{
+    public function hapus($id = null)
+    {
+        try {
             $hapus = DB::table('perbaikan')
-                            ->where('id_perbaikan',$id)
-                            ->delete();
-            if($hapus){
-                flash()->options([
-                    'timeout' => 3000, // 3 seconds
-                    'position' => 'top-center',
-                ])->addSuccess('Data berhasil dihapus.');
+                ->where('id_perbaikan', $id)
+                ->delete();
+            if ($hapus) {
+                flash()->addSuccess('Data berhasil dihapus.');
                 return redirect('pengajuan/PB');
             }
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             $e->getMessage();
         }
     }

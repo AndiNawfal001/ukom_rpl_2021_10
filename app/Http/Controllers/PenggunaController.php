@@ -13,33 +13,33 @@ use Laravolt\Avatar\Facade as Avatar;
 class PenggunaController extends Controller
 {
 
-    public function index(){
-        $data = DB::table('pengguna')
-        ->select('pengguna.*', 'level_user.nama_level', 'admin.nama as admin', 'manajemen.nama as manajemen', 'kaprog.nama as kaprog' )
-        ->leftJoin('level_user', 'pengguna.id_level', '=', 'level_user.id_level')
-        ->leftJoin('admin','pengguna.id_pengguna', '=', 'admin.id_pengguna')
-        ->leftJoin('manajemen','pengguna.id_pengguna', '=', 'manajemen.id_pengguna')
-        ->leftJoin('kaprog','pengguna.id_pengguna', '=', 'kaprog.id_pengguna')
-        ->orderBy('id_level')
-        ->paginate(5);
+    public function index(Request $request)
+    {
+        $data = null;
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $data = DB::table('pengguna')
+                ->select('pengguna.*', 'level_user.nama_level', 'admin.nama as admin', 'manajemen.nama as manajemen', 'kaprog.nama as kaprog')
+                ->leftJoin('level_user', 'pengguna.id_level', '=', 'level_user.id_level')
+                ->leftJoin('admin', 'pengguna.id_pengguna', '=', 'admin.id_pengguna')
+                ->leftJoin('manajemen', 'pengguna.id_pengguna', '=', 'manajemen.id_pengguna')
+                ->leftJoin('kaprog', 'pengguna.id_pengguna', '=', 'kaprog.id_pengguna')
+                ->where('pengguna.username', 'like', "%" . $search . "%")
+                ->orWhere('pengguna.email', 'like', "%" . $search . "%")
+                ->orWhere('level_user.nama_level', 'like', "%" . $search . "%")
+                ->orderBy('level_user.id_level')
+                ->paginate(5);
+        } else {
+            $data = DB::table('pengguna')
+                ->select('pengguna.*', 'level_user.nama_level', 'admin.nama as admin', 'manajemen.nama as manajemen', 'kaprog.nama as kaprog')
+                ->leftJoin('level_user', 'pengguna.id_level', '=', 'level_user.id_level')
+                ->leftJoin('admin', 'pengguna.id_pengguna', '=', 'admin.id_pengguna')
+                ->leftJoin('manajemen', 'pengguna.id_pengguna', '=', 'manajemen.id_pengguna')
+                ->leftJoin('kaprog', 'pengguna.id_pengguna', '=', 'kaprog.id_pengguna')
+                ->orderBy('id_level')
+                ->paginate(5);
+        }
         // dd($data);
-
-        return view('pengguna.index', compact('data'));
-    }
-
-    public function search(Request $request){
-        $search = $request->input('search');
-        $data = DB::table('pengguna')
-        ->select('pengguna.*', 'level_user.nama_level', 'admin.nama as admin', 'manajemen.nama as manajemen', 'kaprog.nama as kaprog' )
-        ->leftJoin('level_user', 'pengguna.id_level', '=', 'level_user.id_level')
-        ->leftJoin('admin','pengguna.id_pengguna', '=', 'admin.id_pengguna')
-        ->leftJoin('manajemen','pengguna.id_pengguna', '=', 'manajemen.id_pengguna')
-        ->leftJoin('kaprog','pengguna.id_pengguna', '=', 'kaprog.id_pengguna')
-        ->where('pengguna.username','like',"%".$search."%")
-        ->orWhere('pengguna.email','like',"%".$search."%")
-        ->orWhere('level_user.nama_level','like',"%".$search."%")
-        ->orderBy('level_user.id_level')
-        ->paginate(5);
 
         return view('pengguna.index', compact('data'));
     }
@@ -49,7 +49,8 @@ class PenggunaController extends Controller
         return collect(DB::select('SELECT * FROM level_user'));
     }
 
-    public function formTambah(){
+    public function formTambah()
+    {
         $levelUser = $this->getlevelUser();
 
         return view('pengguna.formtambah', compact('levelUser'));
@@ -57,21 +58,23 @@ class PenggunaController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'username' => 'unique:pengguna,username',
-            'email' => ['email:dns','unique:pengguna,email'],
-            'nip' => 'max:18',
-        ],
-        [
-            'username.unique' => 'Username tersebut sudah digunakan!',
-            'email.unique' => 'Email tersebut sudah digunakan!',
-            'nip.max' => 'Tidak boleh lebih dari 18 karakter!',
-        ]) ;
+        $request->validate(
+            [
+                'username' => 'unique:pengguna,username',
+                'email' => ['email:dns', 'unique:pengguna,email'],
+                'nip' => 'max:18',
+            ],
+            [
+                'username.unique' => 'Username tersebut sudah digunakan!',
+                'email.unique' => 'Email tersebut sudah digunakan!',
+                'nip.max' => 'Tidak boleh lebih dari 18 karakter!',
+            ]
+        );
         try {
-            if($request->file('image') == null){
-                $image = 'pengguna/'.$request->input('username').'.png';
-                Avatar::create($request->input('username'))->save('storage/pengguna/'.$request->input('username').'.png');
-            }else{
+            if ($request->file('image') == null) {
+                $image = 'pengguna/' . $request->input('username') . '.png';
+                Avatar::create($request->input('username'))->save('storage/pengguna/' . $request->input('username') . '.png');
+            } else {
                 $image = $request->file('image')->store('pengguna');
             }
 
@@ -87,47 +90,44 @@ class PenggunaController extends Controller
                 'foto' => $image,
             ]);
 
-        if ($tambahUser){
-            flash()->options([
-                'timeout' => 3000, // 3 seconds
-                'position' => 'top-center',
-            ])->addSuccess('Data berhasil disimpan.');
-            return redirect('pengguna');
-        }else
-            return "input data gagal";
+            if ($tambahUser) {
+                flash()->addSuccess('Data berhasil disimpan.');
+                return redirect('pengguna');
+            } else
+                return "input data gagal";
         } catch (\Exception $e) {
-        return  $e->getMessage();
+            return  $e->getMessage();
         }
     }
 
     private function getPenggunaAdmin($id)
     {
         return collect(DB::table('admin')
-        ->join('pengguna', 'admin.id_pengguna', '=', 'pengguna.id_pengguna')
-        ->select('admin.*', 'pengguna.*')
-        ->where('pengguna.id_pengguna', $id)
-        ->get())->firstOrFail();
+            ->join('pengguna', 'admin.id_pengguna', '=', 'pengguna.id_pengguna')
+            ->select('admin.*', 'pengguna.*')
+            ->where('pengguna.id_pengguna', $id)
+            ->get())->firstOrFail();
     }
 
     private function getPenggunaManajemen($id)
     {
         return collect(DB::table('manajemen')
-        ->join('pengguna', 'manajemen.id_pengguna', '=', 'pengguna.id_pengguna')
-        ->select('manajemen.*', 'pengguna.*')
-        ->where('pengguna.id_pengguna', $id)
-        ->get())->firstOrFail();
+            ->join('pengguna', 'manajemen.id_pengguna', '=', 'pengguna.id_pengguna')
+            ->select('manajemen.*', 'pengguna.*')
+            ->where('pengguna.id_pengguna', $id)
+            ->get())->firstOrFail();
     }
 
     private function getPenggunaKaprog($id)
     {
         return collect(DB::table('kaprog')
-        ->join('pengguna', 'kaprog.id_pengguna', '=', 'pengguna.id_pengguna')
-        ->select('kaprog.*', 'pengguna.*')
-        ->where('pengguna.id_pengguna', $id)
-        ->get())->firstOrFail();
+            ->join('pengguna', 'kaprog.id_pengguna', '=', 'pengguna.id_pengguna')
+            ->select('kaprog.*', 'pengguna.*')
+            ->where('pengguna.id_pengguna', $id)
+            ->get())->firstOrFail();
     }
 
-    public function edit($id = null )
+    public function edit($id = null)
     {
         // dd($id);
         $admin = DB::table('admin')->select('id_pengguna')->where('id_pengguna', $id)->count();
@@ -136,9 +136,9 @@ class PenggunaController extends Controller
         // dd($manajemen);
         if ($manajemen == 1) {
             $edit = $this->getPenggunaManajemen($id);
-        }elseif($admin == 1){
+        } elseif ($admin == 1) {
             $edit = $this->getPenggunaAdmin($id);
-        }elseif($kaprog == 1){
+        } elseif ($kaprog == 1) {
             $edit = $this->getPenggunaKaprog($id);
         }
         // $edit = $this->getPenggunaAdmin(1);
@@ -150,7 +150,7 @@ class PenggunaController extends Controller
     {
         try {
             // dd($request->all());
-            if($request->file('image') == null){
+            if ($request->file('image') == null) {
                 $updateUser = DB::update("CALL update_user(:kode, :username, :email, :nama, :kontak, :foto)", [
                     'kode' => $request->input('kode'),
                     'username' => $request->input('username'),
@@ -159,7 +159,7 @@ class PenggunaController extends Controller
                     'kontak' => $request->input('kontak'),
                     'foto' => $request->oldImage,
                 ]);
-            }else{
+            } else {
                 $image = $request->file('image')->store('pengguna');
                 $updateUser = DB::update("CALL update_user(:kode, :username, :email, :nama, :kontak, :foto)", [
                     'kode' => $request->input('kode'),
@@ -170,22 +170,19 @@ class PenggunaController extends Controller
                     'foto' => $image,
                 ]);
                 Storage::delete($request->oldImage);
-
             }
-        if ($updateUser){
-            flash()->options([
-                'timeout' => 3000, // 3 seconds
-                'position' => 'top-center',
-            ])->addSuccess('Data berhasil diubah.');
-            return redirect('pengguna');
-        }else
-            return "input data gagal";
+            if ($updateUser) {
+                flash()->addSuccess('Data berhasil diubah.');
+                return redirect('pengguna');
+            } else
+                return "input data gagal";
         } catch (\Exception $e) {
-        return  $e->getMessage();
+            return  $e->getMessage();
         }
     }
 
-    public function hapus($id=null){
+    public function hapus($id = null)
+    {
         try {
             // dd($id);
             $x = DB::table('pengguna')->where('id_pengguna', $id)->get();
@@ -196,17 +193,13 @@ class PenggunaController extends Controller
             $deleteUser = DB::delete("CALL delete_user(:kode)", [
                 'kode' => $id
             ]);
-        if ($deleteUser){
-            flash()->options([
-                'timeout' => 3000, // 3 seconds
-                'position' => 'top-center',
-            ])->addSuccess('Data berhasil dihapus.');
-            return redirect('pengguna');
-        }else
-            return "delete data gagal";
+            if ($deleteUser) {
+                flash()->addSuccess('Data berhasil dihapus.');
+                return redirect('pengguna');
+            } else
+                return "delete data gagal";
         } catch (\Exception $e) {
-        return  $e->getMessage();
+            return  $e->getMessage();
         }
     }
-
 }

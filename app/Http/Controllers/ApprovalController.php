@@ -13,80 +13,76 @@ class ApprovalController extends Controller
     // BARANG BARU
     //
 
-    public function indexBarangBaru(){
+    public function indexBarangBaru()
+    {
         $data = DB::table('pengajuan_bb')->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')->paginate(10);
 
         return view('approval.barang_baru.index', compact('data'));
     }
 
-    public function searchindexBarangBaru(Request $request){
+    public function searchindexBarangBaru(Request $request)
+    {
         $search = $request->input('search');
         $data = DB::table('pengajuan_bb')->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')
-                    ->where('nama_barang','like',"%".$search."%")
-                    ->orWhere('total_harga','like',"%".$search."%")
-                    ->orWhere('tgl','like',"%".$search."%")
-                    ->orWhere('status_approval','like',"%".$search."%")
-                    ->paginate(10);
+            ->where('nama_barang', 'like', "%" . $search . "%")
+            ->orWhere('total_harga', 'like', "%" . $search . "%")
+            ->orWhere('tgl', 'like', "%" . $search . "%")
+            ->orWhere('status_approval', 'like', "%" . $search . "%")
+            ->paginate(10);
 
         return view('approval.barang_baru.index', compact('data'));
     }
 
-    public function statusSetujuBarangBaru($id=null){
-        try{
+    public function statusSetujuBarangBaru($id = null)
+    {
+        try {
             $id_pengguna = DB::table('pengguna')
                 ->select('id_pengguna')
-                ->where('username',Auth::user()->username)
+                ->where('username', Auth::user()->username)
                 ->get();
-                $array = Arr::pluck($id_pengguna, 'id_pengguna');
-                $approver = Arr::get($array, '0');
+            $array = Arr::pluck($id_pengguna, 'id_pengguna');
+            $approver = Arr::get($array, '0');
             // dd($id);
 
             $status = [
-                'approver'=> $approver,
+                'approver' => $approver,
                 'status_approval' => ('setuju'),
                 'tgl_approve' => NOW()
             ];
             $hapus = DB::table('pengajuan_bb')
-                            ->where('id_pengajuan_bb',$id)
-                            ->update($status);
-            if($hapus){
-                flash()->options([
-                    'timeout' => 3000, // 3 seconds
-                    'position' => 'top-center',
-                ])
-                ->addSuccess('Data berhasil disimpan.');
+                ->where('id_pengajuan_bb', $id)
+                ->update($status);
+            if ($hapus) {
+                flash()->addSuccess('Data berhasil disimpan.');
                 return redirect('approval/BB');
             }
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             $e->getMessage();
         }
     }
-    public function statusTidakSetujuBarangBaru($id=null){
-        try{
+    public function statusTidakSetujuBarangBaru($id = null)
+    {
+        try {
             $id_pengguna = DB::table('pengguna')
                 ->select('id_pengguna')
-                ->where('username',Auth::user()->username)
+                ->where('username', Auth::user()->username)
                 ->get();
-                $array = Arr::pluck($id_pengguna, 'id_pengguna');
+            $array = Arr::pluck($id_pengguna, 'id_pengguna');
             $approver = Arr::get($array, '0');
 
             $status = [
-                'approver'=>$approver,
+                'approver' => $approver,
                 'status_approval' => ('tidak'),
                 'tgl_approve' => NOW()
             ];
             $hapus = DB::table('pengajuan_bb')
-                            ->where('id_pengajuan_bb',$id)
-                            ->update($status);
-            if($hapus){
-                flash()->options([
-                    'timeout' => 3000, // 3 seconds
-                    'position' => 'top-center',
-                ])
-                ->addSuccess('Data berhasil disimpan.');
+                ->where('id_pengajuan_bb', $id)
+                ->update($status);
+            if ($hapus) {
+                flash()->addSuccess('Data berhasil disimpan.');
                 return redirect('approval/BB');
             }
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             $e->getMessage();
         }
     }
@@ -97,36 +93,39 @@ class ApprovalController extends Controller
     //
 
 
-    public function indexPerbaikan(){
+    public function indexPerbaikan()
+    {
         $data = DB::table('perbaikan')
-                ->select('perbaikan.*', 'barang.nama_barang', 'ruangan.nama_ruangan')
-                ->leftJoin('detail_barang', 'perbaikan.kode_barang', '=', 'detail_barang.kode_barang')
-                ->leftJoin('barang', 'detail_barang.id_barang', '=', 'barang.id_barang')
-                ->leftJoin('ruangan', 'detail_barang.ruangan', '=', 'ruangan.id_ruangan')
-                ->whereNotNull('tgl_selesai_perbaikan')
-                ->paginate(10);
+            ->select('perbaikan.*', 'barang.nama_barang', 'ruangan.nama_ruangan')
+            ->leftJoin('detail_barang', 'perbaikan.kode_barang', '=', 'detail_barang.kode_barang')
+            ->leftJoin('barang', 'detail_barang.id_barang', '=', 'barang.id_barang')
+            ->leftJoin('ruangan', 'detail_barang.ruangan', '=', 'ruangan.id_ruangan')
+            ->whereNotNull('tgl_selesai_perbaikan')
+            ->paginate(10);
         return view('approval.perbaikan.index', compact('data'));
     }
 
-    public function searchindexPerbaikan(Request $request){
+    public function searchindexPerbaikan(Request $request)
+    {
         $search = $request->input('search');
         $data = DB::table('perbaikan')
-                ->select('perbaikan.*', 'barang.nama_barang', 'ruangan.nama_ruangan')
-                ->leftJoin('detail_barang', 'perbaikan.kode_barang', '=', 'detail_barang.kode_barang')
-                ->leftJoin('barang', 'detail_barang.id_barang', '=', 'barang.id_barang')
-                ->leftJoin('ruangan', 'detail_barang.ruangan', '=', 'ruangan.id_ruangan')
-                ->whereNotNull('tgl_selesai_perbaikan')
-                ->where('perbaikan.kode_barang','like',"%".$search."%")
-                ->paginate(10);
+            ->select('perbaikan.*', 'barang.nama_barang', 'ruangan.nama_ruangan')
+            ->leftJoin('detail_barang', 'perbaikan.kode_barang', '=', 'detail_barang.kode_barang')
+            ->leftJoin('barang', 'detail_barang.id_barang', '=', 'barang.id_barang')
+            ->leftJoin('ruangan', 'detail_barang.ruangan', '=', 'ruangan.id_ruangan')
+            ->whereNotNull('tgl_selesai_perbaikan')
+            ->where('perbaikan.kode_barang', 'like', "%" . $search . "%")
+            ->paginate(10);
         return view('approval.perbaikan.index', compact('data'));
     }
 
-    public function statusSetujuPerbaikan($id=null){
-        try{
+    public function statusSetujuPerbaikan($id = null)
+    {
+        try {
             $id_pengguna = DB::table('pengguna')
-            ->select('id_pengguna')
-            ->where('username',Auth::user()->username)
-            ->get();
+                ->select('id_pengguna')
+                ->where('username', Auth::user()->username)
+                ->get();
             $array = Arr::pluck($id_pengguna, 'id_pengguna');
             $approver = Arr::get($array, '0');
 
@@ -136,28 +135,25 @@ class ApprovalController extends Controller
                 'tgl_approve' => NOW()
             ];
             $hapus = DB::table('perbaikan')
-                            ->where('id_perbaikan',$id)
-                            ->update($status);
+                ->where('id_perbaikan', $id)
+                ->update($status);
             // dd('berhasil');
-            if($hapus){
-                flash()->options([
-                    'timeout' => 3000, // 3 seconds
-                    'position' => 'top-center',
-                ])
-                ->addSuccess('Data berhasil disimpan.');
+            if ($hapus) {
+                flash()->addSuccess('Data berhasil disimpan.');
                 return redirect('approval/PB');
             }
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             $e->getMessage();
         }
     }
 
-    public function statusTidakSetujuPerbaikan($id=null, $kode=null){
-        try{
+    public function statusTidakSetujuPerbaikan($id = null, $kode = null)
+    {
+        try {
             $id_pengguna = DB::table('pengguna')
-            ->select('id_pengguna')
-            ->where('username',Auth::user()->username)
-            ->get();
+                ->select('id_pengguna')
+                ->where('username', Auth::user()->username)
+                ->get();
             $array = Arr::pluck($id_pengguna, 'id_pengguna');
             $approver = Arr::get($array, '0');
 
@@ -172,24 +168,20 @@ class ApprovalController extends Controller
             ];
 
             $perbaikan = DB::table('perbaikan')
-                            ->where('id_perbaikan',$id)
-                            ->update($approve);
+                ->where('id_perbaikan', $id)
+                ->update($approve);
 
             $detail_barang = DB::table('detail_barang')
-                            ->where('kode_barang',$kode)
-                            ->update($kondisi);
+                ->where('kode_barang', $kode)
+                ->update($kondisi);
 
-            if($perbaikan AND $detail_barang){
-                flash()->options([
-                    'timeout' => 3000, // 3 seconds
-                    'position' => 'top-center',
-                ])
-                ->addSuccess('Data berhasil disimpan.');
+            if ($perbaikan and $detail_barang) {
+                flash()->addSuccess('Data berhasil disimpan.');
                 return redirect('approval/PB');
-            // dd("berhasil");
+                // dd("berhasil");
 
             }
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             $e->getMessage();
         }
     }
@@ -198,32 +190,40 @@ class ApprovalController extends Controller
     // PEMUTIHAN
     //
 
-    public function indexPemutihan(){
+    public function indexPemutihan()
+    {
         $data = DB::table('pemutihan')
-        ->join('nama_kode_barang', 'pemutihan.kode_barang', '=', 'nama_kode_barang.kode_barang')
-        ->leftJoin('perbaikan', 'pemutihan.id_perbaikan', '=', 'perbaikan.id_perbaikan')
-        ->select('pemutihan.*', 'nama_kode_barang.nama_barang',
-            'tgl_perbaikan', 'penyebab_keluhan', 'tgl_selesai_perbaikan',
-            'nama_teknisi', 'status_perbaikan'
-        )
-        ->paginate(10);
+            ->join('nama_kode_barang', 'pemutihan.kode_barang', '=', 'nama_kode_barang.kode_barang')
+            ->leftJoin('perbaikan', 'pemutihan.id_perbaikan', '=', 'perbaikan.id_perbaikan')
+            ->select(
+                'pemutihan.*',
+                'nama_kode_barang.nama_barang',
+                'tgl_perbaikan',
+                'penyebab_keluhan',
+                'tgl_selesai_perbaikan',
+                'nama_teknisi',
+                'status_perbaikan'
+            )
+            ->paginate(10);
         return view('approval.pemutihan.index', compact('data'));
     }
 
-    public function searchindexPemutihan(Request $request){
+    public function searchindexPemutihan(Request $request)
+    {
         $search = $request->input('search');
         $data = DB::table('pemutihan')
-                ->where('kode_barang','like',"%".$search."%")
-                ->paginate(10);
+            ->where('kode_barang', 'like', "%" . $search . "%")
+            ->paginate(10);
         return view('approval.pemutihan.index', compact('data'));
     }
 
-    public function statusSetujuPemutihan($id=null, $kode=null){
-        try{
+    public function statusSetujuPemutihan($id = null, $kode = null)
+    {
+        try {
             $id_pengguna = DB::table('pengguna')
-            ->select('id_pengguna')
-            ->where('username',Auth::user()->username)
-            ->get();
+                ->select('id_pengguna')
+                ->where('username', Auth::user()->username)
+                ->get();
             $array = Arr::pluck($id_pengguna, 'id_pengguna');
             $approver = Arr::get($array, '0');
 
@@ -239,31 +239,28 @@ class ApprovalController extends Controller
             // dd('hehe');
 
             $pemutihan = DB::table('pemutihan')
-                            ->where('id_pemutihan',$id)
-                            ->update($approve);
+                ->where('id_pemutihan', $id)
+                ->update($approve);
             DB::table('detail_barang')
-                ->where('kode_barang',$kode)
+                ->where('kode_barang', $kode)
                 ->update($status);
 
-            if($pemutihan){
-                flash()->options([
-                    'timeout' => 3000, // 3 seconds
-                    'position' => 'top-center',
-                ])
-                ->addSuccess('Data berhasil disimpan.');
+            if ($pemutihan) {
+                flash()->addSuccess('Data berhasil disimpan.');
                 return redirect('approval/pemutihan');
             }
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             $e->getMessage();
         }
     }
 
-    public function statusTidakSetujuPemutihan($id=null){
-        try{
+    public function statusTidakSetujuPemutihan($id = null)
+    {
+        try {
             $id_pengguna = DB::table('pengguna')
-            ->select('id_pengguna')
-            ->where('username',Auth::user()->username)
-            ->get();
+                ->select('id_pengguna')
+                ->where('username', Auth::user()->username)
+                ->get();
             $array = Arr::pluck($id_pengguna, 'id_pengguna');
             $approver = Arr::get($array, '0');
 
@@ -274,20 +271,16 @@ class ApprovalController extends Controller
             ];
 
             $pemutihan = DB::table('pemutihan')
-                            ->where('id_pemutihan',$id)
-                            ->update($approve);
+                ->where('id_pemutihan', $id)
+                ->update($approve);
 
-            if($pemutihan){
-                flash()->options([
-                    'timeout' => 3000, // 3 seconds
-                    'position' => 'top-center',
-                ])
-                ->addSuccess('Data berhasil disimpan.');
+            if ($pemutihan) {
+                flash()->addSuccess('Data berhasil disimpan.');
                 return redirect('approval/pemutihan');
-            // dd("berhasil");
+                // dd("berhasil");
 
             }
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             $e->getMessage();
         }
     }

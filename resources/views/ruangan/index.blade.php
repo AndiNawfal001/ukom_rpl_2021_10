@@ -2,33 +2,23 @@
 @section('container')
 
 <div class="pt-6 px-4">
-    {{-- <div class="text-sm breadcrumbs">
-        <ul>
-          <li><a>Home</a></li>
-          <li><a>Documents</a></li>
-          <li>Add Document</li>
-        </ul>
-      </div> --}}
     <div class="bg-base-100 shadow rounded-md p-4 sm:p-6 xl:p-8 ">
-
         <h1 class="text-xl pb-3 font-semibold leading-loose">Daftar Ruangan</h1>
         <div class="lg:flex justify-between mb-2">
-            <form action="/ruangan/search" method="GET">
+            <form action="/ruangan" method="GET">
                 @csrf
-                    <div class="form-control mb-2">
-                        <div class="input-group ">
-                        <input type="text" name="search" placeholder="Search…" class="input input-bordered" />
-                        <button class="btn btn-square" type="submit">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-                        </button>
-                        </div>
+                <div class="form-control mb-2">
+                    <div class="input-group ">
+                    <input type="text" name="search" placeholder="Search…" class="input input-bordered" value="{{ request("search") }}" autocomplete="off" />
+                    <button class="btn btn-square" type="submit">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                    </button>
                     </div>
+                </div>
             </form>
-            <a href="/ruangan/tambah">
-                <button class="btn btn-success gap-2">
+                <label for="tambahruangan" class="btn btn-success gap-2">
                     Tambah Ruangan <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                </button>
-            </a>
+                </label>
         </div>
         <div class="">
             <div class="overflow-x-auto overflow-y-auto">
@@ -88,6 +78,39 @@
 
 @section('modal')
 
+{{-- CREATE --}}
+<input type="checkbox" id="tambahruangan" class="modal-toggle" />
+<label for="tambahruangan" class="modal cursor-pointer">
+  <label class="modal-box relative" for="">
+    <form action="/ruangan/simpan" method="POST">
+        @csrf
+            <h2 class="text-2xl font-bold">Form Tambah Ruangan</h2>
+           <br>
+           <div class="form-control">
+               <label class="label">
+               <span class="label-text">Nama Ruangan</span>
+               </label>
+               <input type="text" name="nama_ruangan" class="input input-bordered @error('nama_ruangan') input-error @enderror" required/>
+           </div>
+           <div class="form-control">
+               <label class="label">
+               <span class="label-text">Penanggung jawab</span>
+               </label>
+               <input type="text" name="penanggung_jawab" class="input input-bordered"  value="{{ old('penanggung_jawab') }}" required/>
+           </div>
+           <div class="form-control">
+               <label class="label">
+                   <span class="label-text">Keterangan</span>
+               </label>
+               <input type="text" name="ket" class="input input-bordered"  value="{{ old('ket') }}" required/>
+           </div>
+               <div class="form-control mt-6">
+                 <button type="submit" value="simpan" class="btn btn-primary">Simpan</button>
+               </div>
+    </form>
+  </label>
+</label>
+
 {{-- EDIT --}}
 @foreach ( $data as $key )
 <input type="checkbox" id="editpengguna{{ $key->id_ruangan }}" class="modal-toggle" />
@@ -101,18 +124,15 @@
 
            <div class="form-control">
                <label class="label">
-               <span class="label-text">Nama Supplier</span>
+               <span class="label-text">Nama Ruangan</span>
                </label>
-               <input type="text" name="nama_ruangan" class="input input-bordered"
-               value="{{ old('nama', $key->nama_ruangan) }}"/>
+               <input type="text" name="nama_ruangan" class="input input-bordered @error('nama_ruangan') input-error @enderror"
+               value="{{ old('nama_ruangan', $key->nama_ruangan) }}"/>
                <input type="hidden"  name="id_ruangan" value="{{$key->id_ruangan}}" />
-               @error('nama_ruangan')
-                    <p class="text-red-500">{{ $message }}</p>
-                @enderror
            </div>
            <div class="form-control">
                <label class="label">
-               <span class="label-text">penanggung_jawab</span>
+               <span class="label-text">Penanggung Jawab</span>
                </label>
                <input type="text" name="penanggung_jawab" class="input input-bordered"
                value="{{ old('penanggung_jawab', $key->penanggung_jawab) }}"/>
@@ -156,4 +176,10 @@
   </div>
 </label>
 @endforeach
+
+@php
+    if($errors->has('nama_ruangan')) {
+        flash()->addError('Nama tersebut sudah digunakan!');
+    }
+@endphp
 @endsection
