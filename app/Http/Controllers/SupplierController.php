@@ -25,6 +25,11 @@ class SupplierController extends Controller
         return view('supplier.index', compact('data'));
     }
 
+    public function formTambah()
+    {
+        return view('supplier.formtambah');
+    }
+
     public function store(Request $request)
     {
         $request->validate(
@@ -59,6 +64,17 @@ class SupplierController extends Controller
         }
     }
 
+    private function getSupplier($id)
+    {
+        return collect(DB::table('supplier')->where('id_supplier', $id)->get())->firstOrFail();
+    }
+
+    public function edit($id = null)
+    {
+        $edit = $this->getSupplier($id);
+        return view('supplier.editform', compact('edit'));
+    }
+
     public function update(Request $request)
     {
         $supplier = SupplierModel::firstWhere('id_supplier', '=', $request->input('id_supplier'));
@@ -91,9 +107,13 @@ class SupplierController extends Controller
                 'kontak' => $request->input('kontak'),
                 'alamat' => $request->input('alamat')
             ];
-            SupplierModel::where('id_supplier', '=', $request->input('id_supplier'))->update($data);
-            flash()->addSuccess('Data berhasil diubah.');
-            return redirect('supplier');
+            $update_supplier = SupplierModel::where('id_supplier', '=', $request->input('id_supplier'))->update($data);
+            if ($update_supplier) {
+                flash()->addSuccess('Data berhasil diubah.');
+                return redirect('supplier');
+            } else {
+                return redirect('supplier');
+            }
         } catch (\Exception $e) {
             return $e->getMessage();
             dd("gagal");

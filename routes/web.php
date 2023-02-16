@@ -101,6 +101,7 @@ Route::post('/barang/detail/update/{id}', [BarangController::class, 'update'])->
 Route::get('/supplier', [SupplierController::class, 'index'])->middleware('auth');
 Route::get('/supplier/tambah', [SupplierController::class, 'formTambah'])->middleware('auth');
 Route::post('/supplier/simpan', [SupplierController::class, 'store'])->middleware('auth');
+Route::get('/supplier/edit/{id}', [SupplierController::class, 'edit'])->middleware('auth');
 Route::post('/supplier/editsimpan', [SupplierController::class, 'update'])->middleware('auth');
 Route::get('/supplier/hapus/{id}', [SupplierController::class, 'hapus'])->middleware('auth');
 
@@ -161,5 +162,6 @@ Route::get('/perawatan/hapus/{id}', [PerawatanController::class, 'hapus'])->midd
 Route::get('/ruangan', [RuanganController::class, 'index'])->middleware('auth');
 Route::get('/ruangan/tambah', [RuanganController::class, 'formTambah'])->middleware('auth');
 Route::post('/ruangan/simpan', [RuanganController::class, 'store'])->middleware('auth');
+Route::get('/ruangan/edit/{id}', [RuanganController::class, 'edit'])->middleware('auth');
 Route::post('/ruangan/editsimpan', [RuanganController::class, 'update'])->middleware('auth');
 Route::get('/ruangan/hapus/{id}', [RuanganController::class, 'hapus'])->middleware('auth');

@@ -16,9 +16,11 @@
                     </div>
                 </div>
             </form>
-                <label for="tambahruangan" class="btn btn-success gap-2">
+            <a href="/ruangan/tambah">
+                <button class="btn btn-success gap-2">
                     Tambah Ruangan <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                </label>
+                </button>
+            </a>
         </div>
         <div class="">
             <div class="overflow-x-auto overflow-y-auto">
@@ -41,9 +43,11 @@
                     <td>{{ $key->penanggung_jawab }}</td>
                     <td>{{ $key->ket }}</td>
                     <td>
-                        <label for="editpengguna{{ $key->id_ruangan }}" class="btn btn-sm btn-warning btn-square btn-outline">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                        </label>
+                        <a href="/ruangan/edit/{{ $key->id_ruangan }}">
+                            <button class="btn btn-sm btn-warning btn-square btn-outline">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                            </button>
+                        </a>
                         <label for="delete{{ $key->id_ruangan }}" class="btn btn-sm btn-error btn-square btn-outline">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                         </label>
@@ -72,87 +76,48 @@
         </div>
     </div>
     <br>
+    {{-- <div>
+        <canvas id="myChart"></canvas>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('myChart');
+
+        new Chart(ctx, {
+          data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                type: 'line',
+                label: '# of Votes',
+                data: [{{ $no }}, 19, 3, 5, 2, 3],
+                fill: true,
+                tension: 0.3,
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgb(255, 99, 132)'
+            },{
+                type: 'line',
+                label: 'Line Dataset',
+                data: [{{ $no }}, 50, 3, 10, 2, 3],
+                fill: true,
+                tension: 0.3,
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgb(54, 162, 235)'
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+    </script> --}}
 </div>
 
 @endsection
 
 @section('modal')
-
-{{-- CREATE --}}
-<input type="checkbox" id="tambahruangan" class="modal-toggle" />
-<label for="tambahruangan" class="modal cursor-pointer">
-  <label class="modal-box relative" for="">
-    <form action="/ruangan/simpan" method="POST">
-        @csrf
-            <h2 class="text-2xl font-bold">Form Tambah Ruangan</h2>
-           <br>
-           <div class="form-control">
-               <label class="label">
-               <span class="label-text">Nama Ruangan</span>
-               </label>
-               <input type="text" name="nama_ruangan" class="input input-bordered @error('nama_ruangan') input-error @enderror" required/>
-           </div>
-           <div class="form-control">
-               <label class="label">
-               <span class="label-text">Penanggung jawab</span>
-               </label>
-               <input type="text" name="penanggung_jawab" class="input input-bordered"  value="{{ old('penanggung_jawab') }}" required/>
-           </div>
-           <div class="form-control">
-               <label class="label">
-                   <span class="label-text">Keterangan</span>
-               </label>
-               <input type="text" name="ket" class="input input-bordered"  value="{{ old('ket') }}" required/>
-           </div>
-               <div class="form-control mt-6">
-                 <button type="submit" value="simpan" class="btn btn-primary">Simpan</button>
-               </div>
-    </form>
-  </label>
-</label>
-
-{{-- EDIT --}}
-@foreach ( $data as $key )
-<input type="checkbox" id="editpengguna{{ $key->id_ruangan }}" class="modal-toggle" />
-<label for="editpengguna{{ $key->id_ruangan }}" class="modal cursor-pointer">
-  <label class="modal-box relative" for="">
-    <form action="/ruangan/editsimpan" method="POST">
-        @csrf
-        <h2 class="text-2xl font-bold">Edit Ruangan</h2>
-        <br>
-        <input type="hidden" name="id_ruangan" class="input input-bordered"  value="{{ $key->id_ruangan }}" required/>
-
-           <div class="form-control">
-               <label class="label">
-               <span class="label-text">Nama Ruangan</span>
-               </label>
-               <input type="text" name="nama_ruangan" class="input input-bordered @error('nama_ruangan') input-error @enderror"
-               value="{{ old('nama_ruangan', $key->nama_ruangan) }}"/>
-               <input type="hidden"  name="id_ruangan" value="{{$key->id_ruangan}}" />
-           </div>
-           <div class="form-control">
-               <label class="label">
-               <span class="label-text">Penanggung Jawab</span>
-               </label>
-               <input type="text" name="penanggung_jawab" class="input input-bordered"
-               value="{{ old('penanggung_jawab', $key->penanggung_jawab) }}"/>
-           </div>
-           <div class="form-control">
-               <label class="label">
-                   <span class="label-text">ket</span>
-               </label>
-               <input type="text" name="ket" class="input input-bordered"
-               value="{{ old('ket', $key->ket) }}"/>
-           </div>
-               <div class="form-control mt-6">
-                 <button type="submit" value="simpan" class="btn btn-primary">Simpan</button>
-               </div>
-    </form>
-  </label>
-</label>
-@endforeach
-
-
 {{-- HAPUS --}}
 @foreach($data as $key)
 <input type="checkbox" id="delete{{ $key->id_ruangan }}" class="modal-toggle" />
@@ -177,9 +142,4 @@
 </label>
 @endforeach
 
-@php
-    if($errors->has('nama_ruangan')) {
-        flash()->addError('Nama tersebut sudah digunakan!');
-    }
-@endphp
 @endsection

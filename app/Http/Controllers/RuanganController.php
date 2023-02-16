@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\RuanganModel;
-use Illuminate\Support\Arr;
 
 class RuanganController extends Controller
 {
@@ -25,6 +24,11 @@ class RuanganController extends Controller
         }
 
         return view('ruangan.index', compact('data'));
+    }
+
+    public function formTambah()
+    {
+        return view('ruangan.formtambah');
     }
 
     public function store(Request $request)
@@ -61,6 +65,17 @@ class RuanganController extends Controller
         } catch (\Exception $e) {
             return  $e->getMessage();
         }
+    }
+
+    private function getRuangan($id)
+    {
+        return collect(DB::table('ruangan')->where('id_ruangan', $id)->get())->firstOrFail();
+    }
+
+    public function edit($id = null)
+    {
+        $edit = $this->getRuangan($id);
+        return view('ruangan.editform', compact('edit'));
     }
 
     public function update(Request $request)
