@@ -44,10 +44,7 @@ class RuanganController extends Controller
             // }
 
 
-            $dariFunction = DB::select('SELECT newIdRuangan() AS id_ruangan');
-            $array = Arr::pluck($dariFunction, 'id_ruangan');
-            $kode_baru = Arr::get($array, '0');
-            // dd($kode_baru);
+            $kode_baru = collect(DB::select('SELECT newIdRuangan() AS id_ruangan'))->firstOrFail()->id_ruangan;
             $tambah_ruangan = RuanganModel::insert([
                 'id_ruangan' => $kode_baru,
                 'nama_ruangan' => $request->input('nama_ruangan'),

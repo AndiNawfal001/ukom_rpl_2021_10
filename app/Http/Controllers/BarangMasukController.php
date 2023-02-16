@@ -29,7 +29,7 @@ class BarangMasukController extends Controller
     {
         $search = $request->input('search');
 
-        $data = DB::table('barang_masuk')->get();
+        $data = DB::table('data_barang_masuk')->get();
         $info = DB::table('pengajuan_bb')->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')->get();
         $approved = DB::table('pengajuan_bb')
             ->where('status_approval', 'setuju')
@@ -46,13 +46,12 @@ class BarangMasukController extends Controller
     {
         $search = $request->input('search');
 
-        $data = DB::table('barang_masuk')
+        $data = DB::table('data_barang_masuk')
             ->where('nama_barang', 'like', "%" . $search . "%")
-            ->orWhere('tgl_masuk', 'like', "%" . $search . "%")
-            ->orWhere('jml_masuk', 'like', "%" . $search . "%")
-            ->orWhere('status_pembelian', 'like', "%" . $search . "%")
+            ->orWhere('progress', 'like', "%" . $search . "%")
+            ->orWhere('target', 'like', "%" . $search . "%")
             ->get();
-        $info = DB::table('pengajuan_bb')->get();
+        $info = DB::table('pengajuan_bb')->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')->get();
         $approved = DB::table('pengajuan_bb')->where('status_approval', 'setuju')->paginate(5, ['*'], 'approved');
         $jenisBarang = DB::table('jenis_barang')->paginate(5, ['*'], 'jenisBarang');
 

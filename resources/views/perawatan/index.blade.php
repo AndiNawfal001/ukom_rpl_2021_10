@@ -3,7 +3,7 @@
 
 <div class="pt-6 px-4">
     <div class="bg-base-100 shadow rounded-md p-4 sm:p-6 xl:p-8 ">
-        <h1 class="text-xl pb-3 font-semibold leading-loose">Daftar Barang untuk perawatan</h1>
+        <h1 class="text-lg lg:text-xl pb-3 font-semibold leading-loose">Daftar Barang untuk perawatan</h1>
         <div class="">
             <div class="lg:flex justify-between mb-2">
                 <form action="/perawatan" method="GET">

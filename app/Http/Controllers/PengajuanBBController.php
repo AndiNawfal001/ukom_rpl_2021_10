@@ -36,6 +36,7 @@ class PengajuanBBController extends Controller
         $data = DB::table('pengajuan_bb')
             ->where('submitter', $submitter)
             ->where('nama_barang', 'like', "%" . $search . "%")
+            ->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')
             // ->orWhere('status_approval','like',"%".$search."%")
             // ->orWhere('tgl','like',"%".$search."%")
             ->paginate(10);
