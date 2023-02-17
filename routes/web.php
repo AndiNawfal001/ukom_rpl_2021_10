@@ -118,7 +118,9 @@ Route::group(['middleware' => ['auth', 'level:admin']], function () {
 // PENGAJUAN BARANG BARU
 Route::get('/pengajuan/BB', [PengajuanBBController::class, 'index'])->middleware('auth');
 Route::get('/pengajuan/BB/search', [PengajuanBBController::class, 'search'])->middleware('auth');
-Route::post('/pengajuan/BB/tambah', [PengajuanBBController::class, 'store'])->middleware('auth');
+Route::get('/pengajuan/BB/tambah', [PengajuanBBController::class, 'formTambah'])->middleware('auth');
+Route::post('/pengajuan/BB/simpan', [PengajuanBBController::class, 'store'])->middleware('auth');
+Route::get('/pengajuan/BB/edit/{id}', [PengajuanBBController::class, 'edit'])->middleware('auth');
 Route::post('/pengajuan/BB/update/{id}', [PengajuanBBController::class, 'update'])->middleware('auth');
 Route::get('/pengajuan/BB/hapus/{id}', [PengajuanBBController::class, 'hapus'])->middleware('auth');
 Route::get('/pengajuan/BB/detail/{id}', [PengajuanBBController::class, 'detail'])->middleware('auth');

@@ -21,7 +21,7 @@
                <span class="label-text">Nama Ruangan</span>
                </label>
                <input type="text" name="nama_ruangan" class="input input-bordered @error('nama_ruangan') input-error @enderror"
-               value="{{ old('nama_ruangan', $edit->nama_ruangan) }}"/>
+               value="{{ old('nama_ruangan', $edit->nama_ruangan) }}" required autocomplete="off"/>
                 @error('nama_ruangan')
                     <p class="text-red-500">{{ $message }}</p>
                 @enderror
@@ -32,15 +32,14 @@
                <span class="label-text">Penanggung Jawab</span>
                </label>
                <input type="text" name="penanggung_jawab" class="input input-bordered"
-               value="{{ old('penanggung_jawab', $edit->penanggung_jawab) }}"/>
+               value="{{ old('penanggung_jawab', $edit->penanggung_jawab) }}" required autocomplete="off"/>
            </div>
            <div class="form-control">
-               <label class="label">
-                   <span class="label-text">ket</span>
-               </label>
-               <input type="text" name="ket" class="input input-bordered"
-               value="{{ old('ket', $edit->ket) }}"/>
-           </div>
+                <label class="label">
+                <span class="label-text">Keterangan</span>
+                </label>
+                <textarea name="ket" cols="20" rows="5" class="textarea textarea-bordered" required>{{ old('ket', $edit->ket) }}</textarea>
+            </div>
                <div class="form-control mt-6">
                  <button type="submit" value="simpan" class="btn btn-primary">Simpan</button>
                </div>

@@ -20,7 +20,7 @@
                     <label class="label">
                     <span class="label-text">Username</span>
                     </label>
-                    <input type="text" name="username" class="input input-bordered" value="{{ old('username') }}"  required/>
+                    <input type="text" name="username" class="input input-bordered" value="{{ old('username') }}"  required autocomplete="off"/>
 
                     @error('username')
                     <p class="text-red-500">{{ $message }}</p>
@@ -42,7 +42,7 @@
                     <label class="label">
                     <span class="label-text">Email</span>
                     </label>
-                    <input type="text" name="email" class="input input-bordered" value="{{ old('email') }}"  required/>
+                    <input type="text" name="email" class="input input-bordered" value="{{ old('email') }}"  required autocomplete="off"/>
                     @error('email')
 
                     <p class="text-red-500">{{ $message }}</p>
@@ -53,7 +53,7 @@
                     <label class="label">
                     <span class="label-text">Password</span>
                     </label>
-                    <input type="text" name="password" class="input input-bordered" required/>
+                    <input type="text" name="password" class="input input-bordered" required autocomplete="off"/>
                 </div>
             </div>
             <div class="basis-1/2">
@@ -61,7 +61,7 @@
                     <label class="label">
                         <span class="label-text">NIP</span>
                     </label>
-                    <input type="number" name="nip" class="input input-bordered" value="{{ old('nip') }}" placeholder="Silahkan dikosongkan jika user admin"/>
+                    <input type="number" name="nip" class="input input-bordered" value="{{ old('nip') }}" placeholder="Silahkan dikosongkan jika user admin" autocomplete="off"/>
                     @error('nip')
                         <p class="text-red-500">{{ $message }}</p>
                     @enderror
@@ -70,13 +70,13 @@
                     <label class="label">
                         <span class="label-text">Nama</span>
                     </label>
-                    <input type="text" name="nama" class="input input-bordered" value="{{ old('nama') }}"  required/>
+                    <input type="text" name="nama" class="input input-bordered" value="{{ old('nama') }}"  required autocomplete="off"/>
                 </div>
                 <div class="form-control">
                     <label class="label">
                         <span class="label-text">Kontak</span>
                     </label>
-                    <input type="number" name="kontak" class="input input-bordered" value="{{ old('kontak') }}"  placeholder="ex = 087654321234" required/>
+                    <input type="number" name="kontak" class="input input-bordered" value="{{ old('kontak') }}"  placeholder="contoh : 087654321234" required autocomplete="off"/>
                     @error('kontak')
 
                     <p class="text-red-500">{{ $message }}</p>

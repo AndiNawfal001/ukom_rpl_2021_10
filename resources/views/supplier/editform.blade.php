@@ -19,7 +19,7 @@
                <span class="label-text">Nama Supplier</span>
                </label>
                <input type="text" name="nama" class="input input-bordered @error('nama') input-error @enderror"
-               value="{{ old('nama', $edit->nama) }}"/>
+               value="{{ old('nama', $edit->nama) }}" required autocomplete="off"/>
                @error('nama')
                 <p class="text-red-500">{{ $message }}</p>
                @enderror
@@ -30,18 +30,17 @@
                <span class="label-text">Kontak</span>
                </label>
                <input type="number" name="kontak" class="input input-bordered @error('kontak') input-error @enderror"
-               value="{{ old('kontak', $edit->kontak) }}"/>
+               value="{{ old('kontak', $edit->kontak) }}" required autocomplete="off"/>
                @error('kontak')
                 <p class="text-red-500">{{ $message }}</p>
                @enderror
            </div>
            <div class="form-control">
-               <label class="label">
-                   <span class="label-text">Alamat</span>
-               </label>
-               <input type="text" name="alamat" class="input input-bordered"
-               value="{{ old('alamat', $edit->alamat) }}"/>
-           </div>
+                <label class="label">
+                <span class="label-text">Alamat</span>
+                </label>
+                <textarea name="alamat" cols="20" rows="5" class="textarea textarea-bordered" required>{{ old('alamat', $edit->alamat) }}</textarea>
+            </div>
                <div class="form-control mt-6">
                  <button type="submit" value="simpan" class="btn btn-primary">Simpan</button>
                </div>

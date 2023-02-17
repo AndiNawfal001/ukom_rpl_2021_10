@@ -99,11 +99,12 @@ class BarangController extends Controller
                     'spesifikasi'   => $request->input('spesifikasi'),
                 ];
             }
-
-            DB::table('detail_barang')
+            $update_detail_barang = DB::table('detail_barang')
                 ->where('kode_barang', '=', $id)
                 ->update($data);
-            flash()->addSuccess('Data Berhasil diubah.');
+            if ($update_detail_barang) {
+                flash()->addSuccess('Data Berhasil diubah.');
+            }
             return redirect('/barang/detail/spesifik/' . $request->input('kode_barang'));
         } catch (\Exception $e) {
             return $e->getMessage();

@@ -108,8 +108,10 @@ class RuanganController extends Controller
                 'ket' => $request->input('ket'),
                 // 'image' => $image,
             ];
-            RuanganModel::where('id_ruangan', '=', $request->input('id_ruangan'))->update($data);
-            flash()->addSuccess('Data berhasil disimpan.');
+            $update_ruangan = RuanganModel::where('id_ruangan', '=', $request->input('id_ruangan'))->update($data);
+            if ($update_ruangan) {
+                flash()->addSuccess('Data berhasil disimpan.');
+            }
             return redirect('ruangan');
         } catch (\Exception $e) {
             return $e->getMessage();

@@ -43,12 +43,23 @@ class PengajuanBBController extends Controller
         return view('pengajuan.barang_baru.index', compact('data', 'ruangan'));
     }
 
+    public function formTambah()
+    {
+        $ruangan = $this->getRuangan();
+        return view('pengajuan.barang_baru.formtambah', compact('ruangan'));
+    }
+
     public function store(Request $request)
     {
-        $request->validate([
-            'nama_barang' => 'required|unique:pengajuan_bb,nama_barang',
-            // 'harga_satuan' => 'max:15'
-        ]);
+        $request->validate(
+            [
+                'nama_barang' => 'unique:pengajuan_bb,nama_barang',
+                // 'harga_satuan' => 'max:15'
+            ],
+            [
+                'nama_barang.unique' => 'Nama tersebut sudah digunakan!',
+            ]
+        );
         try {
             $submitter_id = Auth::user()->id_pengguna;
             $total_harga = $request->input('harga_satuan') * $request->input('jumlah');
@@ -73,8 +84,31 @@ class PengajuanBBController extends Controller
         }
     }
 
+    private function getPengajuanBb($id)
+    {
+        return collect(DB::table('pengajuan_bb')->where('id_pengajuan_bb', $id)->get())->firstOrFail();
+    }
+
+    public function edit($id = null)
+    {
+        $edit = $this->getPengajuanBb($id);
+        return view('pengajuan.barang_baru.editform', compact('edit'));
+    }
+
     public function update(Request $request, $id = null)
     {
+        $pengajuan_bb = DB::table('pengajuan_bb')->where('id_pengajuan_bb', $id)->first();
+        if ($request->input('nama_barang') !== $pengajuan_bb->nama_barang) {
+
+            $request->validate(
+                [
+                    'nama_barang' => 'unique:pengajuan_bb,nama_barang',
+                ],
+                [
+                    'nama_barang.unique' => 'Nama tersebut sudah digunakan!',
+                ]
+            );
+        }
         try {
             $total_harga = $request->input('harga_satuan') * $request->input('jumlah');
             $data = [
@@ -84,10 +118,12 @@ class PengajuanBBController extends Controller
                 'total_harga' => $total_harga,
                 'jumlah' => $request->input('jumlah')
             ];
-            DB::table('pengajuan_bb')
+            $update_pengajuan_bb = DB::table('pengajuan_bb')
                 ->where('id_pengajuan_bb', '=', $id)
                 ->update($data);
-            flash()->addSuccess('Data berhasil diubah.');
+            if ($update_pengajuan_bb) {
+                flash()->addSuccess('Data berhasil diubah.');
+            }
             return redirect('pengajuan/BB');
         }
         // dd("berhasil", $upd);

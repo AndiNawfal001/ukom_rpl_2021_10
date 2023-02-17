@@ -110,10 +110,8 @@ class SupplierController extends Controller
             $update_supplier = SupplierModel::where('id_supplier', '=', $request->input('id_supplier'))->update($data);
             if ($update_supplier) {
                 flash()->addSuccess('Data berhasil diubah.');
-                return redirect('supplier');
-            } else {
-                return redirect('supplier');
             }
+            return redirect('supplier');
         } catch (\Exception $e) {
             return $e->getMessage();
             dd("gagal");

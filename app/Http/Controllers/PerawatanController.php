@@ -118,14 +118,13 @@ class PerawatanController extends Controller
                     'ket_perawatan' => $request->input('ket_perawatan'),
                 ];
             }
-            DB::table('perawatan')
+            $update_perawatan = DB::table('perawatan')
                 ->where('id_perawatan', '=', $request->input('id_perawatan'))
                 ->update($data);
 
-
-            // dd('berhasil');
-            flash()->addSuccess('Data berhasil diubah.');
-            // return redirect('perawatan/detail/'.$id_perawatan);
+            if ($update_perawatan) {
+                flash()->addSuccess('Data berhasil diubah.');
+            }
             return back();
             // dd("berhasil", $upd);
         } catch (\Exception $e) {

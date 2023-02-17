@@ -37,28 +37,28 @@
                     <span class="label-text">Username</span>
                     </label>
                     <input type="text" name="username" class="input input-bordered"
-                    value="{{ old('username', $edit->username) }}" required/>
+                    value="{{ old('username', $edit->username) }}" required autocomplete="off"/>
                 </div>
                 <div class="form-control">
                     <label class="label">
                     <span class="label-text">Email</span>
                     </label>
                     <input type="email" name="email" class="input input-bordered"
-                    value="{{ old('email', $edit->email) }}" required/>
+                    value="{{ old('email', $edit->email) }}" required autocomplete="off"/>
                 </div>
                 <div class="form-control">
                     <label class="label">
                         <span class="label-text">Nama</span>
                     </label>
                     <input type="text" name="nama" class="input input-bordered"
-                    value="{{ old('nama', $edit->nama) }}" required/>
+                    value="{{ old('nama', $edit->nama) }}" required autocomplete="off"/>
                 </div>
                 <div class="form-control">
                     <label class="label">
                         <span class="label-text">Kontak</span>
                     </label>
                     <input type="text" name="kontak" class="input input-bordered"
-                    value="{{ old('kontak', $edit->kontak) }}" required/>
+                    value="{{ old('kontak', $edit->kontak) }}" required autocomplete="off"/>
                 </div>
             </div>
         </div>
