@@ -10,8 +10,6 @@ class RuanganController extends Controller
 {
     public function index(Request $request)
     {
-        $data = null;
-
         if ($request->has('search')) {
             $search = $request->input('search');
 

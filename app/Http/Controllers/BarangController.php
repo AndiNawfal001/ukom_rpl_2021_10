@@ -9,51 +9,44 @@ use Illuminate\Support\Facades\DB;
 class BarangController extends Controller
 {
     //
-    public function index()
+    public function index(Request $request)
     {
-        $data = DB::table('barang_aktif_rusak')->paginate(10);
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $data = DB::table('barang_aktif_rusak')
+                ->where('nama_jenis', 'like', "%" . $search . "%")
+                ->orWhere('nama_barang', 'like', "%" . $search . "%")
+                ->orWhere('jml_barang', 'like', "%" . $search . "%")
+                ->paginate(10);
+        } else {
+            $data = DB::table('barang_aktif_rusak')->paginate(10);
+        }
+
         return view('barang.index', compact('data'));
     }
 
-    public function search(Request $request)
-    {
-        $search = $request->input('search');
-        $data = DB::table('barang_aktif_rusak')
-            ->where('nama_jenis', 'like', "%" . $search . "%")
-            ->orWhere('nama_barang', 'like', "%" . $search . "%")
-            ->paginate(10);
-
-        return view('barang.index', compact('data'));
-    }
-
-    public function detail($id = null)
+    public function detail(Request $request, $id = null)
     {
         $id_barang = $id;
-        $data = DB::table('barang')
-            ->join('jenis_barang', 'barang.id_jenis_brg', '=', 'jenis_barang.id_jenis_brg')
-            ->join('detail_barang', 'barang.id_barang', '=', 'detail_barang.id_barang')
-            ->where('detail_barang.id_barang', $id)
-            ->paginate(10);
-
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $data = DB::table('barang')
+                ->join('jenis_barang', 'barang.id_jenis_brg', '=', 'jenis_barang.id_jenis_brg')
+                ->join('detail_barang', 'barang.id_barang', '=', 'detail_barang.id_barang')
+                ->where('barang.id_barang', $id)
+                ->where('barang.nama_barang', 'like', "%" . $search . "%")
+                ->orWhere('kode_barang', 'like', "%" . $search . "%")
+                ->orWhere('kondisi_barang', 'like', "%" . $search . "%")
+                ->orWhere('status', 'like', "%" . $search . "%")
+                ->paginate(10);
+        } else {
+            $data = DB::table('barang')
+                ->join('jenis_barang', 'barang.id_jenis_brg', '=', 'jenis_barang.id_jenis_brg')
+                ->join('detail_barang', 'barang.id_barang', '=', 'detail_barang.id_barang')
+                ->where('detail_barang.id_barang', $id)
+                ->paginate(10);
+        }
         // dd($data);
-        return view('barang.detail', compact('id_barang', 'data'));
-    }
-
-    public function searchdetail(Request $request, $id = null)
-    {
-        // dd($id);
-        $id_barang = $id;
-        $search = $request->input('search');
-
-        $data = DB::table('barang')
-            ->join('jenis_barang', 'barang.id_jenis_brg', '=', 'jenis_barang.id_jenis_brg')
-            ->join('detail_barang', 'barang.id_barang', '=', 'detail_barang.id_barang')
-            ->where('barang.id_barang', $id)
-            ->where('barang.nama_barang', 'like', "%" . $search . "%")
-            ->orWhere('kode_barang', 'like', "%" . $search . "%")
-            ->orWhere('kondisi_barang', 'like', "%" . $search . "%")
-            ->orWhere('status', 'like', "%" . $search . "%")
-            ->paginate(10);
         return view('barang.detail', compact('id_barang', 'data'));
     }
 

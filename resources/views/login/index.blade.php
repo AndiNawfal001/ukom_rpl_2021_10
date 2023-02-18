@@ -36,7 +36,7 @@
                     <label class="label" for="password">
                         <span class="" name="password" id="password" required>Password</span>
                     </label>
-                    <input type="password" name="password" placeholder="password" class="input input-bordered" />
+                    <input type="password" name="password" placeholder="password" class="input input-bordered" required/>
                     </div>
                     <div class="form-control mt-6 w-full">
                     <button type="submit" class="btn btn-active btn-success">Login</button>

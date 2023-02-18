@@ -58,13 +58,6 @@ class BarangMasukController extends Controller
         return view('barangMasuk.index', compact('data', 'info', 'approved', 'jenisBarang'));
     }
 
-
-    public function getJumlahPengajuan()
-    {
-        $data = DB::select('SELECT COUNT(id_pengajuan_bb) AS jumlah FROM pengajuan_bb WHERE status_approval = "setuju"');
-        return view('partials.sidebar', compact('data'));
-    }
-
     private function getJenisBarang(): Collection
     {
         return collect(DB::select('SELECT * FROM jenis_barang'));

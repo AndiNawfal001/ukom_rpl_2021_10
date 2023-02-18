@@ -5,7 +5,7 @@
     <div class="bg-base-100 shadow rounded-md p-4 sm:p-6 xl:p-8 ">
         <div class="">
             <div class="flex justify-between">
-                <form action="/barang/detail/search/{{ $id_barang }}" method="GET">
+                <form action="/barang/detail/{{ $id_barang }}" method="GET">
                     @csrf
                         <div class="form-control mb-2">
                             <div class="input-group ">

@@ -6,7 +6,6 @@ use app\Models\PenggunaModel;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
@@ -43,16 +42,4 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
         return redirect('login');
     }
-
-    //syntax suntuk membuat innerjoin
-    // public function innerjoin(){
-
-    //     $result = DB::table('level_user')
-    //     ->join('pengguna', 'level_user.id_level', '=' , 'pengguna.' . auth()->user()->id_level)
-    //     ->select('level_user.nama_level','pengguna.' . auth()->user()->id_level)
-    //     ->get();
-    //     return $result;
-    // }
-
-
 }

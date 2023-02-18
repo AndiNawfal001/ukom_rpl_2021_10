@@ -13,22 +13,22 @@ class ApprovalController extends Controller
     // BARANG BARU
     //
 
-    public function indexBarangBaru()
+    public function indexBarangBaru(Request $request)
     {
-        $data = DB::table('pengajuan_bb')->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')->paginate(10);
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $data = DB::table('pengajuan_bb')->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')
+                ->where('nama_barang', 'like', "%" . $search . "%")
+                ->orWhere('total_harga', 'like', "%" . $search . "%")
+                ->orWhere('tgl', 'like', "%" . $search . "%")
+                ->orWhere('status_approval', 'like', "%" . $search . "%")
+                ->paginate(10);
+        } else {
+            $data = DB::table('pengajuan_bb')
+                ->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')
+                ->paginate(10);
+        }
 
-        return view('approval.barang_baru.index', compact('data'));
-    }
-
-    public function searchindexBarangBaru(Request $request)
-    {
-        $search = $request->input('search');
-        $data = DB::table('pengajuan_bb')->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')
-            ->where('nama_barang', 'like', "%" . $search . "%")
-            ->orWhere('total_harga', 'like', "%" . $search . "%")
-            ->orWhere('tgl', 'like', "%" . $search . "%")
-            ->orWhere('status_approval', 'like', "%" . $search . "%")
-            ->paginate(10);
 
         return view('approval.barang_baru.index', compact('data'));
     }
@@ -93,29 +93,30 @@ class ApprovalController extends Controller
     //
 
 
-    public function indexPerbaikan()
+    public function indexPerbaikan(Request $request)
     {
-        $data = DB::table('perbaikan')
-            ->select('perbaikan.*', 'barang.nama_barang', 'ruangan.nama_ruangan')
-            ->leftJoin('detail_barang', 'perbaikan.kode_barang', '=', 'detail_barang.kode_barang')
-            ->leftJoin('barang', 'detail_barang.id_barang', '=', 'barang.id_barang')
-            ->leftJoin('ruangan', 'detail_barang.ruangan', '=', 'ruangan.id_ruangan')
-            ->whereNotNull('tgl_selesai_perbaikan')
-            ->paginate(10);
-        return view('approval.perbaikan.index', compact('data'));
-    }
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $data = DB::table('perbaikan')
+                ->select('perbaikan.*', 'barang.nama_barang', 'ruangan.nama_ruangan')
+                ->leftJoin('detail_barang', 'perbaikan.kode_barang', '=', 'detail_barang.kode_barang')
+                ->leftJoin('barang', 'detail_barang.id_barang', '=', 'barang.id_barang')
+                ->leftJoin('ruangan', 'detail_barang.ruangan', '=', 'ruangan.id_ruangan')
+                ->whereNotNull('tgl_selesai_perbaikan')
+                ->where('perbaikan.kode_barang', 'like', "%" . $search . "%")
+                ->orWhere('barang.nama_barang', 'like', "%" . $search . "%")
+                ->paginate(10);
+        } else {
+            $data = DB::table('perbaikan')
+                ->select('perbaikan.*', 'barang.nama_barang', 'ruangan.nama_ruangan')
+                ->leftJoin('detail_barang', 'perbaikan.kode_barang', '=', 'detail_barang.kode_barang')
+                ->leftJoin('barang', 'detail_barang.id_barang', '=', 'barang.id_barang')
+                ->leftJoin('ruangan', 'detail_barang.ruangan', '=', 'ruangan.id_ruangan')
+                ->whereNotNull('tgl_selesai_perbaikan')
+                ->paginate(10);
+        }
 
-    public function searchindexPerbaikan(Request $request)
-    {
-        $search = $request->input('search');
-        $data = DB::table('perbaikan')
-            ->select('perbaikan.*', 'barang.nama_barang', 'ruangan.nama_ruangan')
-            ->leftJoin('detail_barang', 'perbaikan.kode_barang', '=', 'detail_barang.kode_barang')
-            ->leftJoin('barang', 'detail_barang.id_barang', '=', 'barang.id_barang')
-            ->leftJoin('ruangan', 'detail_barang.ruangan', '=', 'ruangan.id_ruangan')
-            ->whereNotNull('tgl_selesai_perbaikan')
-            ->where('perbaikan.kode_barang', 'like', "%" . $search . "%")
-            ->paginate(10);
+
         return view('approval.perbaikan.index', compact('data'));
     }
 
@@ -190,30 +191,42 @@ class ApprovalController extends Controller
     // PEMUTIHAN
     //
 
-    public function indexPemutihan()
+    public function indexPemutihan(Request $request)
     {
-        $data = DB::table('pemutihan')
-            ->join('nama_kode_barang', 'pemutihan.kode_barang', '=', 'nama_kode_barang.kode_barang')
-            ->leftJoin('perbaikan', 'pemutihan.id_perbaikan', '=', 'perbaikan.id_perbaikan')
-            ->select(
-                'pemutihan.*',
-                'nama_kode_barang.nama_barang',
-                'tgl_perbaikan',
-                'penyebab_keluhan',
-                'tgl_selesai_perbaikan',
-                'nama_teknisi',
-                'status_perbaikan'
-            )
-            ->paginate(10);
-        return view('approval.pemutihan.index', compact('data'));
-    }
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $data = DB::table('pemutihan')
+                ->join('nama_kode_barang', 'pemutihan.kode_barang', '=', 'nama_kode_barang.kode_barang')
+                ->leftJoin('perbaikan', 'pemutihan.id_perbaikan', '=', 'perbaikan.id_perbaikan')
+                ->select(
+                    'pemutihan.*',
+                    'nama_kode_barang.nama_barang',
+                    'tgl_perbaikan',
+                    'penyebab_keluhan',
+                    'tgl_selesai_perbaikan',
+                    'nama_teknisi',
+                    'status_perbaikan'
+                )
+                ->where('pemutihan.kode_barang', 'like', "%" . $search . "%")
+                ->orWhere('nama_kode_barang.nama_barang', 'like', "%" . $search . "%")
+                ->paginate(10);
+        } else {
+            $data = DB::table('pemutihan')
+                ->join('nama_kode_barang', 'pemutihan.kode_barang', '=', 'nama_kode_barang.kode_barang')
+                ->leftJoin('perbaikan', 'pemutihan.id_perbaikan', '=', 'perbaikan.id_perbaikan')
+                ->select(
+                    'pemutihan.*',
+                    'nama_kode_barang.nama_barang',
+                    'tgl_perbaikan',
+                    'penyebab_keluhan',
+                    'tgl_selesai_perbaikan',
+                    'nama_teknisi',
+                    'status_perbaikan'
+                )
+                ->paginate(10);
+        }
 
-    public function searchindexPemutihan(Request $request)
-    {
-        $search = $request->input('search');
-        $data = DB::table('pemutihan')
-            ->where('kode_barang', 'like', "%" . $search . "%")
-            ->paginate(10);
+
         return view('approval.pemutihan.index', compact('data'));
     }
 

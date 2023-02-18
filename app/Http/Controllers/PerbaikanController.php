@@ -6,59 +6,56 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+// use Illuminate\Database\Query\Builder;
 
 class PerbaikanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $submitter = Auth::user()->id_pengguna;
-        $data = DB::table('perbaikan_detailbarang')
-            ->where('perbaikan_detailbarang.submitter', $submitter)
-            ->paginate(10);
-        return view('pengajuan.perbaikan.index', compact('data'));
-    }
-
-    public function search(Request $request)
-    {
-        $submitter = Auth::user()->id_pengguna;
-        $search = $request->input('search');
-        $data = DB::table('perbaikan_detailbarang')
-            ->where('perbaikan_detailbarang.submitter', $submitter)
-            ->where('submitter', $submitter)
-            ->where('nama_barang', 'like', "%" . $search . "%")
-            ->orWhere('kode_barang', 'like', "%" . $search . "%")
-            ->paginate(10);
-        return view('pengajuan.perbaikan.index', compact('data'));
-    }
-
-    public function pilihBarang()
-    {
-        $data = DB::table('detail_barang')
-            ->distinct()
-            ->select('detail_barang.*', 'barang.nama_barang')
-            ->leftJoin('barang', 'detail_barang.id_barang', '=', 'barang.id_barang')
-            ->where('detail_barang.kondisi_barang', 'baik')
-            ->where('detail_barang.status', 'aktif')
-            ->orderBy('detail_barang.kode_barang', 'asc')
-            ->paginate(10);
+        $data = null;
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $data = DB::table('perbaikan_detailbarang')
+                ->where('perbaikan_detailbarang.kode_barang', 'like', "%" . $search . "%")
+                ->where('perbaikan_detailbarang.submitter', $submitter)
+                ->paginate(10);
+        } else {
+            $data = DB::table('perbaikan_detailbarang')
+                ->where('perbaikan_detailbarang.submitter', $submitter)
+                ->paginate(10);
+        }
         // dd($data);
-        return view('pengajuan.perbaikan.pilihbarang', compact('data'));
+        return view('pengajuan.perbaikan.index', compact('data'));
     }
 
-    public function searchpilihbarang(Request $request)
+    public function pilihBarang(Request $request)
     {
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $data = DB::table('detail_barang')
+                ->distinct()
+                ->select('detail_barang.*', 'barang.nama_barang')
+                ->leftJoin('barang', 'detail_barang.id_barang', '=', 'barang.id_barang')
+                ->where('detail_barang.kondisi_barang', 'baik')
+                ->where('detail_barang.status', 'aktif')
+                ->where('detail_barang.kode_barang', 'like', "%" . $search . "%")
+                ->orWhere('barang.nama_barang', 'like', "%" . $search . "%")
+                ->orderBy('detail_barang.kode_barang', 'asc')
+                ->paginate(10);
+        } else {
+            $data = DB::table('detail_barang')
+                ->distinct()
+                ->select('detail_barang.*', 'barang.nama_barang')
+                ->leftJoin('barang', 'detail_barang.id_barang', '=', 'barang.id_barang')
+                ->where('detail_barang.kondisi_barang', 'baik')
+                ->where('detail_barang.status', 'aktif')
+                ->orderBy('detail_barang.kode_barang', 'asc')
+                ->paginate(10);
+        }
 
-        $search = $request->input('search');
-        $data = DB::table('detail_barang')
-            ->distinct()
-            ->select('detail_barang.*', 'barang.nama_barang')
-            ->leftJoin('barang', 'detail_barang.id_barang', '=', 'barang.id_barang')
-            ->where('detail_barang.kondisi_barang', 'baik')
-            ->where('detail_barang.status', 'aktif')
-            ->where('detail_barang.kode_barang', 'like', "%" . $search . "%")
-            ->orWhere('detail_barang.nama_barang', 'like', "%" . $search . "%")
-            ->orderBy('detail_barang.kode_barang', 'asc')
-            ->paginate(10);
+
+        // dd($data);
         return view('pengajuan.perbaikan.pilihbarang', compact('data'));
     }
 

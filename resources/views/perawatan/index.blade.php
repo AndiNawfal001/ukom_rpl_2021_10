@@ -6,7 +6,7 @@
         <h1 class="text-lg lg:text-xl pb-3 font-semibold leading-loose">Daftar Barang untuk perawatan</h1>
         <div class="">
             <div class="lg:flex justify-between mb-2">
-                <form action="/perawatan" method="GET">
+                <form action="/perawatan/search" method="GET">
                     @csrf
                         <div class="form-control mb-2">
                             <div class="input-group ">

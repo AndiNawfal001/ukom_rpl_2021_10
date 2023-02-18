@@ -8,53 +8,67 @@ use Illuminate\Support\Facades\Auth;
 
 class PemutihanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $submitter = Auth::user()->id_pengguna;
-
-        $data = DB::table('pemutihan')
-            ->join('nama_kode_barang', 'pemutihan.kode_barang', '=', 'nama_kode_barang.kode_barang')
-            ->leftJoin('perbaikan', 'pemutihan.id_perbaikan', '=', 'perbaikan.id_perbaikan')
-            ->select(
-                'pemutihan.*',
-                'nama_kode_barang.nama_barang',
-                'tgl_perbaikan',
-                'penyebab_keluhan',
-                'tgl_selesai_perbaikan',
-                'nama_teknisi',
-                'status_perbaikan'
-            )
-            ->where('pemutihan.submitter', $submitter)
-            ->paginate(10);
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $data = DB::table('pemutihan')
+                ->join('nama_kode_barang', 'pemutihan.kode_barang', '=', 'nama_kode_barang.kode_barang')
+                ->leftJoin('perbaikan', 'pemutihan.id_perbaikan', '=', 'perbaikan.id_perbaikan')
+                ->select(
+                    'pemutihan.*',
+                    'nama_kode_barang.nama_barang',
+                    'tgl_perbaikan',
+                    'penyebab_keluhan',
+                    'tgl_selesai_perbaikan',
+                    'nama_teknisi',
+                    'status_perbaikan'
+                )
+                ->where('pemutihan.kode_barang', 'like', "%" . $search . "%")
+                ->where('pemutihan.submitter', $submitter)
+                ->paginate(10);
+        } else {
+            $data = DB::table('pemutihan')
+                ->join('nama_kode_barang', 'pemutihan.kode_barang', '=', 'nama_kode_barang.kode_barang')
+                ->leftJoin('perbaikan', 'pemutihan.id_perbaikan', '=', 'perbaikan.id_perbaikan')
+                ->select(
+                    'pemutihan.*',
+                    'nama_kode_barang.nama_barang',
+                    'tgl_perbaikan',
+                    'penyebab_keluhan',
+                    'tgl_selesai_perbaikan',
+                    'nama_teknisi',
+                    'status_perbaikan'
+                )
+                ->where('pemutihan.submitter', $submitter)
+                ->paginate(10);
+        }
         return view('pengajuan.pemutihan.index', compact('data'));
     }
 
     // LANGSUNG
 
-    public function pilihbarangPemutihanLangsung()
+    public function pilihbarangPemutihanLangsung(Request $request)
     {
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $data = DB::table('detail_barang')
+                ->leftJoin('barang', 'detail_barang.id_barang', '=', 'barang.id_barang')
+                ->where('detail_barang.kode_barang', 'like', "%" . $search . "%")
+                ->where('kondisi_barang', 'baik')
+                ->where('status', 'aktif')
+                ->paginate(10);
+        } else {
+            $data = DB::table('detail_barang')
+                ->select('detail_barang.*', 'barang.nama_barang')
+                ->leftJoin('barang', 'detail_barang.id_barang', '=', 'barang.id_barang')
+                ->where('status', 'aktif')
+                ->where('kondisi_barang', 'baik')
+                ->paginate(10);
+        }
 
-        $data = DB::table('detail_barang')
-            ->select('detail_barang.*', 'barang.nama_barang')
-            ->leftJoin('barang', 'detail_barang.id_barang', '=', 'barang.id_barang')
-            ->where('status', 'aktif')
-            ->where('kondisi_barang', 'baik')
-            ->paginate(10);
-        return view('pengajuan.pemutihan.pemutihanLangsung.pilihbarang', compact('data'));
-    }
 
-    public function searchPLangsung(Request $request)
-    {
-        $search = $request->input('search');
-
-        $data = DB::table('detail_barang')
-            ->leftJoin('barang', 'detail_barang.id_barang', '=', 'barang.id_barang')
-            ->where('detail_barang.kode_barang', 'like', "%" . $search . "%")
-            ->orWhere('barang.nama_barang', 'like', "%" . $search . "%")
-            ->where('kondisi_barang', 'baik')
-            ->where('status', 'aktif')
-            ->paginate(10);
-        // dd($data);
         return view('pengajuan.pemutihan.pemutihanLangsung.pilihbarang', compact('data'));
     }
 
@@ -87,34 +101,29 @@ class PemutihanController extends Controller
 
     // DARI PERBAIKAN
 
-    public function pilihbarang()
+    public function pilihbarang(Request $request)
     {
         $submitter = Auth::user()->id_pengguna;
-
-        $data = DB::table('perbaikan_pemutihan')
-            ->join('nama_kode_barang', 'perbaikan_pemutihan.asli', '=', 'nama_kode_barang.kode_barang')
-            ->select('perbaikan_pemutihan.*', 'nama_kode_barang.nama_barang')
-            ->whereNull('perbaikan_pemutihan.kode_barang')
-            ->where('perbaikan_pemutihan.submitter', $submitter)
-            ->where('perbaikan_pemutihan.approve_perbaikan', 'rusak')
-            ->paginate(10);
-        // dd($data);
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $data = DB::table('perbaikan_pemutihan')
+                ->join('nama_kode_barang', 'perbaikan_pemutihan.asli', '=', 'nama_kode_barang.kode_barang')
+                ->select('perbaikan_pemutihan.*', 'nama_kode_barang.nama_barang')
+                ->whereNull('perbaikan_pemutihan.kode_barang')
+                ->where('perbaikan_pemutihan.asli', 'like', "%" . $search . "%")
+                ->where('perbaikan_pemutihan.submitter', $submitter)
+                ->where('perbaikan_pemutihan.approve_perbaikan', 'rusak')
+                ->paginate(10);
+        } else {
+            $data = DB::table('perbaikan_pemutihan')
+                ->join('nama_kode_barang', 'perbaikan_pemutihan.asli', '=', 'nama_kode_barang.kode_barang')
+                ->select('perbaikan_pemutihan.*', 'nama_kode_barang.nama_barang')
+                ->whereNull('perbaikan_pemutihan.kode_barang')
+                ->where('perbaikan_pemutihan.submitter', $submitter)
+                ->where('perbaikan_pemutihan.approve_perbaikan', 'rusak')
+                ->paginate(10);
+        }
         return view('pengajuan.pemutihan.pilihbarang', compact('data', 'submitter'));
-    }
-
-    public function search(Request $request)
-    {
-        $submitter = Auth::user()->id_pengguna;
-        $search = $request->input('search');
-        $data = DB::table('perbaikan_pemutihan')
-            ->select('*')
-            ->whereNull('kode_barang')
-            ->where('submitter', $submitter)
-            ->where('approve_perbaikan', 'rusak')
-            ->orWhere('asli', 'like', "%" . $search . "%")
-            ->paginate(10);
-        dd($data);
-        return view('pengajuan.pemutihan.pilihbarang', compact('data'));
     }
 
     public function simpanpemutihan(Request $request)
