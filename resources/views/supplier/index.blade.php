@@ -101,12 +101,12 @@
 </label>
 @endforeach
 
-@php
+{{-- @php
     if($errors->has('nama')) {
         flash()->addError('Nama tersebut sudah digunakan!');
     }
     if($errors->has('kontak')) {
         flash()->addError('Kontak tersebut sudah digunakan!');
     }
-@endphp
+@endphp --}}
 @endsection

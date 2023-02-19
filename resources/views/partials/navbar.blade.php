@@ -36,46 +36,46 @@
         </span>
         @endauth
     </div>
-    {{-- <button data-toggle-theme="light,dark" class="btn btn-sm btn-outline mx-5" data-act-class="ACTIVECLASS">theme</button> --}}
+    <button data-toggle-theme="light,dark" class="btn btn-sm btn-outline mx-5" data-act-class="ACTIVECLASS">theme</button>
 
-        <div class="dropdown dropdown-bottom dropdown-end">
-            <label tabindex="0" class="btn btn-sm btn-outline mx-5">Theme</label>
-            <ul tabindex="0" class="dropdown-content menu p-2 shadow-2xl bg-base-100 rounded-box w-52">
-            <li>
-                <button data-set-theme="light" data-act-class="ACTIVECLASS">light</button>
-            </li>
-            <li>
-                <button data-set-theme="dark" data-act-class="ACTIVECLASS">Dark</button>
-            </li>
-            <li>
-                <button data-set-theme="cyberpunk" data-act-class="ACTIVECLASS">Cyberpunk</button>
-            </li>
-            <li>
-                <button data-set-theme="valentine" data-act-class="ACTIVECLASS">Valentine</button>
-            </li>
-            <li>
-                <button data-set-theme="night" data-act-class="ACTIVECLASS">Night</button>
-            </li>
-            <li>
-                <button data-set-theme="dracula" data-act-class="ACTIVECLASS">dracula</button>
-            </li>
-            <li>
-                <button data-set-theme="black" data-act-class="ACTIVECLASS">black</button>
-            </li>
-            <li>
-                <button data-set-theme="luxury" data-act-class="ACTIVECLASS">luxury</button>
-            </li>
-            <li>
-                <button data-set-theme="wireframe" data-act-class="ACTIVECLASS">wireframe</button>
-            </li>
-            <li>
-                <button data-set-theme="synthwave" data-act-class="ACTIVECLASS">synthwave</button>
-            </li>
-            <li>
-                <button data-set-theme="halloween" data-act-class="ACTIVECLASS">halloween</button>
-            </li>
-            </ul>
-        </div>
+    {{-- <div class="dropdown dropdown-bottom dropdown-end">
+        <label tabindex="0" class="btn btn-sm btn-outline mx-5">Theme</label>
+        <ul tabindex="0" class="dropdown-content menu p-2 shadow-2xl bg-base-100 rounded-box w-52">
+        <li>
+            <button data-set-theme="light" data-act-class="ACTIVECLASS">light</button>
+        </li>
+        <li>
+            <button data-set-theme="dark" data-act-class="ACTIVECLASS">Dark</button>
+        </li>
+        <li>
+            <button data-set-theme="cyberpunk" data-act-class="ACTIVECLASS">Cyberpunk</button>
+        </li>
+        <li>
+            <button data-set-theme="valentine" data-act-class="ACTIVECLASS">Valentine</button>
+        </li>
+        <li>
+            <button data-set-theme="night" data-act-class="ACTIVECLASS">Night</button>
+        </li>
+        <li>
+            <button data-set-theme="dracula" data-act-class="ACTIVECLASS">dracula</button>
+        </li>
+        <li>
+            <button data-set-theme="black" data-act-class="ACTIVECLASS">black</button>
+        </li>
+        <li>
+            <button data-set-theme="luxury" data-act-class="ACTIVECLASS">luxury</button>
+        </li>
+        <li>
+            <button data-set-theme="wireframe" data-act-class="ACTIVECLASS">wireframe</button>
+        </li>
+        <li>
+            <button data-set-theme="synthwave" data-act-class="ACTIVECLASS">synthwave</button>
+        </li>
+        <li>
+            <button data-set-theme="halloween" data-act-class="ACTIVECLASS">halloween</button>
+        </li>
+        </ul>
+    </div> --}}
     <form action="/logout" method="POST">
       @csrf
 

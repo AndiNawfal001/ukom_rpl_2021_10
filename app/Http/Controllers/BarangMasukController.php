@@ -18,7 +18,7 @@ class BarangMasukController extends Controller
         $data = DB::table('data_barang_masuk')->get();
         // dd($data);
         $info = DB::table('pengajuan_bb')->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')->get();
-        $jenisBarang = DB::table('jenis_barang')->get();
+        $jenisBarang = DB::table('jenis_barang')->select('jenis_barang.*', 'barang.jml_barang')->leftJoin('barang', 'jenis_barang.id_jenis_brg', '=', 'barang.id_jenis_brg')->get();
         $approved = DB::table('pengajuan_bb')->where('status_approval', 'setuju')->paginate(5);
 
 

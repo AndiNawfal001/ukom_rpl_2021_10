@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('container')
-<div class="bg-base-content opacity-50 h-2/6 left-0 right-0 fixed -z-50"></div>
+{{-- <div class="bg-base-content opacity-50 h-2/6 left-0 right-0 fixed -z-50"></div> --}}
 <div class="pt-6 px-4">
 
     <div class="w-full grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4">
@@ -14,7 +14,7 @@
                      {{ $barang_masuk }}
                      @endif
                  </span>
-                 <h3 class="text-base font-normal">Total Barang Masuk</h3>
+                 <h3 class="text-base font-normal">Total Barang</h3>
               </div>
               <div class="flex-shrink-0">
                  <a href="/barangMasuk" class="text-sm font-medium text-cyan-600 hover:bg-base-200 rounded-lg p-2">Details</a>
@@ -33,7 +33,7 @@
                          {{ $pengajuan_bb }}
                      @endif
                  </span>
-                 <h3 class="text-base font-normal">Pengajuan Barang baru yang disetujui</h3>
+                 <h3 class="text-base font-normal">Pengajuan Barang yang disetujui</h3>
               </div>
               <div class="flex-shrink-0">
                  <a href="/pengajuan/BB" class="text-sm font-medium text-cyan-600 hover:bg-base-200 rounded-lg p-2">Details</a>

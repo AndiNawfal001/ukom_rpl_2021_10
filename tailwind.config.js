@@ -1,8 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-//   daisyui: {
-//     themes: ["dark"],
-//   },
+  daisyui: {
+    themes: ["light", "dark"],
+  },
+    // purge: {
+    //     options: {
+    //     safelist: [/data-theme$/],
+    //     },
+    // },
   content: [
     "./resources/**/*.blade.php",
     "./resources/**/*.js",
@@ -14,4 +19,3 @@ module.exports = {
   },
   plugins: [require("daisyui")],
 }
-// php -S localhost:8000 -t public

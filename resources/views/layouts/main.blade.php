@@ -14,18 +14,16 @@
 
 <div class="lg:flex ">
     <div class="hidden lg:block sidebar">
-        <aside id="sidebar" class=" fixed z-20 h-full top-0 bottom-0 left-0 pt-16 flex lg:flex flex-shrink-0 flex-col w-64 transition-width duration-75" aria-label="Sidebar">
+        <aside id="sidebar" class=" fixed z-20 h-full top-0 bottom-0 left-0 pt-16 flex lg:flex flex-shrink-0 flex-col w-64 transition-width duration-300" aria-label="Sidebar">
             @include('partials.sidebar')
         </aside>
     </div>
 
-
-    <div class="opacity-50 hidden fixed inset-0 z-10" id="sidebarBackdrop" ></div>
-        <div id="main-content" class="h-full w-full  relative overflow-y-auto lg:ml-64" data-aos="fade-down">
-            <main >
-                @yield('container')
-            </main>
-        </div>
+    <div id="main-content" class="h-full w-full  relative overflow-y-auto lg:ml-64" data-aos="fade-down">
+        <main>
+            @yield('container')
+        </main>
+    </div>
 
     </div>
 

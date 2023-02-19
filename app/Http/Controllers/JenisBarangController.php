@@ -12,13 +12,13 @@ class JenisBarangController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_jenis' => 'required|unique:jenis_barang,nama_jenis'
+            'nama_jenis' => 'unique:jenis_barang,nama_jenis'
         ]);
         try {
             $dariFunction = DB::select('SELECT newIdJenisbrg() AS id_jenis_brg');
             $array = Arr::pluck($dariFunction, 'id_jenis_brg');
             $kode_baru = Arr::get($array, '0');
-
+            dd($kode_baru);
             $tambah_jenisbrg = DB::table('jenis_barang')->insert([
                 'id_jenis_brg' => $kode_baru,
                 'nama_jenis' => $request->input('nama_jenis'),
