@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   daisyui: {
-    themes: ["light", "dark"],
+    themes: ['dark', 'light'],
   },
     // purge: {
     //     options: {

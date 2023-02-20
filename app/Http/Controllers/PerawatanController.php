@@ -4,33 +4,36 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 
 // use Illuminate\Support\Collection;
 
 class PerawatanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data = DB::table('perawatan')
-            ->select('perawatan.*', 'nama_kode_barang.nama_barang', 'ruangan.nama_ruangan')
-            ->leftJoin('detail_barang', 'perawatan.kode_barang', '=', 'detail_barang.kode_barang')
-            ->leftJoin('ruangan', 'detail_barang.ruangan', '=', 'ruangan.id_ruangan')
-            ->leftJoin('nama_kode_barang', 'perawatan.kode_barang', 'nama_kode_barang.kode_barang')
-            ->paginate(10);
-        return view('perawatan.index', compact('data'));
-    }
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $data = DB::table('perawatan')
+                ->select('perawatan.*', 'nama_kode_barang.nama_barang', 'ruangan.nama_ruangan')
+                ->leftJoin('detail_barang', 'perawatan.kode_barang', '=', 'detail_barang.kode_barang')
+                ->leftJoin('ruangan', 'detail_barang.ruangan', '=', 'ruangan.id_ruangan')
+                ->leftJoin('nama_kode_barang', 'perawatan.kode_barang', 'nama_kode_barang.kode_barang')
+                ->where('perawatan.kode_barang', 'like', "%" . $search . "%")
+                ->orWhere('nama_kode_barang.nama_barang', 'like', "%" . $search . "%")
+                ->orWhere('perawatan.tgl_perawatan', 'like', "%" . $search . "%")
+                ->orWhere('perawatan.nama_pelaksana', 'like', "%" . $search . "%")
+                ->paginate(10);
+        } else {
+            $data = DB::table('perawatan')
+                ->select('perawatan.*', 'nama_kode_barang.nama_barang', 'ruangan.nama_ruangan')
+                ->leftJoin('detail_barang', 'perawatan.kode_barang', '=', 'detail_barang.kode_barang')
+                ->leftJoin('ruangan', 'detail_barang.ruangan', '=', 'ruangan.id_ruangan')
+                ->leftJoin('nama_kode_barang', 'perawatan.kode_barang', 'nama_kode_barang.kode_barang')
+                ->paginate(10);
+        }
 
-    public function search(Request $request)
-    {
-        $search = $request->input('search');
 
-        $data = DB::table('perawatan')
-            ->where('kode_barang', 'like', "%" . $search . "%")
-            ->orWhere('tgl_perawatan', 'like', "%" . $search . "%")
-            ->orWhere('nama_pelaksana', 'like', "%" . $search . "%")
-            ->paginate(5);
         return view('perawatan.index', compact('data'));
     }
 
@@ -74,11 +77,7 @@ class PerawatanController extends Controller
         );
         try {
 
-            $dariFunction = DB::select('SELECT newIdPerawatan() AS id_perawatan');
-            // dd($dariFunction);
-            $array = Arr::pluck($dariFunction, 'id_perawatan');
-            $id_perawatan = Arr::get($array, '0');
-            // dd($id_perawatan);
+            $id_perawatan = collect(DB::select('SELECT newIdPerawatan() AS id_perawatan'))->firstOrFail()->id_perawatan;
 
             $tambahPerawatan = DB::table('perawatan')->insert([
                 'id_perawatan' => $id_perawatan,

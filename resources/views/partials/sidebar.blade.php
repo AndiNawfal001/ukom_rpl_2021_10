@@ -42,9 +42,28 @@
                     </li>
                 @endcan
                 @php
-                    $pengajuan_bb =  DB::table('pengajuan_bb')->whereNull('approver')->count('id_pengajuan_bb');
-                    $perbaikan =  DB::table('perbaikan')->whereNull('approver')->where('approve_perbaikan', 'pending')->whereNotNull('tgl_selesai_perbaikan')->count('id_perbaikan');
-                    $pemutihan =  DB::table('pemutihan')->whereNull('approver')->count('id_pemutihan');
+                    $pengajuan_bb =  DB::table('pengajuan_bb')
+                                ->whereNull('approver')
+                                ->count('id_pengajuan_bb');
+
+                    $perbaikan =  DB::table('perbaikan')
+                                ->whereNull('approver')
+                                ->where('approve_perbaikan', 'pending')
+                                ->whereNotNull('tgl_selesai_perbaikan')
+                                ->count('id_perbaikan');
+
+                    $pemutihan =  DB::table('pemutihan')
+                                ->whereNull('approver')
+                                ->count('id_pemutihan');
+
+                    $submitter = Auth::user()->id_pengguna;
+                    $pemutihanKaprog = DB::table('perbaikan_pemutihan')
+                                ->join('nama_kode_barang', 'perbaikan_pemutihan.asli', '=', 'nama_kode_barang.kode_barang')
+                                ->select('perbaikan_pemutihan.*', 'nama_kode_barang.nama_barang')
+                                ->whereNull('perbaikan_pemutihan.kode_barang')
+                                ->where('perbaikan_pemutihan.submitter', $submitter)
+                                ->where('perbaikan_pemutihan.approve_perbaikan', 'rusak')
+                                ->count();
                 @endphp
                 @can('admin+manajemen')
                 <li class="group">
@@ -63,26 +82,26 @@
                     </button>
                     <ul class="dropdown-container {{ request()->is('approval/BB*', 'approval/PB*' ,'approval/pemutihan*') ? 'block' : 'hidden' }}">
                         <li >
-                            <a href="/approval/BB" class="flex justify-between items-center py-3 px-2 pl-11 w-full text-base border-primary font-normal rounded-lg group {{ request()->is('approval/BB*') ? 'bg-base-200 border-r-2 shadow-md ml-[2px]' : 'hover:bg-base-300' }}">
+                            <a href="/approval/BB" class="flex justify-between items-center py-3 px-2 pl-11 w-full text-base border-primary font-normal rounded-lg group {{ request()->is('approval/BB*') ? 'bg-base-200 border-r-2 shadow-md' : 'hover:bg-base-300' }}">
                                 Barang Baru
                                 @if($pengajuan_bb >= 1)
-                                    <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info"></span>
+                                    <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info {{ request()->is('approval/BB*') ? 'mr-[6px]' : '' }}"></span>
                                 @endif
                             </a>
                         </li>
                         <li>
-                            <a href="/approval/PB" class="flex justify-between items-center py-3 px-2 pl-11 w-full text-base border-primary font-normal rounded-lg group {{ request()->is('approval/PB*') ? 'bg-base-200 border-r-2 shadow-md ml-[2px]' : 'hover:bg-base-300' }}">
+                            <a href="/approval/PB" class="flex justify-between items-center py-3 px-2 pl-11 w-full text-base border-primary font-normal rounded-lg group {{ request()->is('approval/PB*') ? 'bg-base-200 border-r-2 shadow-md' : 'hover:bg-base-300' }}">
                                 Perbaikan
                                 @if($perbaikan >= 1)
-                                    <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info"></span>
+                                    <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info {{ request()->is('approval/PB*') ? 'mr-[6px]' : '' }}"></span>
                                 @endif
                             </a>
                         </li>
                         <li>
-                            <a href="/approval/pemutihan" class="flex justify-between items-center py-3 px-2 pl-11 w-full text-base border-primary font-normal rounded-lg group {{ request()->is('approval/pemutihan*') ? 'bg-base-200 border-r-2 shadow-md ml-[2px]' : 'hover:bg-base-300' }}">
+                            <a href="/approval/pemutihan" class="flex justify-between items-center py-3 px-2 pl-11 w-full text-base border-primary font-normal rounded-lg group {{ request()->is('approval/pemutihan*') ? 'bg-base-200 border-r-2 shadow-md' : 'hover:bg-base-300' }}">
                                 Pemutihan
                                 @if($pemutihan >= 1)
-                                    <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info"></span>
+                                    <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info{{ request()->is('approval/pemutihan*') ? 'mr-[6px]' : '' }}"></span>
                                 @endif
                             </a>
                         </li>
@@ -99,6 +118,9 @@
                             </svg>
                         </div>
                         <span class="flex-1 ml-3 text-left whitespace-nowrap " sidebar-toggle-item>Pengajuan</span>
+                        @if($pemutihanKaprog >= 1 )
+                            <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info"></span>
+                        @endif
                         <svg sidebar-toggle-item class="w-6 h-6 group-hover:text-base-content" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                     </button>
                     <ul class="dropdown-container {{ request()->is('pengajuan/BB*', 'pengajuan/PB*' ,'pemutihan*') ? 'block' : 'hidden' }}">
@@ -109,10 +131,10 @@
                             <a href="/pengajuan/PB" class="flex items-center py-3 px-2 pl-11 w-full text-base border-primary font-normal rounded-lg group {{ request()->is('pengajuan/PB*') ? 'bg-base-200 border-r-2 shadow-md ml-[2px]' : 'hover:bg-base-300' }}">Perbaikan</a>
                         </li>
                         <li>
-                            <a href="/pemutihan" class="flex items-center py-3 px-2 pl-11 w-full text-base border-primary font-normal rounded-lg group {{ request()->is('pemutihan*') ? 'bg-base-200 border-r-2 shadow-md ml-[2px]' : 'hover:bg-base-300' }}">
+                            <a href="/pemutihan" class="flex justify-between items-center py-3 px-2 pl-11 w-full text-base border-primary font-normal rounded-lg group {{ request()->is('pemutihan*') ? 'bg-base-200 border-r-2 shadow-md' : 'hover:bg-base-300' }}">
                                 Pemutihan
-                                @if($pemutihan >= 1)
-                                    <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info"></span>
+                                @if($pemutihanKaprog >= 1)
+                                    <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info {{ request()->is('pemutihan*') ? 'mr-[6px]' : '' }}"></span>
                                 @endif
                             </a>
                         </li>

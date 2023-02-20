@@ -58,18 +58,30 @@ class PenggunaController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate(
-            [
-                'username' => 'unique:pengguna,username',
-                'email' => ['email:dns', 'unique:pengguna,email'],
-                'nip' => 'max:18',
-            ],
-            [
-                'username.unique' => 'Username tersebut sudah digunakan!',
-                'email.unique' => 'Email tersebut sudah digunakan!',
-                'nip.max' => 'Tidak boleh lebih dari 18 karakter!',
-            ]
-        );
+        if ($request->input('levelUser') !== 'admin') {
+            $request->validate(
+                [
+                    'nip' => 'required|min:18|max:18',
+                ],
+                [
+                    'nip.max' => 'NIP tidak boleh lebih dari 18 karakter!',
+                    'nip.min' => 'NIP tidak boleh kurang dari 18 karakter!',
+                    'nip.required' => 'NIP harus diisi'
+                ]
+            );
+        } else {
+            $request->validate(
+                [
+                    'username' => 'unique:pengguna,username',
+                    'email' => ['email:dns', 'unique:pengguna,email'],
+                ],
+                [
+                    'username.unique' => 'Username tersebut sudah digunakan!',
+                    'email.unique' => 'Email tersebut sudah digunakan!',
+                ]
+            );
+        }
+
         try {
             if ($request->file('image') == null) {
                 $image = 'pengguna/' . $request->input('username') . '.png';

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Arr;
 
 class JenisBarangController extends Controller
 {
@@ -15,10 +14,7 @@ class JenisBarangController extends Controller
             'nama_jenis' => 'unique:jenis_barang,nama_jenis'
         ]);
         try {
-            $dariFunction = DB::select('SELECT newIdJenisbrg() AS id_jenis_brg');
-            $array = Arr::pluck($dariFunction, 'id_jenis_brg');
-            $kode_baru = Arr::get($array, '0');
-            dd($kode_baru);
+            $kode_baru = collect(DB::select('SELECT newIdJenisbrg() AS id_jenis_brg'))->firstOrFail()->id_jenis_brg;
             $tambah_jenisbrg = DB::table('jenis_barang')->insert([
                 'id_jenis_brg' => $kode_baru,
                 'nama_jenis' => $request->input('nama_jenis'),

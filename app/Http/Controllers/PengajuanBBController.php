@@ -11,36 +11,33 @@ use Illuminate\Support\Facades\Auth;
 class PengajuanBBController extends Controller
 {
 
+    public function index(Request $request)
+    {
+        $submitter = Auth::user()->id_pengguna;
+
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $data = DB::table('pengajuan_bb')
+                ->where('nama_barang', 'like', "%" . $search . "%")
+                ->where('submitter', $submitter)
+                ->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')
+                ->paginate(10);
+        } else {
+            $data = DB::table('pengajuan_bb')
+                ->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')
+                ->where('submitter', $submitter)
+                ->paginate(10);
+        }
+
+        $submitter = Auth::user()->id_pengguna;
+
+
+        return view('pengajuan.barang_baru.index', compact('data'));
+    }
+
     private function getRuangan(): Collection
     {
         return collect(DB::select('SELECT * FROM ruangan'));
-    }
-
-    public function index()
-    {
-        $ruangan = $this->getRuangan();
-        $submitter = Auth::user()->id_pengguna;
-        $data = DB::table('pengajuan_bb')
-            ->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')
-            ->where('submitter', $submitter)
-            ->paginate(10);
-
-        return view('pengajuan.barang_baru.index', compact('data', 'ruangan'));
-    }
-
-    public function search(Request $request)
-    {
-        $ruangan = $this->getRuangan();
-        $submitter = Auth::user()->id_pengguna;
-        $search = $request->input('search');
-        $data = DB::table('pengajuan_bb')
-            ->where('submitter', $submitter)
-            ->where('nama_barang', 'like', "%" . $search . "%")
-            ->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')
-            // ->orWhere('status_approval','like',"%".$search."%")
-            // ->orWhere('tgl','like',"%".$search."%")
-            ->paginate(10);
-        return view('pengajuan.barang_baru.index', compact('data', 'ruangan'));
     }
 
     public function formTambah()

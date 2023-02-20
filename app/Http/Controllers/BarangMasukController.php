@@ -13,47 +13,29 @@ use Illuminate\Support\Facades\Auth;
 class BarangMasukController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $data = DB::table('data_barang_masuk')->get();
-        // dd($data);
+        if ($request->has('searchApproved')) {
+            $search = $request->input('searchApproved');
+            $data = DB::table('data_barang_masuk')->get();
+            $approved = DB::table('pengajuan_bb')
+                ->where('nama_barang', 'like', "%" . $search . "%")
+                ->where('status_approval', 'setuju')
+                ->paginate(5);
+        } elseif ($request->has('searchData')) {
+            $search = $request->input('searchData');
+            $data = DB::table('data_barang_masuk')
+                ->where('nama_barang', 'like', "%" . $search . "%")
+                ->orWhere('progress', 'like', "%" . $search . "%")
+                ->orWhere('target', 'like', "%" . $search . "%")
+                ->get();
+            $approved = DB::table('pengajuan_bb')->where('status_approval', 'setuju')->paginate(5);
+        } else {
+            $data = DB::table('data_barang_masuk')->get();
+            $approved = DB::table('pengajuan_bb')->where('status_approval', 'setuju')->paginate(5);
+        }
         $info = DB::table('pengajuan_bb')->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')->get();
         $jenisBarang = DB::table('jenis_barang')->select('jenis_barang.*', 'barang.jml_barang')->leftJoin('barang', 'jenis_barang.id_jenis_brg', '=', 'barang.id_jenis_brg')->get();
-        $approved = DB::table('pengajuan_bb')->where('status_approval', 'setuju')->paginate(5);
-
-
-        return view('barangMasuk.index', compact('data', 'info', 'approved', 'jenisBarang'));
-    }
-
-    public function searchPengajuan(Request $request)
-    {
-        $search = $request->input('search');
-
-        $data = DB::table('data_barang_masuk')->get();
-        $info = DB::table('pengajuan_bb')->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')->get();
-        $approved = DB::table('pengajuan_bb')
-            ->where('status_approval', 'setuju')
-            ->where('nama_barang', 'like', "%" . $search . "%")
-            ->orWhere('jumlah', 'like', "%" . $search . "%")
-            ->paginate(5, ['*'], 'approved');
-        $jenisBarang = DB::table('jenis_barang')
-            ->paginate(5, ['*'], 'jenisBarang');
-
-        return view('barangMasuk.index', compact('data', 'info', 'approved', 'jenisBarang'));
-    }
-
-    public function searchBarangMasuk(Request $request)
-    {
-        $search = $request->input('search');
-
-        $data = DB::table('data_barang_masuk')
-            ->where('nama_barang', 'like', "%" . $search . "%")
-            ->orWhere('progress', 'like', "%" . $search . "%")
-            ->orWhere('target', 'like', "%" . $search . "%")
-            ->get();
-        $info = DB::table('pengajuan_bb')->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')->get();
-        $approved = DB::table('pengajuan_bb')->where('status_approval', 'setuju')->paginate(5, ['*'], 'approved');
-        $jenisBarang = DB::table('jenis_barang')->paginate(5, ['*'], 'jenisBarang');
 
         return view('barangMasuk.index', compact('data', 'info', 'approved', 'jenisBarang'));
     }
@@ -81,9 +63,8 @@ class BarangMasukController extends Controller
         $supplier = $this->getSupplier();
 
         // SISA PENGAJUAN
-        $x = (DB::select('SELECT SUM(jml_masuk) AS jml FROM barang_masuk WHERE id_pengajuan = ' . $tambah->id_pengajuan_bb));
-        $array = Arr::pluck($x, 'jml');
-        $jml_masuk = Arr::get($array, '0');
+        $jml_masuk = collect(DB::select('SELECT SUM(jml_masuk) AS jml FROM barang_masuk WHERE id_pengajuan = ' . $tambah->id_pengajuan_bb))->firstOrFail()->jml;
+
         $jml_pengajuan = $tambah->jumlah;
         $max_input = $jml_pengajuan - $jml_masuk;
         return view('barangMasuk.formtambah', compact('jenisBarang', 'supplier', 'tambah', 'adder', 'max_input'));

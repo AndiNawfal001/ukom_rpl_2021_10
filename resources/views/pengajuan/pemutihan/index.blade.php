@@ -26,13 +26,29 @@
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </label>
                 </a>
+                @php
+                    $submitter = Auth::user()->id_pengguna;
+                    $pemutihanKaprog = DB::table('perbaikan_pemutihan')
+                        ->join('nama_kode_barang', 'perbaikan_pemutihan.asli', '=', 'nama_kode_barang.kode_barang')
+                        ->select('perbaikan_pemutihan.*', 'nama_kode_barang.nama_barang')
+                        ->whereNull('perbaikan_pemutihan.kode_barang')
+                        ->where('perbaikan_pemutihan.submitter', $submitter)
+                        ->where('perbaikan_pemutihan.approve_perbaikan', 'rusak')
+                        ->count();
+                @endphp
                 <a href="/pemutihan/pilihbarang">
-                    <label for="hosting-small" class="inline-flex justify-between items-center p-5 w-full bg-base-100 rounded-lg border border-info cursor-pointer hover:bg-base-300 mb-4
+                    <label for="hosting-small" class="inline-flex justify-between items-center p-5 w-full bg-base-100 rounded-lg border  border-info cursor-pointer hover:bg-base-300 mb-4
                     ">
                         <div class="block">
                             <div class="w-full text-lg font-semibold">Pemutihan dari perbaikan</div>
                             <div class="w-full">lengkapi data untuk pemutihan</div>
                         </div>
+                        @if($pemutihanKaprog >= 1)
+                            <span class="flex h-3 w-3">
+                                <span class="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-sky-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
+                            </span>
+                        @endif
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </label>
                 </a>
