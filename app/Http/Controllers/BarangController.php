@@ -31,17 +31,15 @@ class BarangController extends Controller
         if ($request->has('search')) {
             $search = $request->input('search');
             $data = DB::table('barang')
-                ->join('jenis_barang', 'barang.id_jenis_brg', '=', 'jenis_barang.id_jenis_brg')
                 ->join('detail_barang', 'barang.id_barang', '=', 'detail_barang.id_barang')
-                ->where('barang.id_barang', $id)
                 ->where('barang.nama_barang', 'like', "%" . $search . "%")
                 ->orWhere('kode_barang', 'like', "%" . $search . "%")
                 ->orWhere('kondisi_barang', 'like', "%" . $search . "%")
                 ->orWhere('status', 'like', "%" . $search . "%")
+                ->where('barang.id_barang', $id)
                 ->paginate(10);
         } else {
             $data = DB::table('barang')
-                ->join('jenis_barang', 'barang.id_jenis_brg', '=', 'jenis_barang.id_jenis_brg')
                 ->join('detail_barang', 'barang.id_barang', '=', 'detail_barang.id_barang')
                 ->where('detail_barang.id_barang', $id)
                 ->paginate(10);

@@ -31,7 +31,7 @@
                     <label class="label">
                         <span class="label-text">Level User</span>
                     </label>
-                    <select class="select select-bordered w-full max-w-xs" name="levelUser" required>
+                    <select class="select select-bordered w-full max-w-xs" id="leveluser" name="levelUser" required>
                         <option disabled selected>-- Pilih Level --</option>
                         @foreach ($levelUser as $item)
                             <option value="{{ $item->nama_level }}" {{ old('levelUser') == $item->nama_level ? 'selected' : null}}>{{ $item->nama_level }}</option>
@@ -57,11 +57,11 @@
                 </div>
             </div>
             <div class="basis-1/2">
-                <div class="form-control">
+                <div class="form-control"  id="nip">
                     <label class="label">
                         <span class="label-text">NIP</span>
                     </label>
-                    <input type="number" name="nip" class="input input-bordered" value="{{ old('nip') }}" placeholder="Silahkan dikosongkan jika user admin" autocomplete="off"/>
+                    <input type="number" name="nip" class="input input-bordered" value="{{ old('nip') }}" autocomplete="off"/>
                     @error('nip')
                         <p class="text-red-500">{{ $message }}</p>
                     @enderror
@@ -100,4 +100,17 @@
     </div>
 
 </div>
+
+<script>
+    const leveluser = document.querySelector('#leveluser');
+    const nip = document.querySelector("#nip");
+
+    leveluser.addEventListener('change', function () {
+        if (leveluser.value === 'admin') {
+            nip.classList.toggle('hidden');
+        } else {
+            nip.classList.remove('hidden');
+        }
+    });
+</script>
 @endsection

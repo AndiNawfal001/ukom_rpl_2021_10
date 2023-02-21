@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Arr;
 use App\Models\SupplierModel;
 
 class SupplierController extends Controller
@@ -42,11 +41,7 @@ class SupplierController extends Controller
             ]
         );
         try {
-            $dariFunction = DB::select('SELECT newIdSupplier() AS id_supplier');
-            // dd($dariFunction);
-            $array = Arr::pluck($dariFunction, 'id_supplier');
-            $kode_baru = Arr::get($array, '0');
-            // dd($kode_baru);
+            $kode_baru = collect(DB::select('SELECT newIdSupplier() AS id_supplier'))->firstOrFail()->id_supplier;
             $tambahSupplier = SupplierModel::insert([
                 'id_supplier' => $kode_baru,
                 'nama' => $request->input('nama'),

@@ -64,9 +64,7 @@ class PerbaikanController extends Controller
         try {
             $submitter_id = Auth::user()->id_pengguna;
 
-            $dariFunction = DB::select('SELECT newIdPerbaikan() AS id_perbaikan');
-            $array = Arr::pluck($dariFunction, 'id_perbaikan');
-            $id_perbaikan = Arr::get($array, '0');
+            $id_perbaikan = collect(DB::select('SELECT newIdPerbaikan() AS id_perbaikan'))->firstOrFail()->id_perbaikan;
 
             $tambah_pengajuan_pb = DB::table('perbaikan')->insert([
                 'id_perbaikan' => $id_perbaikan,

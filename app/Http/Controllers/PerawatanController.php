@@ -25,6 +25,7 @@ class PerawatanController extends Controller
                 ->orWhere('perawatan.nama_pelaksana', 'like', "%" . $search . "%")
                 ->paginate(10);
         } else {
+            // TIDAK DI JADIKAN VIEW KARENA DATA JOIN TERSEBUT HANYA UNTUK DETAIL
             $data = DB::table('perawatan')
                 ->select('perawatan.*', 'nama_kode_barang.nama_barang', 'ruangan.nama_ruangan')
                 ->leftJoin('detail_barang', 'perawatan.kode_barang', '=', 'detail_barang.kode_barang')
@@ -37,31 +38,30 @@ class PerawatanController extends Controller
         return view('perawatan.index', compact('data'));
     }
 
-    public function pilihbarangPerawatan()
+    public function pilihbarangPerawatan(Request $request)
     {
-        $data = DB::table('detail_barang')
-            ->select('detail_barang.*', 'nama_kode_barang.nama_barang')
-            ->leftJoin('nama_kode_barang', 'detail_barang.kode_barang', '=', 'nama_kode_barang.kode_barang')
-            ->where('kondisi_barang', 'baik')
-            ->where('status', 'aktif')
-            ->paginate(10);
-        return view('perawatan.pilihbarang', compact('data'));
-    }
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $data = DB::table('detail_barang')
+                ->select('detail_barang.*', 'nama_kode_barang.nama_barang')
+                ->leftJoin('nama_kode_barang', 'detail_barang.kode_barang', '=', 'nama_kode_barang.kode_barang')
+                ->where('kondisi_barang', 'baik')
+                ->where('status', 'aktif')
+                ->where('nama_kode_barang.nama_barang', 'like', "%" . $search . "%")
+                ->orWhere('detail_barang.kode_barang', 'like', "%" . $search . "%")
+                ->orWhere('kondisi_barang', 'like', "%" . $search . "%")
+                ->orWhere('status', 'like', "%" . $search . "%")
+                ->paginate(10);
+        } else {
+            $data = DB::table('detail_barang')
+                ->select('detail_barang.*', 'nama_kode_barang.nama_barang')
+                ->leftJoin('nama_kode_barang', 'detail_barang.kode_barang', '=', 'nama_kode_barang.kode_barang')
+                ->where('kondisi_barang', 'baik')
+                ->where('status', 'aktif')
+                ->paginate(10);
+        }
 
-    public function searchpilihbarangPerawatan(Request $request)
-    {
-        $search = $request->input('search');
 
-        $data = DB::table('detail_barang')
-            ->select('detail_barang.*', 'nama_kode_barang.nama_barang')
-            ->leftJoin('nama_kode_barang', 'detail_barang.kode_barang', '=', 'nama_kode_barang.kode_barang')
-            ->where('kondisi_barang', 'baik')
-            ->where('status', 'aktif')
-            ->where('nama_kode_barang.nama_barang', 'like', "%" . $search . "%")
-            ->orWhere('detail_barang.kode_barang', 'like', "%" . $search . "%")
-            ->orWhere('kondisi_barang', 'like', "%" . $search . "%")
-            ->orWhere('status', 'like', "%" . $search . "%")
-            ->paginate(10);
         return view('perawatan.pilihbarang', compact('data'));
     }
 

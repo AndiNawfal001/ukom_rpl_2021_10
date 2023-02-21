@@ -107,6 +107,7 @@ class ApprovalController extends Controller
                 ->orWhere('barang.nama_barang', 'like', "%" . $search . "%")
                 ->paginate(10);
         } else {
+            // TIDAK DIJADIKAN VIEW KARENA DATA JOIN UNTUK DETAIL
             $data = DB::table('perbaikan')
                 ->select('perbaikan.*', 'barang.nama_barang', 'ruangan.nama_ruangan')
                 ->leftJoin('detail_barang', 'perbaikan.kode_barang', '=', 'detail_barang.kode_barang')
@@ -211,6 +212,7 @@ class ApprovalController extends Controller
                 ->orWhere('nama_kode_barang.nama_barang', 'like', "%" . $search . "%")
                 ->paginate(10);
         } else {
+            // TIDAK DIJADIKAN VIEW KARENA DATA JOIN UNTUK DETAIL
             $data = DB::table('pemutihan')
                 ->join('nama_kode_barang', 'pemutihan.kode_barang', '=', 'nama_kode_barang.kode_barang')
                 ->leftJoin('perbaikan', 'pemutihan.id_perbaikan', '=', 'perbaikan.id_perbaikan')

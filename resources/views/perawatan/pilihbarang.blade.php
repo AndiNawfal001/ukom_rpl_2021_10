@@ -17,7 +17,7 @@
                 </a>
             </div>
         </div>
-        <form action="/perawatan/pilihBarang/search" method="GET">
+        <form action="/perawatan/pilihBarang" method="GET">
             @csrf
                 <div class="form-control mb-2">
                     <div class="input-group ">

@@ -23,7 +23,7 @@ return new class extends Migration
                 RIGHT JOIN perbaikan
                 ON pemutihan.id_perbaikan = perbaikan.id_perbaikan
             )"
-          );
+        );
     }
 
     /**

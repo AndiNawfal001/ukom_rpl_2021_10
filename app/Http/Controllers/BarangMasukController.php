@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 // use Termwind\Components\Dd;
 

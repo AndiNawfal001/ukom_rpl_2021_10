@@ -18,26 +18,16 @@ class PenggunaController extends Controller
         $data = null;
         if ($request->has('search')) {
             $search = $request->input('search');
-            $data = DB::table('pengguna')
-                ->select('pengguna.*', 'level_user.nama_level', 'admin.nama as admin', 'manajemen.nama as manajemen', 'kaprog.nama as kaprog')
-                ->leftJoin('level_user', 'pengguna.id_level', '=', 'level_user.id_level')
-                ->leftJoin('admin', 'pengguna.id_pengguna', '=', 'admin.id_pengguna')
-                ->leftJoin('manajemen', 'pengguna.id_pengguna', '=', 'manajemen.id_pengguna')
-                ->leftJoin('kaprog', 'pengguna.id_pengguna', '=', 'kaprog.id_pengguna')
+            $data = DB::table('pengguna_admin_manajemen_kaprog')
                 ->where('pengguna.username', 'like', "%" . $search . "%")
                 ->orWhere('pengguna.email', 'like', "%" . $search . "%")
                 ->orWhere('level_user.nama_level', 'like', "%" . $search . "%")
                 ->orderBy('level_user.id_level')
                 ->paginate(5);
         } else {
-            $data = DB::table('pengguna')
-                ->select('pengguna.*', 'level_user.nama_level', 'admin.nama as admin', 'manajemen.nama as manajemen', 'kaprog.nama as kaprog')
-                ->leftJoin('level_user', 'pengguna.id_level', '=', 'level_user.id_level')
-                ->leftJoin('admin', 'pengguna.id_pengguna', '=', 'admin.id_pengguna')
-                ->leftJoin('manajemen', 'pengguna.id_pengguna', '=', 'manajemen.id_pengguna')
-                ->leftJoin('kaprog', 'pengguna.id_pengguna', '=', 'kaprog.id_pengguna')
-                ->orderBy('id_level')
+            $data = DB::table('pengguna_admin_manajemen_kaprog')
                 ->paginate(5);
+            // dd($data);
         }
         // dd($data);
 
