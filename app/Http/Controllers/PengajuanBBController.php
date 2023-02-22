@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\PengajuanBBModel;
+use App\Models\RuanganModel;
+
 
 class PengajuanBBController extends Controller
 {
@@ -17,14 +20,12 @@ class PengajuanBBController extends Controller
 
         if ($request->has('search')) {
             $search = $request->input('search');
-            $data = DB::table('pengajuan_bb')
-                ->where('nama_barang', 'like', "%" . $search . "%")
+            $data = PengajuanBBModel::where('nama_barang', 'like', "%" . $search . "%")
                 ->where('submitter', $submitter)
                 ->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')
                 ->paginate(10);
         } else {
-            $data = DB::table('pengajuan_bb')
-                ->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')
+            $data = PengajuanBBModel::leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')
                 ->where('submitter', $submitter)
                 ->paginate(10);
         }
@@ -37,7 +38,7 @@ class PengajuanBBController extends Controller
 
     private function getRuangan(): Collection
     {
-        return collect(DB::select('SELECT * FROM ruangan'));
+        return collect(RuanganModel::get());
     }
 
     public function formTambah()
@@ -60,7 +61,7 @@ class PengajuanBBController extends Controller
         try {
             $submitter_id = Auth::user()->id_pengguna;
             $total_harga = $request->input('harga_satuan') * $request->input('jumlah');
-            $tambah_pengajuan_bb = DB::table('pengajuan_bb')->insert([
+            $tambah_pengajuan_bb = PengajuanBBModel::insert([
                 'submitter' => $submitter_id,
                 'nama_barang' => $request->input('nama_barang'),
                 'spesifikasi' => $request->input('spesifikasi'),
@@ -83,7 +84,7 @@ class PengajuanBBController extends Controller
 
     private function getPengajuanBb($id)
     {
-        return collect(DB::table('pengajuan_bb')->where('id_pengajuan_bb', $id)->get())->firstOrFail();
+        return collect(PengajuanBBModel::where('id_pengajuan_bb', $id)->get())->firstOrFail();
     }
 
     public function edit($id = null)
@@ -94,7 +95,7 @@ class PengajuanBBController extends Controller
 
     public function update(Request $request, $id = null)
     {
-        $pengajuan_bb = DB::table('pengajuan_bb')->where('id_pengajuan_bb', $id)->first();
+        $pengajuan_bb = PengajuanBBModel::where('id_pengajuan_bb', $id)->first();
         if ($request->input('nama_barang') !== $pengajuan_bb->nama_barang) {
 
             $request->validate(
@@ -115,9 +116,7 @@ class PengajuanBBController extends Controller
                 'total_harga' => $total_harga,
                 'jumlah' => $request->input('jumlah')
             ];
-            $update_pengajuan_bb = DB::table('pengajuan_bb')
-                ->where('id_pengajuan_bb', '=', $id)
-                ->update($data);
+            $update_pengajuan_bb = PengajuanBBModel::where('id_pengajuan_bb', '=', $id)->update($data);
             if ($update_pengajuan_bb) {
                 flash()->addSuccess('Data berhasil diubah.');
             }
@@ -133,8 +132,7 @@ class PengajuanBBController extends Controller
     public function hapus($id = null)
     {
         try {
-            $hapus = DB::table('pengajuan_bb')
-                ->where('id_pengajuan_bb', $id, 'AND status_approval = "pending" ')
+            $hapus = PengajuanBBModel::where('id_pengajuan_bb', $id, 'AND status_approval = "pending" ')
                 ->delete();
             if ($hapus) {
                 flash()->addSuccess('Data berhasil dihapus.');

@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\PemutihanModel;
+use App\Models\DetailBarangModel;
+
 class PemutihanController extends Controller
 {
     public function index(Request $request)
@@ -13,8 +16,7 @@ class PemutihanController extends Controller
         $submitter = Auth::user()->id_pengguna;
         if ($request->has('search')) {
             $search = $request->input('search');
-            $data = DB::table('pemutihan')
-                ->join('nama_kode_barang', 'pemutihan.kode_barang', '=', 'nama_kode_barang.kode_barang')
+            $data = PemutihanModel::join('nama_kode_barang', 'pemutihan.kode_barang', '=', 'nama_kode_barang.kode_barang')
                 ->leftJoin('perbaikan', 'pemutihan.id_perbaikan', '=', 'perbaikan.id_perbaikan')
                 ->select(
                     'pemutihan.*',
@@ -30,8 +32,7 @@ class PemutihanController extends Controller
                 ->paginate(10);
         } else {
             // TIDAK DIJADIKAN VIEW KARENA DATA JOIN UNTUK DETAIL PEMUTIHAN YG DARI PERBAIKAN
-            $data = DB::table('pemutihan')
-                ->join('nama_kode_barang', 'pemutihan.kode_barang', '=', 'nama_kode_barang.kode_barang')
+            $data = PemutihanModel::join('nama_kode_barang', 'pemutihan.kode_barang', '=', 'nama_kode_barang.kode_barang')
                 ->leftJoin('perbaikan', 'pemutihan.id_perbaikan', '=', 'perbaikan.id_perbaikan')
                 ->select(
                     'pemutihan.*',
@@ -54,15 +55,13 @@ class PemutihanController extends Controller
     {
         if ($request->has('search')) {
             $search = $request->input('search');
-            $data = DB::table('detail_barang')
-                ->leftJoin('barang', 'detail_barang.id_barang', '=', 'barang.id_barang')
+            $data = DetailBarangModel::leftJoin('barang', 'detail_barang.id_barang', '=', 'barang.id_barang')
                 ->where('detail_barang.kode_barang', 'like', "%" . $search . "%")
                 ->where('kondisi_barang', 'baik')
                 ->where('status', 'aktif')
                 ->paginate(10);
         } else {
-            $data = DB::table('detail_barang')
-                ->select('detail_barang.*', 'barang.nama_barang')
+            $data = DetailBarangModel::select('detail_barang.*', 'barang.nama_barang')
                 ->leftJoin('barang', 'detail_barang.id_barang', '=', 'barang.id_barang')
                 ->where('status', 'aktif')
                 ->where('kondisi_barang', 'baik')
@@ -80,7 +79,7 @@ class PemutihanController extends Controller
 
             $submitter_id = Auth::user()->id_pengguna;
 
-            $x = DB::table('pemutihan')->insert([
+            $x = PemutihanModel::insert([
                 'id_perbaikan' => $request->input('id_perbaikan'),
                 'kode_barang' => $request->input('kode_barang'),
                 'submitter' => $submitter_id,
@@ -134,7 +133,7 @@ class PemutihanController extends Controller
 
             $submitter_id = Auth::user()->id_pengguna;
 
-            $tambah_pengajuan_pb = DB::table('pemutihan')->insert([
+            $tambah_pengajuan_pb = PemutihanModel::insert([
                 'id_perbaikan' => $request->input('id_perbaikan'),
                 'kode_barang' => $request->input('kode_barang'),
                 'submitter' => $submitter_id,

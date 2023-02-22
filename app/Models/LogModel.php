@@ -21,9 +21,5 @@ class LogModel extends Model
     protected $keyType = 'string';
 
 
-    protected $fillable = ['username','aktifitas','tgl'];
-
-    // public function pengguna(){
-    //     return $this->belongsTo(PenggunaModel::class, 'id_pengguna', 'id_pengguna');
-    // }
+    protected $fillable = ['username', 'aktifitas', 'tgl'];
 }

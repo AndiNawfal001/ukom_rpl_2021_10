@@ -22,13 +22,15 @@ class BarangModel extends Model
     // PK bertipe char/string
     // protected $keyType = 'string';
 
-    protected $fillable = ['id_jenis_brg','nama_barang','jml_barang'];
+    protected $fillable = ['id_jenis_brg', 'nama_barang', 'jml_barang'];
 
-    public function jenis_barang(): BelongsTo {
+    public function jenis_barang(): BelongsTo
+    {
         return $this->belongsTo(JenisBarangModel::class, 'id_jenis_brg', 'id_jenis_brg');
     }
 
-    public function KodeBarang(): HasMany {
+    public function KodeBarang(): HasMany
+    {
         return $this->hasMany(DetailBarangModel::class, 'kode_barang', 'id_barang');
-      }
+    }
 }

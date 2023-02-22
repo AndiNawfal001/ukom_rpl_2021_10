@@ -22,17 +22,20 @@ class PemutihanModel extends Model
     // PK bertipe char/string
     // protected $keyType = 'string';
 
-    protected $fillable = ['id_perbaikan', 'approver','kode_barang','submitter', 'tgl_pemutihan', 'approve_penonaktifan', 'tgl_approve'];
+    protected $fillable = ['id_perbaikan', 'approver', 'kode_barang', 'submitter', 'tgl_pemutihan', 'approve_penonaktifan', 'tgl_approve'];
 
-    public function Pengguna_approver(): BelongsTo {
+    public function Pengguna_approver(): BelongsTo
+    {
         return $this->belongsTo(PenggunaModel::class, 'id_pengguna', 'approver');
     }
 
-    public function Pengguna_submitter(): BelongsTo {
+    public function Pengguna_submitter(): BelongsTo
+    {
         return $this->belongsTo(PenggunaModel::class, 'id_pengguna', 'submitter');
     }
 
-    public function DetailBarang(): HasMany {
+    public function DetailBarang(): HasMany
+    {
         return $this->hasMany(DetailBarangModel::class, 'kode_barang', 'kode_barang');
     }
 }

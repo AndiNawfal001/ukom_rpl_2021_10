@@ -23,9 +23,10 @@ class JenisBarangModel extends Model
     // PK bertipe char/string
     protected $keyType = 'string';
 
-    protected $fillable = ['id_jenis_brg','nama_jenis'];
+    protected $fillable = ['id_jenis_brg', 'nama_jenis'];
 
-    public function Barang(): HasMany {
+    public function Barang(): HasMany
+    {
         return $this->hasMany(BarangModel::class, 'id_barang', 'id_jenis_brg');
     }
 }

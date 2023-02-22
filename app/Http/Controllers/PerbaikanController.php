@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
-// use Illuminate\Database\Query\Builder;
+
+use App\Models\PerbaikanModel;
+use App\Models\DetailBarangModel;
 
 class PerbaikanController extends Controller
 {
@@ -33,8 +34,7 @@ class PerbaikanController extends Controller
     {
         if ($request->has('search')) {
             $search = $request->input('search');
-            $data = DB::table('detail_barang')
-                ->distinct()
+            $data = DetailBarangModel::distinct()
                 ->select('detail_barang.*', 'barang.nama_barang')
                 ->leftJoin('barang', 'detail_barang.id_barang', '=', 'barang.id_barang')
                 ->where('detail_barang.kondisi_barang', 'baik')
@@ -44,8 +44,7 @@ class PerbaikanController extends Controller
                 ->orderBy('detail_barang.kode_barang', 'asc')
                 ->paginate(10);
         } else {
-            $data = DB::table('detail_barang')
-                ->distinct()
+            $data = DetailBarangModel::distinct()
                 ->select('detail_barang.*', 'barang.nama_barang')
                 ->leftJoin('barang', 'detail_barang.id_barang', '=', 'barang.id_barang')
                 ->where('detail_barang.kondisi_barang', 'baik')
@@ -66,7 +65,7 @@ class PerbaikanController extends Controller
 
             $id_perbaikan = collect(DB::select('SELECT newIdPerbaikan() AS id_perbaikan'))->firstOrFail()->id_perbaikan;
 
-            $tambah_pengajuan_pb = DB::table('perbaikan')->insert([
+            $tambah_pengajuan_pb = PerbaikanModel::insert([
                 'id_perbaikan' => $id_perbaikan,
                 'kode_barang' => $request->input('kode_barang'),
                 'submitter' => $submitter_id,
@@ -94,11 +93,9 @@ class PerbaikanController extends Controller
                 'status_perbaikan' => $request->input('status_perbaikan'),
                 'solusi_barang' => $request->input('solusi_barang'),
                 'tgl_selesai_perbaikan' => NOW(),
-                //    dd($request->all())
             ];
 
-            $upd = DB::table('perbaikan')
-                ->where('id_perbaikan', '=', $request->input('id_perbaikan'))
+            $upd = PerbaikanModel::where('id_perbaikan', '=', $request->input('id_perbaikan'))
                 ->update($data);
             if ($upd) {
                 flash()->addSuccess('Data berhasil disimpan.');
@@ -116,8 +113,7 @@ class PerbaikanController extends Controller
     public function hapus($id = null)
     {
         try {
-            $hapus = DB::table('perbaikan')
-                ->where('id_perbaikan', $id)
+            $hapus = PerbaikanModel::where('id_perbaikan', $id)
                 ->delete();
             if ($hapus) {
                 flash()->addSuccess('Data berhasil dihapus.');

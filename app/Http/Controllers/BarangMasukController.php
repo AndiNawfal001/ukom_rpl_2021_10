@@ -6,7 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-// use Termwind\Components\Dd;
+
+use App\Models\PengajuanBBModel;
+use App\Models\JenisBarangModel;
+use App\Models\SupplierModel;
+use App\Models\BarangMasukModel;
 
 class BarangMasukController extends Controller
 {
@@ -16,8 +20,7 @@ class BarangMasukController extends Controller
         if ($request->has('searchApproved')) {
             $search = $request->input('searchApproved');
             $data = DB::table('data_barang_masuk')->get();
-            $approved = DB::table('pengajuan_bb')
-                ->where('nama_barang', 'like', "%" . $search . "%")
+            $approved = PengajuanBBModel::where('nama_barang', 'like', "%" . $search . "%")
                 ->where('status_approval', 'setuju')
                 ->paginate(5);
         } elseif ($request->has('searchData')) {
@@ -27,25 +30,25 @@ class BarangMasukController extends Controller
                 ->orWhere('progress', 'like', "%" . $search . "%")
                 ->orWhere('target', 'like', "%" . $search . "%")
                 ->get();
-            $approved = DB::table('pengajuan_bb')->where('status_approval', 'setuju')->paginate(5);
+            $approved = PengajuanBBModel::where('status_approval', 'setuju')->paginate(5);
         } else {
             $data = DB::table('data_barang_masuk')->get();
-            $approved = DB::table('pengajuan_bb')->where('status_approval', 'setuju')->paginate(5);
+            $approved = PengajuanBBModel::where('status_approval', 'setuju')->paginate(5);
         }
-        $info = DB::table('pengajuan_bb')->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')->get();
-        $jenisBarang = DB::table('jenis_barang')->select('jenis_barang.*', 'barang.jml_barang')->leftJoin('barang', 'jenis_barang.id_jenis_brg', '=', 'barang.id_jenis_brg')->get();
+        $info = PengajuanBBModel::leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')->get();
+        $jenisBarang = JenisBarangModel::select('jenis_barang.*', 'barang.jml_barang')->leftJoin('barang', 'jenis_barang.id_jenis_brg', '=', 'barang.id_jenis_brg')->get();
 
         return view('barangMasuk.index', compact('data', 'info', 'approved', 'jenisBarang'));
     }
 
     private function getJenisBarang(): Collection
     {
-        return collect(DB::select('SELECT * FROM jenis_barang'));
+        return collect(JenisBarangModel::get());
     }
 
     private function getSupplier(): Collection
     {
-        return collect(DB::select('SELECT * FROM supplier'));
+        return collect(SupplierModel::get());
     }
 
     private function getPengajuanBb($id)
@@ -109,16 +112,14 @@ class BarangMasukController extends Controller
 
     private function getBarangMasuk($id)
     {
-        return collect(DB::table('barang_masuk')
-            ->leftJoin('supplier', 'barang_masuk.supplier', '=', 'supplier.id_supplier')
+        return collect(BarangMasukModel::leftJoin('supplier', 'barang_masuk.supplier', '=', 'supplier.id_supplier')
             ->where('barang_masuk.id_pengajuan', $id)
             ->get());
     }
 
     private function getPengajuanBbProgress($id)
     {
-        return collect(DB::table('pengajuan_bb')
-            ->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')
+        return collect(PengajuanBBModel::leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')
             ->where('pengajuan_bb.id_pengajuan_bb', $id)
             ->get());
     }

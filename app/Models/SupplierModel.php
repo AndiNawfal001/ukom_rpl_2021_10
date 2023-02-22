@@ -20,7 +20,7 @@ class SupplierModel extends Model
     // PK bertipe char/string
     protected $keyType = 'string';
 
-    protected $fillable = ['id_supplier','nama','kontak','alamat'];
+    protected $fillable = ['id_supplier', 'nama', 'kontak', 'alamat'];
 
     // public function pengguna(){
     //     return $this->belongsTo(PenggunaModel::class, 'id_pengguna', 'id_pengguna');

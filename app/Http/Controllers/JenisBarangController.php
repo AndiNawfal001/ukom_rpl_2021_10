@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use App\Models\JenisBarangModel;
+
 class JenisBarangController extends Controller
 {
 
@@ -15,7 +17,7 @@ class JenisBarangController extends Controller
         ]);
         try {
             $kode_baru = collect(DB::select('SELECT newIdJenisbrg() AS id_jenis_brg'))->firstOrFail()->id_jenis_brg;
-            $tambah_jenisbrg = DB::table('jenis_barang')->insert([
+            $tambah_jenisbrg = JenisBarangModel::insert([
                 'id_jenis_brg' => $kode_baru,
                 'nama_jenis' => $request->input('nama_jenis'),
             ]);
@@ -34,9 +36,7 @@ class JenisBarangController extends Controller
     {
 
         try {
-            $hapus = DB::table('jenis_barang')
-                ->where('id_jenis_brg', $id)
-                ->delete();
+            $hapus = JenisBarangModel::where('id_jenis_brg', $id)->delete();
             if ($hapus) {
                 flash()->addSuccess('Barang Berhasil dihapus.');
                 return redirect('barangMasuk');

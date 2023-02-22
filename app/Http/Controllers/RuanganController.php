@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 use App\Models\RuanganModel;
 
 class RuanganController extends Controller
@@ -67,7 +68,7 @@ class RuanganController extends Controller
 
     private function getRuangan($id)
     {
-        return collect(DB::table('ruangan')->where('id_ruangan', $id)->get())->firstOrFail();
+        return collect(RuanganModel::where('id_ruangan', $id)->get())->firstOrFail();
     }
 
     public function edit($id = null)

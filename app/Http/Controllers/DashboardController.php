@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\BarangModel;
+use App\Models\LogModel;
+use App\Models\PengajuanBBModel;
 
 class DashboardController extends Controller
 {
@@ -30,14 +33,13 @@ class DashboardController extends Controller
         $pemutihan = collect(DB::select("SELECT * FROM jumlah_pemutihan_s"))
             ->firstOrFail()
             ->jml_pemutihan_s;
-        $latest_detail_barang = DB::table('barang')
-            ->select('detail_barang.kode_barang', 'jenis_barang.nama_jenis')
+        $latest_detail_barang = BarangModel::select('detail_barang.kode_barang', 'jenis_barang.nama_jenis')
             ->join('detail_barang', 'barang.id_barang', '=', 'detail_barang.id_barang')
             ->leftJoin('jenis_barang', 'barang.id_jenis_brg', '=', 'jenis_barang.id_jenis_brg')
             ->orderByDesc('detail_barang.kode_barang')
             ->paginate(5);
-        $latest_logging = DB::table('log')->orderByDesc('id_log')->paginate(5);
-        $bb_outstanding = DB::table('pengajuan_bb')->where('status_pembelian', NULL)->paginate(5);
+        $latest_logging = LogModel::orderByDesc('id_log')->paginate(5);
+        $bb_outstanding = PengajuanBBModel::where('status_pembelian', NULL)->paginate(5);
         $kode_rusak = DB::table('perbaikan_pemutihan')
             ->whereNull('kode_barang')
             ->where('submitter', $submitter)

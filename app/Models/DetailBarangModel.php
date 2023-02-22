@@ -22,21 +22,25 @@ class DetailBarangModel extends Model
     // PK bertipe char/string
     protected $keyType = 'string';
 
-    protected $fillable = ['kode_barang','nama_barang','id_barang','spesifikasi', 'kondisi_barang', 'status', 'foto_barang'];
+    protected $fillable = ['kode_barang', 'nama_barang', 'id_barang', 'spesifikasi', 'kondisi_barang', 'status', 'foto_barang'];
 
-    public function Barang(): BelongsTo {
+    public function Barang(): BelongsTo
+    {
         return $this->belongsTo(BarangModel::class, 'id_barang', 'id_barang');
     }
 
-    public function Pemutihan(): HasMany {
+    public function Pemutihan(): HasMany
+    {
         return $this->hasMany(PemutihanModel::class, 'kode_barang', 'kode_barang');
     }
 
-    public function Perawatan(): HasMany {
+    public function Perawatan(): HasMany
+    {
         return $this->hasMany(PerawatanModel::class, 'kode_barang', 'kode_barang');
     }
 
-    public function Perbaikan(): HasMany {
+    public function Perbaikan(): HasMany
+    {
         return $this->hasMany(PerbaikanModel::class, 'kode_barang', 'kode_barang');
     }
 }

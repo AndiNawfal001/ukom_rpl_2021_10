@@ -19,9 +19,10 @@ class KaprogModel extends Model
     // PK bertipe char/string
     protected $keyType = 'string';
 
-    protected $fillable = ['nip','nama','kontak'];
+    protected $fillable = ['nip', 'nama', 'kontak'];
 
-    public function Pengguna(){
+    public function Pengguna()
+    {
         return $this->belongsTo(PenggunaModel::class, 'id_pengguna', 'id_pengguna');
     }
 }

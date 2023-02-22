@@ -10,6 +10,13 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Arr;
 use Laravolt\Avatar\Facade as Avatar;
 
+use App\Models\LevelUserModel;
+use App\Models\AdminModel;
+use App\Models\ManajemenModel;
+use App\Models\KaprogModel;
+
+
+
 class PenggunaController extends Controller
 {
 
@@ -36,7 +43,7 @@ class PenggunaController extends Controller
 
     private function getlevelUser(): Collection
     {
-        return collect(DB::select('SELECT * FROM level_user'));
+        return collect(LevelUserModel::get());
     }
 
     public function formTambah()
@@ -104,8 +111,7 @@ class PenggunaController extends Controller
 
     private function getPenggunaAdmin($id)
     {
-        return collect(DB::table('admin')
-            ->join('pengguna', 'admin.id_pengguna', '=', 'pengguna.id_pengguna')
+        return collect(AdminModel::join('pengguna', 'admin.id_pengguna', '=', 'pengguna.id_pengguna')
             ->select('admin.*', 'pengguna.*')
             ->where('pengguna.id_pengguna', $id)
             ->get())->firstOrFail();
@@ -113,8 +119,7 @@ class PenggunaController extends Controller
 
     private function getPenggunaManajemen($id)
     {
-        return collect(DB::table('manajemen')
-            ->join('pengguna', 'manajemen.id_pengguna', '=', 'pengguna.id_pengguna')
+        return collect(ManajemenModel::join('pengguna', 'manajemen.id_pengguna', '=', 'pengguna.id_pengguna')
             ->select('manajemen.*', 'pengguna.*')
             ->where('pengguna.id_pengguna', $id)
             ->get())->firstOrFail();
@@ -122,8 +127,7 @@ class PenggunaController extends Controller
 
     private function getPenggunaKaprog($id)
     {
-        return collect(DB::table('kaprog')
-            ->join('pengguna', 'kaprog.id_pengguna', '=', 'pengguna.id_pengguna')
+        return collect(KaprogModel::join('pengguna', 'kaprog.id_pengguna', '=', 'pengguna.id_pengguna')
             ->select('kaprog.*', 'pengguna.*')
             ->where('pengguna.id_pengguna', $id)
             ->get())->firstOrFail();
@@ -132,9 +136,9 @@ class PenggunaController extends Controller
     public function edit($id = null)
     {
         // dd($id);
-        $admin = DB::table('admin')->select('id_pengguna')->where('id_pengguna', $id)->count();
-        $manajemen = DB::table('manajemen')->select('id_pengguna')->where('id_pengguna', $id)->count();
-        $kaprog = DB::table('kaprog')->select('id_pengguna')->where('id_pengguna', $id)->count();
+        $admin = AdminModel::select('id_pengguna')->where('id_pengguna', $id)->count();
+        $manajemen = ManajemenModel::select('id_pengguna')->where('id_pengguna', $id)->count();
+        $kaprog = KaprogModel::select('id_pengguna')->where('id_pengguna', $id)->count();
         // dd($manajemen);
         if ($manajemen == 1) {
             $edit = $this->getPenggunaManajemen($id);

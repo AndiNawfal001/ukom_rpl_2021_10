@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 use App\Models\SupplierModel;
 
 class SupplierController extends Controller
@@ -60,7 +61,7 @@ class SupplierController extends Controller
 
     private function getSupplier($id)
     {
-        return collect(DB::table('supplier')->where('id_supplier', $id)->get())->firstOrFail();
+        return collect(SupplierModel::where('id_supplier', $id)->get())->firstOrFail();
     }
 
     public function edit($id = null)

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use App\Models\BarangModel;
+use App\Models\DetailBarangModel;
 
 class BarangController extends Controller
 {
@@ -30,8 +32,7 @@ class BarangController extends Controller
         $id_barang = $id;
         if ($request->has('search')) {
             $search = $request->input('search');
-            $data = DB::table('barang')
-                ->join('detail_barang', 'barang.id_barang', '=', 'detail_barang.id_barang')
+            $data = BarangModel::join('detail_barang', 'barang.id_barang', '=', 'detail_barang.id_barang')
                 ->where('barang.nama_barang', 'like', "%" . $search . "%")
                 ->orWhere('kode_barang', 'like', "%" . $search . "%")
                 ->orWhere('kondisi_barang', 'like', "%" . $search . "%")
@@ -39,8 +40,7 @@ class BarangController extends Controller
                 ->where('barang.id_barang', $id)
                 ->paginate(10);
         } else {
-            $data = DB::table('barang')
-                ->join('detail_barang', 'barang.id_barang', '=', 'detail_barang.id_barang')
+            $data = BarangModel::join('detail_barang', 'barang.id_barang', '=', 'detail_barang.id_barang')
                 ->where('detail_barang.id_barang', $id)
                 ->paginate(10);
         }
@@ -67,8 +67,7 @@ class BarangController extends Controller
     public function spesifik($id = null)
     {
         $data = $this->getSpesifik($id);
-        $modal = DB::table('barang')
-            ->join('jenis_barang', 'barang.id_jenis_brg', '=', 'jenis_barang.id_jenis_brg')
+        $modal = BarangModel::join('jenis_barang', 'barang.id_jenis_brg', '=', 'jenis_barang.id_jenis_brg')
             ->join('detail_barang', 'barang.id_barang', '=', 'detail_barang.id_barang')
             ->where('detail_barang.kode_barang', $id)
             ->paginate(10);
@@ -90,9 +89,7 @@ class BarangController extends Controller
                     'spesifikasi'   => $request->input('spesifikasi'),
                 ];
             }
-            $update_detail_barang = DB::table('detail_barang')
-                ->where('kode_barang', '=', $id)
-                ->update($data);
+            $update_detail_barang = DetailBarangModel::where('kode_barang', '=', $id)->update($data);
             if ($update_detail_barang) {
                 flash()->addSuccess('Data Berhasil diubah.');
             }

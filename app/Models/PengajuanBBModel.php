@@ -22,17 +22,20 @@ class PengajuanBBModel extends Model
     // PK bertipe char/string
     // protected $keyType = 'string';
 
-    protected $fillable = ['approver','submitter','nama_barang', 'spesifikasi', 'harga_satuan', 'total_harga', 'jumlah', 'tgl', 'ruangan', 'status_approval', 'tgl_approve', 'status_pembelian'];
+    protected $fillable = ['approver', 'submitter', 'nama_barang', 'spesifikasi', 'harga_satuan', 'total_harga', 'jumlah', 'tgl', 'ruangan', 'status_approval', 'tgl_approve', 'status_pembelian'];
 
-    public function Pengguna_approver(): BelongsTo {
+    public function Pengguna_approver(): BelongsTo
+    {
         return $this->belongsTo(PenggunaModel::class, 'id_pengguna', 'approver');
     }
 
-    public function Pengguna_submitter(): BelongsTo {
+    public function Pengguna_submitter(): BelongsTo
+    {
         return $this->belongsTo(PenggunaModel::class, 'id_pengguna', 'submitter');
     }
 
-    public function BarangMasuk(): HasMany {
+    public function BarangMasuk(): HasMany
+    {
         return $this->hasMany(BarangMasukModel::class, 'id_pengajuan', 'id_pengajuan_bb');
     }
 }

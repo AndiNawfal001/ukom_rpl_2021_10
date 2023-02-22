@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
-// use Illuminate\Support\Collection;
+use App\Models\PerawatanModel;
+use App\Models\DetailBarangModel;
 
 class PerawatanController extends Controller
 {
@@ -14,8 +15,7 @@ class PerawatanController extends Controller
     {
         if ($request->has('search')) {
             $search = $request->input('search');
-            $data = DB::table('perawatan')
-                ->select('perawatan.*', 'nama_kode_barang.nama_barang', 'ruangan.nama_ruangan')
+            $data = PerawatanModel::select('perawatan.*', 'nama_kode_barang.nama_barang', 'ruangan.nama_ruangan')
                 ->leftJoin('detail_barang', 'perawatan.kode_barang', '=', 'detail_barang.kode_barang')
                 ->leftJoin('ruangan', 'detail_barang.ruangan', '=', 'ruangan.id_ruangan')
                 ->leftJoin('nama_kode_barang', 'perawatan.kode_barang', 'nama_kode_barang.kode_barang')
@@ -26,8 +26,7 @@ class PerawatanController extends Controller
                 ->paginate(10);
         } else {
             // TIDAK DI JADIKAN VIEW KARENA DATA JOIN TERSEBUT HANYA UNTUK DETAIL
-            $data = DB::table('perawatan')
-                ->select('perawatan.*', 'nama_kode_barang.nama_barang', 'ruangan.nama_ruangan')
+            $data = PerawatanModel::select('perawatan.*', 'nama_kode_barang.nama_barang', 'ruangan.nama_ruangan')
                 ->leftJoin('detail_barang', 'perawatan.kode_barang', '=', 'detail_barang.kode_barang')
                 ->leftJoin('ruangan', 'detail_barang.ruangan', '=', 'ruangan.id_ruangan')
                 ->leftJoin('nama_kode_barang', 'perawatan.kode_barang', 'nama_kode_barang.kode_barang')
@@ -42,8 +41,7 @@ class PerawatanController extends Controller
     {
         if ($request->has('search')) {
             $search = $request->input('search');
-            $data = DB::table('detail_barang')
-                ->select('detail_barang.*', 'nama_kode_barang.nama_barang')
+            $data = DetailBarangModel::select('detail_barang.*', 'nama_kode_barang.nama_barang')
                 ->leftJoin('nama_kode_barang', 'detail_barang.kode_barang', '=', 'nama_kode_barang.kode_barang')
                 ->where('kondisi_barang', 'baik')
                 ->where('status', 'aktif')
@@ -53,8 +51,7 @@ class PerawatanController extends Controller
                 ->orWhere('status', 'like', "%" . $search . "%")
                 ->paginate(10);
         } else {
-            $data = DB::table('detail_barang')
-                ->select('detail_barang.*', 'nama_kode_barang.nama_barang')
+            $data = DetailBarangModel::select('detail_barang.*', 'nama_kode_barang.nama_barang')
                 ->leftJoin('nama_kode_barang', 'detail_barang.kode_barang', '=', 'nama_kode_barang.kode_barang')
                 ->where('kondisi_barang', 'baik')
                 ->where('status', 'aktif')
@@ -79,7 +76,7 @@ class PerawatanController extends Controller
 
             $id_perawatan = collect(DB::select('SELECT newIdPerawatan() AS id_perawatan'))->firstOrFail()->id_perawatan;
 
-            $tambahPerawatan = DB::table('perawatan')->insert([
+            $tambahPerawatan = PerawatanModel::insert([
                 'id_perawatan' => $id_perawatan,
                 'kode_barang' => $request->input('kode_barang'),
                 'nama_pelaksana' => $request->input('nama_pelaksana'),
@@ -117,9 +114,7 @@ class PerawatanController extends Controller
                     'ket_perawatan' => $request->input('ket_perawatan'),
                 ];
             }
-            $update_perawatan = DB::table('perawatan')
-                ->where('id_perawatan', '=', $request->input('id_perawatan'))
-                ->update($data);
+            $update_perawatan = PerawatanModel::where('id_perawatan', '=', $request->input('id_perawatan'))->update($data);
 
             if ($update_perawatan) {
                 flash()->addSuccess('Data berhasil diubah.');
@@ -136,9 +131,7 @@ class PerawatanController extends Controller
     {
 
         try {
-            $hapus = DB::table('perawatan')
-                ->where('id_perawatan', $id)
-                ->delete();
+            $hapus = PerawatanModel::where('id_perawatan', $id)->delete();
             if ($hapus) {
                 flash()->addSuccess('Data berhasil dihapus.');
                 return redirect('perawatan');

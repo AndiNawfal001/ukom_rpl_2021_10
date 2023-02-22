@@ -17,22 +17,25 @@ class BarangMasukModel extends Model
     protected $primaryKey = 'id_barang_masuk';
     // agar timestamps tidak otomatis masuk
     public $timestamps = false;
-    // PK bukan integer AI
+    // PK integer AI
     public $incrementing = true;
     // PK bertipe char/string
     // protected $keyType = 'string';
 
-    protected $fillable = ['id_pengajuan','supplier','adder', 'nama_barang', 'jml_masuk', 'tgl_masuk', 'status_pembelian'];
+    protected $fillable = ['id_pengajuan', 'supplier', 'adder', 'nama_barang', 'jml_masuk', 'tgl_masuk', 'status_pembelian'];
 
-    public function PengajuanBB(): BelongsTo {
-        return $this->belongsTo(JenisBarangModel::class, 'id_pengajuan_bb', 'id_pengajuan');
+    public function PengajuanBB(): BelongsTo
+    {
+        return $this->belongsTo(PengajuanBBModel::class, 'id_pengajuan_bb', 'id_pengajuan');
     }
 
-    public function Supplier(): BelongsTo {
+    public function Supplier(): BelongsTo
+    {
         return $this->belongsTo(SupplierModel::class, 'id_supplier', 'supplier');
     }
 
-    public function Pengguna(): BelongsTo {
+    public function Pengguna(): BelongsTo
+    {
         return $this->belongsTo(PenggunaModel::class, 'id_supplier', 'adder');
     }
 }

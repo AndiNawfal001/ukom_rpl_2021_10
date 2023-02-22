@@ -19,9 +19,10 @@ class AdminModel extends Model
     // PK bertipe char/string
     // protected $keyType = 'string';
 
-    protected $fillable = ['id_pengguna','nama','kontak'];
+    protected $fillable = ['id_pengguna', 'nama', 'kontak'];
 
-    public function Pengguna(){
+    public function Pengguna()
+    {
         return $this->belongsTo(PenggunaModel::class, 'id_pengguna', 'id_pengguna');
     }
 }

@@ -21,9 +21,5 @@ class RuanganModel extends Model
     protected $keyType = 'string';
 
 
-    protected $fillable = ['id_ruangan','nama_ruangan','penanggung_jawab','ket'];
-
-    // public function pengguna(){
-    //     return $this->belongsTo(PenggunaModel::class, 'id_pengguna', 'id_pengguna');
-    // }
+    protected $fillable = ['id_ruangan', 'nama_ruangan', 'penanggung_jawab', 'ket'];
 }
