@@ -11,7 +11,6 @@ class PenggunaModel extends Model
 {
     use HasFactory;
 
-    // nama table
     protected $table = 'pengguna';
     // nama PK
     protected $primaryKey = 'id_pengguna';
@@ -19,14 +18,17 @@ class PenggunaModel extends Model
     public $timestamps = false;
     // PK integer AI
     public $incrementing = true;
-    // PK bertipe char/string
-    // protected $keyType = 'string';
 
-    protected $fillable = ['id_level', 'username', 'email', 'password'];
+    protected $fillable = ['id_level', 'username', 'email', 'password', 'foto'];
 
-    public function level_user(): BelongsTo
+    public function LevelUser(): BelongsTo
     {
         return $this->belongsTo(LevelUser::class, 'id_level', 'id_level');
+    }
+
+    public function Manajemen(): HasMany
+    {
+        return $this->hasMany(Manajemen::class, 'id_pengguna', 'id_pengguna');
     }
 
     public function Kaprog(): HasMany
@@ -37,11 +39,6 @@ class PenggunaModel extends Model
     public function Admin(): HasMany
     {
         return $this->hasMany(AdminModel::class, 'id_pengguna', 'id_pengguna');
-    }
-
-    public function Manajemen(): HasMany
-    {
-        return $this->hasMany(Manajemen::class, 'id_pengguna', 'id_pengguna');
     }
 
     public function BarangMasuk(): HasMany

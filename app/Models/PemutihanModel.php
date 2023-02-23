@@ -11,18 +11,20 @@ class PemutihanModel extends Model
 {
     use HasFactory;
 
-    // nama table
     protected $table = 'pemutihan';
     // nama PK
     protected $primaryKey = 'id_pemutihan';
     // agar timestamps tidak otomatis masuk
     public $timestamps = false;
-    // PK bukan integer AI
+    // PK integer AI
     public $incrementing = true;
-    // PK bertipe char/string
-    // protected $keyType = 'string';
 
-    protected $fillable = ['id_perbaikan', 'approver', 'kode_barang', 'submitter', 'tgl_pemutihan', 'approve_penonaktifan', 'tgl_approve'];
+    protected $fillable = ['id_perbaikan', 'approver', 'kode_barang', 'submitter', 'tgl_pemutihan', 'ket_pemutihan', 'foto_kondisi_terakhir', 'approve_penonaktifan', 'tgl_approve'];
+
+    public function Perbaikan(): BelongsTo
+    {
+        return $this->belongsTo(PerbaikanModel::class, 'id_perbaikan', 'id_perbaikan');
+    }
 
     public function Pengguna_approver(): BelongsTo
     {
@@ -34,8 +36,8 @@ class PemutihanModel extends Model
         return $this->belongsTo(PenggunaModel::class, 'id_pengguna', 'submitter');
     }
 
-    public function DetailBarang(): HasMany
+    public function KodeBarang(): BelongsTo
     {
-        return $this->hasMany(DetailBarangModel::class, 'kode_barang', 'kode_barang');
+        return $this->belongsTo(DetailBarangModel::class, 'kode_barang', 'kode_barang');
     }
 }

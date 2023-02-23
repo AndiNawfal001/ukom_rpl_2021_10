@@ -254,7 +254,7 @@
                 <?php $no=1;?>
                 @forelse($jenisBarang as $key)
                 <tr>
-                    <td>{{ $key->nama_jenis }}</td>
+                    <th>{{ $key->nama_jenis }}</th>
                     <td>
                         @if($key->jml_barang == NULL)
                             0

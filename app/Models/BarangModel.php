@@ -11,16 +11,13 @@ class BarangModel extends Model
 {
     use HasFactory;
 
-    // nama table
     protected $table = 'barang';
     // nama PK
     protected $primaryKey = 'id_barang';
     // agar timestamps tidak otomatis masuk
     public $timestamps = false;
-    // PK bukan integer AI
+    // PK integer AI
     public $incrementing = true;
-    // PK bertipe char/string
-    // protected $keyType = 'string';
 
     protected $fillable = ['id_jenis_brg', 'nama_barang', 'jml_barang'];
 

@@ -12,7 +12,6 @@ class JenisBarangModel extends Model
 {
     use HasFactory;
 
-    // nama table
     protected $table = 'jenis_barang';
     // nama PK
     protected $primaryKey = 'id_jenis_brg';

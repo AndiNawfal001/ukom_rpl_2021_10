@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class AdminModel extends Model
 {
@@ -14,14 +15,12 @@ class AdminModel extends Model
     protected $primaryKey = 'id_admin';
     // agar timestamps tidak otomatis masuk
     public $timestamps = false;
-    // PK bukan integer AI
-    // public $incrementing = false;
-    // PK bertipe char/string
-    // protected $keyType = 'string';
+    // PK integer AI
+    public $incrementing = true;
 
     protected $fillable = ['id_pengguna', 'nama', 'kontak'];
 
-    public function Pengguna()
+    public function Pengguna(): BelongsTo
     {
         return $this->belongsTo(PenggunaModel::class, 'id_pengguna', 'id_pengguna');
     }

@@ -18,12 +18,14 @@ class BarangMasukController extends Controller
     public function index(Request $request)
     {
         if ($request->has('searchApproved')) {
+
             $search = $request->input('searchApproved');
             $data = DB::table('data_barang_masuk')->get();
             $approved = PengajuanBBModel::where('nama_barang', 'like', "%" . $search . "%")
                 ->where('status_approval', 'setuju')
                 ->paginate(5);
         } elseif ($request->has('searchData')) {
+
             $search = $request->input('searchData');
             $data = DB::table('data_barang_masuk')
                 ->where('nama_barang', 'like', "%" . $search . "%")
@@ -32,9 +34,11 @@ class BarangMasukController extends Controller
                 ->get();
             $approved = PengajuanBBModel::where('status_approval', 'setuju')->paginate(5);
         } else {
+
             $data = DB::table('data_barang_masuk')->get();
             $approved = PengajuanBBModel::where('status_approval', 'setuju')->paginate(5);
         }
+
         $info = PengajuanBBModel::leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')->get();
         $jenisBarang = JenisBarangModel::select('jenis_barang.*', 'barang.jml_barang')->leftJoin('barang', 'jenis_barang.id_jenis_brg', '=', 'barang.id_jenis_brg')->get();
 

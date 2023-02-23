@@ -11,16 +11,13 @@ class PengajuanBBModel extends Model
 {
     use HasFactory;
 
-    // nama table
     protected $table = 'pengajuan_bb';
     // nama PK
     protected $primaryKey = 'id_pengajuan_bb';
     // agar timestamps tidak otomatis masuk
     public $timestamps = false;
-    // PK bukan integer AI
+    // PK integer AI
     public $incrementing = true;
-    // PK bertipe char/string
-    // protected $keyType = 'string';
 
     protected $fillable = ['approver', 'submitter', 'nama_barang', 'spesifikasi', 'harga_satuan', 'total_harga', 'jumlah', 'tgl', 'ruangan', 'status_approval', 'tgl_approve', 'status_pembelian'];
 
@@ -37,5 +34,10 @@ class PengajuanBBModel extends Model
     public function BarangMasuk(): HasMany
     {
         return $this->hasMany(BarangMasukModel::class, 'id_pengajuan', 'id_pengajuan_bb');
+    }
+
+    public function Ruangan(): BelongsTo
+    {
+        return $this->belongsTo(RuanganModel::class, 'id_ruangan', 'ruangan');
     }
 }

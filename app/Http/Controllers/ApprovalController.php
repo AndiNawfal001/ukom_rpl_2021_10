@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\PengajuanBBModel;
@@ -15,6 +13,13 @@ use App\Models\PemutihanModel;
 
 class ApprovalController extends Controller
 {
+
+    private function getIDApprover()
+    {
+        $approver = Auth::user()->username;
+        return PenggunaModel::where('username', $approver)->first()->id_pengguna;
+    }
+
     //
     // BARANG BARU
     //
@@ -35,20 +40,11 @@ class ApprovalController extends Controller
 
         return view('approval.barang_baru.index', compact('data'));
     }
-    // private function getIDApprover()
-    // {
-    //     $approver = Auth::user()->username;
-    //     return collect(PenggunaModel::select('id_pengguna')->where('username', $approver));
-    // }
 
     public function statusSetujuBarangBaru($id = null)
     {
         try {
-            $id_pengguna = PenggunaModel::select('id_pengguna')->where('username', Auth::user()->username)->get();
-            $array = Arr::pluck($id_pengguna, 'id_pengguna');
-            $approver = Arr::get($array, '0');
-            // dd($id);
-
+            $approver = $this->getIDApprover();
             $status = [
                 'approver' => $approver,
                 'status_approval' => ('setuju'),
@@ -66,17 +62,13 @@ class ApprovalController extends Controller
     public function statusTidakSetujuBarangBaru($id = null)
     {
         try {
-            $id_pengguna = PenggunaModel::select('id_pengguna')->where('username', Auth::user()->username)->get();
-            $array = Arr::pluck($id_pengguna, 'id_pengguna');
-            $approver = Arr::get($array, '0');
-
+            $approver = $this->getIDApprover();
             $status = [
                 'approver' => $approver,
                 'status_approval' => ('tidak'),
                 'tgl_approve' => NOW()
             ];
-            $hapus = PengajuanBBModel::where('id_pengajuan_bb', $id)
-                ->update($status);
+            $hapus = PengajuanBBModel::where('id_pengajuan_bb', $id)->update($status);
             if ($hapus) {
                 flash()->addSuccess('Data berhasil disimpan.');
                 return redirect('approval/BB');
@@ -121,12 +113,7 @@ class ApprovalController extends Controller
     public function statusSetujuPerbaikan($id = null)
     {
         try {
-            $id_pengguna = PenggunaModel::select('id_pengguna')
-                ->where('username', Auth::user()->username)
-                ->get();
-            $array = Arr::pluck($id_pengguna, 'id_pengguna');
-            $approver = Arr::get($array, '0');
-
+            $approver = $this->getIDApprover();
             $status = [
                 'approver' => $approver,
                 'approve_perbaikan' => ('sudah diperbaiki'),
@@ -146,13 +133,8 @@ class ApprovalController extends Controller
     public function statusTidakSetujuPerbaikan($id = null, $kode = null)
     {
         try {
-            $id_pengguna = PenggunaModel::select('id_pengguna')
-                ->where('username', Auth::user()->username)
-                ->get();
-            $array = Arr::pluck($id_pengguna, 'id_pengguna');
-            $approver = Arr::get($array, '0');
-
-            $approve = [
+            $approver = $this->getIDApprover();
+            $status = [
                 'approver' => $approver,
                 'approve_perbaikan' => ('rusak'),
                 'tgl_approve' => NOW()
@@ -162,11 +144,9 @@ class ApprovalController extends Controller
                 'kondisi_barang' => ('rusak'),
             ];
 
-            $perbaikan = PerbaikanModel::where('id_perbaikan', $id)
-                ->update($approve);
+            $perbaikan = PerbaikanModel::where('id_perbaikan', $id)->update($status);
 
-            $detail_barang = DetailBarangModel::where('kode_barang', $kode)
-                ->update($kondisi);
+            $detail_barang = DetailBarangModel::where('kode_barang', $kode)->update($kondisi);
 
             if ($perbaikan and $detail_barang) {
                 flash()->addSuccess('Data berhasil disimpan.');
@@ -224,25 +204,19 @@ class ApprovalController extends Controller
     public function statusSetujuPemutihan($id = null, $kode = null)
     {
         try {
-            $id_pengguna = PenggunaModel::select('id_pengguna')
-                ->where('username', Auth::user()->username)
-                ->get();
-            $array = Arr::pluck($id_pengguna, 'id_pengguna');
-            $approver = Arr::get($array, '0');
-
-            $approve = [
+            $approver = $this->getIDApprover();
+            $status = [
                 'approver' => $approver,
                 'approve_penonaktifan' => ('setuju'),
                 'tgl_approve' => NOW()
             ];
 
-            $status = [
+            $kondisi = [
                 'status' => ('nonaktif')
             ];
-            // dd('hehe');
 
-            $pemutihan = PemutihanModel::where('id_pemutihan', $id)->update($approve);
-            DetailBarangModel::where('kode_barang', $kode)->update($status);
+            $pemutihan = PemutihanModel::where('id_pemutihan', $id)->update($status);
+            DetailBarangModel::where('kode_barang', $kode)->update($kondisi);
 
             if ($pemutihan) {
                 flash()->addSuccess('Data berhasil disimpan.');
@@ -256,19 +230,14 @@ class ApprovalController extends Controller
     public function statusTidakSetujuPemutihan($id = null)
     {
         try {
-            $id_pengguna = PenggunaModel::select('id_pengguna')
-                ->where('username', Auth::user()->username)
-                ->get();
-            $array = Arr::pluck($id_pengguna, 'id_pengguna');
-            $approver = Arr::get($array, '0');
-
-            $approve = [
+            $approver = $this->getIDApprover();
+            $status = [
                 'approver' => $approver,
                 'approve_penonaktifan' => ('tidak setuju'),
                 'tgl_approve' => NOW()
             ];
 
-            $pemutihan = PemutihanModel::where('id_pemutihan', $id)->update($approve);
+            $pemutihan = PemutihanModel::where('id_pemutihan', $id)->update($status);
 
             if ($pemutihan) {
                 flash()->addSuccess('Data berhasil disimpan.');

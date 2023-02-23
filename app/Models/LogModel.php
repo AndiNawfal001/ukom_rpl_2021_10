@@ -9,7 +9,6 @@ class LogModel extends Model
 {
     use HasFactory;
 
-    // nama table
     protected $table = 'log';
     // nama PK
     protected $primaryKey = 'id_log';
@@ -21,5 +20,5 @@ class LogModel extends Model
     protected $keyType = 'string';
 
 
-    protected $fillable = ['username', 'aktifitas', 'tgl'];
+    protected $fillable = ['id_log', 'username', 'aktifitas', 'tgl'];
 }

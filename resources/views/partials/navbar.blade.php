@@ -36,7 +36,7 @@
         </span>
         @endauth
     </div>
-    <button data-toggle-theme="light,dark" class="btn btn-sm btn-outline mx-5" data-act-class="ACTIVECLASS">theme</button>
+    {{-- <button data-toggle-theme="light,dark" class="btn btn-sm btn-outline mx-5" data-act-class="ACTIVECLASS">theme</button> --}}
 
     {{-- <div class="dropdown dropdown-bottom dropdown-end">
         <label tabindex="0" class="btn btn-sm btn-outline mx-5">Theme</label>

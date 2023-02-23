@@ -9,7 +9,6 @@ class RuanganModel extends Model
 {
     use HasFactory;
 
-    // nama table
     protected $table = 'ruangan';
     // nama PK
     protected $primaryKey = 'id_ruangan';

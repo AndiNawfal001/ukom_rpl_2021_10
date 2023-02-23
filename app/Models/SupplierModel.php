@@ -9,7 +9,6 @@ class SupplierModel extends Model
 {
     use HasFactory;
 
-    // nama table
     protected $table = 'supplier';
     // nama PK
     protected $primaryKey = 'id_supplier';
@@ -21,8 +20,4 @@ class SupplierModel extends Model
     protected $keyType = 'string';
 
     protected $fillable = ['id_supplier', 'nama', 'kontak', 'alamat'];
-
-    // public function pengguna(){
-    //     return $this->belongsTo(PenggunaModel::class, 'id_pengguna', 'id_pengguna');
-    // }
 }

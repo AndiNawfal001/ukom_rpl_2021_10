@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Arr;
 use Laravolt\Avatar\Facade as Avatar;
 
 use App\Models\LevelUserModel;
+use App\Models\PenggunaModel;
 use App\Models\AdminModel;
 use App\Models\ManajemenModel;
 use App\Models\KaprogModel;
@@ -26,10 +26,10 @@ class PenggunaController extends Controller
         if ($request->has('search')) {
             $search = $request->input('search');
             $data = DB::table('pengguna_admin_manajemen_kaprog')
-                ->where('pengguna.username', 'like', "%" . $search . "%")
-                ->orWhere('pengguna.email', 'like', "%" . $search . "%")
-                ->orWhere('level_user.nama_level', 'like', "%" . $search . "%")
-                ->orderBy('level_user.id_level')
+                ->where('username', 'like', "%" . $search . "%")
+                ->orWhere('email', 'like', "%" . $search . "%")
+                ->orWhere('nama_level', 'like', "%" . $search . "%")
+                ->orderBy('id_level')
                 ->paginate(5);
         } else {
             $data = DB::table('pengguna_admin_manajemen_kaprog')
@@ -190,12 +190,8 @@ class PenggunaController extends Controller
     public function hapus($id = null)
     {
         try {
-            // dd($id);
-            $x = DB::table('pengguna')->where('id_pengguna', $id)->get();
-            $flattened = Arr::pluck($x, 'foto');
-            $price = Arr::get($flattened, '0');
-            // dd($price);
-            Storage::delete($price); //HAPUS FILE DI STORAGE
+            $foto = PenggunaModel::where('id_pengguna', $id)->first()->foto;
+            Storage::delete($foto); //HAPUS FILE DI STORAGE
             $deleteUser = DB::delete("CALL delete_user(:kode)", [
                 'kode' => $id
             ]);

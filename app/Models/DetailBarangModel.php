@@ -11,7 +11,6 @@ class DetailBarangModel extends Model
 {
     use HasFactory;
 
-    // nama table
     protected $table = 'detail_barang';
     // nama PK
     protected $primaryKey = 'kode_barang';
@@ -22,7 +21,7 @@ class DetailBarangModel extends Model
     // PK bertipe char/string
     protected $keyType = 'string';
 
-    protected $fillable = ['kode_barang', 'nama_barang', 'id_barang', 'spesifikasi', 'kondisi_barang', 'status', 'foto_barang'];
+    protected $fillable = ['kode_barang', 'id_barang', 'spesifikasi', 'kondisi_barang', 'status', 'foto_barang', 'ruangan'];
 
     public function Barang(): BelongsTo
     {
@@ -42,5 +41,10 @@ class DetailBarangModel extends Model
     public function Perbaikan(): HasMany
     {
         return $this->hasMany(PerbaikanModel::class, 'kode_barang', 'kode_barang');
+    }
+
+    public function Ruangan(): BelongsTo
+    {
+        return $this->BelongsTo(RuanganModel::class, 'id_ruangan', 'ruangan');
     }
 }

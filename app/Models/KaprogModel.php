@@ -15,11 +15,11 @@ class KaprogModel extends Model
     // agar timestamps tidak otomatis masuk
     public $timestamps = false;
     // PK bukan integer AI
-    // public $incrementing = false;
+    public $incrementing = false;
     // PK bertipe char/string
     protected $keyType = 'string';
 
-    protected $fillable = ['nip', 'nama', 'kontak'];
+    protected $fillable = ['nip', 'id_pengguna', 'nama', 'kontak'];
 
     public function Pengguna()
     {

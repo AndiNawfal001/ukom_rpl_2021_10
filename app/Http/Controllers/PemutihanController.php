@@ -31,7 +31,7 @@ class PemutihanController extends Controller
                 ->where('pemutihan.submitter', $submitter)
                 ->paginate(10);
         } else {
-            // TIDAK DIJADIKAN VIEW KARENA DATA JOIN UNTUK DETAIL PEMUTIHAN YG DARI PERBAIKAN
+            // TIDAK DIJADIKAN VIEW KARENA DATA JOIN HANYA UNTUK DETAIL PEMUTIHAN YG DARI PERBAIKAN
             $data = PemutihanModel::join('nama_kode_barang', 'pemutihan.kode_barang', '=', 'nama_kode_barang.kode_barang')
                 ->leftJoin('perbaikan', 'pemutihan.id_perbaikan', '=', 'perbaikan.id_perbaikan')
                 ->select(

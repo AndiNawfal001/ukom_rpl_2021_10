@@ -9,7 +9,6 @@ class PerawatanModel extends Model
 {
     use HasFactory;
 
-    // nama table
     protected $table = 'perawatan';
     // nama PK
     protected $primaryKey = 'id_perawatan';
@@ -20,9 +19,9 @@ class PerawatanModel extends Model
     // PK bertipe char/string
     protected $keyType = 'string';
 
-    protected $fillable = ['id_perawatan', 'kode_barang', 'nama_pelaksana', 'ket_perawatan', 'foto_perawatan', 'tgl_perawatan'];
+    protected $fillable = ['id_perawatan', 'kode_barang', 'nama_pelaksana', 'ket_perawatan', 'tgl_perawatan'];
 
-    public function kode_barang()
+    public function KodeBarang()
     {
         return $this->belongsTo(DetailBarangModel::class, 'kode_barang', 'kode_barang');
     }
