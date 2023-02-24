@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use app\Models\PenggunaModel;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,12 +20,8 @@ class LoginController extends Controller
             'password' => 'required'
         ]);
 
-        // dd($request->all());
-
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            //dd(Auth::user()->username);
             $request->session()->regenerate();
-            //ddd($request);
             flash()->addSuccess('Berhasil Login.');
             return redirect()->intended('/dashboard');
         }
