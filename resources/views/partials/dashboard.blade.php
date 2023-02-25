@@ -9,7 +9,7 @@
                <div class="flex-shrink-0">
                   <span class="text-2xl sm:text-3xl leading-none font-bold">
                     @if($barang_masuk == NULL)
-                         0
+                        0
                      @else
                      {{ $barang_masuk }}
                      @endif

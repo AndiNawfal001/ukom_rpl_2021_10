@@ -39,7 +39,10 @@ class DashboardController extends Controller
             ->orderByDesc('detail_barang.kode_barang')
             ->paginate(5);
         $latest_logging = LogModel::orderByDesc('id_log')->paginate(5);
-        $bb_outstanding = PengajuanBBModel::where('status_pembelian', NULL)->paginate(5);
+        $bb_outstanding = PengajuanBBModel::whereNotNull('approver')
+            ->where('status_approval', 'setuju')
+            ->where('status_pembelian', NULL)
+            ->paginate(5);
         $kode_rusak = DB::table('perbaikan_pemutihan')
             ->whereNull('kode_barang')
             ->where('submitter', $submitter)
