@@ -17,7 +17,6 @@
         <div class="overflow-x-auto w-full">
 
             <table class="table w-full">
-              <!-- head -->
               <thead>
                 <tr>
                     <th>No</th>
@@ -29,36 +28,35 @@
                 </tr>
               </thead>
               <tbody>
-                <?php $no=1;?>
-                @forelse($data as $key)
+                @forelse($data as $key => $item)
                 <tr>
-                    <th>{{ $no++ }}</th>
+                    <th>{{ $data->firstItem() + $key }}</th>
                     <td>
                       <div class="flex items-center space-x-3">
 
                         <div>
-                          <div class="font-bold">{{ $key->nama_barang }}</div>
-                          <div class="text-sm opacity-50">{{ $key->nama_jenis }}</div>
+                          <div class="font-bold">{{ $item->nama_barang }}</div>
+                          <div class="text-sm opacity-50">{{ $item->nama_jenis }}</div>
                         </div>
                       </div>
                     </td>
-                    <td>{{ number_format($key->jml_barang, 0, '.', '.') }}</td>
+                    <td>{{ number_format($item->jml_barang, 0, '.', '.') }}</td>
                     <td>
-                        @if($key->barang_rusak == 0)
-                        <p class="badge badge-outline badge-info">{{ number_format($key->barang_rusak, 0, '.', '.') }}</p>
+                        @if($item->barang_rusak == 0)
+                        <p class="badge badge-outline badge-info">{{ number_format($item->barang_rusak, 0, '.', '.') }}</p>
                         @else
-                        <p class="badge badge-outline badge-warning">{{ number_format($key->barang_rusak, 0, '.', '.') }}</p>
+                        <p class="badge badge-outline badge-warning">{{ number_format($item->barang_rusak, 0, '.', '.') }}</p>
                         @endif
                     </td>
                     <td>
-                        @if($key->barang_nonaktif == 0)
-                        <p class="badge badge-outline badge-success">{{ number_format($key->barang_nonaktif, 0, '.', '.') }}</p>
+                        @if($item->barang_nonaktif == 0)
+                        <p class="badge badge-outline badge-success">{{ number_format($item->barang_nonaktif, 0, '.', '.') }}</p>
                         @else
-                        <p class="badge badge-outline badge-error">{{ number_format($key->barang_nonaktif, 0, '.', '.') }}</p>
+                        <p class="badge badge-outline badge-error">{{ number_format($item->barang_nonaktif, 0, '.', '.') }}</p>
                         @endif
                     </td>
                     <th>
-                        <a href="/barang/detail/{{ $key->id_barang }}">
+                        <a href="/barang/detail/{{ $item->id_barang }}">
                             <button class="btn btn-sm btn-outline btn-info">Detail</button>
                         </a>
                     </th>

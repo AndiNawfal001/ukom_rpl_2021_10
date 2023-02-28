@@ -29,32 +29,31 @@
                     <table class="table w-full ">
                         <thead>
                             <tr>
-                                <th></th>
+                                <th>No</th>
                                 <th>Barang</th>
                                 <th>Tanggal Perawatan</th>
                                 <th>Nama Pelaksana</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
-                        <?php $no=1;?>
-                        @forelse($data as $key)
+                        @forelse($data as $key =>$item)
                         <tr>
-                        <th>{{ $no++ }}</th>
+                        <th>{{ $data->firstItem() + $key }}</th>
                         <th>
                             <div class="flex items-center space-x-3">
                                 <div>
-                                    <div class="font-bold text-lg">{{ $key->nama_barang }}</div>
-                                    <div class="text-sm opacity-50">{{ $key->kode_barang }}</div>
+                                    <div class="font-bold text-lg">{{ $item->nama_barang }}</div>
+                                    <div class="text-sm opacity-50">{{ $item->kode_barang }}</div>
                                 </div>
                             </div>
                         </th>
-                        <td>{{ $key->tgl_perawatan }}</td>
-                        <td>{{ $key->nama_pelaksana }}</td>
+                        <td>{{ $item->tgl_perawatan }}</td>
+                        <td>{{ $item->nama_pelaksana }}</td>
                         <td>
-                            <label for="detailperawatan{{ $key->id_perawatan }}" class="btn btn-sm  btn-info btn-square btn-outline">
+                            <label for="detailperawatan{{ $item->id_perawatan }}" class="btn btn-sm  btn-info btn-square btn-outline">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             </label>
-                            <label for="delete{{ $key->id_perawatan }}" class="btn btn-sm btn-error btn-square btn-outline">
+                            <label for="delete{{ $item->id_perawatan }}" class="btn btn-sm btn-error btn-square btn-outline">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                             </label>
                         </td>
@@ -116,7 +115,7 @@
             <p class="font-light">Keterangan Perawatan</p>
             <p class="font-medium ">{{ $key->ket_perawatan }}</p>
         </div>
-        <div class="py-5 flex flex-row-reverse gap-3">
+        <div class="pt-5 flex flex-row-reverse gap-3">
                 <label for="editperawatan{{$key->kode_barang}}" for="detailperawatan{{ $key->id_perawatan }}" class="btn btn-sm btn-outline btn-warning">
                     Edit
                 </label>

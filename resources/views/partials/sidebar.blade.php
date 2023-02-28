@@ -27,21 +27,12 @@
                         </a>
                     </li>
                 @endcan
-
-                @can('admin+manajemen')
-                    <li class="border-primary rounded-lg group {{ request()->is('barangMasuk*') ? 'bg-base-200 shadow-md' : 'hover:bg-base-300' }}">
-                        <a href="/barangMasuk" class="flex items-center p-2">
-                            <div class="btn btn-sm btn-active btn-square {{ request()->is('barangMasuk*') ? 'btn-primary' : 'btn-ghost' }}">
-                                <svg class="w-5 h-5 " fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"></path>
-                                </svg>
-                            </div>
-                        <span class="flex-1 ml-3 whitespace-nowrap">Barang Masuk</span>
-                        {{-- <span class="inline-flex justify-center items-center p-3 ml-3 w-3 h-3 text-sm font-medium text-blue-600 bg-blue-200 rounded-full dark:bg-blue-900 dark:text-blue-200">0</span> --}}
-                        </a>
-                    </li>
-                @endcan
                 @php
+                    $approved_null = DB::table('pengajuan_bb')
+                                ->whereNull('status_pembelian')
+                                ->where('status_approval', 'setuju')
+                                ->count();
+
                     $pengajuan_bb =  DB::table('pengajuan_bb')
                                 ->whereNull('approver')
                                 ->count('id_pengajuan_bb');
@@ -65,6 +56,24 @@
                                 ->where('perbaikan_pemutihan.approve_perbaikan', 'rusak')
                                 ->count();
                 @endphp
+                @can('admin+manajemen')
+                    <li class="border-primary rounded-lg group {{ request()->is('barangMasuk*') ? 'bg-base-200 shadow-md' : 'hover:bg-base-300' }}">
+                        <a href="/barangMasuk" class="flex items-center p-2">
+                            <div class="btn btn-sm btn-active btn-square {{ request()->is('barangMasuk*') ? 'btn-primary' : 'btn-ghost' }}">
+                                <svg class="w-5 h-5 " fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"></path>
+                                </svg>
+                            </div>
+                        <span class="flex-1 ml-3 whitespace-nowrap">Barang Masuk</span>
+                        @can('manajemen')
+                            @if($approved_null >= 1)
+                                <span class="inline-flex justify-center items-center p-3 ml-3 w-3 h-3 text-sm font-medium text-info-content bg-info rounded-full">{{ $approved_null }}</span>
+                            @endif
+                        @endcan
+                        </a>
+                    </li>
+                @endcan
+
                 @can('admin+manajemen')
                 <li class="group">
                     <button type="button" class="flex items-center p-2 w-full text-base font-normal rounded-lg hover:bg-base-300 dropdown-btn" >
@@ -125,10 +134,10 @@
                     </button>
                     <ul class="dropdown-container {{ request()->is('pengajuan/BB*', 'pengajuan/PB*' ,'pemutihan*') ? 'block' : 'hidden' }}">
                         <li>
-                            <a href="/pengajuan/BB" class="flex items-center py-3 px-2 pl-11 w-full text-base border-primary font-normal rounded-lg group {{ request()->is('pengajuan/BB*') ? 'bg-base-200 border-r-2 shadow-md ml-[2px]' : 'hover:bg-base-300' }}">Barang Baru</a>
+                            <a href="/pengajuan/BB" class="flex items-center py-3 px-2 pl-11 w-full text-base border-primary font-normal rounded-lg group {{ request()->is('pengajuan/BB*') ? 'bg-base-200 border-r-2 shadow-md' : 'hover:bg-base-300' }}">Barang Baru</a>
                         </li>
                         <li>
-                            <a href="/pengajuan/PB" class="flex items-center py-3 px-2 pl-11 w-full text-base border-primary font-normal rounded-lg group {{ request()->is('pengajuan/PB*') ? 'bg-base-200 border-r-2 shadow-md ml-[2px]' : 'hover:bg-base-300' }}">Perbaikan</a>
+                            <a href="/pengajuan/PB" class="flex items-center py-3 px-2 pl-11 w-full text-base border-primary font-normal rounded-lg group {{ request()->is('pengajuan/PB*') ? 'bg-base-200 border-r-2 shadow-md' : 'hover:bg-base-300' }}">Perbaikan</a>
                         </li>
                         <li>
                             <a href="/pemutihan" class="flex justify-between items-center py-3 px-2 pl-11 w-full text-base border-primary font-normal rounded-lg group {{ request()->is('pemutihan*') ? 'bg-base-200 border-r-2 shadow-md' : 'hover:bg-base-300' }}">

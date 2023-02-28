@@ -57,7 +57,6 @@
                         <table class="table w-full ">
                             <thead>
                                 <tr>
-                                    {{-- <th>NO</th> --}}
                                     <th>Username</th>
                                     <th>Email</th>
                                     <th>Level User</th>
@@ -66,10 +65,8 @@
                                     @endcan
                                 </tr>
                             </thead>
-                            <?php $no=1;?>
                             @forelse($data as $key)
                             <tr>
-                                {{-- <th>{{ $no++ }}</th> --}}
                                 <th>{{ $key->username }}</th>
                                 <td>{{ $key->email }}</td>
                                 <td>

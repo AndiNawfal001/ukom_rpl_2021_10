@@ -27,39 +27,38 @@
                     <table class="table table-zebra w-full ">
                         <thead>
                             <tr>
-                                {{-- <th>No</th> --}}
-                                <th> Barang</th>
+                                <th>No</th>
+                                <th>Barang</th>
                                 <th>Kondisi</th>
                                 <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
-                        <?php $no=1;?>
-                        @forelse($data as $key)
+                        @forelse($data as $key => $item)
                         <tr>
-                        {{-- <th>{{ $no++ }}</th> --}}
+                        <th>{{ $data->firstItem() + $key }}</th>
                         <th>
                             <div class="flex items-center space-x-3">
                                 <div>
-                                    <div class="font-bold text-lg">{{ $key->nama_barang }}</div>
-                                    <div class="text-sm opacity-50">{{ $key->kode_barang }}</div>
+                                    <div class="font-bold text-lg">{{ $item->nama_barang }}</div>
+                                    <div class="text-sm opacity-50">{{ $item->kode_barang }}</div>
                                 </div>
                             </div>
                         </th>
                         <td>
                             <p class="badge badge-outline
-                            {{ ($key->kondisi_barang === 'baik') ? 'badge-info' : '' }}
-                            {{ ($key->kondisi_barang === 'rusak') ? 'badge-warning' : '' }}
-                            ">{{ $key->kondisi_barang }}</p>
+                            {{ ($item->kondisi_barang === 'baik') ? 'badge-info' : '' }}
+                            {{ ($item->kondisi_barang === 'rusak') ? 'badge-warning' : '' }}
+                            ">{{ $item->kondisi_barang }}</p>
                         </td>
                         <td>
                             <p class="badge badge-outline
-                            {{ ($key->status === 'aktif') ? 'badge-success' : '' }}
-                            {{ ($key->status === 'nonaktif') ? 'badge-error' : '' }}
-                            ">{{ $key->status }}</p>
+                            {{ ($item->status === 'aktif') ? 'badge-success' : '' }}
+                            {{ ($item->status === 'nonaktif') ? 'badge-error' : '' }}
+                            ">{{ $item->status }}</p>
                         </td>
                         <td>
-                            <a href="/barang/detail/spesifik/{{$key->kode_barang}}">
+                            <a href="/barang/detail/spesifik/{{$item->kode_barang}}">
                                 <button class="btn btn-sm btn-info btn-square btn-outline">
                                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 </button>
