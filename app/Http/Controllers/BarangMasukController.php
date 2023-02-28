@@ -40,8 +40,7 @@ class BarangMasukController extends Controller
         }
 
         $info = PengajuanBBModel::leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')->get();
-        $jenisBarang = JenisBarangModel::select('jenis_barang.*', 'barang.jml_barang')->leftJoin('barang', 'jenis_barang.id_jenis_brg', '=', 'barang.id_jenis_brg')->get();
-
+        $jenisBarang = DB::table('jenis_barang_jml')->get();
         return view('barangMasuk.index', compact('data', 'info', 'approved', 'jenisBarang'));
     }
 
