@@ -1,14 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   daisyui: {
-    themes: ['dark'],
+    themes: ['light'],
     //light / winter / emerald / fantasy / lemonade
   },
-    // purge: {
-    //     options: {
-    //     safelist: [/data-theme$/],
-    //     },
-    // },
   content: [
     "./resources/**/*.blade.php",
     "./resources/**/*.js",
