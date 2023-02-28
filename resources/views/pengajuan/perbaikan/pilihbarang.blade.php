@@ -41,7 +41,6 @@
                                 <td>Aksi</td>
                             </tr>
                         </thead>
-                        <?php $no=1;?>
                         @forelse($data as $key => $item)
                         <tr>
                         <th>{{ $data->firstItem() + $key }}</th>
@@ -90,7 +89,11 @@
                         @endforelse
 
                     </table>
-                    {{ $data->links() }}
+                    <div class="lg:flex flex-row-reverse">
+                        <div>
+                            {{ $data->links() }}
+                        </div>
+                    </div>
 
                 </div>
 

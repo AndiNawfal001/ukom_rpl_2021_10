@@ -17,9 +17,9 @@ class SupplierController extends Controller
             $data = SupplierModel::where('nama', 'like', "%" . $search . "%")
                 ->orWhere('kontak', 'like', "%" . $search . "%")
                 ->orWhere('alamat', 'like', "%" . $search . "%")
-                ->paginate(5);
+                ->paginate(10);
         } else {
-            $data = SupplierModel::paginate(5);
+            $data = SupplierModel::paginate(10);
         }
         return view('supplier.index', compact('data'));
     }

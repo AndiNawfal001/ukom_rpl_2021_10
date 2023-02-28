@@ -67,7 +67,7 @@
                                 </tr>
                             </thead>
                             <?php $no=1;?>
-                            @foreach($data as $key)
+                            @forelse($data as $key)
                             <tr>
                                 {{-- <th>{{ $no++ }}</th> --}}
                                 <th>{{ $key->username }}</th>

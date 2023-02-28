@@ -30,10 +30,10 @@ class PenggunaController extends Controller
                 ->orWhere('email', 'like', "%" . $search . "%")
                 ->orWhere('nama_level', 'like', "%" . $search . "%")
                 ->orderBy('id_level')
-                ->paginate(5);
+                ->paginate(10);
         } else {
             $data = DB::table('pengguna_admin_manajemen_kaprog')
-                ->paginate(5);
+                ->paginate(10);
             // dd($data);
         }
         // dd($data);
