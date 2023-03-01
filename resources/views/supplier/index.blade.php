@@ -33,7 +33,6 @@
                             <th>Aksi</th>
                         </tr>
                     </thead>
-                    <?php $no=1;?>
                     @forelse($data as $key)
                     <tr>
                         <th>{{ $key->nama }}</th>

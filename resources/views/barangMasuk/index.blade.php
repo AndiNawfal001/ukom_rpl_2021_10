@@ -129,12 +129,12 @@
                             <p class="badge badge-outline
                                         {{ ($key->progress < $key->target) ? 'badge-warning' : '' }}
                                         {{ ($key->progress = $key->target) ? 'badge-success' : '' }}
-                                        ">
-                            @if(($key->progress < $key->target))
-                                outstanding
-                            @else
-                                selesai
-                            @endif
+                            ">
+                                @if($key->progress <= $key->target)
+                                    <span>outstanding</span>
+                                @else
+                                    <span>selesai</span>
+                                @endif
                             </p>
                         </td>
                         <td>
