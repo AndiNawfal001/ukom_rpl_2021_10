@@ -24,8 +24,12 @@
                 @foreach ($card as $key)
 
                     <h3 class="text-xl font-bold">{{ $key->nama_barang }}</h3>
-                    <h3 class="text-md">diajukan {{ $key->tgl }}</h3>
-
+                    <div class="xl:flex gap-5">
+                        <p class="text-sm xl:border-r-2 xl:pr-5">diajukan {{ $key->tgl }}</p>
+                        <p class="text-sm font-medium">
+                            <span>disetujui pada {{ $key->tgl_approve }}</span>
+                        </p>
+                    </div>
                     <div class="py-4">
                         <p class="font-light text-gray-500">Spesifikasi</p>
                         <p class="font-medium">{{ $key->spesifikasi }} </p>
