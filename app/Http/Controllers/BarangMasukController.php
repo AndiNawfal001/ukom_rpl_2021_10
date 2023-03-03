@@ -23,7 +23,7 @@ class BarangMasukController extends Controller
             $data = DB::table('data_barang_masuk')->get();
             $approved = PengajuanBBModel::where('nama_barang', 'like', "%" . $search . "%")
                 ->where('status_approval', 'setuju')
-                ->paginate(5);
+                ->paginate(10);
         } elseif ($request->has('searchData')) {
 
             $search = $request->input('searchData');
@@ -32,11 +32,11 @@ class BarangMasukController extends Controller
                 ->orWhere('progress', 'like', "%" . $search . "%")
                 ->orWhere('target', 'like', "%" . $search . "%")
                 ->get();
-            $approved = PengajuanBBModel::where('status_approval', 'setuju')->paginate(5);
+            $approved = PengajuanBBModel::where('status_approval', 'setuju')->paginate(10);
         } else {
 
             $data = DB::table('data_barang_masuk')->get();
-            $approved = PengajuanBBModel::where('status_approval', 'setuju')->paginate(5);
+            $approved = PengajuanBBModel::where('status_approval', 'setuju')->paginate(10);
         }
 
         $info = PengajuanBBModel::leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')->get();

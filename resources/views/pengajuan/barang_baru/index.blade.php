@@ -106,7 +106,14 @@
             {{ ($key->status_approval === 'tidak') ? 'badge-error' : '' }}
             ">{{ $key->status_approval }}</div><br>
             <h3 class="text-xl font-bold">{{ $key->nama_barang }}</h3>
-            <h3 class="text-md">diajukan {{ $key->tgl }}</h3>
+            <div class="xl:flex gap-5">
+                <p class="text-sm">diajukan {{ $key->tgl }}</p>
+                @if($key->tgl_approve !== NULL)
+                    <p class="text-sm xl:border-l-2 xl:pl-5 font-medium">
+                        <span>disetujui pada {{ $key->tgl_approve }}</span>
+                    </p>
+                @endif
+            </div>
 
             <div class="py-4">
                 <p class="font-light">Spesifikasi</p>
