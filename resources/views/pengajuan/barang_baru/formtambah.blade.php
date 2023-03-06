@@ -39,13 +39,13 @@
                     <label class="label">
                         <span class="label-text">Harga Satuan</span>
                     </label>
-                    <input type="number" name="harga_satuan" class="input input-bordered" value="{{ old('harga_satuan') }}" required autocomplete="off"/>
+                    <input type="number" name="harga_satuan" class="input input-bordered" min="1000" value="{{ old('harga_satuan') }}" required autocomplete="off"/>
                 </div>
                 <div class="form-control">
                     <label class="label">
                         <span class="label-text">Jumlah Barang</span>
                     </label>
-                    <input type="number" name="jumlah" class="input input-bordered" value="{{ old('jumlah') }}" required autocomplete="off"/>
+                    <input type="number" name="jumlah" class="input input-bordered" min="1" value="{{ old('jumlah') }}" required autocomplete="off"/>
                 </div>
                 <div class="form-control">
                     <label class="label">
