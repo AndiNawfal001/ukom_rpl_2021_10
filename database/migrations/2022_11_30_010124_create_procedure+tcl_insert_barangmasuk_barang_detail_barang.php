@@ -20,14 +20,12 @@ return new class extends Migration
             spesifikasi TEXT,
             kondisi_barang VARCHAR(10),
             supplier VARCHAR(30),
-            -- nama_manajemen VARCHAR(30),
             adder VARCHAR(50),
             jenis_barang VARCHAR(30),
             foto_barang VARCHAR(225),
             ruangan CHAR(6)
         )
         BEGIN
-        -- DECLARE barang INT;
         DECLARE idBarang CHAR(6);
         DECLARE idBarangBaru VARCHAR(6);
         DECLARE jenis_brg VARCHAR(30);
@@ -35,7 +33,6 @@ return new class extends Migration
         DECLARE id_supplier VARCHAR(30);
         DECLARE jumlah_pengajuan INT;
         DECLARE jml_barang_barang INT;
-        -- DECLARE nip char(18);
         DECLARE adder_id INT;
         DECLARE cek_barang_masuk INT;
         DECLARE jml_sebelum INT;

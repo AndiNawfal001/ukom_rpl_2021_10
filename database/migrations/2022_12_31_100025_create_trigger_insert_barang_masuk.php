@@ -17,7 +17,7 @@ return new class extends Migration
     {
         DB::unprepared("DROP TRIGGER IF EXISTS insert_barang_masuk");
         DB::unprepared(
-          "CREATE TRIGGER after_insert_barang_masuk
+            "CREATE TRIGGER after_insert_barang_masuk
             AFTER INSERT
             ON barang_masuk
             FOR EACH ROW

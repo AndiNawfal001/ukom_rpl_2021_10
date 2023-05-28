@@ -1,5 +1,33 @@
 <?php
 
+/*
+BarangMasukController
+
+Controller ini dibuat untuk modul barang masuk
+
+Atribut yang digunakan  :
+    PengajuanBBModel = untuk menampung table pengajuan_bb
+    JenisBarangModel = untuk menampung table jenis_barang
+    SupplierModel = untuk menampung table supplier
+    BarangMasukModel = untuk menampung table barang_masuk
+
+Method yang digunakan   :
+    index()                     = untuk menampilkan data dan menerima request search
+    getJenisBarang()            = untuk mengambil data table jenis_barang
+    getSupplier()               = untuk mengambil data table supplier
+    getPengajuanBb()            = untuk mengambil data table pengajuan_bb
+    formTambah()                = untuk mengirim data ke form serta menampilkan form
+    store()                     = untuk mengirim data ke database
+    getBarangMasuk()            = untuk mengambil data table barang_masuk leftjoin dengan table supplier
+    getPengajuanBbProgress()    = untuk mengambil data table pengajuan_bb leftjoin dengan table ruangan
+    detailBarangMasuk()         = untuk menampilkan data ke halaman history barang masuk
+
+Author  : Andi Nawfal Dzikra (usk_rpl_2021_02)
+email   : nawfaldzikra1611@gmail.com
+tujuan  : Untuk mengelola barang masuk dan history barang yang sudah masuk
+Date    : 17/05/2023
+*/
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
