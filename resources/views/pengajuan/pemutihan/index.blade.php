@@ -2,7 +2,7 @@
 @section('container')
 <div class="pt-6 px-4">
 
-    <div class="bg-base-100 shadow rounded-md p-4 sm:p-6 xl:p-8 ">
+    <div class="bg-base-100 shadow-xl rounded-2xl p-4 sm:p-4 xl:p-6 ">
         <h1 class="text-xl pb-3 font-semibold leading-loose">Daftar Barang untuk pemutihan</h1>
         <form action="/pemutihan" method="GET">
             @csrf
@@ -18,7 +18,7 @@
         <div class="lg:flex flex-row-reverse gap-4">
             <div class="basis-2/6">
                 <a href="/pemutihanLangsung/pilihBarang">
-                    <label for="hosting-small" class="inline-flex justify-between items-center p-5 w-full bg-base-100 rounded-lg border border-warning cursor-pointer hover:bg-base-300 mb-4">
+                    <label for="hosting-small" class="inline-flex justify-between items-center p-5 w-full bg-base-100 rounded-2xl border border-warning cursor-pointer hover:shadow-xl transition mb-4">
                         <div class="block">
                             <div class="w-full text-lg font-semibold">Pemutihan langsung</div>
                             <div class="w-full">seperti barang tua</div>
@@ -37,7 +37,7 @@
                         ->count();
                 @endphp
                 <a href="/pemutihan/pilihbarang">
-                    <label for="hosting-small" class="inline-flex justify-between items-center p-5 w-full bg-base-100 rounded-lg border  border-info cursor-pointer hover:bg-base-300 mb-4
+                    <label for="hosting-small" class="inline-flex justify-between items-center p-5 w-full bg-base-100 rounded-2xl border  border-info cursor-pointer hover:shadow-xl transition mb-4
                     ">
                         <div class="block">
                             <div class="w-full text-lg font-semibold">Pemutihan dari perbaikan</div>
@@ -56,26 +56,24 @@
 
             <div class="basis-4/6">
                 <div class="overflow-x-auto overflow-y-auto">
-                    <table class="table w-full ">
-                        <thead>
-                            <tr>
-                                <th>Barang</th>
-                                <th>Tanggal Pemutihan</th>
-                                <th>Penonaktifan</th>
-                                <th>Aksi</th>
+                    <table class="table table-compact w-full ">
+                            <tr class="font-medium opacity-80">
+                                <td>Barang</td>
+                                <td>Tanggal Pemutihan</td>
+                                <td>Penonaktifan</td>
+                                <td>Aksi</td>
                             </tr>
-                        </thead>
                         <?php $no=1;?>
                         @forelse($data as $key)
                         <tr>
-                        <th>
+                        <td>
                             <div class="flex items-center space-x-3">
                                 <div>
-                                    <div class="font-bold text-lg">{{ $key->nama_barang }}</div>
+                                    <div class="font-semibold">{{ $key->nama_barang }}</div>
                                     <div class="text-sm opacity-50">{{ $key->kode_barang }}</div>
                                 </div>
                             </div>
-                        </th>
+                        </td>
                         <td>{{ $key->tgl_pemutihan }}</td>
                         <td>
                             <p class="badge badge-outline
@@ -107,7 +105,7 @@
             </div>
         </div>
     </div>
-    <br>
+    <br><br>
 </div>
 
 

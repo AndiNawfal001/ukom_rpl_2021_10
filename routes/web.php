@@ -15,6 +15,7 @@ use App\Http\Controllers\PerawatanController;
 use App\Http\Controllers\PerbaikanController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\RuanganController;
+use App\Http\Controllers\ExportController;
 
 // use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -41,9 +42,10 @@ Route::post('/login', [LoginController::class, 'authenticate']);
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
+Route::get('export-to-excel', 'ExportController@exportToExcel')->name('export.excel');
 
 Route::group(['middleware' => ['auth', 'level:admin']], function () {
-    Route::get('/log', [LoggingController::class, 'index'])->middleware('auth');
+    Route::get('/logging', [LoggingController::class, 'index'])->middleware('auth');
 });
 
 //Route Group untuk menggabungkan banyaknya middleware
@@ -65,16 +67,16 @@ Route::group(['middleware' => ['auth', 'level:admin,manajemen']], function () {
     Route::get('/approval/pemutihan/tidaksetuju/{id}', [ApprovalController::class, 'statusTidakSetujuPemutihan'])->middleware('auth');
 
     // BARANG MASUK
-    Route::get('/barangMasuk', [BarangMasukController::class, 'index'])->middleware('auth');
-    Route::get('/barangMasuk/tambah/{id}', [BarangMasukController::class, 'formTambah'])->middleware('auth');
-    Route::post('/barangMasuk/tambah/simpan', [BarangMasukController::class, 'store'])->middleware('auth');
+    Route::get('/barang Masuk', [BarangMasukController::class, 'index'])->middleware('auth');
+    Route::get('/barang Masuk/tambah/{id}', [BarangMasukController::class, 'formTambah'])->middleware('auth');
+    Route::post('/barang Masuk/tambah/simpan', [BarangMasukController::class, 'store'])->middleware('auth');
 
     // JENIS BARANG
     Route::post('/jenisBarang/tambah', [JenisBarangController::class, 'store'])->middleware('auth');
     Route::get('/jenisBarang/hapus/{id}', [JenisBarangController::class, 'hapus'])->middleware('auth');
 
     // HISTORY BARANGMASUK
-    Route::get('/barangMasuk/history/{id}', [BarangMasukController::class, 'detailBarangMasuk'])->middleware('auth');
+    Route::get('/barang Masuk/history/{id}', [BarangMasukController::class, 'detailBarangMasuk'])->middleware('auth');
 });
 
 // BARANG

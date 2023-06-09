@@ -2,13 +2,13 @@
 @section('container')
 
 <div class="pt-6 px-4">
-    <div class="alert alert-info shadow-lg mb-4 rounded-md">
+    <div class="alert alert-info shadow-xl rounded-2xl mb-4">
         <div>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
         <span>Pastikan dulu barangnya sudah ada</span>
         </div>
     </div>
-    <div class="bg-base-100 shadow rounded-md p-4 sm:p-6 xl:p-8 ">
+    <div class="bg-base-100 shadow-xl rounded-2xl p-4 sm:p-4 xl:p-6 ">
         <div class="flex justify-between pb-3 items-center">
             <h1 class="text-xl font-semibold leading-loose">Pilih Barang untuk pemutihan</h1>
             <a href="/pemutihan" class="btn btn-sm btn-square">
@@ -29,28 +29,26 @@
         <div class="">
             <div class="">
                 <div class="overflow-x-auto overflow-y-auto ">
-                    <table class="table w-full ">
-                        <thead>
+                    <table class="table table-compact w-full ">
                             <tr>
-                                <th>No</th>
-                                <th>Barang</th>
-                                <th>Kondisi</th>
-                                <th>Status</th>
-                                <th>Aksi</th>
+                                <td>No</td>
+                                <td>Barang</td>
+                                <td>Kondisi</td>
+                                <td>Status</td>
+                                <td>Aksi</td>
                             </tr>
-                        </thead>
                         <?php $no=1;?>
                         @forelse($data as $key)
                         <tr>
                         <th>{{ $no++ }}</th>
-                        <th>
+                        <td>
                             <div class="flex items-center space-x-3">
                                 <div>
-                                    <div class="font-bold text-lg">{{ $key->nama_barang }}</div>
+                                    <div class="font-semibold">{{ $key->nama_barang }}</div>
                                     <div class="text-sm opacity-50">{{ $key->kode_barang }}</div>
                                 </div>
                             </div>
-                        </th>
+                        </td>
                         <td>
                             <p class="badge badge-outline
                             {{ ($key->kondisi_barang === 'baik') ? 'badge-info' : '' }}
@@ -94,7 +92,7 @@
             </div>
         </div>
     </div>
-    <br>
+    <br><br>
 </div>
 
 
@@ -108,9 +106,8 @@
     <label class="modal-box relative" for="">
         <form action="/pemutihan/pemutihanLangsung/simpanpemutihanLangsung" method="POST"  enctype="multipart/form-data">
             @csrf
-                <h2 class="text-2xl font-bold">Pemutihan Langsung</h2>
+                <h2 class="text-xl font-semibold">Pemutihan Langsung</h2>
                 <div class="order-last my-2">
-                    Kode barang :
                     <div class="btn btn-sm btn-outline no-animation">{{ $key->kode_barang }}</div>
                 </div>
             <div class="form-control hidden">
@@ -121,13 +118,13 @@
             </div>
             <div class="form-control">
                 <label class="label">
-                <span class="label-text">Keterangan PemutihanLangsung</span>
+                <span class="label-text font-medium">Keterangan Pemutihan Langsung</span>
                 </label>
                 <textarea name="ket_pemutihan" cols="20" rows="5" class="textarea textarea-bordered" placeholder="contoh : barang sudah tua" required></textarea>
             </div>
             <div class="form-control">
                 <label class="label">
-                    <span class="label-text">Foto kondisi terakhir barang</span>
+                    <span class="label-text font-medium">Foto kondisi terakhir barang</span>
                 </label>
                 <input type="file" name="image" id="image" class="file-input file-input-bordered w-full max-w-xs" onchange="previewImage()" required/>
                 <br>

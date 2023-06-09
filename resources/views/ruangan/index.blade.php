@@ -2,10 +2,10 @@
 @section('container')
 
 <div class="pt-6 px-4">
-    <div class="bg-base-100 shadow rounded-md p-4 sm:p-6 xl:p-8 ">
-        <h1 class="text-xl pb-3 font-semibold leading-loose">Daftar Ruangan</h1>
+    <div class="bg-base-100 shadow-xl rounded-2xl p-4 sm:p-4 xl:p-6 ">
+        {{-- <h1 class="text-xl pb-3 font-semibold leading-loose">Daftar Ruangan</h1> --}}
         <div class="lg:flex justify-between mb-2">
-            <form action="/ruangan" method="GET">
+            {{-- <form action="/ruangan" method="GET">
                 @csrf
                 <div class="form-control mb-2">
                     <div class="input-group ">
@@ -15,24 +15,24 @@
                     </button>
                     </div>
                 </div>
-            </form>
+            </form> --}}
+        <h1 class="text-xl pb-3 font-semibold leading-loose">Daftar Ruangan</h1>
+
             <a href="/ruangan/tambah">
-                <button class="btn btn-success gap-2">
+                <button class="btn btn-success btn-outline gap-2">
                     Tambah Ruangan <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 </button>
             </a>
         </div>
         <div class="">
             <div class="overflow-x-auto overflow-y-auto">
-                <table class="table w-full ">
-                    <thead>
-                        <tr>
-                            <th>Nama Ruangan</th>
-                            <th>Penanggung Jawab</th>
-                            <th>Ket</th>
-                            <th>Aksi</th>
+                <table class="table table-compact w-full ">
+                        <tr class="font-medium opacity-80">
+                            <td>Nama Ruangan</td>
+                            <td>Penanggung Jawab</td>
+                            <td>Ket</td>
+                            <td>Aksi</td>
                         </tr>
-                    </thead>
                     @forelse($data as $key)
                     <tr>
                         <th>{{ $key->nama_ruangan }}</th>
@@ -70,7 +70,7 @@
             </div>
         </div>
     </div>
-    <br>
+    <br><br>
     {{-- <div>
         <canvas id="myChart"></canvas>
     </div>

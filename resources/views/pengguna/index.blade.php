@@ -3,12 +3,12 @@
 
 <div class="pt-6 px-4">
 
-    <div class="bg-base-100 shadow rounded-md p-4 sm:p-6 xl:p-8 ">
+    <div class="bg-base-100 shadow-xl rounded-2xl p-4 sm:p-4 xl:p-6 ">
 
-        <h1 class="text-xl pb-3 font-semibold leading-loose">Daftar Pengguna</h1>
+        {{-- <h1 class="text-xl pb-3 font-semibold leading-loose">Daftar Pengguna</h1> --}}
         {{-- MOBILE --}}
         <div class="lg:hidden justify-between mb-2 ">
-            <form action="/pengguna" method="GET">
+            {{-- <form action="/pengguna" method="GET">
                 @csrf
                     <div class="form-control mb-2">
                         <div class="input-group ">
@@ -18,7 +18,8 @@
                         </button>
                         </div>
                     </div>
-            </form>
+            </form> --}}
+                <h1 class="text-xl pb-3 font-semibold leading-loose">Daftar Pengguna</h1>
             @can('admin')
             <a href="/pengguna/tambah">
                 <button class="btn btn-success gap-2">
@@ -33,7 +34,7 @@
             <div class="basis-4/5 mt-4 lg:mt-0">
                 {{-- DESKTOP --}}
                 <div class="hidden lg:flex justify-between mb-2 ">
-                    <form action="/pengguna" method="GET">
+                    {{-- <form action="/pengguna" method="GET">
                         @csrf
                             <div class="form-control mb-2">
                                 <div class="input-group ">
@@ -43,10 +44,12 @@
                                 </button>
                                 </div>
                             </div>
-                    </form>
+                    </form> --}}
+                    <h1 class="text-xl pb-3 font-semibold leading-loose">Daftar Pengguna</h1>
+
                     @can('admin')
                         <a href="/pengguna/tambah">
-                            <button class="btn btn-success gap-2">
+                            <button class="btn btn-success btn-outline gap-2">
                                 Tambah Pengguna <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             </button>
                         </a>
@@ -54,17 +57,15 @@
                 </div>
                 <div class="">
                     <div class="overflow-x-auto overflow-y-auto">
-                        <table class="table w-full ">
-                            <thead>
-                                <tr>
-                                    <th>Username</th>
-                                    <th>Email</th>
-                                    <th>Level User</th>
+                        <table class="table table-compact w-full ">
+                                <tr class="font-medium opacity-80">
+                                    <td>Username</td>
+                                    <td>Email</td>
+                                    <td>Level User</td>
                                     @can('admin')
-                                        <th>Aksi</th>
+                                        <td>Aksi</td>
                                     @endcan
                                 </tr>
-                            </thead>
                             @forelse($data as $key)
                             <tr>
                                 <th>{{ $key->username }}</th>
@@ -115,9 +116,9 @@
         </div>
         </div>
     </div>
+    <br><br>
 </div>
 
-    <br>
 </div>
 
 @endsection

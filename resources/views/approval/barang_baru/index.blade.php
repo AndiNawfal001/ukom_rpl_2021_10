@@ -2,7 +2,7 @@
 @section('container')
 
 <div class="pt-6 px-4">
-    <div class="bg-base-100 border-t-2 border-primary shadow rounded-md p-4 sm:p-6 xl:p-8 ">
+    <div class="bg-base-100 shadow-xl rounded-2xl p-4 sm:p-4 xl:p-6 ">
         <h1 class="text-xl pb-3 font-semibold leading-loose">Daftar Pengajuan Barang Baru untuk di Approve</h1>
 
         <form action="/approval/BB" method="GET">
@@ -19,17 +19,15 @@
             <div class="">
                 <div class="">
                     <div class="overflow-x-auto overflow-y-auto">
-                        <table class="table w-full">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Nama Barang</th>
-                                    <th>Total Harga</th>
-                                    <th>Tanggal Pengajuan</th>
-                                    <th>Status</th>
-                                    <th>Aksi</th>
+                        <table class="table table-compact w-full">
+                                <tr class="font-medium opacity-80">
+                                    <td>No</td>
+                                    <td>Nama Barang</td>
+                                    <td>Total Harga</td>
+                                    <td>Tanggal Pengajuan</td>
+                                    <td>Status</td>
+                                    <td>Aksi</td>
                                 </tr>
-                            </thead>
                             <?php $no=1;?>
                             @forelse($data as $key)
                             <tbody>
@@ -73,7 +71,7 @@
                 </div>
             </div>
     </div>
-    <br>
+    <br><br>
 </div>
 @endsection
 @section('modal')

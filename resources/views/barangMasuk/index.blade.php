@@ -4,7 +4,7 @@
 <div class="pt-6 px-4">
     <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
         <div>
-            <div class="bg-base-100 shadow-md rounded-lg p-4 mb-4 sm:p-6 xl:p-8 hover:shadow-2xl duration-300">
+            <div class="bg-base-100 shadow-xl rounded-2xl p-4 mb-4 sm:p-4 xl:p-6 ">
                 <div class="flex items-center">
                    <div class="flex-shrink-0">
                     @php
@@ -25,9 +25,9 @@
                    </div>
                 </div>
             </div>
-            <div class="bg-base-100 shadow rounded-lg p-4 sm:p-6 duration-300">
+            <div class="bg-base-100 shadow-xl rounded-2xl p-4 sm:p-4 xl:p-6">
                 <h1 class="text-xl pb-3 font-semibold leading-loose">Pengajuan yang sudah disetujui</h1>
-                <form action="/barangMasuk" method="GET">
+                {{-- <form action="/barangMasuk" method="GET">
                     @csrf
                         <div class="form-control mb-2">
                             <div class="input-group ">
@@ -37,30 +37,28 @@
                             </button>
                             </div>
                         </div>
-                </form>
+                </form> --}}
                 <div class="">
 
                     <div class="overflow-x-auto overflow-y-auto mb-4">
                         <table class="table table-compact w-full">
-                            <thead>
-                                <tr>
-                                    <th>Nama Barang</th>
-                                    <th>Jumlah</th>
-                                    <th>Tgl Approve</th>
-                                    <th>Aksi</th>
+                                <tr class="font-medium opacity-80">
+                                    <td>Nama Barang</td>
+                                    <td>Jumlah</td>
+                                    <td>Tgl Approve</td>
+                                    <td>Aksi</td>
                                 </tr>
-                            </thead>
                             @forelse($approved as $key)
                             <tr>
                                 <th>
                                     <div class="flex items-center space-x-3">
 
                                     <div>
-                                        <div class="font-bold">{{ $key->nama_barang }}</div>
+                                        <div class="font-semibold">{{ $key->nama_barang }}</div>
                                         @if($key->status_pembelian == 'selesai')
-                                            <div class="badge badge-sm badge-outline badge-success my-2">Completed</div>
+                                            <div class="badge badge-sm badge-outline badge-success my-1">Completed</div>
                                         @else
-                                            <div class="badge badge-sm badge-outline badge-warning my-2">In Progress</div>
+                                            <div class="badge badge-sm badge-outline badge-warning my-1">In Progress</div>
                                         @endif
                                     </div>
                                     </div>
@@ -97,9 +95,9 @@
                 </div>
             </div>
         </div>
-        <div class="bg-base-100 shadow rounded-lg p-4 sm:p-6 xl:p-8 duration-300">
+        <div class="bg-base-100 shadow-xl rounded-2xl p-4 sm:p-4 xl:p-6">
             <h1 class="text-xl pb-3 font-semibold leading-loose">Barang yang sudah masuk</h1>
-            <form action="/barangMasuk" method="GET">
+            {{-- <form action="/barangMasuk" method="GET">
                 @csrf
                     <div class="form-control mb-2">
                         <div class="input-group ">
@@ -109,17 +107,15 @@
                         </button>
                         </div>
                     </div>
-            </form>
+            </form> --}}
             <div class="overflow-x-auto overflow-y-auto">
                 <table class="table table-compact w-full">
-                    <thead>
-                        <tr>
-                            <th>Nama Barang</th>
-                            <th>Progress</th>
-                            <th>Status Pembelian</th>
-                            <th>Aksi</th>
+                        <tr class="font-medium opacity-80">
+                            <td>Nama Barang</td>
+                            <td>Progress</td>
+                            <td>Status Pembelian</td>
+                            <td>Aksi</td>
                         </tr>
-                    </thead>
                     @forelse($data as $key)
                     <tr>
                         <td>{{ $key->nama_barang }}</td>
@@ -132,7 +128,7 @@
                             @endif
                         </td>
                         <td>
-                            <a href="/barangMasuk/history/{{ $key->id_pengajuan_bb }}" class="btn btn-sm btn-info btn-square btn-outline">
+                            <a href="/barang Masuk/history/{{ $key->id_pengajuan_bb }}" class="btn btn-sm btn-info btn-square btn-outline">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             </a>
                         </td>
@@ -152,7 +148,7 @@
             </div>
         </div>
     </div>
-    <br>
+    <br><br>
 </div>
 @php
     if($errors->has('nama_jenis')) {
@@ -205,7 +201,7 @@
         </div>
         <div class="flex flex-row-reverse">
             @if($key->status_pembelian == "outstanding" OR $key->status_pembelian == "")
-                <a href="/barangMasuk/tambah/{{ $key->id_pengajuan_bb }}"><button class="btn btn-sm btn-outline btn-success">Tambah Barang</button></a>
+                <a href="/barang Masuk/tambah/{{ $key->id_pengajuan_bb }}"><button class="btn btn-sm btn-outline btn-success">Tambah Barang</button></a>
             @else
             @endif
         </div>
@@ -221,11 +217,11 @@
         <label class="modal-box relative" for="">
             <form action="/jenisBarang/tambah" method="POST">
                 @csrf
-                <h2 class="text-2xl font-bold">Tambah Jenis Barang</h2>
+                <h2 class="text-xl font-semibold">Tambah Jenis Barang</h2>
                 <br>
                 <div class="form-control">
                     <label class="label">
-                    <span class="label-text">Nama Jenis Barang</span>
+                    <span class="label-text font-medium">Nama Jenis Barang</span>
                     </label>
                     <input type="text" name="nama_jenis" class="input input-bordered" required autocomplete="off"/>
                 </div>
@@ -242,13 +238,11 @@
     <label for="detailjenisbarang" class="modal cursor-pointer">
         <label class="modal-box relative" for="">
             <table class="table table-compact w-full">
-                <thead>
-                    <tr>
-                        <th>Jenis Barang</th>
-                        <th>Jumlah</th>
-                        <th>Aksi</th>
+                    <tr class="font-medium opacity-80">
+                        <td>Jenis Barang</td>
+                        <td>Jumlah</td>
+                        <td>Aksi</td>
                     </tr>
-                </thead>
                 <?php $no=1;?>
                 @forelse($jenisBarang as $key)
                 <tr>
@@ -291,7 +285,7 @@
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"></path>
     </svg>
     <div class="text-center">
-        <h3 class="font-bold text-2xl">Anda yakin ? {{ $key->id_jenis_brg }}</h3>
+        <h3 class="font-bold text-2xl">Anda yakin ?</h3>
     </div>
     <div class="flex justify-center pt-4 gap-3">
         <label for="delete{{ $key->id_jenis_brg }}" class="btn btn-sm btn-outline btn-info">Cancel</label>

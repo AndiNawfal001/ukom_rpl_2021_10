@@ -9,12 +9,12 @@
           <li>Add Document</li>
         </ul>
       </div> --}}
-    <div class="bg-base-100 shadow rounded-md p-4 sm:p-6 xl:p-8 ">
+    <div class="bg-base-100 shadow-xl rounded-2xl p-4 sm:p-4 xl:p-6 ">
 
         <div class="flex justify-between">
             <h1 class="text-xl pb-3 font-semibold leading-loose">Detail Progress</h1>
             <div >
-                <a href="/barangMasuk" class="btn btn-sm btn-square">
+                <a href="/barang Masuk" class="btn btn-sm btn-square">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                 </a>
             </div>
@@ -23,7 +23,7 @@
             <div class="mb-4 md:mb-0 md:w-2/5 bg-base-300 hover:shadow-xl duration-300 p-4 rounded-md ">
                 @foreach ($card as $key)
 
-                    <h3 class="text-xl font-bold">{{ $key->nama_barang }}</h3>
+                    <h3 class="text-xl font-semibold">{{ $key->nama_barang }}</h3>
                     <div class="xl:flex gap-5">
                         <p class="text-sm xl:border-r-2 xl:pr-5">diajukan {{ $key->tgl }}</p>
                         <p class="text-sm font-medium">
@@ -59,18 +59,16 @@
 
                 <div class="overflow-x-auto overflow-y-auto">
                     <table class="table table-compact w-full ">
-                        <thead>
-                            <tr>
-                                <th>Tgl Masuk</th>
-                                <th>Jumlah Masuk</th>
-                                <th>Supplier</th>
-                                <th>Status Pembelian</th>
+                            <tr class="font-medium opacity-80">
+                                <td>Tgl Masuk</td>
+                                <td>Jumlah Masuk</td>
+                                <td>Supplier</td>
+                                <td>Status Pembelian</td>
                             </tr>
-                        </thead>
                         <?php $no=1;?>
                         @forelse($data as $key)
                         <tr>
-                        <th>{{ $key->tgl_masuk }}</th>
+                        <td>{{ $key->tgl_masuk }}</td>
                         <td>{{ $key->jml_masuk }}</td>
                         <td>{{ $key->nama }}</td> {{-- supplier --}}
                         <td>
@@ -102,7 +100,7 @@
             </div>
         </div>
     </div>
-    <br>
+    <br><br>
 </div>
 
 @endsection

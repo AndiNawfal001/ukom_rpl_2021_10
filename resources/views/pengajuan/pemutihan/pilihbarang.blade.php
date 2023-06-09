@@ -2,8 +2,8 @@
 @section('container')
 
 <div class="pt-6 px-4">
-    <div class="bg-base-100 shadow rounded-md p-4 sm:p-6 xl:p-8 ">
-        <div class="flex justify-between pb-3 items-center">
+    <div class="bg-base-100 shadow-xl rounded-2xl p-4 sm:p-4 xl:p-6 ">
+        <div class="flex justify-between pb-2 items-center">
             <h1 class="text-xl pb-3 font-semibold leading-loose">Pilih Barang yang rusak</h1>
             <a href="/pemutihan" class="btn btn-sm btn-square">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
@@ -23,27 +23,25 @@
         <div class="">
             <div class=" gap-5">
                 <div class="overflow-x-auto overflow-y-auto ">
-                    <table class="table w-full ">
-                        <thead>
+                    <table class="table table-compact w-full ">
                             <tr>
-                                <th>Barang</th>
-                                <th>Tgl Selesai Perbaikan</th>
-                                <th>Status Perbaikan</th>
-                                <th>Approve Perbaikan</th>
-                                <th>Aksi</th>
+                                <td>Barang</td>
+                                <td>Tgl Selesai Perbaikan</td>
+                                <td>Status Perbaikan</td>
+                                <td>Approve Perbaikan</td>
+                                <td>Aksi</td>
                             </tr>
-                        </thead>
                         <?php $no=1;?>
                         @forelse($data as $key)
                         <tr>
-                        <th>
+                        <td>
                             <div class="flex items-center space-x-3">
                                 <div>
-                                    <div class="font-bold text-lg">{{ $key->nama_barang }}</div>
+                                    <div class="font-semibold">{{ $key->nama_barang }}</div>
                                     <div class="text-sm opacity-50">{{ $key->asli }}</div>
                                 </div>
                             </div>
-                        </th>
+                        </td>
                         <td>{{ $key->tgl_selesai_perbaikan }}</td>
                         <td><p class="badge badge-outline badge-warning">{{ $key->status_perbaikan }}</p></td>
                         <td><p class="badge badge-outline badge-error">{{ $key->approve_perbaikan }}</p></td>
@@ -71,7 +69,7 @@
             </div>
         </div>
     </div>
-    <br>
+    <br><br>
 </div>
 
 @endsection
@@ -91,7 +89,7 @@
                     <div class="btn btn-sm btn-outline no-animation">{{ $key->asli }}</div>
 
                 </div>
-                <h2 class="text-2xl font-bold">Form pemutihan</h2>
+                <h2 class="text-xl font-semibold">Form pemutihan</h2>
             </div>
             <br>
             <div class="form-control hidden">
@@ -111,13 +109,13 @@
             </div>
             <div class="form-control">
                 <label class="label">
-                <span class="label-text">Keterangan Pemutihan</span>
+                <span class="label-text font-medium">Keterangan Pemutihan</span>
                 </label>
                 <textarea name="ket_pemutihan" cols="20" rows="5" class="textarea textarea-bordered" placeholder="contoh : barang sudah rusak" required></textarea>
             </div>
             <div class="form-control">
                 <label class="label">
-                    <span class="label-text">Foto kondisi terakhir barang</span>
+                    <span class="label-text font-medium">Foto kondisi terakhir barang</span>
                 </label>
                 <input type="file" name="image" id="image" class="file-input file-input-bordered w-full max-w-xs" onchange="previewImage()" required/>
                 <br>

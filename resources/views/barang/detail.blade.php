@@ -2,7 +2,7 @@
 @section('container')
 
 <div class="pt-6 px-4">
-    <div class="bg-base-100 shadow rounded-md p-4 sm:p-6 xl:p-8 ">
+    <div class="bg-base-100 shadow-xl rounded-2xl p-4 sm:p-4 xl:p-6 ">
         <div class="">
             <div class="flex justify-between">
                 <form action="/barang/detail/{{ $id_barang }}" method="GET">
@@ -22,29 +22,27 @@
                     </a>
                 </div>
             </div>
-            <div class=" gap-5">
+            <div class="">
                 <div class="overflow-x-auto overflow-y-auto ">
-                    <table class="table table-zebra w-full ">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Barang</th>
-                                <th>Kondisi</th>
-                                <th>Status</th>
-                                <th>Aksi</th>
+                    <table class="table table-compact w-full ">
+                            <tr class="font-medium opacity-80">
+                                <td>No</td>
+                                <td>Barang</td>
+                                <td>Kondisi</td>
+                                <td>Status</td>
+                                <td>Aksi</td>
                             </tr>
-                        </thead>
                         @forelse($data as $key => $item)
                         <tr>
                         <th>{{ $data->firstItem() + $key }}</th>
-                        <th>
+                        <td>
                             <div class="flex items-center space-x-3">
                                 <div>
-                                    <div class="font-bold text-lg">{{ $item->nama_barang }}</div>
+                                    <div class="font-semibold">{{ $item->nama_barang }}</div>
                                     <div class="text-sm opacity-50">{{ $item->kode_barang }}</div>
                                 </div>
                             </div>
-                        </th>
+                        </td>
                         <td>
                             <p class="badge badge-outline
                             {{ ($item->kondisi_barang === 'baik') ? 'badge-info' : '' }}
@@ -91,7 +89,7 @@
             </div>
         </div>
     </div>
-    <br>
+    <br><br>
 </div>
 
 @endsection

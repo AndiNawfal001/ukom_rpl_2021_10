@@ -2,34 +2,34 @@
 @section('container')
 
 <div class="pt-6 px-4">
-    <div class="bg-base-100 shadow rounded-md p-4 sm:p-6 xl:p-8 ">
-        <h1 class="text-xl pb-3 font-semibold leading-loose">History Logging</h1>
-        <form action="/log" method="GET">
-            @csrf
-                <div class="form-control mb-2">
-                    <div class="input-group ">
-                    <input type="text" name="search" placeholder="Search…" class="input input-bordered" value="{{ request("search") }}" autocomplete="off"/>
-                    <button class="btn btn-square" type="submit">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-                    </button>
+    <div class="bg-base-100 shadow-xl rounded-2xl p-4 sm:p-4 xl:p-6 ">
+        <div class="lg:flex justify-between mb-2">
+            <h1 class="text-xl pb-3 font-semibold leading-loose">History Logging</h1>
+            <form action="/logging" method="GET">
+                @csrf
+                    <div class="form-control mb-2">
+                        <div class="input-group ">
+                        <input type="text" name="search" placeholder="Search…" class="input input-bordered" value="{{ request("search") }}" autocomplete="off"/>
+                        <button class="btn btn-square" type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                        </button>
+                        </div>
                     </div>
-                </div>
-        </form>
+            </form>
+        </div>
         <div class="">
             <div class="overflow-x-auto overflow-y-auto">
-                <table class="table w-full ">
-                    <thead>
-                        <tr>
-                            <th>Id Log</th>
-                            <th>Username</th>
-                            <th>Aktifitas</th>
-                            <th>Tanggal</th>
+                <table class="table table-compact w-full ">
+                        <tr class="font-medium opacity-80">
+                            <td>Id Log</td>
+                            <td>Username</td>
+                            <td>Aktifitas</td>
+                            <td>Tanggal</td>
                         </tr>
-                    </thead>
 
                     @forelse($data as $key)
                     <tr>
-                        <th>{{ $key->id_log }}</th>
+                        <td>{{ $key->id_log }}</td>
                         <td>{{ $key->username }}</td>
                         <td>
                             <p class="badge badge-outline
@@ -60,7 +60,7 @@
             </div>
         </div>
     </div>
-    <br>
+    <br><br>
 </div>
 
 

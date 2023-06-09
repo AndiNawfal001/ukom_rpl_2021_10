@@ -2,7 +2,7 @@
 @section('container')
 <div class="pt-6 px-4">
 
-    <div class="bg-base-100 border-t-2 border-primary shadow rounded-md p-4 sm:p-6 xl:p-8 ">
+    <div class="bg-base-100 shadow-xl rounded-2xl p-4 sm:p-4 xl:p-6 ">
         <h1 class="text-xl pb-3 font-semibold leading-loose">Daftar Pengajuan pemutihan untuk di Approve</h1>
         <form action="/approval/pemutihan" method="GET">
             @csrf
@@ -18,28 +18,26 @@
         <div class="">
             <div class="">
                 <div class="overflow-x-auto overflow-y-auto">
-                    <table class="table w-full ">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Barang</th>
-                                <th>Tanggal Pemutihan</th>
-                                <th>Penonaktifan</th>
-                                <th>Aksi</th>
+                    <table class="table table-compact w-full ">
+                            <tr class="font-medium opacity-80">
+                                <td>No</td>
+                                <td>Barang</td>
+                                <td>Tanggal Pemutihan</td>
+                                <td>Penonaktifan</td>
+                                <td>Aksi</td>
                             </tr>
-                        </thead>
                         <?php $no=1;?>
                         @forelse($data as $key)
                         <tr>
                         <th>{{ $no++ }}</th>
-                        <th>
+                        <td>
                             <div class="flex items-center space-x-3">
                                 <div>
-                                    <div class="font-bold text-lg">{{ $key->nama_barang }}</div>
+                                    <div class="font-semibold">{{ $key->nama_barang }}</div>
                                     <div class="text-sm opacity-50">{{ $key->kode_barang }}</div>
                                 </div>
                             </div>
-                        </th>
+                        </td>
                         <td>{{ $key->tgl_pemutihan }}</td>
                         <td>
                             <p class="badge badge-outline
@@ -71,7 +69,7 @@
             </div>
         </div>
     </div>
-    <br>
+    <br><br>
 </div>
 
 @endsection
@@ -103,7 +101,7 @@
                             <p class="btn btn-sm btn-outline">{{ $key->kode_barang }}</p>
                         </div>
                     </div>
-                    <h3 class="text-xl font-bold">{{ $key->nama_barang }}</h3>
+                    <h3 class="text-xl font-semibold">{{ $key->nama_barang }}</h3>
                     <h3 class="text-md">diajukan {{ $key->tgl_pemutihan }}</h3>
 
                     <div class="py-4">

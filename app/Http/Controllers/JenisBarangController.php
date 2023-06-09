@@ -24,7 +24,7 @@ class JenisBarangController extends Controller
 
             if ($tambah_jenisbrg) {
                 flash()->addSuccess('Barang Berhasil disimpan.');
-                return redirect('barangMasuk');
+                return redirect('barang Masuk');
             } else
                 return "input data gagal";
         } catch (\Exception $e) {
@@ -39,7 +39,7 @@ class JenisBarangController extends Controller
             $hapus = JenisBarangModel::where('id_jenis_brg', $id)->delete();
             if ($hapus) {
                 flash()->addSuccess('Barang Berhasil dihapus.');
-                return redirect('barangMasuk');
+                return redirect('barang Masuk');
             }
         } catch (\Exception $e) {
             $e->getMessage();

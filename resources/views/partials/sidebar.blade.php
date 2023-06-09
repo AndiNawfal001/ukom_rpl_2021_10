@@ -1,236 +1,236 @@
-<div class="relative flex-1 flex flex-col min-h-0 shadow-xl bg-base-100 pt-0">
-    <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
-       <div class="flex-1 px-3 space-y-1">
-            <ul>
-                <li class="rounded-lg group {{ request()->is('dashboard') ? 'bg-base-200 shadow-md' : 'hover:bg-base-300' }}">
-                    <a href="/dashboard" class="flex items-center p-2 ">
-                        <div class="btn btn-sm btn-active btn-square {{ request()->is('dashboard') ? 'btn-primary' : 'btn-ghost' }}">
-                            <svg class="w-5 h-w-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z"></path>
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z"></path>
-                            </svg>
-                        </div>
+<div class="relative flex-1 flex flex-col min-h-0 bg-base-100 lg:bg-transparent shadow-xl lg:shadow-none rounded-2xl px-2">
+    <hr class="hidden lg:block border-0 h-px bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent mt-1 -my-2">
+        <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
+           <div class="flex-1 px-3 space-y-1">
+                <ul class="">
+                    <li class="rounded-lg group my-1 {{ request()->is('dashboard') ? 'bg-base-100 lg:shadow-lg' : '' }}">
+                        <a href="/dashboard" class="flex items-center p-2 ">
+                            <div class="bg-base-100 w-9 h-9 rounded-lg shadow-lg flex justify-center items-center {{ request()->is('dashboard') ? 'bg-primary text-base-100 ' : '' }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M2.25 13.5a8.25 8.25 0 018.25-8.25.75.75 0 01.75.75v6.75H18a.75.75 0 01.75.75 8.25 8.25 0 01-16.5 0z" clip-rule="evenodd" />
+                                    <path fill-rule="evenodd" d="M12.75 3a.75.75 0 01.75-.75 8.25 8.25 0 018.25 8.25.75.75 0 01-.75.75h-7.5a.75.75 0 01-.75-.75V3z" clip-rule="evenodd" />
+                                  </svg>
 
-                    <span class="ml-3 text-md">Dashboard</span>
-                    </a>
-                </li>
-                @can('admin')
-                    <li class="rounded-lg group {{ request()->is('log*') ? 'bg-base-200  shadow-md' : 'hover:bg-base-300' }}">
-                        <a href="/log" class="flex items-center p-2">
-                            <div class="btn btn-sm btn-active btn-square {{ request()->is('log*') ? 'btn-primary' : 'btn-ghost' }}">
-                                <svg class="w-5 h-w-5 " fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"></path>
-                                </svg>
                             </div>
-                        <span class="flex-1 ml-3 text-md whitespace-nowrap">Logging</span>
-                        <span class="inline-flex justify-center items-center px-2 ml-3 text-sm font-medium bg-base-content text-base-100 rounded-full duration-300">Pro</span>
+
+                        <span class="ml-3 {{ request()->is('dashboard') ? 'font-semibold opacity-100' : 'opacity-70' }}">Dashboard</span>
                         </a>
                     </li>
-                @endcan
-                @php
-                    $approved_null = DB::table('pengajuan_bb')
-                                ->whereNull('status_pembelian')
-                                ->where('status_approval', 'setuju')
-                                ->count();
+                    @can('admin')
+                        <li class="rounded-lg group my-1 {{ request()->is('logging*') ? 'bg-base-100 lg:shadow-lg' : '' }}">
+                            <a href="/logging" class="flex items-center p-2">
+                                <div class="bg-base-100 w-9 h-9 rounded-lg shadow-lg flex justify-center items-center {{ request()->is('logging*') ? 'bg-primary text-base-100 ' : '' }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                                        <path d="M21 6.375c0 2.692-4.03 4.875-9 4.875S3 9.067 3 6.375 7.03 1.5 12 1.5s9 2.183 9 4.875z" />
+                                        <path d="M12 12.75c2.685 0 5.19-.586 7.078-1.609a8.283 8.283 0 001.897-1.384c.016.121.025.244.025.368C21 12.817 16.97 15 12 15s-9-2.183-9-4.875c0-.124.009-.247.025-.368a8.285 8.285 0 001.897 1.384C6.809 12.164 9.315 12.75 12 12.75z" />
+                                        <path d="M12 16.5c2.685 0 5.19-.586 7.078-1.609a8.282 8.282 0 001.897-1.384c.016.121.025.244.025.368 0 2.692-4.03 4.875-9 4.875s-9-2.183-9-4.875c0-.124.009-.247.025-.368a8.284 8.284 0 001.897 1.384C6.809 15.914 9.315 16.5 12 16.5z" />
+                                        <path d="M12 20.25c2.685 0 5.19-.586 7.078-1.609a8.282 8.282 0 001.897-1.384c.016.121.025.244.025.368 0 2.692-4.03 4.875-9 4.875s-9-2.183-9-4.875c0-.124.009-.247.025-.368a8.284 8.284 0 001.897 1.384C6.809 19.664 9.315 20.25 12 20.25z" />
+                                      </svg>
 
-                    $pengajuan_bb =  DB::table('pengajuan_bb')
-                                ->whereNull('approver')
-                                ->count('id_pengajuan_bb');
+                                </div>
+                            <span class="flex-1 ml-3  {{ request()->is('logging*') ? 'font-semibold opacity-100' : 'opacity-70' }} whitespace-nowrap">Logging</span>
+                            <span class="inline-flex justify-center items-center px-2 ml-3 text-sm font-medium bg-base-content text-base-100 rounded-full duration-300">Pro</span>
+                            </a>
+                        </li>
+                    @endcan
+                    @php
+                        $approved_null = DB::table('pengajuan_bb')
+                                    ->whereNull('status_pembelian')
+                                    ->where('status_approval', 'setuju')
+                                    ->count();
 
-                    $perbaikan =  DB::table('perbaikan')
-                                ->whereNull('approver')
-                                ->where('approve_perbaikan', 'pending')
-                                ->whereNotNull('tgl_selesai_perbaikan')
-                                ->count('id_perbaikan');
+                        $pengajuan_bb =  DB::table('pengajuan_bb')
+                                    ->whereNull('approver')
+                                    ->count('id_pengajuan_bb');
 
-                    $pemutihan =  DB::table('pemutihan')
-                                ->whereNull('approver')
-                                ->count('id_pemutihan');
+                        $perbaikan =  DB::table('perbaikan')
+                                    ->whereNull('approver')
+                                    ->where('approve_perbaikan', 'pending')
+                                    ->whereNotNull('tgl_selesai_perbaikan')
+                                    ->count('id_perbaikan');
 
-                    $submitter = Auth::user()->id_pengguna;
-                    $pemutihanKaprog = DB::table('perbaikan_pemutihan')
-                                ->join('nama_kode_barang', 'perbaikan_pemutihan.asli', '=', 'nama_kode_barang.kode_barang')
-                                ->select('perbaikan_pemutihan.*', 'nama_kode_barang.nama_barang')
-                                ->whereNull('perbaikan_pemutihan.kode_barang')
-                                ->where('perbaikan_pemutihan.submitter', $submitter)
-                                ->where('perbaikan_pemutihan.approve_perbaikan', 'rusak')
-                                ->count();
-                @endphp
-                @can('admin+manajemen')
-                    <li class="border-primary rounded-lg group {{ request()->is('barangMasuk*') ? 'bg-base-200 shadow-md' : 'hover:bg-base-300' }}">
-                        <a href="/barangMasuk" class="flex items-center p-2">
-                            <div class="btn btn-sm btn-active btn-square {{ request()->is('barangMasuk*') ? 'btn-primary' : 'btn-ghost' }}">
-                                <svg class="w-5 h-5 " fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"></path>
-                                </svg>
+                        $pemutihan =  DB::table('pemutihan')
+                                    ->whereNull('approver')
+                                    ->count('id_pemutihan');
+
+                        $submitter = Auth::user()->id_pengguna;
+                        $pemutihanKaprog = DB::table('perbaikan_pemutihan')
+                                    ->join('nama_kode_barang', 'perbaikan_pemutihan.asli', '=', 'nama_kode_barang.kode_barang')
+                                    ->select('perbaikan_pemutihan.*', 'nama_kode_barang.nama_barang')
+                                    ->whereNull('perbaikan_pemutihan.kode_barang')
+                                    ->where('perbaikan_pemutihan.submitter', $submitter)
+                                    ->where('perbaikan_pemutihan.approve_perbaikan', 'rusak')
+                                    ->count();
+                    @endphp
+                    @can('admin+manajemen')
+                        <li class="rounded-lg group my-1 {{ request()->is('barang Masuk*') ? 'bg-base-100 lg:shadow-lg' : '' }}">
+                            <a href="/barang Masuk" class="flex items-center p-2">
+                                <div class="bg-base-100 w-9 h-9 rounded-lg shadow-lg flex justify-center items-center {{ request()->is('barangMasuk*') ? 'bg-primary text-base-100 ' : '' }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M19.5 21a3 3 0 003-3V9a3 3 0 00-3-3h-5.379a.75.75 0 01-.53-.22L11.47 3.66A2.25 2.25 0 009.879 3H4.5a3 3 0 00-3 3v12a3 3 0 003 3h15zm-6.75-10.5a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25v2.25a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V10.5z" clip-rule="evenodd" />
+                                      </svg>
+
+                                </div>
+                            <span class="flex-1 ml-3  {{ request()->is('barang Masuk*') ? 'font-semibold opacity-100' : 'opacity-70' }} whitespace-nowrap">Barang Masuk</span>
+                            @can('manajemen')
+                                @if($approved_null >= 1)
+                                    <span class="inline-flex justify-center items-center p-3 ml-3 w-3 h-3 text-sm font-medium text-info-content bg-info rounded-full">{{ $approved_null }}</span>
+                                @endif
+                            @endcan
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('admin+manajemen')
+                    <li class="group rounded-lg my-1">
+                        <button type="button" class="flex items-center p-2 w-full dropdown-btn" >
+                            <div class="bg-base-100 w-9 h-9 rounded-lg shadow-lg flex justify-center items-center {{ request()->is('approval/BB*', 'approval/PB*' ,'approval/pemutihan*') ? 'bg-primary text-base-100 ' : '' }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M7.502 6h7.128A3.375 3.375 0 0118 9.375v9.375a3 3 0 003-3V6.108c0-1.505-1.125-2.811-2.664-2.94a48.972 48.972 0 00-.673-.05A3 3 0 0015 1.5h-1.5a3 3 0 00-2.663 1.618c-.225.015-.45.032-.673.05C8.662 3.295 7.554 4.542 7.502 6zM13.5 3A1.5 1.5 0 0012 4.5h4.5A1.5 1.5 0 0015 3h-1.5z" clip-rule="evenodd" />
+                                    <path fill-rule="evenodd" d="M3 9.375C3 8.339 3.84 7.5 4.875 7.5h9.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-9.75A1.875 1.875 0 013 20.625V9.375zm9.586 4.594a.75.75 0 00-1.172-.938l-2.476 3.096-.908-.907a.75.75 0 00-1.06 1.06l1.5 1.5a.75.75 0 001.116-.062l3-3.75z" clip-rule="evenodd" />
+                                  </svg>
+
                             </div>
-                        <span class="flex-1 ml-3 whitespace-nowrap">Barang Masuk</span>
-                        @can('manajemen')
-                            @if($approved_null >= 1)
-                                <span class="inline-flex justify-center items-center p-3 ml-3 w-3 h-3 text-sm font-medium text-info-content bg-info rounded-full">{{ $approved_null }}</span>
+
+                            <span  class="flex-1 ml-3 text-left  {{ request()->is('approval/BB*', 'approval/PB*' ,'approval/pemutihan*') ? 'font-semibold opacity-100' : 'opacity-70' }} whitespace-nowrap" sidebar-toggle-item>Approval</span>
+                            @if($pemutihan >= 1 or $pengajuan_bb >=1 or $perbaikan >= 1)
+                                <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info"></span>
                             @endif
-                        @endcan
+                            <svg sidebar-toggle-item class="w-6 h-6 group-hover:text-base-content" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        </button>
+                        <ul class="dropdown-container {{ request()->is('approval/BB*', 'approval/PB*' ,'approval/pemutihan*') ? 'block' : 'hidden' }}">
+                            <li >
+                                <a href="/approval/BB" class="flex justify-between items-center py-3 px-2 pl-11 w-full text-base border-primary font-normal rounded-lg group opacity-70 {{ request()->is('approval/BB*') ? 'bg-base-100 border-r-2 shadow-lg' : '' }}">
+                                    Barang Baru
+                                    @if($pengajuan_bb >= 1)
+                                        <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info {{ request()->is('approval/BB*') ? 'mr-[6px]' : '' }}"></span>
+                                    @endif
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/approval/PB" class="flex justify-between items-center py-3 px-2 pl-11 w-full text-base border-primary font-normal rounded-lg group opacity-70 {{ request()->is('approval/PB*') ? 'bg-base-100 border-r-2 shadow-lg' : '' }}">
+                                    Perbaikan
+                                    @if($perbaikan >= 1)
+                                        <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info {{ request()->is('approval/PB*') ? 'mr-[6px]' : '' }}"></span>
+                                    @endif
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/approval/pemutihan" class="flex justify-between items-center py-3 px-2 pl-11 w-full text-base border-primary font-normal rounded-lg group opacity-70 {{ request()->is('approval/pemutihan*') ? 'bg-base-100 border-r-2 shadow-lg' : '' }}">
+                                    Pemutihan
+                                    @if($pemutihan >= 1)
+                                        <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info{{ request()->is('approval/pemutihan*') ? 'mr-[6px]' : '' }}"></span>
+                                    @endif
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    @endcan
+
+                    <li class="group rounded-lg my-1">
+                        <button type="button" class="flex items-center p-2 w-full text-base font-normal rounded-lg dropdown-btn" >
+                            <div class="bg-base-100 w-9 h-9 rounded-lg shadow-lg flex justify-center items-center {{ request()->is('pengajuan/BB*', 'pengajuan/PB*' ,'pemutihan*') ? 'bg-primary text-base-100 ' : '' }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M7.502 6h7.128A3.375 3.375 0 0118 9.375v9.375a3 3 0 003-3V6.108c0-1.505-1.125-2.811-2.664-2.94a48.972 48.972 0 00-.673-.05A3 3 0 0015 1.5h-1.5a3 3 0 00-2.663 1.618c-.225.015-.45.032-.673.05C8.662 3.295 7.554 4.542 7.502 6zM13.5 3A1.5 1.5 0 0012 4.5h4.5A1.5 1.5 0 0015 3h-1.5z" clip-rule="evenodd" />
+                                    <path fill-rule="evenodd" d="M3 9.375C3 8.339 3.84 7.5 4.875 7.5h9.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-9.75A1.875 1.875 0 013 20.625V9.375zM6 12a.75.75 0 01.75-.75h.008a.75.75 0 01.75.75v.008a.75.75 0 01-.75.75H6.75a.75.75 0 01-.75-.75V12zm2.25 0a.75.75 0 01.75-.75h3.75a.75.75 0 010 1.5H9a.75.75 0 01-.75-.75zM6 15a.75.75 0 01.75-.75h.008a.75.75 0 01.75.75v.008a.75.75 0 01-.75.75H6.75a.75.75 0 01-.75-.75V15zm2.25 0a.75.75 0 01.75-.75h3.75a.75.75 0 010 1.5H9a.75.75 0 01-.75-.75zM6 18a.75.75 0 01.75-.75h.008a.75.75 0 01.75.75v.008a.75.75 0 01-.75.75H6.75a.75.75 0 01-.75-.75V18zm2.25 0a.75.75 0 01.75-.75h3.75a.75.75 0 010 1.5H9a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                                  </svg>
+
+                            </div>
+                            <span  class="flex-1 ml-3 text-left  {{ request()->is('pengajuan/BB*', 'pengajuan/PB*' ,'pemutihan*') ? 'font-semibold opacity-100' : 'opacity-70' }} whitespace-nowrap" sidebar-toggle-item>Pengajuan</span>
+                            @if($pemutihanKaprog >= 1 )
+                                <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info"></span>
+                            @endif
+                            <svg sidebar-toggle-item class="w-6 h-6 group-hover:text-base-content" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        </button>
+                        <ul class="dropdown-container {{ request()->is('pengajuan/BB*', 'pengajuan/PB*' ,'pemutihan*') ? 'block' : 'hidden' }}">
+                            <li>
+                                <a href="/pengajuan/BB" class="flex items-center py-3 px-2 pl-11 w-full text-base border-primary font-normal rounded-lg group opacity-70 {{ request()->is('pengajuan/BB*') ? 'bg-base-100 border-r-2 shadow-lg' : '' }}">Barang Baru</a>
+                            </li>
+                            <li>
+                                <a href="/pengajuan/PB" class="flex items-center py-3 px-2 pl-11 w-full text-base border-primary font-normal rounded-lg group opacity-70 {{ request()->is('pengajuan/PB*') ? 'bg-base-100 border-r-2 shadow-lg' : '' }}">Perbaikan</a>
+                            </li>
+                            <li>
+                                <a href="/pemutihan" class="flex justify-between items-center py-3 px-2 pl-11 w-full text-base border-primary font-normal rounded-lg group opacity-70 {{ request()->is('pemutihan*') ? 'bg-base-100 border-r-2 shadow-lg' : '' }}">
+                                    Pemutihan
+                                    @if($pemutihanKaprog >= 1)
+                                        <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info {{ request()->is('pemutihan*') ? 'mr-[6px]' : '' }}"></span>
+                                    @endif
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="rounded-lg group my-1 {{ request()->is('barang', 'barang/detail*', 'barang/search*') ? 'bg-base-100 lg:shadow-lg' : '' }}">
+                        <a href="/barang" class="flex items-center p-2">
+                            <div class="bg-base-100 w-9 h-9 rounded-lg shadow-lg flex justify-center items-center {{ request()->is('barang', 'barang/detail*', 'barang/search*') ? 'bg-primary text-base-100 ' : '' }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M19.5 21a3 3 0 003-3v-4.5a3 3 0 00-3-3h-15a3 3 0 00-3 3V18a3 3 0 003 3h15zM1.5 10.146V6a3 3 0 013-3h5.379a2.25 2.25 0 011.59.659l2.122 2.121c.14.141.331.22.53.22H19.5a3 3 0 013 3v1.146A4.483 4.483 0 0019.5 9h-15a4.483 4.483 0 00-3 1.146z" />
+                                  </svg>
+
+                            </div>
+                        <span class="flex-1 ml-3  {{ request()->is('barang', 'barang/detail*', 'barang/search*') ? 'font-semibold opacity-100' : 'opacity-70' }} whitespace-nowrap">Barang</span>
                         </a>
                     </li>
-                @endcan
 
-                @can('admin+manajemen')
-                <li class="group">
-                    <button type="button" class="flex items-center p-2 w-full text-base font-normal rounded-lg hover:bg-base-300 dropdown-btn" >
-                        <div class="btn btn-sm btn-active btn-square {{ request()->is('approval/BB*', 'approval/PB*' ,'approval/pemutihan*') ? 'btn-primary' : 'btn-ghost' }}">
-                            <svg class="w-5 h-5 " fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0118 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3l1.5 1.5 3-3.75"></path>
-                            </svg>
-                        </div>
+                    <li class="rounded-lg group my-1 {{ request()->is('perawatan*') ? 'bg-base-100 lg:shadow-lg' : '' }}">
+                        <a href="/perawatan" class="flex items-center p-2">
+                            <div class="bg-base-100 w-9 h-9 rounded-lg shadow-lg flex justify-center items-center {{ request()->is('perawatan*') ? 'bg-primary text-base-100 ' : '' }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M19.906 9c.382 0 .749.057 1.094.162V9a3 3 0 00-3-3h-3.879a.75.75 0 01-.53-.22L11.47 3.66A2.25 2.25 0 009.879 3H6a3 3 0 00-3 3v3.162A3.756 3.756 0 014.094 9h15.812zM4.094 10.5a2.25 2.25 0 00-2.227 2.568l.857 6A2.25 2.25 0 004.951 21H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-2.227-2.568H4.094z" />
+                                  </svg>
 
-                        <span class="flex-1 ml-3 text-left whitespace-nowrap " sidebar-toggle-item>Approval</span>
-                        @if($pemutihan >= 1 or $pengajuan_bb >=1 or $perbaikan >= 1)
-                            <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info"></span>
-                        @endif
-                        <svg sidebar-toggle-item class="w-6 h-6 group-hover:text-base-content" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                    </button>
-                    <ul class="dropdown-container {{ request()->is('approval/BB*', 'approval/PB*' ,'approval/pemutihan*') ? 'block' : 'hidden' }}">
-                        <li >
-                            <a href="/approval/BB" class="flex justify-between items-center py-3 px-2 pl-11 w-full text-base border-primary font-normal rounded-lg group {{ request()->is('approval/BB*') ? 'bg-base-200 border-r-2 shadow-md' : 'hover:bg-base-300' }}">
-                                Barang Baru
-                                @if($pengajuan_bb >= 1)
-                                    <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info {{ request()->is('approval/BB*') ? 'mr-[6px]' : '' }}"></span>
-                                @endif
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/approval/PB" class="flex justify-between items-center py-3 px-2 pl-11 w-full text-base border-primary font-normal rounded-lg group {{ request()->is('approval/PB*') ? 'bg-base-200 border-r-2 shadow-md' : 'hover:bg-base-300' }}">
-                                Perbaikan
-                                @if($perbaikan >= 1)
-                                    <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info {{ request()->is('approval/PB*') ? 'mr-[6px]' : '' }}"></span>
-                                @endif
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/approval/pemutihan" class="flex justify-between items-center py-3 px-2 pl-11 w-full text-base border-primary font-normal rounded-lg group {{ request()->is('approval/pemutihan*') ? 'bg-base-200 border-r-2 shadow-md' : 'hover:bg-base-300' }}">
-                                Pemutihan
-                                @if($pemutihan >= 1)
-                                    <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info{{ request()->is('approval/pemutihan*') ? 'mr-[6px]' : '' }}"></span>
-                                @endif
-                            </a>
-                        </li>
+                            </div>
+                        <span class="flex-1 ml-3  {{ request()->is('perawatan*') ? 'font-semibold opacity-100' : 'opacity-70' }} whitespace-nowrap">Perawatan</span>
+                        </a>
+                    </li>
 
-                    </ul>
-                </li>
-                @endcan
+                    <li class="rounded-lg group my-1 {{ request()->is('pengguna*') ? 'bg-base-100 lg:shadow-lg' : '' }}">
+                        <a href="/pengguna" class="flex items-center p-2">
+                            <div class="bg-base-100 w-9 h-9 rounded-lg shadow-lg flex justify-center items-center {{ request()->is('pengguna*') ? 'bg-primary text-base-100 ' : '' }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M8.25 6.75a3.75 3.75 0 117.5 0 3.75 3.75 0 01-7.5 0zM15.75 9.75a3 3 0 116 0 3 3 0 01-6 0zM2.25 9.75a3 3 0 116 0 3 3 0 01-6 0zM6.31 15.117A6.745 6.745 0 0112 12a6.745 6.745 0 016.709 7.498.75.75 0 01-.372.568A12.696 12.696 0 0112 21.75c-2.305 0-4.47-.612-6.337-1.684a.75.75 0 01-.372-.568 6.787 6.787 0 011.019-4.38z" clip-rule="evenodd" />
+                                    <path d="M5.082 14.254a8.287 8.287 0 00-1.308 5.135 9.687 9.687 0 01-1.764-.44l-.115-.04a.563.563 0 01-.373-.487l-.01-.121a3.75 3.75 0 013.57-4.047zM20.226 19.389a8.287 8.287 0 00-1.308-5.135 3.75 3.75 0 013.57 4.047l-.01.121a.563.563 0 01-.373.486l-.115.04c-.567.2-1.156.349-1.764.441z" />
+                                  </svg>
 
-                <li class="group">
-                    <button type="button" class="flex items-center p-2 w-full text-base font-normal rounded-lg hover:bg-base-300 dropdown-btn" >
-                        <div class="btn btn-sm btn-active btn-square {{ request()->is('pengajuan/BB*', 'pengajuan/PB*' ,'pemutihan*') ? 'btn-primary' : 'btn-ghost' }}">
-                            <svg class="w-5 h-5 " fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z"></path>
-                            </svg>
-                        </div>
-                        <span class="flex-1 ml-3 text-left whitespace-nowrap " sidebar-toggle-item>Pengajuan</span>
-                        @if($pemutihanKaprog >= 1 )
-                            <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info"></span>
-                        @endif
-                        <svg sidebar-toggle-item class="w-6 h-6 group-hover:text-base-content" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                    </button>
-                    <ul class="dropdown-container {{ request()->is('pengajuan/BB*', 'pengajuan/PB*' ,'pemutihan*') ? 'block' : 'hidden' }}">
-                        <li>
-                            <a href="/pengajuan/BB" class="flex items-center py-3 px-2 pl-11 w-full text-base border-primary font-normal rounded-lg group {{ request()->is('pengajuan/BB*') ? 'bg-base-200 border-r-2 shadow-md' : 'hover:bg-base-300' }}">Barang Baru</a>
-                        </li>
-                        <li>
-                            <a href="/pengajuan/PB" class="flex items-center py-3 px-2 pl-11 w-full text-base border-primary font-normal rounded-lg group {{ request()->is('pengajuan/PB*') ? 'bg-base-200 border-r-2 shadow-md' : 'hover:bg-base-300' }}">Perbaikan</a>
-                        </li>
-                        <li>
-                            <a href="/pemutihan" class="flex justify-between items-center py-3 px-2 pl-11 w-full text-base border-primary font-normal rounded-lg group {{ request()->is('pemutihan*') ? 'bg-base-200 border-r-2 shadow-md' : 'hover:bg-base-300' }}">
-                                Pemutihan
-                                @if($pemutihanKaprog >= 1)
-                                    <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info {{ request()->is('pemutihan*') ? 'mr-[6px]' : '' }}"></span>
-                                @endif
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                            </div>
+                        <span class="flex-1 ml-3  {{ request()->is('pengguna*') ? 'font-semibold opacity-100' : 'opacity-70' }} whitespace-nowrap">Pengguna</span>
+                        </a>
+                    </li>
 
-                <li class="rounded-lg group {{ request()->is('barang', 'barang/detail*', 'barang/search*') ? 'bg-base-200 shadow-md': 'hover:bg-base-300' }}">
-                    <a href="/barang" class="flex items-center p-2">
-                        <div class="btn btn-sm btn-active btn-square {{ request()->is('barang', 'barang/detail*', 'barang/search*') ? 'btn-primary' : 'btn-ghost' }}">
-                            <svg class="w-5 h-5 " fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"></path>
-                            </svg>
-                        </div>
-                    <span class="flex-1 ml-3 whitespace-nowrap">Barang</span>
-                    </a>
-                </li>
+                    <li class="rounded-lg group my-1 {{ request()->is('supplier*') ? 'bg-base-100 lg:shadow-lg' : '' }}">
+                        <a href="/supplier" class="flex items-center p-2">
+                            <div class="bg-base-100 w-9 h-9 rounded-lg shadow-lg flex justify-center items-center {{ request()->is('supplier*') ? 'bg-primary text-base-100 ' : '' }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M3.375 4.5C2.339 4.5 1.5 5.34 1.5 6.375V13.5h12V6.375c0-1.036-.84-1.875-1.875-1.875h-8.25zM13.5 15h-12v2.625c0 1.035.84 1.875 1.875 1.875h.375a3 3 0 116 0h3a.75.75 0 00.75-.75V15z" />
+                                    <path d="M8.25 19.5a1.5 1.5 0 10-3 0 1.5 1.5 0 003 0zM15.75 6.75a.75.75 0 00-.75.75v11.25c0 .087.015.17.042.248a3 3 0 015.958.464c.853-.175 1.522-.935 1.464-1.883a18.659 18.659 0 00-3.732-10.104 1.837 1.837 0 00-1.47-.725H15.75z" />
+                                    <path d="M19.5 19.5a1.5 1.5 0 10-3 0 1.5 1.5 0 003 0z" />
+                                  </svg>
 
-                <li class="rounded-lg group {{ request()->is('perawatan*') ? 'bg-base-200 shadow-md': 'hover:bg-base-300' }}">
-                    <a href="/perawatan" class="flex items-center p-2">
-                        <div class="btn btn-sm btn-active btn-square {{ request()->is('perawatan*') ? 'btn-primary' : 'btn-ghost' }}">
-                            <svg class="w-5 h-5 " fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 00-1.883 2.542l.857 6a2.25 2.25 0 002.227 1.932H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-1.883-2.542m-16.5 0V6A2.25 2.25 0 016 3.75h3.879a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H18A2.25 2.25 0 0120.25 9v.776"></path>
-                            </svg>
-                        </div>
-                    <span class="flex-1 ml-3 whitespace-nowrap">Perawatan</span>
-                    </a>
-                </li>
+                            </div>
+                            <span class="flex-1 ml-3  {{ request()->is('supplier*') ? 'font-semibold opacity-100' : 'opacity-70' }} whitespace-nowrap">Supplier</span>
+                            {{-- <span class="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-info-content bg-info rounded-full">
+                                {{ DB::table('supplier')->count('id_supplier') }}
+                            </span> --}}
+                        </a>
+                    </li>
 
-                <li class="rounded-lg group {{ request()->is('pengguna*') ? 'bg-base-200 shadow-md': 'hover:bg-base-300' }}">
-                    <a href="/pengguna" class="flex items-center p-2">
-                        <div class="btn btn-sm btn-active btn-square {{ request()->is('pengguna*') ? 'btn-primary' : 'btn-ghost' }}">
-                            <svg class="w-5 h-5 " fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"></path>
-                            </svg>
-                        </div>
-                    <span class="flex-1 ml-3 whitespace-nowrap">Pengguna</span>
-                    </a>
-                </li>
+                    <li class="rounded-lg group my-1 {{ request()->is('ruangan*') ? 'bg-base-100 lg:shadow-lg' : '' }}">
+                        <a href="/ruangan" class="flex items-center p-2 ">
+                            <div class="bg-base-100 w-9 h-9 rounded-lg shadow-lg flex justify-center items-center {{ request()->is('ruangan*') ? 'bg-primary text-base-100 ' : '' }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M4.5 2.25a.75.75 0 000 1.5v16.5h-.75a.75.75 0 000 1.5h16.5a.75.75 0 000-1.5h-.75V3.75a.75.75 0 000-1.5h-15zM9 6a.75.75 0 000 1.5h1.5a.75.75 0 000-1.5H9zm-.75 3.75A.75.75 0 019 9h1.5a.75.75 0 010 1.5H9a.75.75 0 01-.75-.75zM9 12a.75.75 0 000 1.5h1.5a.75.75 0 000-1.5H9zm3.75-5.25A.75.75 0 0113.5 6H15a.75.75 0 010 1.5h-1.5a.75.75 0 01-.75-.75zM13.5 9a.75.75 0 000 1.5H15A.75.75 0 0015 9h-1.5zm-.75 3.75a.75.75 0 01.75-.75H15a.75.75 0 010 1.5h-1.5a.75.75 0 01-.75-.75zM9 19.5v-2.25a.75.75 0 01.75-.75h4.5a.75.75 0 01.75.75v2.25a.75.75 0 01-.75.75h-4.5A.75.75 0 019 19.5z" clip-rule="evenodd" />
+                                  </svg>
 
-                <li class="rounded-lg group {{ request()->is('supplier*') ? 'bg-base-200 shadow-md': 'hover:bg-base-300' }}">
-                    <a href="/supplier" class="flex items-center p-2">
-                        <div class="btn btn-sm btn-active btn-square {{ request()->is('supplier*') ? 'btn-primary' : 'btn-ghost' }}">
-                            <svg class="w-5 h-5 flex-shrink-0 " fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"></path>
-                            </svg>
-                        </div>
-                        <span class="flex-1 ml-3 whitespace-nowrap">Supplier</span>
-                        {{-- <span class="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-info-content bg-info rounded-full">
-                            {{ DB::table('supplier')->count('id_supplier') }}
-                        </span> --}}
-                    </a>
-                </li>
+                            </div>
 
-                <li class="rounded-lg group {{ request()->is('ruangan*') ? 'bg-base-200 shadow-md': 'hover:bg-base-300' }}">
-                    <a href="/ruangan" class="flex items-center p-2 ">
-                        <div class="btn btn-sm btn-active btn-square {{ request()->is('ruangan*') ? 'btn-primary' : 'btn-ghost' }}">
-                            <svg class="w-5 h-5 flex-shrink-0 " fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z"></path>
-                            </svg>
-                        </div>
-
-                        <span class="flex-1 ml-3 whitespace-nowrap">Ruangan</span>
-                    </a>
-                </li>
+                            <span class="flex-1 ml-3  {{ request()->is('ruangan*') ? 'font-semibold opacity-100' : 'opacity-70' }} whitespace-nowrap">Ruangan</span>
+                        </a>
+                    </li>
 
 
-            </ul>
+                </ul>
 
-
-            <div class="lg:hidden">
-            {{-- line --}}
-            <hr class="border-0 h-px bg-gradient-to-r from-base-100 via-primary to-base-100 my-2">
-                @auth
-                    <div class="p-3 text-center">
-                        {{Auth::user()->username}}
-                        -
-                        <span class="font-semibold
-                            {{ (Auth::user()->level_user->nama_level === 'admin') ? 'text-error' : '' }}
-                            {{ (Auth::user()->level_user->nama_level === 'manajemen') ? 'text-success' : '' }}
-                            {{ (Auth::user()->level_user->nama_level === 'kaprog') ? 'text-info' : '' }}
-                        ">
-                            {{ Auth::user()->level_user->nama_level }}
-                        </span>
-                    </div>
-                @endauth
             </div>
-
         </div>
-    </div>
- </div>
+</div>

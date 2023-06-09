@@ -2,10 +2,10 @@
 @section('container')
 
 <div class="pt-6 px-4">
-    <div class="bg-base-100 shadow rounded-md p-4 sm:p-6 xl:p-8 ">
-        <h1 class="text-xl pb-3 font-semibold leading-loose">Daftar Pengajuan Perbaikan Barang</h1>
+    <div class="bg-base-100 shadow-xl rounded-2xl p-4 sm:p-4 xl:p-6 ">
+        {{-- <h1 class="text-xl pb-3 font-semibold leading-loose">Daftar Pengajuan Perbaikan Barang</h1> --}}
         <div class="lg:flex justify-between mb-2">
-            <form action="/pengajuan/PB" method="GET">
+            {{-- <form action="/pengajuan/PB" method="GET">
                 @csrf
                     <div class="form-control mb-2">
                         <div class="input-group ">
@@ -15,36 +15,36 @@
                         </button>
                         </div>
                     </div>
-            </form>
+            </form> --}}
+        <h1 class="text-xl pb-3 font-semibold leading-loose">Daftar Pengajuan Perbaikan Barang</h1>
+
             <div class="">
-                <a href="/pengajuan/PB/pilihBarang"><button type="submit" class="btn btn-success gap-2">Tambah Pengajuan <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></button></a>
+                <a href="/pengajuan/PB/pilihBarang"><button type="submit" class="btn btn-success btn-outline gap-2">Tambah Pengajuan <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></button></a>
             </div>
         </div>
         <div class="">
             <div class="">
                 <div class="overflow-x-auto overflow-y-auto">
 
-                    <table class="table w-full">
-                        <thead>
-                            <tr>
-                                <th>Barang</th>
-                                <th>Tgl Perbaikan</th>
-                                <th>Selesai Perbaikan</th>
-                                <th>Approval perbaikan</th>
-                                <th>Aksi</th>
+                    <table class="table table-compact w-full">
+                            <tr class="font-medium opacity-80">
+                                <td>Barang</td>
+                                <td>Tgl Perbaikan</td>
+                                <td>Selesai Perbaikan</td>
+                                <td>Approval perbaikan</td>
+                                <td>Aksi</td>
                             </tr>
-                        </thead>
                         <?php $no=1;?>
                         @forelse($data as $key)
                         <tr>
-                            <th>
+                            <td>
                                 <div class="flex items-center space-x-3">
                                     <div>
-                                        <div class="font-bold text-lg">{{ $key->nama_barang }}</div>
+                                        <div class="font-semibold">{{ $key->nama_barang }}</div>
                                         <div class="text-sm opacity-50">{{ $key->kode_barang }}</div>
                                     </div>
                                 </div>
-                            </th>
+                            </td>
                             <td>{{ $key->tgl_perbaikan }}</td>
                             <td>
                                 @if($key->tgl_selesai_perbaikan == NULL)
@@ -97,7 +97,7 @@
         </div>
 
     </div>
-    <br>
+    <br><br>
 </div>
 
 
@@ -151,15 +151,14 @@
     <div class="modal-box w-11/12 max-w-5xl">
         <form action="/PB/selesaiPerbaikan/simpanSelesaiPerbaikan" method="POST">
             @csrf
-            <h2 class="text-2xl font-bold">Form Selesai Perbaikan</h2>
+                <h2 class="text-xl font-semibold">Form Selesai Perbaikan</h2>
                 <div class="pt-2">
-                    Kode barang :
                     <div class="btn btn-sm btn-outline no-animation">{{ $key->kode_barang }}</div>
                 </div>
             <br>
             <div class="form-control hidden">
                 <label class="label">
-                <span class="label-text">Kode Barang</span>
+                <span class="label-text font-medium">Kode Barang</span>
                 </label>
                 <input type="text" name="id_perbaikan" class="input input-bordered "
                 value="{{ old('id_perbaikan', $key->id_perbaikan) }}"/>
@@ -168,13 +167,13 @@
                 <div class="basis-1/2">
                     <div class="form-control">
                         <label class="label">
-                            <span class="label-text">Nama Teknisi</span>
+                            <span class="label-text font-medium">Nama Teknisi</span>
                         </label>
                         <input type="text" name="nama_teknisi" class="input input-bordered" required autocomplete="off"/>
                     </div>
                     <div class="form-control">
                         <label class="label">
-                        <span class="label-text">Penyebab Keluhan</span>
+                        <span class="label-text font-medium">Penyebab Keluhan</span>
                         </label>
                         <textarea name="penyebab_keluhan" cols="20" rows="5" class="textarea textarea-bordered" required></textarea>
                     </div>
@@ -182,7 +181,7 @@
                 <div class="basis-1/2">
                     <div class="form-control">
                         <label class="label">
-                            <span class="label-text">Status Barang</span>
+                            <span class="label-text font-medium">Status Barang</span>
                             </label>
                         <div class="flex items-center pl-4 rounded-t border">
                             <input id="bordered-radio-1" type="radio" value="bisa diperbaiki" name="status_perbaikan" class="radio radio-success" required>
@@ -195,7 +194,7 @@
                     </div>
                     <div class="form-control">
                         <label class="label">
-                        <span class="label-text">Solusi Keluhan</span>
+                        <span class="label-text font-medium">Solusi Keluhan</span>
                         </label>
                         <textarea name="solusi_barang" cols="20" rows="5" class="textarea textarea-bordered" placeholder="Silahkan Dikosongkan Jika Status Barang tidak bisa diperbaiki" ></textarea>
                     </div>

@@ -2,11 +2,11 @@
 @section('container')
 <div class="p-5">
 
- <div class="shadow-md rounded-md mx-auto  bg-base-100 p-5">
+ <div class="shadow-xl rounded-2xl mx-auto  bg-base-100 p-5">
  <form action="/ruangan/simpan" method="POST">
  @csrf
     <div class="flex justify-between">
-        <h2 class="text-2xl font-bold">Form Tambah Ruangan</h2>
+        <h2 class="text-xl font-semibold">Form Tambah Ruangan</h2>
         <div >
             <a href="/ruangan" class="btn btn-sm btn-square">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
@@ -16,7 +16,7 @@
     <br>
     <div class="form-control">
         <label class="label">
-        <span class="label-text">Nama Ruangan</span>
+        <span class="label-text font-medium">Nama Ruangan</span>
         </label>
         <input type="text" name="nama_ruangan" class="input input-bordered @error('nama_ruangan') input-error @enderror" value="{{ old('nama_ruangan') }}" required autocomplete="off"/>
         @error('nama_ruangan')
@@ -25,13 +25,13 @@
     </div>
     <div class="form-control">
         <label class="label">
-        <span class="label-text">Penanggung jawab</span>
+        <span class="label-text font-medium">Penanggung jawab</span>
         </label>
         <input type="text" name="penanggung_jawab" class="input input-bordered"  value="{{ old('penanggung_jawab') }}" required autocomplete="off"/>
     </div>
     <div class="form-control">
         <label class="label">
-        <span class="label-text">Keterangan</span>
+        <span class="label-text font-medium">Keterangan</span>
         </label>
         <textarea name="ket" cols="20" rows="5" class="textarea textarea-bordered" required>{{ old('ket') }}</textarea>
     </div>
@@ -41,5 +41,6 @@
     </form>
     </div>
 
+<br>
 </div>
 @endsection

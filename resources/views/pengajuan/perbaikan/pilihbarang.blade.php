@@ -2,13 +2,13 @@
 @section('container')
 
 <div class="pt-6 px-4">
-    <div class="alert alert-info shadow-lg mb-4 rounded-md">
+    <div class="alert alert-info shadow-xl rounded-2xl mb-4  ">
         <div>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
         <span>Pastikan dulu barangnya sudah ada</span>
         </div>
     </div>
-    <div class="bg-base-100 shadow rounded-md p-4 sm:p-6 xl:p-8 ">
+    <div class="bg-base-100 shadow-xl rounded-2xl p-4 sm:p-4 xl:p-6 ">
         <div class="flex justify-between">
             <h1 class="text-xl pb-3 font-semibold leading-loose">Pilih Barang yang ingin diperbaiki</h1>
             <div >
@@ -31,28 +31,26 @@
         <div class="">
             <div class="">
                 <div class="overflow-x-auto overflow-y-auto">
-                    <table class="table w-full ">
-                        <thead>
+                    <table class="table table-compact w-full ">
                             <tr>
-                                <th>No</th>
+                                <td>No</td>
                                 <td>Barang</td>
                                 <td>Kondisi</td>
                                 <td>Status</td>
                                 <td>Aksi</td>
                             </tr>
-                        </thead>
                         @forelse($data as $key => $item)
                         <tr>
                         <th>{{ $data->firstItem() + $key }}</th>
-                        <th>
+                        <td>
                             <div class="flex items-center space-x-3">
                                 <div>
-                                    <div class="font-bold text-lg">{{ $item->nama_barang }}</div>
+                                    <div class="font-semibold">{{ $item->nama_barang }}</div>
                                     {{-- <div class="text-sm opacity-50">{{ $item->kode_barang }}</div> --}}
                                     <div class="text-sm opacity-50">{{ $item->kode_barang }}</div>
                                 </div>
                             </div>
-                        </th>
+                        </td>
                         <td>
                             <p class="badge badge-outline
                             {{ ($item->kondisi_barang === 'baik') ? 'badge-info' : '' }}
@@ -100,7 +98,7 @@
             </div>
         </div>
     </div>
-    <br>
+    <br><br>
 </div>
 
 
@@ -117,13 +115,11 @@
         <form action="/pengajuan/PB/perbaikan/simpanperbaikan" method="POST">
             @csrf
             <div class="lg:flex justify-between">
-                <h2 class="text-2xl font-bold">Form Perbaikan</h2>
+                <h2 class="text-xl font-semibold">Form Perbaikan</h2>
                 <div class="my-2 lg:my-0">
-                    Kode barang :
                     <div class="btn btn-sm btn-outline no-animation">{{ $key->kode_barang }}</div>
                 </div>
             </div>
-            <br>
             <div class="form-control hidden">
                 <label class="label">
                 <span class="label-text">Kode Barang</span>
@@ -133,7 +129,7 @@
             </div>
             <div class="form-control">
                 <label class="label">
-                <span class="label-text">Keluhan</span>
+                <span class="label-text font-medium">Keluhan</span>
                 </label>
                 <textarea name="keluhan" cols="20" rows="5" class="textarea textarea-bordered" " required></textarea>
             </div>

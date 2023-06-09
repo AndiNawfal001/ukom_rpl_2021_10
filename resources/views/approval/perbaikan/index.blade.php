@@ -2,7 +2,7 @@
 @section('container')
 
 <div class="pt-6 px-4">
-    <div class="bg-base-100 border-t-2 border-primary shadow rounded-md p-4 sm:p-6 xl:p-8 ">
+    <div class="bg-base-100 shadow-xl rounded-2xl p-4 sm:p-4 xl:p-6 ">
         <h1 class="text-xl pb-3 font-semibold leading-loose">Daftar Pengajuan Perbaikan untuk di Approve</h1>
         <form action="/approval/PB" method="GET">
             @csrf
@@ -18,27 +18,25 @@
         <div class="">
             <div class="">
                 <div class="overflow-x-auto overflow-y-auto">
-                    <table class="table w-full">
-                        <thead>
-                            <tr>
-                                <th>Barang</th>
-                                <th>Tgl Perbaikan</th>
-                                <th>Selesai Perbaikan</th>
-                                <th>Approval perbaikan</th>
-                                <th>Aksi</th>
+                    <table class="table table-compact w-full">
+                            <tr class="font-medium opacity-80">
+                                <td>Barang</td>
+                                <td>Tgl Perbaikan</td>
+                                <td>Selesai Perbaikan</td>
+                                <td>Approval perbaikan</td>
+                                <td>Aksi</td>
                             </tr>
-                        </thead>
                         <?php $no=1;?>
                         @forelse($data as $key)
                         <tr>
-                            <th>
+                            <td>
                                 <div class="flex items-center space-x-3">
                                     <div>
-                                        <div class="font-bold text-lg">{{ $key->nama_barang }}</div>
+                                        <div class="font-semibold">{{ $key->nama_barang }}</div>
                                         <div class="text-sm opacity-50">{{ $key->kode_barang }}</div>
                                     </div>
                                 </div>
-                            </th>
+                            </td>
                             <td>{{ $key->tgl_perbaikan }}</td>
                             <td>
                                 @if($key->tgl_selesai_perbaikan == NULL)
@@ -78,7 +76,7 @@
             </div>
         </div>
     </div>
-    <br>
+    <br><br>
 </div>
 
 
@@ -110,7 +108,7 @@
             </div>
             <div class="pb-3">
                 <p class="font-light">Penyebab Keluhan</p>
-                <p class="font-medium ">{{ $key->penyebab_keluhan }} Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit perspiciatis consequuntur unde neque eaque laboriosam, corporis labore at inventore debitis, fuga autem dolor ut illum tempore iusto dignissimos corrupti doloremque!</p>
+                <p class="font-medium ">{{ $key->penyebab_keluhan }}</p>
             </div>
             <div class="flex ">
                 <div class="badge badge-lg badge-outline

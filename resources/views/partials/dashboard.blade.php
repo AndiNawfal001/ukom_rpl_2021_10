@@ -3,103 +3,113 @@
 {{-- <div class="bg-base-content opacity-50 h-2/6 left-0 right-0 fixed -z-50"></div> --}}
 <div class="pt-6 px-4">
 
-    <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="bg-base-100 border-t-2 border-primary shadow-md rounded-lg p-4 sm:p-6 xl:p-8 hover:shadow-2xl duration-300">
-            <div class="flex items-center">
-               <div class="flex-shrink-0">
-                  <span class="text-2xl sm:text-3xl leading-none font-bold">
+    <div class="w-full grid grid-cols-1 md:grid-cols-4 gap-5">
+        <div class="flex items-center justify-between bg-base-100 shadow-xl rounded-2xl p-4">
+            <div>
+                <span class="font-medium opacity-70">Total Barang</span>
+                <p class="font-bold text-2xl">
                     @if($barang_masuk == NULL)
                         0
                      @else
                      {{ $barang_masuk }}
                      @endif
-                  </span>
-                  <h3 class="text-base font-normal">Total Barang</h3>
-               </div>
-               <div class="ml-5 w-0 flex items-center justify-end flex-1 text-green-500 text-base font-bold">
-                  <a href="/barangMasuk" class="text-sm font-medium text-cyan-600 hover:bg-base-200 rounded-lg p-2">Details</a>
-               </div>
+                </p>
+            </div>
+            <div class="bg-gradient-to-br from-[#ceb4fd] to-[#5b06f6] w-12 h-12 rounded-lg shadow-lg flex justify-center items-center text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M11.644 1.59a.75.75 0 01.712 0l9.75 5.25a.75.75 0 010 1.32l-9.75 5.25a.75.75 0 01-.712 0l-9.75-5.25a.75.75 0 010-1.32l9.75-5.25z" />
+                    <path d="M3.265 10.602l7.668 4.129a2.25 2.25 0 002.134 0l7.668-4.13 1.37.739a.75.75 0 010 1.32l-9.75 5.25a.75.75 0 01-.71 0l-9.75-5.25a.75.75 0 010-1.32l1.37-.738z" />
+                    <path d="M10.933 19.231l-7.668-4.13-1.37.739a.75.75 0 000 1.32l9.75 5.25c.221.12.489.12.71 0l9.75-5.25a.75.75 0 000-1.32l-1.37-.738-7.668 4.13a2.25 2.25 0 01-2.134-.001z" />
+                  </svg>
+
+
             </div>
         </div>
-        <div class="bg-base-100 shadow-md rounded-lg p-4 sm:p-6 xl:p-8 hover:shadow-2xl duration-300">
-            <div class="flex items-center">
-               <div class="flex-shrink-0">
-                  <span class="text-2xl sm:text-3xl leading-none font-bold">
-                    @if($pengajuan_bb == NULL)
-                         0
+
+        <div class="flex items-center justify-between bg-base-100 shadow-xl rounded-2xl p-4">
+            <div>
+                <span class="font-medium opacity-70">Jumlah Supplier</span>
+                <p class="font-bold text-2xl">
+                    @if($supplier == NULL)
+                        0
                      @else
-                         {{ $pengajuan_bb }}
+                     {{ $supplier }}
                      @endif
-                  </span>
-                  <h3 class="text-base font-normal">Pengajuan Barang disetujui</h3>
-               </div>
-               <div class="ml-5 w-0 flex items-center justify-end flex-1 text-green-500 text-base font-bold">
-                  <a href="/pengajuan/BB" class="text-sm font-medium text-cyan-600 hover:bg-base-200 rounded-lg p-2">Details</a>
-               </div>
+                </p>
+            </div>
+            <div class="bg-gradient-to-br from-[#ceb4fd] to-[#5b06f6] w-12 h-12 rounded-lg shadow-lg flex justify-center items-center text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M3.375 4.5C2.339 4.5 1.5 5.34 1.5 6.375V13.5h12V6.375c0-1.036-.84-1.875-1.875-1.875h-8.25zM13.5 15h-12v2.625c0 1.035.84 1.875 1.875 1.875h.375a3 3 0 116 0h3a.75.75 0 00.75-.75V15z" />
+                    <path d="M8.25 19.5a1.5 1.5 0 10-3 0 1.5 1.5 0 003 0zM15.75 6.75a.75.75 0 00-.75.75v11.25c0 .087.015.17.042.248a3 3 0 015.958.464c.853-.175 1.522-.935 1.464-1.883a18.659 18.659 0 00-3.732-10.104 1.837 1.837 0 00-1.47-.725H15.75z" />
+                    <path d="M19.5 19.5a1.5 1.5 0 10-3 0 1.5 1.5 0 003 0z" />
+                  </svg>
+
             </div>
         </div>
-    </div>
-    <div class="mt-4 w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <div class="bg-base-100 shadow-md rounded-lg p-4 sm:p-6 xl:p-8 hover:shadow-2xl duration-300">
-           <div class="flex items-center">
-              <div class="flex-shrink-0">
-                 <span class="text-2xl sm:text-3xl leading-none font-bold">{{ $supplier }}</span>
-                 <h3 class="text-base font-normal">Jumlah Supplier</h3>
-              </div>
-              <div class="ml-5 w-0 flex items-center justify-end flex-1 text-green-500 text-base font-bold">
-                 <a href="/supplier" class="text-sm font-medium text-cyan-600 hover:bg-base-200 rounded-lg p-2">Details</a>
-              </div>
-           </div>
+
+        <div class="flex items-center justify-between bg-base-100 shadow-xl rounded-2xl p-4">
+            <div>
+                <span class="font-medium opacity-70">Jumlah Ruangan</span>
+                <p class="font-bold text-2xl">
+                    @if($ruangan == NULL)
+                        0
+                     @else
+                     {{ $ruangan }}
+                     @endif
+                </p>
+            </div>
+            <div class="bg-gradient-to-br from-[#ceb4fd] to-[#5b06f6] w-12 h-12 rounded-lg shadow-lg flex justify-center items-center text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                    <path fill-rule="evenodd" d="M4.5 2.25a.75.75 0 000 1.5v16.5h-.75a.75.75 0 000 1.5h16.5a.75.75 0 000-1.5h-.75V3.75a.75.75 0 000-1.5h-15zM9 6a.75.75 0 000 1.5h1.5a.75.75 0 000-1.5H9zm-.75 3.75A.75.75 0 019 9h1.5a.75.75 0 010 1.5H9a.75.75 0 01-.75-.75zM9 12a.75.75 0 000 1.5h1.5a.75.75 0 000-1.5H9zm3.75-5.25A.75.75 0 0113.5 6H15a.75.75 0 010 1.5h-1.5a.75.75 0 01-.75-.75zM13.5 9a.75.75 0 000 1.5H15A.75.75 0 0015 9h-1.5zm-.75 3.75a.75.75 0 01.75-.75H15a.75.75 0 010 1.5h-1.5a.75.75 0 01-.75-.75zM9 19.5v-2.25a.75.75 0 01.75-.75h4.5a.75.75 0 01.75.75v2.25a.75.75 0 01-.75.75h-4.5A.75.75 0 019 19.5z" clip-rule="evenodd" />
+                  </svg>
+
+            </div>
         </div>
-        <div class="bg-base-100 shadow-md rounded-lg p-4 sm:p-6 xl:p-8 hover:shadow-2xl duration-300">
-           <div class="flex items-center">
-              <div class="flex-shrink-0">
-                 <span class="text-2xl sm:text-3xl leading-none font-bold">{{ $ruangan }}</span>
-                 <h3 class="text-base font-normal">Jumlah Ruangan</h3>
-              </div>
-              <div class="ml-5 w-0 flex items-center justify-end flex-1 text-green-500 text-base font-bold">
-                 <a href="/ruangan" class="text-sm font-medium text-cyan-600 hover:bg-base-200 rounded-lg p-2">Details</a>
-              </div>
-           </div>
+
+        <div class="flex items-center justify-between bg-base-100 shadow-xl rounded-2xl p-4">
+            <div>
+                <span class="font-medium opacity-70">Pemutihan disetujui</span>
+                <p class="font-bold text-2xl">
+                    @if($pemutihan == NULL)
+                        0
+                     @else
+                     {{ $pemutihan }}
+                     @endif
+                </p>
+            </div>
+            <div class="bg-gradient-to-br from-[#ceb4fd] to-[#5b06f6] w-12 h-12 rounded-lg shadow-lg flex justify-center items-center text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                    <path fill-rule="evenodd" d="M7.502 6h7.128A3.375 3.375 0 0118 9.375v9.375a3 3 0 003-3V6.108c0-1.505-1.125-2.811-2.664-2.94a48.972 48.972 0 00-.673-.05A3 3 0 0015 1.5h-1.5a3 3 0 00-2.663 1.618c-.225.015-.45.032-.673.05C8.662 3.295 7.554 4.542 7.502 6zM13.5 3A1.5 1.5 0 0012 4.5h4.5A1.5 1.5 0 0015 3h-1.5z" clip-rule="evenodd" />
+                    <path fill-rule="evenodd" d="M3 9.375C3 8.339 3.84 7.5 4.875 7.5h9.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-9.75A1.875 1.875 0 013 20.625V9.375zm9.586 4.594a.75.75 0 00-1.172-.938l-2.476 3.096-.908-.907a.75.75 0 00-1.06 1.06l1.5 1.5a.75.75 0 001.116-.062l3-3.75z" clip-rule="evenodd" />
+                  </svg>
+
+            </div>
         </div>
-        <div class="bg-base-100 shadow-md rounded-lg p-4 sm:p-6 xl:p-8 hover:shadow-2xl duration-300">
-           <div class="flex items-center">
-              <div class="flex-shrink-0">
-                 <span class="text-2xl sm:text-3xl leading-none font-bold">{{ $pemutihan }}</span>
-                 <h3 class="text-base font-normal">Pemutihan disetujui</h3>
-              </div>
-              <div class="ml-5 w-0 flex items-center justify-end flex-1 text-green-500 text-base font-bold">
-                 <a href="/pemutihan" class="text-sm font-medium text-cyan-600 hover:bg-base-200 rounded-lg p-2">Details</a>
-              </div>
-           </div>
-        </div>
+
     </div>
 
-
-    <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+    <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-5 mt-4">
         {{-- <div></div> --}}
-        <div class="bg-base-100 shadow-md rounded-lg p-4 sm:p-6 xl:p-8 duration-300">
+        <div class="bg-base-100 col-auto shadow-xl rounded-2xl p-4 sm:p-4 xl:p-6">
             <div class="mb-4 flex items-center justify-between">
                 <div>
-                    <h3 class="text-xl font-bold mb-2">Latest Input Barang</h3>
+                    <h3 class="text-xl font-semibold mb-2">Latest Input Barang</h3>
                     <span class="text-base font-normal ">This is a list of latest input barang</span>
                 </div>
             </div>
             <div class="flex flex-col mt-8">
                 <div class="overflow-x-auto rounded-lg">
                 <div class="align-middle inline-block min-w-full">
-                    <div class="shadow-md overflow-hidden sm:rounded-lg">
+                    <div class="shadow-xl overflow-hidden sm:rounded-lg">
                         <table class="min-w-full table-compact divide-y">
-                            <thead class="font-semibold">
                             <tr>
-                                <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                <td scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Kode Barang
-                                </th>
-                                <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                </td>
+                                <td scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Jenis Barang
-                                </th>
+                                </td>
                             </tr>
-                            </thead>
                             <tbody>
                             @forelse($latest_detail_barang as $key)
                             <tr>
@@ -129,17 +139,17 @@
         </div>
         </div>
         @can('admin')
-                <div class="bg-base-100 shadow-md border-t-2 shad border-error rounded-lg p-3 h-full sm:p-5 xl:p-7 duration-300">
+                <div class="bg-base-100 col-auto shadow-xl rounded-2xl p-4 h-full sm:p-4 xl:p-6">
                     <div class="mb-4 flex items-center justify-between">
                         <div>
-                            <h3 class="text-xl font-bold mb-2">Latest logging activity</h3>
+                            <h3 class="text-xl font-semibold mb-2">Latest logging activity</h3>
                             <span class="text-base font-normal ">This is a list of latest logging activity</span>
                         </div>
                     </div>
                     <div class="flex flex-col mt-8">
                         <div class="overflow-x-auto rounded-lg">
                             <div class="align-middle inline-block min-w-full">
-                                <div class="shadow-md overflow-hidden sm:rounded-lg">
+                                <div class="shadow-xl overflow-hidden sm:rounded-lg">
                                 <table class="min-w-full table-compact divide-y">
                                     <thead class="font-semibold">
                                     <tr>
@@ -191,12 +201,10 @@
 
                     </div>
                 </div>
-            {{-- <div class="bg-gradient-to-r from-red-500 to-orange-500 shadow-md rounded-lg p-1">
-            </div> --}}
         @endcan
 
         @can('manajemen')
-                <div class="bg-base-100 shadow-md border-t-2 shad border-success rounded-lg p-3 h-full sm:p-5 xl:p-7 duration-300">
+                <div class="bg-base-100 col-auto shadow-xl rounded-2xl p-4 h-full sm:p-4 xl:p-6">
                     <div class="mb-4 flex items-center justify-between">
                         <div>
                             <h3 class="text-xl font-bold mb-2">Pengajuan Barang Baru</h3>
@@ -206,7 +214,7 @@
                     <div class="flex flex-col mt-8">
                         <div class="overflow-x-auto rounded-lg">
                             <div class="align-middle inline-block min-w-full">
-                                <div class="shadow-md overflow-hidden sm:rounded-lg">
+                                <div class="shadow-xl overflow-hidden sm:rounded-lg">
                                 <table class="min-w-full table-compact divide-y">
                                     <thead class="font-semibold">
                                     <tr>
@@ -252,12 +260,10 @@
 
                     </div>
                 </div>
-            {{-- <div class="bg-gradient-to-r from-lime-400 to-lime-500 shadow-md rounded-lg p-1">
-            </div> --}}
         @endcan
 
         @can('kaprog')
-                <div class="bg-base-100 shadow-md border-t-2 shad border-info rounded-lg p-3 h-full sm:p-5 xl:p-7 duration-300">
+                <div class="bg-base-100 col-auto shadow-xl rounded-2xl p-4 h-full sm:p-4 xl:p-6">
                     <div class="mb-4 flex items-center justify-between">
                         <div>
                             <h3 class="text-xl font-bold mb-2">Daftar Barang Rusak untuk Pemutihan</h3>
@@ -267,7 +273,7 @@
                     <div class="flex flex-col mt-8">
                         <div class="overflow-x-auto rounded-lg">
                             <div class="align-middle inline-block min-w-full">
-                                <div class="shadow-md overflow-hidden sm:rounded-lg">
+                                <div class="shadow-xl overflow-hidden sm:rounded-lg">
                                 <table class="min-w-full table-compact divide-y">
                                     <thead class="font-semibold">
                                     <tr>
@@ -313,15 +319,12 @@
 
                     </div>
                 </div>
-            {{-- <div class="bg-gradient-to-r from-indigo-400 to-cyan-400 shadow-md rounded-lg p-1">
-            </div> --}}
         @endcan
     </div>
 
 
 
-
-     <br>
+     <br><br>
 </div>
 
 @endsection

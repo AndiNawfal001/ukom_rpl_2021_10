@@ -2,7 +2,7 @@
 @section('container')
 
 <div class="pt-6 px-4">
-    <div class="bg-base-100 shadow rounded-md p-4 sm:p-6 xl:p-8 ">
+    <div class="bg-base-100 shadow-xl rounded-2xl p-4 sm:p-4 xl:p-6 ">
             <div class="flex justify-between">
                 <h1 class="text-xl font-semibold leading-loose">Detail </h1>
                 <div>
@@ -21,7 +21,7 @@
             </div>
             <div class="basis-1/2">
                 <p class="btn btn-sm btn-outline mb-3">{{ $data->kode_barang }}</p>
-                <p class="text-2xl font-semibold">{{ $data->nama_barang }}</p>
+                <p class="text-xl font-semibold">{{ $data->nama_barang }}</p>
                 <div class="pb-3">
                     <p class="font-medium">{{ $data->nama_jenis }}</p>
                 </div>
@@ -60,7 +60,7 @@
             </div>
         </div>
     </div>
-    <br>
+    <br><br>
 </div>
 
 @endsection
@@ -73,18 +73,17 @@
     <label class="modal-box relative" for="">
         <form action="/barang/detail/update/{{ $key->kode_barang }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <h2 class="text-2xl font-bold">Edit Detail Barang</h2>
-            <br>
+            <h2 class="text-xl font-semibold">Edit Detail Barang</h2>
             <div class="form-control">
                 <label class="label">
-                <span class="label-text">Spesifikasi</span>
+                <span class="label-text font-medium">Spesifikasi</span>
                 </label>
                 <textarea name="spesifikasi" cols="20" rows="5" class="textarea textarea-bordered" " required>{{ old('spesifikasi', $key->spesifikasi) }}</textarea>
                 <input type="hidden"  name="kode_barang" value="{{$key->kode_barang}}" />
             </div>
             <div class="form-control">
                 <label class="label">
-                    <span class="label-text">Gambar</span>
+                    <span class="label-text font-medium">Gambar</span>
                 </label>
 
                 <input type="file" name="image" id="image" class="file-input file-input-bordered w-full max-w-xs" onchange="previewImage()"/>

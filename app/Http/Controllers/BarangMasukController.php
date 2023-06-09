@@ -133,7 +133,7 @@ class BarangMasukController extends Controller
 
             if ($tambahBarangMasuk) {
                 flash()->addSuccess('Barang Berhasil Masuk.');
-                return redirect('barangMasuk');
+                return redirect('barang Masuk');
             } else
                 return "input data gagal";
         } catch (\Exception $e) {

@@ -2,11 +2,11 @@
 @section('container')
 
 <div class="pt-6 px-4">
-    <div class="bg-base-100 shadow rounded-md p-4 sm:p-6 xl:p-8 ">
-        <h1 class="text-lg lg:text-xl pb-3 font-semibold leading-loose">Daftar Barang untuk perawatan</h1>
+    <div class="bg-base-100 shadow-xl rounded-2xl p-4 sm:p-4 xl:p-6 ">
+        {{-- <h1 class="text-lg lg:text-xl pb-3 font-semibold leading-loose">Daftar Barang untuk perawatan</h1> --}}
         <div class="">
             <div class="lg:flex justify-between mb-2">
-                <form action="/perawatan" method="GET">
+                {{-- <form action="/perawatan" method="GET">
                     @csrf
                         <div class="form-control mb-2">
                             <div class="input-group ">
@@ -16,9 +16,11 @@
                             </button>
                             </div>
                         </div>
-                </form>
+                </form> --}}
+        <h1 class="text-lg lg:text-xl pb-3 font-semibold leading-loose">Daftar Barang untuk perawatan</h1>
+
                 <a href="/perawatan/pilihBarang">
-                    <button type="submit" class="btn btn-success gap-2" >
+                    <button type="submit" class="btn btn-success btn-outline gap-2" >
                         Tambah Perawatan
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </button>
@@ -26,27 +28,25 @@
             </div>
             <div class="">
                 <div class="overflow-x-auto overflow-y-auto">
-                    <table class="table w-full ">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Barang</th>
-                                <th>Tanggal Perawatan</th>
-                                <th>Nama Pelaksana</th>
-                                <th>Aksi</th>
+                    <table class="table table-compact w-full ">
+                            <tr class="font-medium opacity-80">
+                                <td>No</td>
+                                <td>Barang</td>
+                                <td>Tanggal Perawatan</td>
+                                <td>Nama Pelaksana</td>
+                                <td>Aksi</td>
                             </tr>
-                        </thead>
                         @forelse($data as $key =>$item)
                         <tr>
                         <th>{{ $data->firstItem() + $key }}</th>
-                        <th>
+                        <td>
                             <div class="flex items-center space-x-3">
                                 <div>
-                                    <div class="font-bold text-lg">{{ $item->nama_barang }}</div>
+                                    <div class="font-semibold">{{ $item->nama_barang }}</div>
                                     <div class="text-sm opacity-50">{{ $item->kode_barang }}</div>
                                 </div>
                             </div>
-                        </th>
+                        </td>
                         <td>{{ $item->tgl_perawatan }}</td>
                         <td>{{ $item->nama_pelaksana }}</td>
                         <td>
@@ -81,7 +81,7 @@
         </div>
 
     </div>
-    <br>
+    <br><br>
 </div>
 
 

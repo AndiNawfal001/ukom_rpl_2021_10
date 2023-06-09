@@ -1,33 +1,32 @@
 @extends('layouts.main')
 @section('container')
 <div class="pt-6 px-4">
-    <div class="bg-base-100 shadow rounded-md p-4 sm:p-6 xl:p-8 ">
-        <h1 class="text-xl pb-3 font-semibold leading-loose">Daftar Seluruh Barang</h1>
-        <form action="/barang" method="GET">
-            @csrf
-                <div class="form-control mb-2">
-                    <div class="input-group ">
-                    <input type="text" name="search" placeholder="Search…" class="input input-bordered" value="{{ request("search") }}" autocomplete="off"/>
-                    <button class="btn btn-square" type="submit">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-                    </button>
+    <div class="bg-base-100 shadow-xl rounded-2xl p-4 sm:p-6 xl:p-8 ">
+        <div class="lg:flex justify-between mb-2">
+            <h1 class="text-xl pb-3 font-semibold leading-loose">Daftar Seluruh Barang</h1>
+            <form action="/barang" method="GET">
+                @csrf
+                    <div class="form-control mb-2">
+                        <div class="input-group ">
+                        <input type="text" name="search" placeholder="Search…" class="input input-bordered" value="{{ request("search") }}" autocomplete="off"/>
+                        <button class="btn btn-square" type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                        </button>
+                        </div>
                     </div>
-                </div>
-        </form>
+            </form>
+        </div>
         <div class="overflow-x-auto w-full">
 
-            <table class="table w-full">
-              <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Nama Barang</th>
-                    <th>Total Barang</th>
-                    <th>Barang Rusak</th>
-                    <th>Barang Non Aktif</th>
-                    <th>Aksi</th>
+            <table class="table table-compact w-full">
+                <tr class="font-medium opacity-80">
+                    <td>No</td>
+                    <td>Nama Barang</td>
+                    <td>Total Barang</td>
+                    <td>Barang Rusak</td>
+                    <td>Barang Non Aktif</td>
+                    <td>Aksi</td>
                 </tr>
-              </thead>
-              <tbody>
                 @forelse($data as $key => $item)
                 <tr>
                     <th>{{ $data->firstItem() + $key }}</th>
@@ -35,7 +34,7 @@
                       <div class="flex items-center space-x-3">
 
                         <div>
-                          <div class="font-bold">{{ $item->nama_barang }}</div>
+                          <div class="font-semibold">{{ $item->nama_barang }}</div>
                           <div class="text-sm opacity-50">{{ $item->nama_jenis }}</div>
                         </div>
                       </div>
@@ -71,7 +70,6 @@
                         </td>
                     </tr>
                 @endforelse
-              </tbody>
 
 
             </table>
@@ -82,7 +80,7 @@
             </div>
         </div>
     </div>
-    <br>
+    <br><br>
 </div>
 
 
