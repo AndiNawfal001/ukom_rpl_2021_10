@@ -13,7 +13,7 @@
 
     <div class="hero min-h-screen bg-base-100 select-none">
         <div class="hero-content w-full flex-col lg:flex-row-reverse gap-7"  data-aos="zoom-in" duration="2000">
-            <div class="card flex-shrink-0 w-full max-w-sm border bg-gray-50">
+            <div class="card flex-shrink-0 w-full max-w-sm shadow-lg bg-base-200">
                 <div class="card-body w-full">
                     <div class="w-full text-center">
                         <img src="{{ asset('image/aa.png') }}" class="mx-auto w-14">
