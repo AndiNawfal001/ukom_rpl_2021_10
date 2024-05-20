@@ -4,5 +4,9 @@
 
 /* Custom CSS */
 .table-primary {
-    @apply table table-compact w-full;
+    @apply table table-sm table-pin-cols w-full;
+} 
+
+.border-table {
+    @apply border border-base-200;
 } 

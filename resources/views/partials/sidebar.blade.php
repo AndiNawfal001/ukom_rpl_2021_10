@@ -66,7 +66,7 @@
                             </div>
                         <span class="flex-1 ml-3 whitespace-nowrap">Barang Masuk</span>
                         @can('manajemen')
-                            @if($approved_null >= 1)
+                            @if($approved_null != 0)
                                 <span class="inline-flex justify-center items-center p-3 ml-3 w-3 h-3 text-sm font-medium text-info-content bg-info rounded-full">{{ $approved_null }}</span>
                             @endif
                         @endcan

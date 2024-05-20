@@ -19,7 +19,7 @@
         </aside>
     </div>
 
-    <div id="main-content" class="h-full w-full  relative overflow-y-auto lg:ml-64" data-aos="fade-down">
+    <div id="main-content" class="h-full w-full  relative overflow-y-auto lg:ml-64">
         <main>
             @yield('container')
         </main>
