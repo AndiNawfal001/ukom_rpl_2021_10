@@ -9,44 +9,84 @@
             @csrf
                 <div class="form-control mb-2">
                     <div class="input-group ">
-                    <input type="text" name="search" placeholder="Search…" class="input input-sm input-bordered" value="{{ request("search") }}" autocomplete="off"/>
-                    <button class="btn btn-sm btn-square" type="submit">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-                    </button>
+                        <input type="text" name="search" placeholder="Search…" class="input input-sm input-bordered" value="{{ request("search") }}" autocomplete="off"/>
+                        <select name="filter_month" class="select select-bordered select-sm w-40 max-w-xs">
+                            <option disabled {{ request('filter_month') ? '' : 'selected' }}>-- All Months --</option>
+                            <?php
+                            for ($bulan = 1; $bulan <= 12; $bulan++) {
+                                $nama_bulan = date("F", mktime(0, 0, 0, $bulan, 1));
+                                $selected = request('filter_month') == $bulan ? 'selected' : '';
+                                echo "<option value='$bulan' $selected>$nama_bulan</option>";
+                            }
+                            ?>
+                        </select>
+                        <select name="filter_year" class="select select-bordered select-sm w-40 max-w-xs">
+                            <option disabled {{ request('filter_year') ? '' : 'selected' }}>-- All Years --</option>
+                            <?php
+                            $years = DB::table('pengajuan_bb')
+                                        ->select(DB::raw('YEAR(tgl) AS year'))
+                                        ->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')
+                                        ->distinct()
+                                        ->orderBy('year', 'asc')
+                                        ->get();
+                        
+                            foreach ($years as $year) {
+                                $selected = request('filter_year') == $year->year ? 'selected' : '';
+                                echo "<option value='$year->year' $selected>$year->year</option>";
+                            }
+                            ?>
+                        </select>
+                        <select name="filter_status" class="select select-bordered select-sm w-40 max-w-xs">
+                            <option disabled {{ request('filter_status') ? '' : 'selected' }}>-- All Status --</option>
+                            <?php
+                            $statuses = DB::table('pengajuan_bb')
+                                            ->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')
+                                            ->select('status_approval')
+                                            ->distinct()
+                                            ->get();
+                        
+                            foreach ($statuses as $status) {
+                                $selected = request('filter_status') == $status->status_approval ? 'selected' : '';
+                                echo "<option value='$status->status_approval' $selected>$status->status_approval</option>";
+                            }
+                            ?>
+                        </select>
+                        <button class="btn btn-sm btn-square" type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                        </button>
                     </div>
                 </div>
         </form>
             <div class="">
                 <div class="">
                     <div class="overflow-x-auto overflow-y-auto">
-                        <table class="table table-compact w-full">
+                        <table class="table-primary">
                             <thead>
                                 <tr>
-                                    <th></th>
-                                    <th>Nama Barang</th>
-                                    <th>Total Harga</th>
-                                    <th>Tanggal Pengajuan</th>
-                                    <th>Status</th>
-                                    <th>Kontrol</th>
+                                    <th class="text-center">No</th>
+                                    <th class="text-center">Nama Barang</th>
+                                    <th class="text-center">Total Harga</th>
+                                    <th class="text-center">Tanggal Pengajuan</th>
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">Kontrol</th>
                                 </tr>
-                            </thead>
-                            <?php $no=1;?>
-                            @forelse($data as $key)
+                            </thead> 
+                            @forelse($data as $key => $item)
                             <tbody>
                                 <tr>
-                                    <th>{{ $no++ }}</th>
-                                    <td>{{ $key->nama_barang }}</td>
-                                    <td>{{ number_format($key->total_harga, 0, '.', '.') }}</td>
-                                    <td>{{ $key->tgl }}</td>
-                                    <td>
-                                        <p class="badge badge-outline
-                                        {{ ($key->status_approval === 'setuju') ? 'badge-success' : '' }}
-                                        {{ ($key->status_approval === 'pending') ? 'badge-warning' : '' }}
-                                        {{ ($key->status_approval === 'tidak') ? 'badge-error' : '' }}
-                                        ">{{ $key->status_approval }}</p>
-                                    <td>
-                                        <label for="approvalbbdetail{{ $key->id_pengajuan_bb }}" class="btn btn-sm  btn-info btn-square btn-outline">
-                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <td class="text-center">{{ $data->firstItem() + $key }}.</td> 
+                                    <td>{{ $item->nama_barang }}</td>
+                                    <td class="text-right">{{ number_format($item->total_harga, 0, '.', '.') }}</td>
+                                    <td class="text-center">{{ $item->tgl }}</td>
+                                    <td class="text-center">
+                                        <p class="badge badge-outline w-20
+                                        {{ ($item->status_approval === 'setuju') ? 'badge-success' : '' }}
+                                        {{ ($item->status_approval === 'pending') ? 'badge-warning' : '' }}
+                                        {{ ($item->status_approval === 'tidak') ? 'badge-error' : '' }}
+                                        ">{{ $item->status_approval }}</p>
+                                    <td class="text-center">
+                                        <label for="approvalbbdetail{{ $item->id_pengajuan_bb }}" class="btn btn-sm  btn-info btn-square btn-outline">
+                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> 
                                         </label>
                                     </td>
                                     @empty

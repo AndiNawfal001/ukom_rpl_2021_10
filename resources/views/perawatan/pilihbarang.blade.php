@@ -54,13 +54,13 @@
                                 </div>
                             </th>
                             <td>
-                                <p class="badge badge-outline
+                                <p class=" badge badge-outline w-20
                                 {{ ($item->kondisi_barang === 'baik') ? 'badge-info' : '' }}
                                 {{ ($item->kondisi_barang === 'rusak') ? 'badge-warning' : '' }}
                                 ">{{ $item->kondisi_barang }}</p>
                             </td>
                             <td>
-                                <p class="badge badge-outline
+                                <p class=" badge badge-outline w-20
                                 {{ ($item->status === 'nonaktif') ? 'badge-error' : '' }}
                                 {{ ($item->status === 'aktif') ? 'badge-success' : '' }}
                                 ">{{ $item->status }}</p>

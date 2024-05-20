@@ -23,7 +23,7 @@
         <div class="">
             <div class=" gap-5">
                 <div class="overflow-x-auto overflow-y-auto ">
-                    <table class="table table-compact w-full ">
+                    <table class="table-primary ">
                         <thead>
                             <tr>
                                 <th>Barang</th>
@@ -45,8 +45,8 @@
                             </div>
                         </th>
                         <td>{{ $key->tgl_selesai_perbaikan }}</td>
-                        <td><p class="badge badge-outline badge-warning">{{ $key->status_perbaikan }}</p></td>
-                        <td><p class="badge badge-outline badge-error">{{ $key->approve_perbaikan }}</p></td>
+                        <td><p class=" badge badge-outline w-20 badge-warning">{{ $key->status_perbaikan }}</p></td>
+                        <td><p class=" badge badge-outline w-20 badge-error">{{ $key->approve_perbaikan }}</p></td>
                         <td>
                             <label for="pemutihan{{ $key->kode_barang }}" class="btn btn-sm btn-warning btn-square btn-outline">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11"></path></svg>

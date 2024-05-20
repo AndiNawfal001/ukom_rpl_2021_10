@@ -54,7 +54,7 @@
                 </div>
                 <div class="">
                     <div class="overflow-x-auto overflow-y-auto">
-                        <table class="table table-compact w-full ">
+                        <table class="table-primary ">
                             <thead>
                                 <tr>
                                     <th>Username</th>
@@ -70,7 +70,7 @@
                                 <th>{{ $key->username }}</th>
                                 <td>{{ $key->email }}</td>
                                 <td>
-                                    <p class="badge badge-outline
+                                    <p class=" badge badge-outline w-20
                                     {{ ($key->nama_level === 'kaprog') ? 'badge-info' : '' }}
                                     {{ ($key->nama_level === 'manajemen') ? 'badge-success' : '' }}
                                     {{ ($key->nama_level === 'admin') ? 'badge-error' : '' }}

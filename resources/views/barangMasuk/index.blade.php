@@ -41,7 +41,7 @@
                 <div class="">
 
                     <div class="overflow-x-auto overflow-y-auto mb-4">
-                        <table class="table table-compact w-full">
+                        <table class="table-primary">
                             <thead>
                                 <tr>
                                     <th>Nama Barang</th>
@@ -111,7 +111,7 @@
                     </div>
             </form>
             <div class="overflow-x-auto overflow-y-auto">
-                <table class="table table-compact w-full">
+                <table class="table-primary">
                     <thead>
                         <tr>
                             <th>Nama Barang</th>
@@ -126,9 +126,9 @@
                         <td>{{ $key->progress }} / {{ $key->target }}</td>
                         <td>
                             @if($key->progress < $key->target)
-                                <p class="badge badge-outline badge-warning">outstanding</p>
+                                <p class=" badge badge-outline w-20 badge-warning">outstanding</p>
                             @else
-                                <p class="badge badge-outline badge-success">selesai</p>
+                                <p class=" badge badge-outline w-20 badge-success">selesai</p>
                             @endif
                         </td>
                         <td>
@@ -241,7 +241,7 @@
 <input type="checkbox" id="detailjenisbarang" class="modal-toggle" />
     <label for="detailjenisbarang" class="modal cursor-pointer">
         <label class="modal-box relative" for="">
-            <table class="table table-compact w-full">
+            <table class="table-primary">
                 <thead>
                     <tr>
                         <th>Jenis Barang</th>

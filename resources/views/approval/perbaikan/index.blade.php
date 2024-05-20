@@ -18,7 +18,7 @@
         <div class="">
             <div class="">
                 <div class="overflow-x-auto overflow-y-auto">
-                    <table class="table table-compact w-full">
+                    <table class="table-primary">
                         <thead>
                             <tr>
                                 <th>Barang</th>
@@ -42,13 +42,13 @@
                             <td>{{ $key->tgl_perbaikan }}</td>
                             <td>
                                 @if($key->tgl_selesai_perbaikan == NULL)
-                                    <p class="badge badge-outline badge-warning">belum selesai</p>
+                                    <p class=" badge badge-outline w-20 badge-warning">belum selesai</p>
                                 @else
-                                    <p class="badge badge-outline badge-success">sudah selesai</p>
+                                    <p class=" badge badge-outline w-20 badge-success">sudah selesai</p>
                                 @endif
                             </td>
                             <td>
-                                <p class="badge badge-outline
+                                <p class=" badge badge-outline w-20
                                 {{ ($key->approve_perbaikan === 'sudah diperbaiki') ? 'badge-success' : '' }}
                                 {{ ($key->approve_perbaikan === 'pending') ? 'badge-warning' : '' }}
                                 {{ ($key->approve_perbaikan === 'rusak') ? 'badge-error' : '' }}

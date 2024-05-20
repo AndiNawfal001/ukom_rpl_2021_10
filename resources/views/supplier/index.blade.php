@@ -24,7 +24,7 @@
         </div>
         <div class="">
             <div class="overflow-x-auto overflow-y-auto">
-                <table class="table table-compact w-full ">
+                <table class="table-primary ">
                     <thead>
                         <tr>
                             <th>Nama Supplier</th>

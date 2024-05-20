@@ -161,7 +161,7 @@
                                                 <span class="font-semibold">{{ $key->id_log }}</span>
                                             </td>
                                             <td class="p-4 whitespace-nowrap text-sm font-normal">
-                                                <p class="badge badge-outline
+                                                <p class=" badge badge-outline w-20
                                                     {{ ($key->aktifitas === 'tambah barang') ? 'badge-success' : '' }}
                                                     {{ ($key->aktifitas === 'approve pemutihan' OR $key->aktifitas === 'disapprove pemutihan') ? 'badge-warning' : '' }}
                                                     {{ ($key->aktifitas === 'barang diperbaiki' OR $key->aktifitas === 'barang rusak') ? 'badge-info' : '' }}

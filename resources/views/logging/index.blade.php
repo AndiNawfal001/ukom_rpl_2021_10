@@ -17,7 +17,7 @@
         </form>
         <div class="">
             <div class="overflow-x-auto overflow-y-auto">
-                <table class="table table-compact w-full ">
+                <table class="table-primary ">
                     <thead>
                         <tr>
                             <th>Id Log</th>
@@ -32,7 +32,7 @@
                         <th>{{ $key->id_log }}</th>
                         <td>{{ $key->username }}</td>
                         <td>
-                            <p class="badge badge-outline
+                            <p class=" badge badge-outline w-20
                             {{ ($key->aktifitas === 'tambah barang') ? 'badge-success' : '' }}
                             {{ ($key->aktifitas === 'approve pemutihan' OR $key->aktifitas === 'disapprove pemutihan') ? 'badge-warning' : '' }}
                             {{ ($key->aktifitas === 'barang diperbaiki' OR $key->aktifitas === 'barang rusak') ? 'badge-info' : '' }}

@@ -24,7 +24,7 @@
             <div class="">
                 <div class="overflow-x-auto overflow-y-auto">
 
-                    <table class="table table-compact w-full">
+                    <table class="table-primary">
                         <thead>
                             <tr>
                                 <th>Barang</th>
@@ -54,7 +54,7 @@
                                 @endif
                             </td>
                             <td>
-                                <p class="badge badge-outline
+                                <p class=" badge badge-outline w-20
                                 {{ ($key->approve_perbaikan === 'sudah diperbaiki') ? 'badge-success' : '' }}
                                 {{ ($key->approve_perbaikan === 'pending') ? 'badge-warning' : '' }}
                                 {{ ($key->approve_perbaikan === 'rusak') ? 'badge-error' : '' }}

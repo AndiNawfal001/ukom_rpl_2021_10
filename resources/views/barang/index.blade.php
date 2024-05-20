@@ -16,7 +16,7 @@
         </form>
         <div class="overflow-x-auto w-full">
 
-            <table class="table table-compact w-full">
+            <table class="table-primary">
               <thead>
                 <tr>
                     <th>No</th>
@@ -43,16 +43,16 @@
                     <td>{{ number_format($item->jml_barang, 0, '.', '.') }}</td>
                     <td>
                         @if($item->barang_rusak == 0)
-                        <p class="badge badge-outline badge-info">{{ number_format($item->barang_rusak, 0, '.', '.') }}</p>
+                        <p class=" badge badge-outline w-20 badge-info">{{ number_format($item->barang_rusak, 0, '.', '.') }}</p>
                         @else
-                        <p class="badge badge-outline badge-warning">{{ number_format($item->barang_rusak, 0, '.', '.') }}</p>
+                        <p class=" badge badge-outline w-20 badge-warning">{{ number_format($item->barang_rusak, 0, '.', '.') }}</p>
                         @endif
                     </td>
                     <td>
                         @if($item->barang_nonaktif == 0)
-                        <p class="badge badge-outline badge-success">{{ number_format($item->barang_nonaktif, 0, '.', '.') }}</p>
+                        <p class=" badge badge-outline w-20 badge-success">{{ number_format($item->barang_nonaktif, 0, '.', '.') }}</p>
                         @else
-                        <p class="badge badge-outline badge-error">{{ number_format($item->barang_nonaktif, 0, '.', '.') }}</p>
+                        <p class=" badge badge-outline w-20 badge-error">{{ number_format($item->barang_nonaktif, 0, '.', '.') }}</p>
                         @endif
                     </td>
                     <th>

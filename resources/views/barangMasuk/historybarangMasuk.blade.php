@@ -58,7 +58,7 @@
             <div class="md:w-3/5">
 
                 <div class="overflow-x-auto overflow-y-auto">
-                    <table class="table table-compact w-full ">
+                    <table class="table-primary ">
                         <thead>
                             <tr>
                                 <th>Tgl Masuk</th>

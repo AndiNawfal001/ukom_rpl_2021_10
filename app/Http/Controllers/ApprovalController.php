@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,16 +27,37 @@ class ApprovalController extends Controller
 
     public function indexBarangBaru(Request $request)
     {
-        if ($request->has('search')) {
-            $search = $request->input('search');
-            $data = PengajuanBBModel::leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')
-                ->where('nama_barang', 'like', "%" . $search . "%")
-                ->orWhere('total_harga', 'like', "%" . $search . "%")
-                ->orWhere('tgl', 'like', "%" . $search . "%")
-                ->orWhere('status_approval', 'like', "%" . $search . "%")
+        if ($request->has('search') || $request->has('filter_month') || $request->has('filter_year') || $request->has('filter_status')) { 
+            $search = $request->input('search'); 
+
+            $where = " 1=1";
+            if ($request->has('search')) {
+                $search = $request->input('search');
+                $where .= " AND (nama_barang LIKE '%$search%' OR total_harga LIKE '%$search%' OR status_approval LIKE '%$search%')";
+            }
+
+            if ($request->has('filter_month')) {
+                $filter_month = $request->input('filter_month'); 
+                $where .= " AND MONTH(tgl) = '$filter_month'";
+            }
+            
+            if ($request->has('filter_year')) {
+                $filter_year = $request->input('filter_year'); 
+                $where .= " AND YEAR(tgl) = '$filter_year'";
+            }
+            
+            if ($request->has('filter_status')) {
+                $filter_status = $request->input('filter_status'); 
+                $where .= " AND status_approval = '$filter_status'";
+            }
+        
+            $data = DB::table('pengajuan_bb')
+                ->leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan') 
+                ->whereRaw($where) 
                 ->paginate(10);
+  
         } else {
-            $data = PengajuanBBModel::leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')->paginate(10);
+            $data = PengajuanBBModel::leftJoin('ruangan', 'pengajuan_bb.ruangan', '=', 'ruangan.id_ruangan')->paginate(10); 
         }
 
         return view('approval.barang_baru.index', compact('data'));

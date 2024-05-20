@@ -29,7 +29,7 @@
         <div class="">
             <div class="">
                 <div class="overflow-x-auto overflow-y-auto ">
-                    <table class="table table-compact w-full ">
+                    <table class="table-primary ">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -52,13 +52,13 @@
                             </div>
                         </th>
                         <td>
-                            <p class="badge badge-outline
+                            <p class=" badge badge-outline w-20
                             {{ ($key->kondisi_barang === 'baik') ? 'badge-info' : '' }}
                             {{ ($key->kondisi_barang === 'rusak') ? 'badge-warning' : '' }}
                             ">{{ $key->kondisi_barang }}</p>
                         </td>
                         <td>
-                            <p class="badge badge-outline
+                            <p class=" badge badge-outline w-20
                             {{ ($key->status === 'aktif') ? 'badge-success' : '' }}
                             {{ ($key->status === 'nonaktif') ? 'badge-error' : '' }}
                             ">{{ $key->status }}</p>

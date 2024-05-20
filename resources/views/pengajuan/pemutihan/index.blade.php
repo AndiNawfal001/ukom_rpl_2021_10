@@ -56,7 +56,7 @@
 
             <div class="basis-4/6">
                 <div class="overflow-x-auto overflow-y-auto">
-                    <table class="table table-compact w-full ">
+                    <table class="table-primary ">
                         <thead>
                             <tr>
                                 <th>Barang</th>
@@ -78,7 +78,7 @@
                         </th>
                         <td>{{ $key->tgl_pemutihan }}</td>
                         <td>
-                            <p class="badge badge-outline
+                            <p class=" badge badge-outline w-20
                             {{ ($key->approve_penonaktifan === 'setuju') ? 'badge-success' : '' }}
                             {{ ($key->approve_penonaktifan === 'pending') ? 'badge-warning' : '' }}
                             {{ ($key->approve_penonaktifan === 'tidak setuju') ? 'badge-error' : '' }}

@@ -24,7 +24,7 @@
             </div>
             <div class=" gap-5">
                 <div class="overflow-x-auto overflow-y-auto ">
-                    <table class="table table-compact w-full ">
+                    <table class="table-primary ">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -40,19 +40,19 @@
                         <th>
                             <div class="flex items-center space-x-3">
                                 <div>
-                                    <div class="font-bold text-lg">{{ $item->nama_barang }}</div>
-                                    <div class="text-sm opacity-50">{{ $item->kode_barang }}</div>
+                                    <div class="font-bold  ">{{ $item->nama_barang }}</div>
+                                    <div class="text-xs opacity-50">{{ $item->kode_barang }}</div>
                                 </div>
                             </div>
                         </th>
                         <td>
-                            <p class="badge badge-outline
+                            <p class=" badge badge-outline w-20
                             {{ ($item->kondisi_barang === 'baik') ? 'badge-info' : '' }}
                             {{ ($item->kondisi_barang === 'rusak') ? 'badge-warning' : '' }}
                             ">{{ $item->kondisi_barang }}</p>
                         </td>
                         <td>
-                            <p class="badge badge-outline
+                            <p class=" badge badge-outline w-20
                             {{ ($item->status === 'aktif') ? 'badge-success' : '' }}
                             {{ ($item->status === 'nonaktif') ? 'badge-error' : '' }}
                             ">{{ $item->status }}</p>
