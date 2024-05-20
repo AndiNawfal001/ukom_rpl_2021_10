@@ -106,16 +106,16 @@ class BarangMasukController extends Controller
     {
         $request->validate(
             [
-                'image' => 'mimes:jpeg,jpg,png'
+                'image' => 'mimes:jpeg,jpg,png',
+                'jml_barang' => 'required',
             ],
             [
                 'image.mimes' => 'File harus bertipe: jpeg, jpg, png!',
+                'jml_barang.required' => 'Input supplier harus diisi!',
             ]
         );
         try {
-            $image = $request->file('image')->store('barang');
-
-            // dd($request->all());
+            $image = 'barang/'.basename($request->file('image')->store('public/barang'));
             $tambahBarangMasuk = DB::insert("CALL tambah_barangmasuk( :nama_barang, :jml_barang, :spesifikasi, :kondisi_barang, :supplier, :adder, :jenis_barang, :foto_barang, :ruangan)", [
 
                 'nama_barang' => $request->input('nama_barang'),

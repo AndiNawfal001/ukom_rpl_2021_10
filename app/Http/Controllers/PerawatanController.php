@@ -102,7 +102,7 @@ class PerawatanController extends Controller
                 if ($request->oldImage) {
                     Storage::delete($request->oldImage);
                 }
-                $image = $request->file('image')->store('perawatan');
+                $image = 'perawatan/'.basename($request->file('image')->store('perawatan'));
                 $data = [
                     'nama_pelaksana' => $request->input('nama_pelaksana'),
                     'ket_perawatan' => $request->input('ket_perawatan'),

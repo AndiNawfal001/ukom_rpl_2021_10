@@ -1,12 +1,12 @@
 @extends('layouts.main')
 @section('container')
 <div class="p-5">
-    <div class="alert alert-info rounded-md mb-4 shadow-lg">
+    <!--<div class="alert alert-info rounded-md mb-4 shadow-lg">
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
           <span>Bila Supplier atau Jenis Barang yang dimaksud tidak ada, silahkan isi terlebih dahulu</span>
         </div>
-    </div>
+    </div>-->
  <div class="shadow-md rounded-md mx-auto  bg-base-100 p-5">
  <form action="simpan" method="POST"  enctype="multipart/form-data">
  @csrf
@@ -53,11 +53,14 @@
                     <label class="label">
                         <span class="label-text">Supplier</span>
                     </label>
-                    <select class="select select-bordered w-full max-w-xs" name="supplier" required>
+                    <select class="select select-bordered w-full max-w-xs" id="supplier" name="supplier" required>
                         <option disabled selected>-- Pilih Supplier --</option>
                         @foreach ($supplier as $item)
                             <option value="{{ $item->id_supplier }}" {{ old('supplier') == $item->id_supplier ? 'selected' : null}}>{{ $item->nama }}</option>
                         @endforeach
+                        @error('supplier')
+                            <p class="text-red-500">{{ $message }}</p>
+                        @enderror
                     </select>
                 </div>
 

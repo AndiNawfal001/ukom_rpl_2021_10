@@ -19,41 +19,66 @@ class RuanganSeeder extends Seeder
         $ruangan = collect([
             [
                 'id_ruangan' => 'RGN001',
-                'nama_ruangan' => 'D1',
-                'penanggung_jawab' => 'Km nya',
-                'ket' => 'Butuh Meja',
-
+                'nama_ruangan' => 'Executive Boardroom',
+                'penanggung_jawab' => 'Supervisor',
+                'ket' => 'Butuh Kursi dan Meja Rapat',
             ],
             [
                 'id_ruangan' => 'RGN002',
-                'nama_ruangan' => 'D2',
-                'penanggung_jawab' => 'Km nya',
-                'ket' => 'Butuh Meja',
-
+                'nama_ruangan' => 'Innovation Lab',
+                'penanggung_jawab' => 'Coordinator',
+                'ket' => 'Butuh Peralatan Percobaan',
             ],
             [
                 'id_ruangan' => 'RGN003',
-                'nama_ruangan' => 'D3',
-                'penanggung_jawab' => 'Km nya',
-                'ket' => 'Butuh Meja',
-
+                'nama_ruangan' => 'Design Studio',
+                'penanggung_jawab' => 'Art Director',
+                'ket' => 'Butuh Peralatan Desain',
             ],
             [
                 'id_ruangan' => 'RGN004',
-                'nama_ruangan' => 'D4',
-                'penanggung_jawab' => 'Km nya',
-                'ket' => 'Butuh Meja',
-
+                'nama_ruangan' => 'Relaxation Lounge',
+                'penanggung_jawab' => 'Wellness Manager',
+                'ket' => 'Butuh Kursi Santai dan Meja Kecil',
             ],
             [
                 'id_ruangan' => 'RGN005',
-                'nama_ruangan' => 'D5',
-                'penanggung_jawab' => 'Km nya',
-                'ket' => 'Butuh Meja',
-
+                'nama_ruangan' => 'Training Center',
+                'penanggung_jawab' => 'Training Coordinator',
+                'ket' => 'Butuh Meja dan Proyektor',
             ],
-
-        ]);
+            [
+                'id_ruangan' => 'RGN006',
+                'nama_ruangan' => 'Creative Workshop Space',
+                'penanggung_jawab' => 'Facilities Manager',
+                'ket' => 'Butuh Whiteboard dan Flipchart',
+            ],
+            [
+                'id_ruangan' => 'RGN007',
+                'nama_ruangan' => 'Executive Suite',
+                'penanggung_jawab' => 'Petugas Kebersihan',
+                'ket' => 'Butuh Alat Pembersih',
+            ],
+            [
+                'id_ruangan' => 'RGN008',
+                'nama_ruangan' => 'Innovation Hub',
+                'penanggung_jawab' => 'Teknisi Listrik',
+                'ket' => 'Butuh Perbaikan Listrik',
+            ],
+            [
+                'id_ruangan' => 'RGN009',
+                'nama_ruangan' => 'Relaxation Zone',
+                'penanggung_jawab' => 'Petugas Keamanan',
+                'ket' => 'Butuh Penjagaan Tambahan',
+            ],
+            [
+                'id_ruangan' => 'RGN010',
+                'nama_ruangan' => 'Workspace 3.0',
+                'penanggung_jawab' => 'Petugas Administrasi',
+                'ket' => 'Butuh Peralatan Kantor',
+            ],
+        ]); 
+        
         $ruangan->each(fn ($r) => DB::table('ruangan')->insert($r));
     }
 }

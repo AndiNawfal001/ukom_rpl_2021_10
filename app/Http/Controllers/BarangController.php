@@ -79,7 +79,7 @@ class BarangController extends Controller
     {
         try {
             if ($request->file('image')) {
-                $image = $request->file('image')->store('detail_barang');
+                $image = 'detail_barang/'.basename($request->file('image')->store('public/detail_barang'));
                 $data = [
                     'spesifikasi'   => $request->input('spesifikasi'),
                     'foto_barang' => $image

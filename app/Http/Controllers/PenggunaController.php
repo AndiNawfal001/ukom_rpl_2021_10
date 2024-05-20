@@ -84,7 +84,7 @@ class PenggunaController extends Controller
                 $image = 'pengguna/' . $request->input('username') . '.png';
                 Avatar::create($request->input('username'))->save('storage/pengguna/' . $request->input('username') . '.png');
             } else {
-                $image = $request->file('image')->store('pengguna');
+                $image = 'pengguna/'.basename($request->file('image')->store('public/pengguna'));
             }
 
             // dd($request->all());
@@ -166,7 +166,7 @@ class PenggunaController extends Controller
                     'foto' => $request->oldImage,
                 ]);
             } else {
-                $image = $request->file('image')->store('pengguna');
+                $image = 'pengguna/'.basename($request->file('image')->store('public/pengguna'));
                 $updateUser = DB::update("CALL update_user(:kode, :username, :email, :nama, :kontak, :foto)", [
                     'kode' => $request->input('kode'),
                     'username' => $request->input('username'),

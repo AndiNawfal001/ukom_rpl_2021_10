@@ -75,7 +75,7 @@ class PemutihanController extends Controller
     public function simpanpemutihanLangsung(Request $request)
     {
         try {
-            $image = $request->file('image')->store('pemutihan');
+            $image = 'pemutihan/'.basename($request->file('image')->store('public/pemutihan'));
 
             $submitter_id = Auth::user()->id_pengguna;
 
@@ -129,7 +129,7 @@ class PemutihanController extends Controller
     public function simpanpemutihan(Request $request)
     {
         try {
-            $image = $request->file('image')->store('pemutihan');
+            $image = 'pemutihan/'.basename($request->file('image')->store('public/pemutihan'));
 
             $submitter_id = Auth::user()->id_pengguna;
 

@@ -9,28 +9,28 @@
                 @csrf
                 <div class="form-control mb-2">
                     <div class="input-group ">
-                    <input type="text" name="search" placeholder="Search…" class="input input-bordered" value="{{ request("search") }}" autocomplete="off" />
-                    <button class="btn btn-square" type="submit">
+                    <input type="text" name="search" placeholder="Search…" class="input input-sm input-bordered" value="{{ request("search") }}" autocomplete="off" />
+                    <button class="btn btn-sm btn-square" type="submit">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                     </button>
                     </div>
                 </div>
             </form>
             <a href="/ruangan/tambah">
-                <button class="btn btn-success gap-2">
-                    Tambah Ruangan <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <button class="btn btn-sm btn-success gap-2">
+                    Tambah <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 </button>
             </a>
         </div>
         <div class="">
             <div class="overflow-x-auto overflow-y-auto">
-                <table class="table w-full ">
+                <table class="table table-compact w-full ">
                     <thead>
                         <tr>
                             <th>Nama Ruangan</th>
                             <th>Penanggung Jawab</th>
                             <th>Ket</th>
-                            <th>Aksi</th>
+                            <th>Kontrol</th>
                         </tr>
                     </thead>
                     @forelse($data as $key)
@@ -64,6 +64,7 @@
             </div>
 
         </div>
+        <br>
         <div class="lg:flex flex-row-reverse">
             <div >
                 {{ $data->links() }}
