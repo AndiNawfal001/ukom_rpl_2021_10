@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite('resources/css/app.css')
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="shortcut icon" href="{{ asset('image/aa.png') }}" sizes="16x16">
+    <link rel="shortcut icon" href="{{ asset('image/logo.png') }}" sizes="16x16">
     <title>MyStock</title>
 </head>
 <body>
@@ -16,7 +16,7 @@
             <div class="card flex-shrink-0 w-full max-w-sm shadow-lg bg-base-200">
                 <div class="card-body w-full">
                     <div class="w-full text-center">
-                        <img src="{{ asset('image/aa.png') }}" class="mx-auto w-14">
+                        <img src="{{ asset('image/logo.png') }}" class="mx-auto w-14">
                         <h1 class="text-2xl font-light my-2 ">Sign in to MyStock</h1>
                     </div>
                 <form action="login" method="POST">

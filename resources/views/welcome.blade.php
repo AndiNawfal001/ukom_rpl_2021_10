@@ -139,7 +139,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>MyStock</title>
-    <link rel="shortcut icon" href="{{ asset('image/aa.png') }}" sizes="16x16">
+    <link rel="shortcut icon" href="{{ asset('image/logo.png') }}" sizes="16x16">
     @vite('resources/css/app.css')
 </head>
 <body>
