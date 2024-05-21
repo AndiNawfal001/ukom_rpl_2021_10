@@ -4,7 +4,7 @@
 <div class="pt-6 px-4">
     <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
         <div>
-            <div class="bg-base-100 shadow-md rounded-lg p-4 mb-4 sm:p-6 xl:p-8 hover:shadow-2xl duration-300">
+            <div class="bg-base-100 shadow-md rounded-lg p-4 mb-4 sm:p-5 hover:shadow-2xl duration-300">
                 <div class="flex items-center">
                    <div class="flex-shrink-0">
                     @php
@@ -26,13 +26,13 @@
                 </div>
             </div>
             <div class="bg-base-100 shadow rounded-lg p-4 sm:p-6 duration-300">
-                <h1 class="text-xl pb-3 font-semibold leading-loose">Pengajuan yang sudah disetujui</h1>
+                <h1 class="h1-judul">Pengajuan yang sudah disetujui</h1>
                 <form action="/barangMasuk" method="GET">
                     @csrf
                         <div class="form-control mb-2">
                             <div class="flex gap-2 items-center  ">
                             <input type="text" name="searchApproved" placeholder="Search Nama Barang…" class="input input-sm input-bordered"  value="{{ request("searchApproved") }}" autocomplete="off"/>
-                            <button class="btn btn-sm btn-square" type="submit">
+                            <button class="btn btn-sm btn-primary btn-square" type="submit">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                             </button>
                             </div>
@@ -96,14 +96,14 @@
                 </div>
             </div>
         </div>
-        <div class="bg-base-100 shadow rounded-lg p-4 sm:p-6 xl:p-8 duration-300">
-            <h1 class="text-xl pb-3 font-semibold leading-loose">Barang yang sudah masuk</h1>
+        <div class="bg-base-100 shadow rounded-lg p-4 sm:p-5 duration-300">
+            <h1 class="h1-judul">Barang yang sudah masuk</h1>
             <form action="/barangMasuk" method="GET">
                 @csrf
                     <div class="form-control mb-2">
                         <div class="flex gap-2 items-center  ">
                             <input type="text" name="searchData" placeholder="Search…" class="input input-sm input-bordered"  value="{{ request("searchData") }}" autocomplete="off"/>
-                            <button class="btn btn-sm btn-square" type="submit">
+                            <button class="btn btn-sm btn-primary btn-square" type="submit">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                             </button>
                         </div>
@@ -219,13 +219,13 @@
         <label class="modal-box relative" for="">
             <form action="/jenisBarang/tambah" method="POST">
                 @csrf
-                <h2 class="text-2xl font-bold">Tambah Jenis Barang</h2>
+                <h2 class="h1-judul">Tambah Jenis Barang</h2>
                 <br>
                 <div class="form-control">
                     <label class="label">
                     <span class="label-text">Nama Jenis Barang</span>
                     </label>
-                    <input type="text" name="nama_jenis" class="input input-bordered" required autocomplete="off"/>
+                    <input type="text" name="nama_jenis" class="input input-sm input-bordered" required autocomplete="off"/>
                 </div>
 
                     <div class="form-control mt-6">

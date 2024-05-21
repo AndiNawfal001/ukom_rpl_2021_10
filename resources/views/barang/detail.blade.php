@@ -2,7 +2,7 @@
 @section('container')
 
 <div class="pt-6 px-4">
-    <div class="bg-base-100 shadow rounded-md p-4 sm:p-6 xl:p-8 ">
+    <div class="bg-base-100 shadow rounded-md p-4 sm:p-5 ">
         <div class="">
             <div class="flex justify-between">
                 <form action="/barang/detail/{{ $id_barang }}" method="GET">
@@ -10,7 +10,7 @@
                         <div class="form-control mb-2">
                             <div class="flex gap-2 items-center  ">
                             <input type="text" name="search" placeholder="Search…" class="input input-sm input-bordered" value="{{ request("search") }}" autocomplete="off"/>
-                            <button class="btn btn-sm btn-square" type="submit">
+                            <button class="btn btn-sm btn-primary btn-square" type="submit">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                             </button>
                             </div>
@@ -82,7 +82,7 @@
                     <br>
                     <div class="flex flex-row-reverse my-4">
                         <div class="bg-base-100 text-content">
-                            {{ $data->links() }}
+                            {{ $data->links('vendor.pagination.daisyui') }}
                         </div>
                     </div>
                 </div>
@@ -104,13 +104,13 @@
     <label class="modal-box relative" for="">
         <form action="/barang/detail/update/{{ $key->kode_barang }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <h2 class="text-2xl font-bold">Edit Detail Barang</h2>
+            <h2 class="h1-judul">Edit Detail Barang</h2>
             <br>
             <div class="form-control">
                 <label class="label">
                 <span class="label-text">Spesifikasi</span>
                 </label>
-                <input type="text" name="spesifikasi" class="input input-bordered"
+                <input type="text" name="spesifikasi" class="input input-sm input-bordered"
                 value="{{ old('spesifikasi', $key->spesifikasi) }}"/>
                 <input type="hidden"  name="kode_barang" value="{{$key->kode_barang}}" />
                 <input type="hidden"  name="id_barang" value="{{$key->id_barang}}" />
@@ -120,7 +120,7 @@
                     <span class="label-text">Gambar</span>
                 </label>
 
-                <input type="file" name="image" id="image" class="file-input file-input-bordered w-full max-w-xs" onchange="previewImage()"/>
+                <input type="file" name="image" id="image" class="file-input file-input-sm file-input-bordered w-full max-w-xs" onchange="previewImage()"/>
                 <br>
                 <input type="hidden" name="oldImage" value="{{ $key->foto_barang }}">
 

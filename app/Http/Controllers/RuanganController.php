@@ -17,9 +17,10 @@ class RuanganController extends Controller
             $data = RuanganModel::where('nama_ruangan', 'like', "%" . $search . "%")
                 ->orWhere('penanggung_jawab', 'like', "%" . $search . "%")
                 ->orWhere('ket', 'like', "%" . $search . "%")
+                ->orderBy('id_ruangan', 'DESC')
                 ->paginate(10);
         } else {
-            $data = RuanganModel::paginate(10);
+            $data = RuanganModel::orderBy('id_ruangan', 'DESC')->paginate(10);
         }
 
         return view('ruangan.index', compact('data'));

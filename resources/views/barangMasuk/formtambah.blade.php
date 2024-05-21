@@ -12,7 +12,7 @@
  @csrf
     <div class="flex justify-between">
         <div>
-            <h2 class="text-2xl font-bold">Form Tambah Barang</h2>
+            <h2 class="h1-judul">Form Tambah Barang</h2>
             <p class="badge badge-lg badge-outline badge-info my-2">{{ $tambah->nama_barang }}</p>
         </div>
         <div>
@@ -28,7 +28,7 @@
                     <label class="label">
                     <span class="label-text">Nama Barang</span>
                     </label>
-                    <input type="text" name="nama_barang" class="input input-bordered"
+                    <input type="text" name="nama_barang" class="input input-sm input-bordered"
                     value="{{ $tambah->nama_barang }}" required/>
                     @error('nama_barang')
                         <p class="text-red-500">{{ $message }}</p>
@@ -38,7 +38,7 @@
                     <label class="label">
                     <span class="label-text">Jumlah Barang</span>
                     </label>
-                    <input type="number" value="{{ $max_input }}" min="1" max="{{ $max_input }}" name="jml_barang" class="input input-bordered" required/>
+                    <input type="number" value="{{ $max_input }}" min="1" max="{{ $max_input }}" name="jml_barang" class="input input-sm input-bordered" required/>
                 </div>
                 <div class="form-control">
                     <label class="label">
@@ -53,7 +53,7 @@
                     <label class="label">
                         <span class="label-text">Supplier</span>
                     </label>
-                    <select class="select select-bordered w-full max-w-xs" id="supplier" name="supplier" required>
+                    <select class="select select-sm select-bordered w-full max-w-xs" id="supplier" name="supplier" required>
                         <option disabled selected>-- Pilih Supplier --</option>
                         @foreach ($supplier as $item)
                             <option value="{{ $item->id_supplier }}" {{ old('supplier') == $item->id_supplier ? 'selected' : null}}>{{ $item->nama }}</option>
@@ -68,14 +68,14 @@
                     <label class="label">
                     <span class="label-text">Nama Manejemen</span>
                     </label>
-                    <input type="text" name="adder" class="input input-bordered" value="{{ $adder }}" required/>
+                    <input type="text" name="adder" class="input input-sm input-bordered" value="{{ $adder }}" required/>
                 </div>
 
                 <div class="form-control">
                     <label class="label">
                         <span class="label-text">Jenis Barang</span>
                     </label>
-                    <select class="select select-bordered w-full max-w-xs" name="jenis_barang" required>
+                    <select class="select select-sm select-bordered w-full max-w-xs" name="jenis_barang" required>
                         <option disabled selected>-- Pilih Jenis Barang --</option>
                         @foreach ($jenisBarang as $item)
                             <option value="{{ $item->id_jenis_brg }}" {{ old('jenis_barang') == $item->id_jenis_brg ? 'selected' : null}}>{{ $item->nama_jenis }}</option>
@@ -86,13 +86,13 @@
                     <label class="label">
                         <span class="label-text">Foto Barang</span>
                     </label>
-                    <input type="file" name="image" id="image" class="file-input file-input-bordered w-full max-w-xs" onchange="previewImage()" required/>
+                    <input type="file" name="image" id="image" class="file-input file-input-sm file-input-bordered w-full max-w-xs" onchange="previewImage()" required/>
                     @error('image')
                         <p class="text-red-500">{{ $message }}</p>
                     @enderror
                     <br>
                     <img src="" class="img-preview object-scale-down w-1/2 md:w-1/4" alt="">
-                    <input type="hidden" name="ruangan" class="input input-bordered" value="{{ $tambah->ruangan }}" required/>
+                    <input type="hidden" name="ruangan" class="input input-sm input-bordered" value="{{ $tambah->ruangan }}" required/>
                 </div>
             </div>
       </div>

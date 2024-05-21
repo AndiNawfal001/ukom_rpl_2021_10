@@ -4,7 +4,7 @@
 <div class="pt-6 px-4">
 
     <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="bg-base-100 border-t-2 border-primary shadow-md rounded-lg p-4 sm:p-6 xl:p-8 hover:shadow-2xl duration-300">
+        <div class="bg-base-100 border-t-2 border-primary shadow-md rounded-lg p-4 sm:p-5 hover:shadow-2xl duration-300">
             <div class="flex items-center">
                <div class="flex-shrink-0">
                   <span class="text-2xl sm:text-3xl leading-none font-bold">
@@ -21,7 +21,7 @@
                </div>
             </div>
         </div>
-        <div class="bg-base-100 shadow-md rounded-lg p-4 sm:p-6 xl:p-8 hover:shadow-2xl duration-300">
+        <div class="bg-base-100 shadow-md rounded-lg p-4 sm:p-5 hover:shadow-2xl duration-300">
             <div class="flex items-center">
                <div class="flex-shrink-0">
                   <span class="text-2xl sm:text-3xl leading-none font-bold">
@@ -40,7 +40,7 @@
         </div>
     </div>
     <div class="mt-4 w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <div class="bg-base-100 shadow-md rounded-lg p-4 sm:p-6 xl:p-8 hover:shadow-2xl duration-300">
+        <div class="bg-base-100 shadow-md rounded-lg p-4 sm:p-5 hover:shadow-2xl duration-300">
            <div class="flex items-center">
               <div class="flex-shrink-0">
                  <span class="text-2xl sm:text-3xl leading-none font-bold">{{ $supplier }}</span>
@@ -51,7 +51,7 @@
               </div>
            </div>
         </div>
-        <div class="bg-base-100 shadow-md rounded-lg p-4 sm:p-6 xl:p-8 hover:shadow-2xl duration-300">
+        <div class="bg-base-100 shadow-md rounded-lg p-4 sm:p-5 hover:shadow-2xl duration-300">
            <div class="flex items-center">
               <div class="flex-shrink-0">
                  <span class="text-2xl sm:text-3xl leading-none font-bold">{{ $ruangan }}</span>
@@ -62,7 +62,7 @@
               </div>
            </div>
         </div>
-        <div class="bg-base-100 shadow-md rounded-lg p-4 sm:p-6 xl:p-8 hover:shadow-2xl duration-300">
+        <div class="bg-base-100 shadow-md rounded-lg p-4 sm:p-5 hover:shadow-2xl duration-300">
            <div class="flex items-center">
               <div class="flex-shrink-0">
                  <span class="text-2xl sm:text-3xl leading-none font-bold">{{ $pemutihan }}</span>
@@ -78,7 +78,7 @@
 
     <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
         {{-- <div></div> --}}
-        <div class="bg-base-100 shadow-md rounded-lg p-4 sm:p-6 xl:p-8 duration-300">
+        <div class="bg-base-100 shadow-md rounded-lg p-4 sm:p-5 duration-300">
             <div class="mb-4 flex items-center justify-between">
                 <div>
                     <h3 class="text-xl font-bold mb-2">Latest Input Barang</h3>

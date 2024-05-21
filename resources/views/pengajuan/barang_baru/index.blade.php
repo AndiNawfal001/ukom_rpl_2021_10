@@ -2,15 +2,15 @@
 @section('container')
 
 <div class="pt-6 px-4">
-    <div class="bg-base-100 shadow rounded-md p-4 sm:p-6 xl:p-8 ">
-        <h1 class="text-xl pb-3 font-semibold leading-loose">Daftar Pengajuan Barang Baru</h1>
+    <div class="bg-base-100 shadow rounded-md p-4 sm:p-5 ">
+        <h1 class="h1-judul">Daftar Pengajuan Barang Baru</h1>
         <div class="lg:flex justify-between mb-2">
             <form action="/pengajuan/BB" method="GET">
                 @csrf
                     <div class="form-control mb-2">
                         <div class="flex gap-2 items-center  ">
                         <input type="text" name="search" placeholder="Search Nama Barang…" class="input input-sm input-bordered" value="{{ request("search") }}" autocomplete="off" />
-                        <button class="btn btn-sm btn-square" type="submit">
+                        <button class="btn btn-sm btn-primary btn-square" type="submit">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                         </button>
                         </div>
@@ -26,25 +26,25 @@
                 <div class="">
                     <div class="overflow-x-auto overflow-y-auto">
                         <table class="table-primary">
-                            <thead>
+                            <thead class="bg-base-200">
                                 <tr>
-                                    <th class="text-center">No</th>
-                                    <th class="text-center">Nama Barang</th>
-                                    <th class="text-center">Total Harga</th>
-                                    <th class="text-center">Tanggal Pengajuan</th>
-                                    <th class="text-center">Status</th>
-                                    <th class="text-center">Kontrol</th>
+                                    <x-table-header class="w-5">No</x-table-header>
+                                    <x-table-header>Nama Barang</x-table-header>
+                                    <x-table-header>Total Harga</x-table-header>
+                                    <x-table-header>Tanggal Pengajuan</x-table-header>
+                                    <x-table-header>Status</x-table-header>
+                                    <x-table-header>Kontrol</x-table-header>
                                 </tr>
                             </thead>
                             <?php $no=1;?>
                             @forelse($data as $key)
                             <tbody>
                                 <tr>
-                                    <td class="text-center">{{ $no++ }}.</td>
-                                    <td>{{ $key->nama_barang }}</td>
-                                    <td class="text-right">{{ number_format($key->total_harga, 0, '.', '.') }}</td>
-                                    <td class="text-center">{{ $key->tgl }}</td>
-                                    <td class="text-center">
+                                    <td class="border-table text-center">{{ $no++ }}.</td>
+                                    <td class="border-table">{{ $key->nama_barang }}</td>
+                                    <td class="border-table text-right">{{ number_format($key->total_harga, 0, '.', '.') }}</td>
+                                    <td class="border-table text-center">{{ $key->tgl }}</td>
+                                    <td class="border-table text-center">
                                         <p class=" badge badge-outline w-20
                                         {{ ($key->status_approval === 'setuju') ? 'badge-success' : '' }}
                                         {{ ($key->status_approval === 'pending') ? 'badge-warning' : '' }}

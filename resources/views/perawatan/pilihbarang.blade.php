@@ -1,16 +1,10 @@
 @extends('layouts.main')
 @section('container')
 
-<div class="pt-6 px-4">
-    <div class="alert alert-info shadow-lg mb-4 rounded-md ">
-        <div>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-        <span>Pastikan dulu barangnya sudah ada</span>
-        </div>
-    </div>
-    <div class="bg-base-100 static shadow rounded-md p-4 sm:p-6 xl:p-8 ">
+<div class="pt-6 px-4"> 
+    <div class="bg-base-100 static shadow rounded-md p-4 sm:p-5 ">
         <div class="flex justify-between">
-            <h1 class="text-xl pb-3 font-semibold leading-loose">Pilih Barang untuk dirawat</h1>
+            <h1 class="h1-judul">Pilih Barang untuk dirawat</h1>
             <div class="">
                 <a href="/perawatan" class="btn btn-sm btn-square">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
@@ -22,7 +16,7 @@
                 <div class="form-control mb-2">
                     <div class="flex gap-2 items-center  ">
                     <input type="text" name="search" placeholder="Search…" class="input input-sm input-bordered" value="{{ request("search") }}" autocomplete="off"/>
-                    <button class="btn btn-sm btn-square" type="submit">
+                    <button class="btn btn-sm btn-primary btn-square" type="submit">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                     </button>
                     </div>
@@ -74,7 +68,7 @@
                               </td>
                             @empty
                             <tr>
-                                <td colspan="4">
+                                <td colspan="5">
                                     <div class="text-center">
                                         <img src="{{ asset('image/empty.png') }}" class="mx-auto w-40"> 
                                     </div>
@@ -89,7 +83,7 @@
                     <br>
                     <div class="lg:flex flex-row-reverse">
                         <div class="mt-4">
-                            {{ $data->links() }}
+                            {{ $data->links('vendor.pagination.daisyui') }}
                         </div>
                     </div>
                 </div>
@@ -114,7 +108,7 @@
     <form action="/perawatan/simpanperawatan" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="lg:flex justify-between">
-            <h2 class="text-2xl font-bold">Form perawatan</h2>
+            <h2 class="h1-judul">Form perawatan</h2>
             <div class="my-2 lg:my-0">
                 Kode barang :
                 <div class="btn btn-sm btn-outline no-animation">{{ $key->kode_barang }}</div>
@@ -124,14 +118,14 @@
             <label class="label">
             <span class="label-text">Kode Barang</span>
             </label>
-            <input type="text" name="kode_barang" class="input input-bordered "
+            <input type="text" name="kode_barang" class="input input-sm input-bordered "
             value="{{ old('nama', $key->kode_barang) }}"/>
         </div>
         <div class="form-control">
             <label class="label">
                 <span class="label-text">Nama Pelaksana</span>
             </label>
-            <input type="text" name="nama_pelaksana" class="input input-bordered" required autocomplete="off"/>
+            <input type="text" name="nama_pelaksana" class="input input-sm input-bordered" required autocomplete="off"/>
         </div>
         <div class="form-control">
             <label class="label">

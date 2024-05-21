@@ -3,9 +3,7 @@
 
 <div class="pt-6 px-4">
     <div class="bg-base-100 border-t-2 border-primary shadow rounded-md p-4 sm:p-5">
-        <h1 class="text-xl pb-3 font-semibold leading-loose">Daftar Pengajuan Barang Baru untuk di Approve</h1>
-
-        
+        <h1 class="h1-judul">Daftar Pengajuan Barang Baru untuk di Approve</h1>  
             <div class="">
                 <div class="">
                     <div class="overflow-x-auto overflow-y-auto">
@@ -14,7 +12,7 @@
                                 <div class="form-control mb-2">
                                     <div class="flex gap-2 items-center">
                                         <input type="text" name="search" placeholder="Search…" class="input input-sm input-bordered" value="{{ request("search") }}" autocomplete="off"/>
-                                        <select name="filter_month" class="select select-bordered select-sm w-40 max-w-xs">
+                                        <select name="filter_month" class="select select-sm select-bordered select-sm w-40 max-w-xs">
                                             <option disabled {{ request('filter_month') ? '' : 'selected' }}>-- All Months --</option>
                                             <?php
                                             for ($bulan = 1; $bulan <= 12; $bulan++) {
@@ -24,7 +22,7 @@
                                             }
                                             ?>
                                         </select>
-                                        <select name="filter_year" class="select select-bordered select-sm w-40 max-w-xs">
+                                        <select name="filter_year" class="select select-sm select-bordered select-sm w-40 max-w-xs">
                                             <option disabled {{ request('filter_year') ? '' : 'selected' }}>-- All Years --</option>
                                             <?php
                                             $years = DB::table('pengajuan_bb')
@@ -40,7 +38,7 @@
                                             }
                                             ?>
                                         </select>
-                                        <select name="filter_status" class="select select-bordered select-sm w-40 max-w-xs">
+                                        <select name="filter_status" class="select select-sm select-bordered select-sm w-40 max-w-xs">
                                             <option disabled {{ request('filter_status') ? '' : 'selected' }}>-- All Status --</option>
                                             <?php
                                             $statuses = DB::table('pengajuan_bb')
@@ -64,12 +62,12 @@
                         <table class="table-primary">
                             <thead class="bg-base-200">
                                 <tr>
-                                    <th class="text-center border-table w-5">No</th>
-                                    <th class="text-center border-table">Nama Barang</th>
-                                    <th class="text-center border-table w-40">Total Harga</th>
-                                    <th class="text-center border-table w-20">Tanggal Pengajuan</th>
-                                    <th class="text-center border-table w-20">Status</th>
-                                    <th class="text-center border-table w-20">Kontrol</th>
+                                    <x-table-header class="w-5">No</x-table-header>
+                                    <x-table-header>Nama Barang</x-table-header>
+                                    <x-table-header class="w-40">Total Harga</x-table-header>
+                                    <x-table-header class="w-20">Tanggal Pengajuan</x-table-header>
+                                    <x-table-header class="w-20">Status</x-table-header>
+                                    <x-table-header class="w-20">Kontrol</x-table-header>
                                 </tr>
                             </thead> 
                             @forelse($data as $key => $item)
@@ -108,7 +106,7 @@
                     <br>
                     <div class="lg:flex flex-row-reverse">
                         <div>
-                            {{ $data->links() }}
+                            {{ $data->links('vendor.pagination.daisyui') }}
                         </div>
                     </div>
                 </div>

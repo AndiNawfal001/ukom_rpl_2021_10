@@ -2,7 +2,7 @@
 @section('container')
 
 <div class="pt-6 px-4">
-    <div class="bg-base-100 shadow rounded-md p-4 sm:p-6 xl:p-8 ">
+    <div class="bg-base-100 shadow rounded-md p-4 sm:p-5 ">
             <div class="flex justify-between">
                 <h1 class="text-xl font-semibold leading-loose">Detail </h1>
                 <div>
@@ -73,7 +73,7 @@
     <label class="modal-box relative" for="">
         <form action="/barang/detail/update/{{ $key->kode_barang }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <h2 class="text-2xl font-bold">Edit Detail Barang</h2>
+            <h2 class="h1-judul">Edit Detail Barang</h2>
             <br>
             <div class="form-control">
                 <label class="label">
@@ -87,7 +87,7 @@
                     <span class="label-text">Gambar</span>
                 </label>
 
-                <input type="file" name="image" id="image" class="file-input file-input-bordered w-full max-w-xs" onchange="previewImage()"/>
+                <input type="file" name="image" id="image" class="file-input file-input-sm file-input-bordered w-full max-w-xs" onchange="previewImage()"/>
                 <br>
                 <input type="hidden" name="oldImage" value="{{ $key->foto_barang }}">
 

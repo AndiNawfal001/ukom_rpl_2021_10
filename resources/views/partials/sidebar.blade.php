@@ -1,4 +1,4 @@
-<div class="relative flex-1 flex flex-col min-h-0 shadow-xl bg-base-100 pt-0">
+<div class="relative flex-1 flex flex-col min-h-0 shadow-xl bg-base-100 pt-0 text-sm">
     <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
        <div class="flex-1 px-3 space-y-1">
             <ul>
@@ -76,7 +76,7 @@
 
                 @can('admin+manajemen')
                 <li class="group">
-                    <button type="button" class="flex items-center p-2 w-full text-base font-normal rounded-lg hover:bg-base-300 dropdown-btn" >
+                    <button type="button" class="flex items-center p-2 w-full font-normal rounded-lg hover:bg-base-300 dropdown-btn" >
                         <div class="btn btn-sm btn-active btn-square {{ request()->is('approval/BB*', 'approval/PB*' ,'approval/pemutihan*') ? 'btn-primary' : 'btn-ghost' }}">
                             <svg class="w-5 h-5 " fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0118 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3l1.5 1.5 3-3.75"></path>
@@ -91,7 +91,7 @@
                     </button>
                     <ul class="dropdown-container {{ request()->is('approval/BB*', 'approval/PB*' ,'approval/pemutihan*') ? 'block' : 'hidden' }}">
                         <li >
-                            <a href="/approval/BB" class="flex justify-between items-center py-3 px-2 pl-11 w-full text-base border-primary font-normal rounded-lg group {{ request()->is('approval/BB*') ? 'bg-base-200 border-r-2 shadow-md' : 'hover:bg-base-300' }}">
+                            <a href="/approval/BB" class="flex justify-between items-center py-3 px-2 pl-11 w-full border-primary font-normal rounded-lg group {{ request()->is('approval/BB*') ? 'bg-base-200 border-r-2 shadow-md' : 'hover:bg-base-300' }}">
                                 Barang Baru
                                 @if($pengajuan_bb >= 1)
                                     <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info {{ request()->is('approval/BB*') ? 'mr-[6px]' : '' }}"></span>
@@ -99,7 +99,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/approval/PB" class="flex justify-between items-center py-3 px-2 pl-11 w-full text-base border-primary font-normal rounded-lg group {{ request()->is('approval/PB*') ? 'bg-base-200 border-r-2 shadow-md' : 'hover:bg-base-300' }}">
+                            <a href="/approval/PB" class="flex justify-between items-center py-3 px-2 pl-11 w-full border-primary font-normal rounded-lg group {{ request()->is('approval/PB*') ? 'bg-base-200 border-r-2 shadow-md' : 'hover:bg-base-300' }}">
                                 Perbaikan
                                 @if($perbaikan >= 1)
                                     <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info {{ request()->is('approval/PB*') ? 'mr-[6px]' : '' }}"></span>
@@ -107,7 +107,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/approval/pemutihan" class="flex justify-between items-center py-3 px-2 pl-11 w-full text-base border-primary font-normal rounded-lg group {{ request()->is('approval/pemutihan*') ? 'bg-base-200 border-r-2 shadow-md' : 'hover:bg-base-300' }}">
+                            <a href="/approval/pemutihan" class="flex justify-between items-center py-3 px-2 pl-11 w-full border-primary font-normal rounded-lg group {{ request()->is('approval/pemutihan*') ? 'bg-base-200 border-r-2 shadow-md' : 'hover:bg-base-300' }}">
                                 Pemutihan
                                 @if($pemutihan >= 1)
                                     <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info{{ request()->is('approval/pemutihan*') ? 'mr-[6px]' : '' }}"></span>
@@ -120,7 +120,7 @@
                 @endcan
 
                 <li class="group">
-                    <button type="button" class="flex items-center p-2 w-full text-base font-normal rounded-lg hover:bg-base-300 dropdown-btn" >
+                    <button type="button" class="flex items-center p-2 w-full font-normal rounded-lg hover:bg-base-300 dropdown-btn" >
                         <div class="btn btn-sm btn-active btn-square {{ request()->is('pengajuan/BB*', 'pengajuan/PB*' ,'pemutihan*') ? 'btn-primary' : 'btn-ghost' }}">
                             <svg class="w-5 h-5 " fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z"></path>
@@ -134,13 +134,13 @@
                     </button>
                     <ul class="dropdown-container {{ request()->is('pengajuan/BB*', 'pengajuan/PB*' ,'pemutihan*') ? 'block' : 'hidden' }}">
                         <li>
-                            <a href="/pengajuan/BB" class="flex items-center py-3 px-2 pl-11 w-full text-base border-primary font-normal rounded-lg group {{ request()->is('pengajuan/BB*') ? 'bg-base-200 border-r-2 shadow-md' : 'hover:bg-base-300' }}">Barang Baru</a>
+                            <a href="/pengajuan/BB" class="flex items-center py-3 px-2 pl-11 w-full border-primary font-normal rounded-lg group {{ request()->is('pengajuan/BB*') ? 'bg-base-200 border-r-2 shadow-md' : 'hover:bg-base-300' }}">Barang Baru</a>
                         </li>
                         <li>
-                            <a href="/pengajuan/PB" class="flex items-center py-3 px-2 pl-11 w-full text-base border-primary font-normal rounded-lg group {{ request()->is('pengajuan/PB*') ? 'bg-base-200 border-r-2 shadow-md' : 'hover:bg-base-300' }}">Perbaikan</a>
+                            <a href="/pengajuan/PB" class="flex items-center py-3 px-2 pl-11 w-full border-primary font-normal rounded-lg group {{ request()->is('pengajuan/PB*') ? 'bg-base-200 border-r-2 shadow-md' : 'hover:bg-base-300' }}">Perbaikan</a>
                         </li>
                         <li>
-                            <a href="/pemutihan" class="flex justify-between items-center py-3 px-2 pl-11 w-full text-base border-primary font-normal rounded-lg group {{ request()->is('pemutihan*') ? 'bg-base-200 border-r-2 shadow-md' : 'hover:bg-base-300' }}">
+                            <a href="/pemutihan" class="flex justify-between items-center py-3 px-2 pl-11 w-full border-primary font-normal rounded-lg group {{ request()->is('pemutihan*') ? 'bg-base-200 border-r-2 shadow-md' : 'hover:bg-base-300' }}">
                                 Pemutihan
                                 @if($pemutihanKaprog >= 1)
                                     <span class="inline-flex mx-2 justify-center items-center p-1 ml-1 w-1 h-1 text-sm font-medium rounded-full bg-info {{ request()->is('pemutihan*') ? 'mr-[6px]' : '' }}"></span>

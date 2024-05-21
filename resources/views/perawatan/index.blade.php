@@ -2,8 +2,8 @@
 @section('container')
 
 <div class="pt-6 px-4">
-    <div class="bg-base-100 shadow rounded-md p-4 sm:p-6 xl:p-8 ">
-        <h1 class="text-lg lg:text-xl pb-3 font-semibold leading-loose">Daftar Barang untuk perawatan</h1>
+    <div class="bg-base-100 shadow rounded-md p-4 sm:p-5 ">
+        <h1 class="h1-judul">Daftar Barang untuk perawatan</h1>
         <div class="">
             <div class="lg:flex justify-between mb-2">
                 <form action="/perawatan" method="GET">
@@ -11,7 +11,7 @@
                         <div class="form-control mb-2">
                             <div class="flex gap-2 items-center  ">
                             <input type="text" name="search" placeholder="Search…" class="input input-sm input-bordered" value="{{ request("search") }}" autocomplete="off"/>
-                            <button class="btn btn-sm btn-square" type="submit">
+                            <button class="btn btn-sm btn-primary btn-square" type="submit">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                             </button>
                             </div>
@@ -27,29 +27,29 @@
             <div class="">
                 <div class="overflow-x-auto overflow-y-auto">
                     <table class="table-primary ">
-                        <thead>
+                        <thead class="bg-base-200">
                             <tr>
-                                <th>No</th>
-                                <th>Barang</th>
-                                <th>Tanggal Perawatan</th>
-                                <th>Nama Pelaksana</th>
-                                <th>Kontrol</th>
+                                <x-table-header class="w-5">No</x-table-header>
+                                <x-table-header>Barang</x-table-header>
+                                <x-table-header>Tanggal Perawatan</x-table-header>
+                                <x-table-header>Nama Pelaksana</x-table-header>
+                                <x-table-header>Kontrol</x-table-header>
                             </tr>
                         </thead>
                         @forelse($data as $key =>$item)
                         <tr>
-                        <th>{{ $data->firstItem() + $key }}</th>
-                        <th>
+                        <td class="border-table">{{ $data->firstItem() + $key }}</td>
+                        <td class="border-table">
                             <div class="flex items-center space-x-3">
                                 <div>
                                     <div class="font-bold text-lg">{{ $item->nama_barang }}</div>
                                     <div class="text-sm opacity-50">{{ $item->kode_barang }}</div>
                                 </div>
                             </div>
-                        </th>
-                        <td>{{ $item->tgl_perawatan }}</td>
-                        <td>{{ $item->nama_pelaksana }}</td>
-                        <td>
+                        </td>
+                        <td class="border-table">{{ $item->tgl_perawatan }}</td>
+                        <td class="border-table">{{ $item->nama_pelaksana }}</td>
+                        <td class="border-table">
                             <label for="detailperawatan{{ $item->id_perawatan }}" class="btn btn-sm  btn-info btn-square btn-outline">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             </label>
@@ -75,7 +75,7 @@
             <br>
             <div class="lg:flex flex-row-reverse">
                 <div >
-                    {{ $data->links() }}
+                    {{ $data->links('vendor.pagination.daisyui') }}
                 </div>
             </div>
         </div>
@@ -133,13 +133,13 @@
   <label class="modal-box relative" for="">
     <form action="/perawatan/edit/editsimpan" method="POST" enctype="multipart/form-data">
         @csrf
-        <h2 class="text-2xl font-bold">Edit Perawatan</h2>
+        <h2 class="h1-judul">Edit Perawatan</h2>
         <br>
         <div class="form-control">
             <label class="label">
             <span class="label-text">Nama Pelaksana</span>
             </label>
-            <input type="text" name="nama_pelaksana" class="input input-bordered"
+            <input type="text" name="nama_pelaksana" class="input input-sm input-bordered"
             value="{{ old('nama_pelaksana', $key->nama_pelaksana) }}" required autocomplete="off" />
             <input type="hidden"  name="id_perawatan" value="{{$key->id_perawatan}}" />
         </div>

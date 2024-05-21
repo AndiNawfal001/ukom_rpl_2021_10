@@ -77,6 +77,36 @@ class RuanganSeeder extends Seeder
                 'penanggung_jawab' => 'Petugas Administrasi',
                 'ket' => 'Butuh Peralatan Kantor',
             ],
+            [
+                'id_ruangan' => 'RGN011',
+                'nama_ruangan' => 'Training Room A',
+                'penanggung_jawab' => 'Training Coordinator',
+                'ket' => 'Butuh Meja dan Kursi Pelatihan',
+            ],
+            [
+                'id_ruangan' => 'RGN012',
+                'nama_ruangan' => 'Meeting Room B',
+                'penanggung_jawab' => 'HR Coordinator',
+                'ket' => 'Butuh Proyektor dan Layar',
+            ],
+            [
+                'id_ruangan' => 'RGN013',
+                'nama_ruangan' => 'Lounge Area',
+                'penanggung_jawab' => 'Facilities Manager',
+                'ket' => 'Butuh Sofa dan Meja Kecil',
+            ],
+            [
+                'id_ruangan' => 'RGN014',
+                'nama_ruangan' => 'Cafeteria',
+                'penanggung_jawab' => 'Catering Manager',
+                'ket' => 'Butuh Peralatan Masak dan Penyajian Makanan',
+            ],
+            [
+                'id_ruangan' => 'RGN015',
+                'nama_ruangan' => 'Fitness Center',
+                'penanggung_jawab' => 'Fitness Instructor',
+                'ket' => 'Butuh Perangkat Fitness dan Alat Penimbang',
+            ],
         ]); 
         
         $ruangan->each(fn ($r) => DB::table('ruangan')->insert($r));

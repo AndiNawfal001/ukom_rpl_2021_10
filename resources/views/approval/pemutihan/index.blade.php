@@ -2,14 +2,14 @@
 @section('container')
 <div class="pt-6 px-4">
 
-    <div class="bg-base-100 border-t-2 border-primary shadow rounded-md p-4 sm:p-6 xl:p-8 ">
-        <h1 class="text-xl pb-3 font-semibold leading-loose">Daftar Pengajuan pemutihan untuk di Approve</h1>
+    <div class="bg-base-100 border-t-2 border-primary shadow rounded-md p-4 sm:p-5 ">
+        <h1 class="h1-judul">Daftar Pengajuan pemutihan untuk di Approve</h1>
         <form action="/approval/pemutihan" method="GET">
             @csrf
                 <div class="form-control mb-2">
                     <div class="flex gap-2 items-center  ">
                     <input type="text" name="search" placeholder="Search…" class="input input-sm input-bordered" value="{{ request("search") }}" autocomplete="off"/>
-                    <button class="btn btn-sm btn-square" type="submit">
+                    <button class="btn btn-sm btn-primary btn-square" type="submit">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                     </button>
                     </div>
@@ -19,49 +19,48 @@
             <div class="">
                 <div class="overflow-x-auto overflow-y-auto">
                     <table class="table-primary ">
-                        <thead>
+                        <thead class="bg-base-200">
                             <tr>
-                                <th></th>
-                                <th>Barang</th>
-                                <th>Tanggal Pemutihan</th>
-                                <th>Penonaktifan</th>
-                                <th>Kontrol</th>
+                                <x-table-header class="w-5">No</x-table-header>
+                                <x-table-header>Barang</x-table-header>
+                                <x-table-header>Tanggal Pemutihan</x-table-header>
+                                <x-table-header>Penonaktifan</x-table-header>
+                                <x-table-header>Kontrol</x-table-header>
                             </tr>
-                        </thead>
-                        <?php $no=1;?>
-                        @forelse($data as $key)
+                        </thead> 
+                        @forelse($data as $key => $item)
                         <tr>
-                        <th>{{ $no++ }}</th>
-                        <th>
-                            <div class="flex items-center space-x-3">
-                                <div>
-                                    <div class="font-bold text-lg">{{ $key->nama_barang }}</div>
-                                    <div class="text-sm opacity-50">{{ $key->kode_barang }}</div>
-                                </div>
-                            </div>
-                        </th>
-                        <td>{{ $key->tgl_pemutihan }}</td>
-                        <td>
-                            <p class=" badge badge-outline w-20
-                            {{ ($key->approve_penonaktifan === 'setuju') ? 'badge-success' : '' }}
-                            {{ ($key->approve_penonaktifan === 'pending') ? 'badge-warning' : '' }}
-                            {{ ($key->approve_penonaktifan === 'tidak setuju') ? 'badge-error' : '' }}
-                            ">{{ $key->approve_penonaktifan }}</p>
-                        </td>
-                        <td>
-                            <label for="detailpemutihan{{ $key->id_pemutihan }}" class="btn btn-sm btn-info btn-square btn-outline">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            </label>
-                        </td>
-                        @empty
-                        <tr>
-                            <td colspan="6">
-                                <div class="text-center">
-                                    <img src="{{ asset('image/empty.png') }}" class="mx-auto w-40"> 
+                            <td class="border-table">{{ $data->firstItem() + $key }}</td>
+                            <td class="border-table">
+                                <div class="flex items-center space-x-3">
+                                    <div>
+                                        <div class="font-bold text-lg">{{ $item->nama_barang }}</div>
+                                        <div class="text-sm opacity-50">{{ $item->kode_barang }}</div>
+                                    </div>
                                 </div>
                             </td>
-                        </tr>
-                        </tr>
+                            <td class="border-table">{{ $item->tgl_pemutihan }}</td>
+                            <td class="border-table">
+                                <p class=" badge badge-outline w-20
+                                {{ ($item->approve_penonaktifan === 'setuju') ? 'badge-success' : '' }}
+                                {{ ($item->approve_penonaktifan === 'pending') ? 'badge-warning' : '' }}
+                                {{ ($item->approve_penonaktifan === 'tidak setuju') ? 'badge-error' : '' }}
+                                ">{{ $item->approve_penonaktifan }}</p>
+                            </td>
+                            <td class="border-table">
+                                <label for="detailpemutihan{{ $item->id_pemutihan }}" class="btn btn-sm btn-info btn-square btn-outline">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                </label>
+                            </td>
+                        </tr> 
+                        @empty
+                            <tr>
+                                <td colspan="6">
+                                    <div class="text-center">
+                                        <img src="{{ asset('image/empty.png') }}" class="mx-auto w-40"> 
+                                    </div>
+                                </td>
+                            </tr>
                         @endforelse
 
                     </table>

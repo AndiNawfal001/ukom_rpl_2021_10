@@ -6,21 +6,20 @@
     <form action="simpan" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="flex justify-between">
-            <h2 class="text-2xl font-bold">Form Tambah Pengguna</h2>
+            <h2 class="h1-judul">Form Tambah Pengguna</h2>
             <div class="">
                 <a href="/pengguna" class="btn btn-sm btn-square">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                 </a>
             </div>
-        </div>
-        <br>
+        </div> 
         <div class="lg:flex flex-row gap-5">
             <div class="basis-1/2">
                 <div class="form-control">
                     <label class="label">
                     <span class="label-text">Username</span>
                     </label>
-                    <input type="text" name="username" class="input input-bordered" value="{{ old('username') }}"  required autocomplete="off"/>
+                    <input type="text" name="username" class="input input-sm input-bordered" value="{{ old('username') }}"  required autocomplete="off"/>
 
                     @error('username')
                     <p class="text-red-500">{{ $message }}</p>
@@ -31,7 +30,7 @@
                     <label class="label">
                         <span class="label-text">Level User</span>
                     </label>
-                    <select class="select select-bordered w-full max-w-xs" id="leveluser" name="levelUser" required>
+                    <select class="select select-sm select-bordered w-full max-w-xs" id="leveluser" name="levelUser" required>
                         <option disabled selected>-- Pilih Level --</option>
                         @foreach ($levelUser as $item)
                             <option value="{{ $item->nama_level }}" {{ old('levelUser') == $item->nama_level ? 'selected' : null}}>{{ $item->nama_level }}</option>
@@ -42,7 +41,7 @@
                     <label class="label">
                     <span class="label-text">Email</span>
                     </label>
-                    <input type="text" name="email" class="input input-bordered" value="{{ old('email') }}"  required autocomplete="off"/>
+                    <input type="text" name="email" class="input input-sm input-bordered" value="{{ old('email') }}"  required autocomplete="off"/>
                     @error('email')
 
                     <p class="text-red-500">{{ $message }}</p>
@@ -53,7 +52,7 @@
                     <label class="label">
                     <span class="label-text">Password</span>
                     </label>
-                    <input type="text" name="password" class="input input-bordered" required autocomplete="off"/>
+                    <input type="text" name="password" class="input input-sm input-bordered" required autocomplete="off"/>
                 </div>
             </div>
             <div class="basis-1/2">
@@ -61,7 +60,7 @@
                     <label class="label">
                         <span class="label-text">NIP</span>
                     </label>
-                    <input type="number" name="nip" class="input input-bordered" value="{{ old('nip') }}" autocomplete="off"/>
+                    <input type="number" name="nip" class="input input-sm input-bordered" value="{{ old('nip') }}" autocomplete="off"/>
                     @error('nip')
                         <p class="text-red-500">{{ $message }}</p>
                     @enderror
@@ -70,13 +69,13 @@
                     <label class="label">
                         <span class="label-text">Nama</span>
                     </label>
-                    <input type="text" name="nama" class="input input-bordered" value="{{ old('nama') }}"  required autocomplete="off"/>
+                    <input type="text" name="nama" class="input input-sm input-bordered" value="{{ old('nama') }}"  required autocomplete="off"/>
                 </div>
                 <div class="form-control">
                     <label class="label">
                         <span class="label-text">Kontak</span>
                     </label>
-                    <input type="number" name="kontak" class="input input-bordered" value="{{ old('kontak') }}"  placeholder="contoh : 087654321234" required autocomplete="off"/>
+                    <input type="number" name="kontak" class="input input-sm input-bordered" value="{{ old('kontak') }}"  placeholder="contoh : 087654321234" required autocomplete="off"/>
                     @error('kontak')
 
                     <p class="text-red-500">{{ $message }}</p>
@@ -87,7 +86,7 @@
                     <label class="label">
                         <span class="label-text">Foto (optional)</span>
                     </label>
-                    <input type="file" name="image" id="image" class="file-input file-input-bordered w-full max-w-xs" onchange="previewImage()"/>
+                    <input type="file" name="image" id="image" class="file-input file-input-sm file-input-bordered w-full max-w-xs" onchange="previewImage()"/>
                     <br>
                     <img src="" class="img-preview object-scale-down w-1/2 md:w-1/4" alt="">
                 </div>

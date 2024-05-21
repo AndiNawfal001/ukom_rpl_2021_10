@@ -6,19 +6,18 @@
  <form action="/ruangan/simpan" method="POST">
  @csrf
     <div class="flex justify-between">
-        <h2 class="text-2xl font-bold">Form Tambah Ruangan</h2>
+        <h1 class="h1-judul">Form Tambah Ruangan</h1>
         <div >
             <a href="/ruangan" class="btn btn-sm btn-square">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
             </a>
         </div>
-    </div>
-    <br>
+    </div> 
     <div class="form-control">
         <label class="label">
         <span class="label-text">Nama Ruangan</span>
         </label>
-        <input type="text" name="nama_ruangan" class="input input-bordered @error('nama_ruangan') input-error @enderror" value="{{ old('nama_ruangan') }}" required autocomplete="off"/>
+        <input type="text" name="nama_ruangan" class="input input-sm input-bordered @error('nama_ruangan') input-error @enderror" value="{{ old('nama_ruangan') }}" required autocomplete="off"/>
         @error('nama_ruangan')
             <p class="text-red-500">{{ $message }}</p>
         @enderror
@@ -27,7 +26,7 @@
         <label class="label">
         <span class="label-text">Penanggung jawab</span>
         </label>
-        <input type="text" name="penanggung_jawab" class="input input-bordered"  value="{{ old('penanggung_jawab') }}" required autocomplete="off"/>
+        <input type="text" name="penanggung_jawab" class="input input-sm input-bordered"  value="{{ old('penanggung_jawab') }}" required autocomplete="off"/>
     </div>
     <div class="form-control">
         <label class="label">

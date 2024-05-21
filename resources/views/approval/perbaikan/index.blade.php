@@ -2,14 +2,14 @@
 @section('container')
 
 <div class="pt-6 px-4">
-    <div class="bg-base-100 border-t-2 border-primary shadow rounded-md p-4 sm:p-6 xl:p-8 ">
-        <h1 class="text-xl pb-3 font-semibold leading-loose">Daftar Pengajuan Perbaikan untuk di Approve</h1>
+    <div class="bg-base-100 border-t-2 border-primary shadow rounded-md p-4 sm:p-5 ">
+        <h1 class="h1-judul">Daftar Pengajuan Perbaikan untuk di Approve</h1>
         <form action="/approval/PB" method="GET">
             @csrf
                 <div class="form-control mb-2">
                     <div class="flex gap-2 items-center  ">
                     <input type="text" name="search" placeholder="Search…" class="input input-sm input-bordered" value="{{ request("search") }}" autocomplete="off"/>
-                    <button class="btn btn-sm btn-square" type="submit">
+                    <button class="btn btn-sm btn-primary btn-square" type="submit">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                     </button>
                     </div>
@@ -19,43 +19,45 @@
             <div class="">
                 <div class="overflow-x-auto overflow-y-auto">
                     <table class="table-primary">
-                        <thead>
+                        <thead class="bg-base-200">
                             <tr>
-                                <th>Barang</th>
-                                <th>Tgl Perbaikan</th>
-                                <th>Selesai Perbaikan</th>
-                                <th>Approval perbaikan</th>
-                                <th>Kontrol</th>
+                                <x-table-header class="w-5">No</x-table-header>
+                                <x-table-header>Barang</x-table-header>
+                                <x-table-header>Tgl Perbaikan</x-table-header>
+                                <x-table-header>Selesai Perbaikan</x-table-header>
+                                <x-table-header>Approval perbaikan</x-table-header>
+                                <x-table-header>Kontrol</x-table-header>
                             </tr>
                         </thead>
                         <?php $no=1;?>
-                        @forelse($data as $key)
+                        @forelse($data as $key => $item)
                         <tr>
-                            <th>
+                            <td class="border-table">{{ $data->firstItem() + $key }}</td>
+                            <td class="border-table">
                                 <div class="flex items-center space-x-3">
                                     <div>
-                                        <div class="font-bold text-lg">{{ $key->nama_barang }}</div>
-                                        <div class="text-sm opacity-50">{{ $key->kode_barang }}</div>
+                                        <div class="font-bold text-lg">{{ $item->nama_barang }}</div>
+                                        <div class="text-sm opacity-50">{{ $item->kode_barang }}</div>
                                     </div>
                                 </div>
-                            </th>
-                            <td>{{ $key->tgl_perbaikan }}</td>
-                            <td>
-                                @if($key->tgl_selesai_perbaikan == NULL)
+                            </td>
+                            <td class="border-table">{{ $item->tgl_perbaikan }}</td>
+                            <td class="border-table">
+                                @if($item->tgl_selesai_perbaikan == NULL)
                                     <p class=" badge badge-outline w-20 badge-warning">belum selesai</p>
                                 @else
                                     <p class=" badge badge-outline w-20 badge-success">sudah selesai</p>
                                 @endif
                             </td>
-                            <td>
+                            <td class="border-table">
                                 <p class=" badge badge-outline w-20
-                                {{ ($key->approve_perbaikan === 'sudah diperbaiki') ? 'badge-success' : '' }}
-                                {{ ($key->approve_perbaikan === 'pending') ? 'badge-warning' : '' }}
-                                {{ ($key->approve_perbaikan === 'rusak') ? 'badge-error' : '' }}
-                                ">{{ $key->approve_perbaikan }}</p>
+                                {{ ($item->approve_perbaikan === 'sudah diperbaiki') ? 'badge-success' : '' }}
+                                {{ ($item->approve_perbaikan === 'pending') ? 'badge-warning' : '' }}
+                                {{ ($item->approve_perbaikan === 'rusak') ? 'badge-error' : '' }}
+                                ">{{ $item->approve_perbaikan }}</p>
                             </td>
-                            <td>
-                                <label for="detail{{ $key->id_perbaikan }}" class="btn btn-sm  btn-info btn-square btn-outline">
+                            <td class="border-table">
+                                <label for="detail{{ $item->id_perbaikan }}" class="btn btn-sm  btn-info btn-square btn-outline">
                                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 </label>
                             </td>

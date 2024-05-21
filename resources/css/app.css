@@ -10,3 +10,7 @@
 .border-table {
     @apply border border-base-200;
 } 
+
+.h1-judul {
+    @apply text-xl pb-3 font-semibold leading-loose;
+} 
