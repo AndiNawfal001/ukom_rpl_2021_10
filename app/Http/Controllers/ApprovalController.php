@@ -28,8 +28,6 @@ class ApprovalController extends Controller
     public function indexBarangBaru(Request $request)
     {
         if ($request->has('search') || $request->has('filter_month') || $request->has('filter_year') || $request->has('filter_status')) { 
-            $search = $request->input('search'); 
-
             $where = " 1=1";
             if ($request->has('search')) {
                 $search = $request->input('search');

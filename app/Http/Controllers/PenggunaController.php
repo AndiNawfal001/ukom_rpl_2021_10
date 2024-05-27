@@ -23,12 +23,20 @@ class PenggunaController extends Controller
     public function index(Request $request)
     {
         $data = null;
-        if ($request->has('search')) {
-            $search = $request->input('search');
+        if ($request->has('search') || $request->has('filter_level')) {
+            $where = " 1=1";
+            if ($request->has('search')) {
+                $search = $request->input('search');
+                $where .= " AND (username LIKE '%$search%' OR email LIKE '%$search%')";
+            }
+
+            if ($request->has('filter_level')) {
+                $filter_level = $request->input('filter_level'); 
+                $where .= " AND id_level = '$filter_level'";
+            }
+
             $data = DB::table('pengguna_admin_manajemen_kaprog')
-                ->where('username', 'like', "%" . $search . "%")
-                ->orWhere('email', 'like', "%" . $search . "%")
-                ->orWhere('nama_level', 'like', "%" . $search . "%")
+                ->whereRaw($where)  
                 ->orderBy('id_level')
                 ->paginate(10);
         } else {

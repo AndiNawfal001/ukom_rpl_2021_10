@@ -12,7 +12,7 @@
                                 <div class="form-control mb-2">
                                     <div class="flex gap-2 items-center">
                                         <input type="text" name="search" placeholder="Search…" class="input input-sm input-bordered" value="{{ request("search") }}" autocomplete="off"/>
-                                        <select name="filter_month" class="select select-sm select-bordered select-sm w-40 max-w-xs">
+                                        <select name="filter_month" class="select select-sm select-bordered w-40 max-w-xs">
                                             <option disabled {{ request('filter_month') ? '' : 'selected' }}>-- All Months --</option>
                                             <?php
                                             for ($bulan = 1; $bulan <= 12; $bulan++) {
@@ -22,7 +22,7 @@
                                             }
                                             ?>
                                         </select>
-                                        <select name="filter_year" class="select select-sm select-bordered select-sm w-40 max-w-xs">
+                                        <select name="filter_year" class="select select-sm select-bordered w-40 max-w-xs">
                                             <option disabled {{ request('filter_year') ? '' : 'selected' }}>-- All Years --</option>
                                             <?php
                                             $years = DB::table('pengajuan_bb')
@@ -38,7 +38,7 @@
                                             }
                                             ?>
                                         </select>
-                                        <select name="filter_status" class="select select-sm select-bordered select-sm w-40 max-w-xs">
+                                        <select name="filter_status" class="select select-sm select-bordered w-40 max-w-xs">
                                             <option disabled {{ request('filter_status') ? '' : 'selected' }}>-- All Status --</option>
                                             <?php
                                             $statuses = DB::table('pengajuan_bb')

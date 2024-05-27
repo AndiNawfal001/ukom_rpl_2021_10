@@ -44,7 +44,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="4">
+                        <td colspan="5">
                             <div class="text-center">
                                 <img src="{{ asset('image/empty.png') }}" class="mx-auto w-40"> 
                             </div>
